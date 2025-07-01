@@ -1,16 +1,32 @@
 # tripto
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+lib/
+├── core/                      # أشياء عامة ومشتركة بين كل الموديولات
+│   ├── constants/             # ألوان، صور، ثوابت
+│   ├── error/                 # إدارة الأخطاء (Failure Classes)
+│   ├── routes/                # إدارة المسارات (Navigation)
+│   ├── services/             # أدوات مثل API client أو التخزين المحلي
+│   ├── theme/                # الثيمات العامة (ألوان، خطوط، أزرار)
+│   └── utils/                # أدوات مساعدة عامة
+│
+├── features/                  # كل ميزة لها مجلد مستقل
+│   ├── splash/                # ميزة Splash فقط
+│   │   ├── data/
+│   │   │   ├── models/        # نماذج البيانات (SplashModel مثلًا)
+│   │   │   └── datasources/   # لو فيه API أو local data
+│   │   ├── domain/
+│   │   │   ├── entities/      # الكيانات المجردة (Entity)
+│   │   │   └── usecases/      # منطق التطبيق (UseCases)
+│   │   ├── presentation/
+│   │   │   ├── pages/         # الصفحات الرئيسية
+│   │   │   ├── widgets/       # ودجتس مساعدة
+│   │   │   └── controllers/   # Cubit / Bloc / Provider
+│   │   └── splash.dart        # barrel file لتصدير كل شيء من الميزة
+│   │
+│   └── home/                  # ميزة أخرى مثل الصفحة الرئيسية
+│       └── ...
+│
+├── injection/                 # ملف إعداد الـ Dependency Injection
+│   └── service_locator.dart
+│
+├── main.dart                  # ملف البداية الرئيسي للتطبيق
