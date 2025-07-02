@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/const_right_buttons.dart';
+import 'package:tripto/core/constants/right_buttons.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerPage extends StatefulWidget {
@@ -12,9 +12,9 @@ class VideoPlayerPage extends StatefulWidget {
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   final List<String> videoUrls = [
    
-  'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
   'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
   'https://samplelib.com/lib/preview/mp4/sample-5s.mp4',
+  'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
   'https://samplelib.com/lib/preview/mp4/sample-10s.mp4',
   'https://samplelib.com/lib/preview/mp4/sample-15s.mp4',
   'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',

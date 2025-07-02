@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/const_button.dart';
+import 'package:tripto/core/constants/button_lets.dart';
 import '../../../../../core/routes/app_routes.dart';
 
 class WelcomePage extends StatelessWidget {
