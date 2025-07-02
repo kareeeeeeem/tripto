@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/constants/const_right_buttons.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerPage extends StatefulWidget {
@@ -80,7 +81,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                         child: VideoPlayer(_controller),
                       ),
                     ),
-                  
+                    const ConstRightButtons(), // ← دي هتظهر الزرائر على كل فيديو
                   ],
                 )
               : const Center(child: CircularProgressIndicator());

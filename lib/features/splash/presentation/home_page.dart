@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+// class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         VideoWidget(videoUrl: videoUrl),
+//         const ButtonsWidget(),
+//       ],
+//     );
+//   }
+// }
