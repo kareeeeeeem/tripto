@@ -13,9 +13,10 @@ class SplashPage extends StatelessWidget {
         children: [
           const Spacer(flex: 3),
           const Spacer(flex: 2),
+         const Image(image: AssetImage('assets/splah.png')),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, AppRoutes.home);
+              Navigator.pushReplacementNamed(context, AppRoutes.splash);
             },
             child: const Text("Let's Go"),
           ),
