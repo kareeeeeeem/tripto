@@ -15,7 +15,7 @@ class TripToApp extends StatelessWidget {
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
  
-      initialRoute: AppRoutes.splash,
+      initialRoute: AppRoutes.welcome,
       routes: AppRoutes.routes,
     );
   }

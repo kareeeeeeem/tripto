@@ -6,7 +6,6 @@ import 'package:tripto/features/splash/presentation/welcome_home_page.dart';
 
 class AppRoutes {
   static const splash = '/';
-  static const home = '/home';
   static const welcome = '/welcome';
   static const videoPlayer = '/videoPlayer';
 
@@ -16,7 +15,6 @@ class AppRoutes {
 
   static final routes = <String, WidgetBuilder>{
 
-    home: (context) => const WelcomeHomePage(),
     welcome: (context) => const WelcomeHomePage(),
     videoPlayer: (context) => const VideoPlayerPage(),    
 
