@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/routes/app_routes.dart';
 
 class SplashPage extends StatelessWidget {
@@ -11,15 +10,27 @@ class SplashPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(flex: 3),
-          const Spacer(flex: 2),
+          const Image(
+            image: AssetImage('assets/splash.png'),
+          ),
+          const SizedBox(height: 70),
+
           ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, AppRoutes.home);
+              Navigator.pushReplacementNamed(context, AppRoutes.videoPlayer);
             },
-            child: const Text("Let's Go"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              padding: const EdgeInsets.symmetric(horizontal: 111, vertical: 22),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0), // مستطيل بحواف ناعمة
+              ),
+            ),
+            child: const Text(
+              "Let's Go",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
           ),
-          const Spacer(),
         ],
       ),
     );
