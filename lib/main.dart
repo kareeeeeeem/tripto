@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/routes/app_routes.dart';
 
-
 void main() {
   runApp(const TripToApp());
 }
@@ -14,7 +13,7 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
- 
+
       initialRoute: AppRoutes.welcome,
       routes: AppRoutes.routes,
     );

@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 class ConstButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final double? width;
-  final double? height;
 
   const ConstButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.width,     // ← العرض اختياري
-    this.height,    // ← الارتفاع اختياري
   });
 
   @override
@@ -20,8 +16,6 @@ class ConstButton extends StatelessWidget {
       onTap: onPressed,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: width,
-        height: height,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
