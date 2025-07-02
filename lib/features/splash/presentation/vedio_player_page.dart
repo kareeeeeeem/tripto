@@ -12,7 +12,16 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   final List<String> videoUrls = [
     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/elephant.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/elephant.mp4'
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/horse.mp4',   
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/lion.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/monkey.mp4
+
+   // Add more video URLs as needed
+
+
+
+
   ];
 
   late VideoPlayerController _controller;
