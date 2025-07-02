@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/routes/app_routes.dart';
 
-void main() {
-  runApp(const TripToApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  runApp(TripToApp(isFirstTime : isFirstTime));
 }
 
 class TripToApp extends StatelessWidget {
-  const TripToApp({super.key});
+  final bool isFirstTime;
+  const TripToApp({super.key , required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class TripToApp extends StatelessWidget {
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
 
-      initialRoute: AppRoutes.welcome,
+      initialRoute: isFirstTime ? '/splash' : '/welcome',
       routes: AppRoutes.routes,
     );
   }

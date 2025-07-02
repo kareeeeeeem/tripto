@@ -12,7 +12,7 @@ class WelcomeHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Image(
-            image: AssetImage('assets/splash.png'),
+            image: AssetImage('assets/images/welcome.png'),
           ),
           const SizedBox(height: 70),
 
