@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ConstRightButtons extends StatelessWidget {
-  const ConstRightButtons({super.key});
+class RightButtons extends StatelessWidget {
+  const RightButtons({super.key});
 
   @override
   Widget build(BuildContext context) {

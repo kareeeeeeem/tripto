@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/nav_bar.dart';
-import 'package:tripto/features/presentation/vedio_player_page.dart';
+import 'package:tripto/presentation/app/vedio_player_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _pages[_currentIndex],
           Positioned(
-            bottom: 0,
+            bottom: 30,
             left: 0,
             right: 0,
             child: NavBar(
