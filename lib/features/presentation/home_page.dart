@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD:lib/features/splash/presentation/home_page.dart
 import 'package:tripto/features/splash/presentation/vedio_player_page.dart';
+=======
+import 'package:tripto/core/constants/nav_bar.dart';
+import 'package:tripto/features/presentation/vedio_player_page.dart';
+>>>>>>> 9b5221c54622dc8a0270a9f49a2044111d8581d9:lib/features/presentation/home_page.dart
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
