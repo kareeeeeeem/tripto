@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/nav_bar.dart';
 import 'package:tripto/features/presentation/vedio_player_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,13 +17,13 @@ class _HomePageState extends State<HomePage> {
       'page': const VideoPlayerPage(),
     },
     {
-      'icon': Icons.extension,
+      'icon': Icons.grid_view,
       'page': const Center(
         child: Text("Activities", style: TextStyle(color: Colors.white)),
       ),
     },
     {
-      'icon': Icons.person_2_outlined,
+      'icon': Icons.person_outline,
       'page': const Center(
         child: Text("Profile Page", style: TextStyle(color: Colors.white)),
       ),

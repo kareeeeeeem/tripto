@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tripto/features/presentation/activities.dart';
 import 'core/routes/app_routes.dart';
 
 void main() {
@@ -13,10 +12,9 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
-    // initialRoute: '/',
-      home: Activities(),
+    initialRoute: '/',
 
-      // routes: AppRoutes.routes,
+      routes: AppRoutes.routes,
     );
   }
 }
