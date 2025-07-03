@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/nav_bar.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+//will named app
+
+
+class app extends StatefulWidget {
+  const app({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<app> createState() => _appState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _appState extends State<app> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = const [
