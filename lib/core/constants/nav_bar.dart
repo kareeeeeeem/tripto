@@ -1,57 +1,50 @@
 import 'package:flutter/material.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+class NavBar extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTabSelected;
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
+  const NavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTabSelected,
+  });
 
-class _NavBarState extends State<NavBar> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    const Center(child: Text("Home Page")),
-    const Center(child: Text("Games / Assistant")),
-    const Center(child: Text("Profile Page")),
-    const Center(child: Text("Favorites")),
+  final List<IconData> _icons = const [
+    Icons.home,
+    Icons.extension,
+    Icons.person_2_outlined,
+    Icons.favorite_border,
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    return Positioned(
+      bottom: 30,
+      left: 0,
+      right: 0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Container(
+            color: Colors.black,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(_icons.length, (index) {
+                return GestureDetector(
+                  onTap: () => onTabSelected(index),
+                  child: Icon(
+                    _icons[index],
+                    color: currentIndex == index ? Colors.white : Colors.grey,
+                    size: 28,
+                  ),
+                );
+              }),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_esports),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Love',
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../features/presentation/activities.dart';
-import '../../features/presentation/home_page.dart';
+import '../../features/presentation/nav_bar_pages/home_page.dart';
 import '../../features/presentation/splash_page.dart';
 import '../../features/presentation/vedio_player_page.dart';
 import '../../features/presentation/welcome_page.dart';
-import '../constants/nav_bar.dart';
 
 class AppRoutes {
   static const splash = '/';
@@ -20,7 +17,7 @@ class AppRoutes {
     welcome: (context) => const WelcomePage(),
     videoPlayer: (context) => const VideoPlayerPage(),
     home: (context) => const HomePage(),
-    navBar: (context) => const NavBar(),
+ 
     // activities: (context) => const activities(),
   };
 }

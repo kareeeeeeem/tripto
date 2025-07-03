@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripto/features/presentation/welcome_page.dart';
 
-import 'home_page.dart';
+import 'nav_bar_pages/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
