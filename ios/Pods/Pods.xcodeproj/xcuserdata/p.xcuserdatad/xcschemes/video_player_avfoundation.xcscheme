@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AAA98FC9182FB27CC0DC22AD1316E0BC"
-               BuildableName = "video_player_avfoundation.framework"
+               BuildableName = "libvideo_player_avfoundation.a"
                BlueprintName = "video_player_avfoundation"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

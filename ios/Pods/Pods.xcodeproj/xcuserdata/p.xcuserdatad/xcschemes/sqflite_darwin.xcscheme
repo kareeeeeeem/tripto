@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6178324C15B5DCE31C127429F0C8EE8F"
-               BuildableName = "sqflite_darwin.framework"
+               BuildableName = "libsqflite_darwin.a"
                BlueprintName = "sqflite_darwin"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

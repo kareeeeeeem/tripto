@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/button_lets.dart';
 import '../../../../../core/routes/app_routes.dart';
-import '../../../core/constants/button_lets.dart';
+
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});

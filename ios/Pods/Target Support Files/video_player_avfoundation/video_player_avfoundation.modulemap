@@ -1,4 +1,4 @@
-framework module video_player_avfoundation {
+module video_player_avfoundation {
   umbrella header "video_player_avfoundation-umbrella.h"
 
   export *
