@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tripto/features/splash/presentation/splash_page.dart';
 import 'core/routes/app_routes.dart';
 
 void main() {
