@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/constants/nav_bar.dart';
 import 'package:tripto/features/splash/presentation/vedio_player_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,8 +8,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SizedBox.expand(
-        child: VideoPlayerPage(),  // ← دي اللي هتعرض الفيديوهات بالحجم الكامل
+      body: Column(
+        children:  [
+          Expanded(child: VideoPlayerPage()),
+         ],
       ),
     );
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BottomNavExample extends StatefulWidget {
-  const BottomNavExample({super.key});
+class NavBar extends StatefulWidget {
+  const NavBar({super.key});
 
   @override
-  State<BottomNavExample> createState() => _BottomNavExampleState();
+  State<NavBar> createState() => _NavBarState();
 }
 
-class _BottomNavExampleState extends State<BottomNavExample> {
+class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [

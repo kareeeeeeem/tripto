@@ -80,16 +80,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                         child: VideoPlayer(_controller),
                       ),
                     ),
-                    const Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          '🎬 فيديو',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    )
                   ],
                 )
               : const Center(child: CircularProgressIndicator());

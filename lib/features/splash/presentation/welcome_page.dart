@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/button_lets.dart';
-import '../../../../../core/routes/app_routes.dart';
-
+import 'package:tripto/core/routes/app_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -13,15 +13,14 @@ class WelcomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(
-            image: AssetImage('assets/images/welcome.png'),
-          ),
+          const Image(image: AssetImage('assets/images/welcome.png')),
           const SizedBox(height: 222),
-
           ConstButton(
             text: "Let's Go",
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, AppRoutes.videoPlayer);
+            onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setBool('isFirstTime', false);
+              Navigator.pushReplacementNamed(context, AppRoutes.home);
             },
           ),
         ],
