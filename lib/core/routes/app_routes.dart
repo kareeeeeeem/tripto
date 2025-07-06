@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pagess/CategoryPages/CategorySelector.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import '../../presentation/pagess/navbar_pages/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
 import '../../presentation/app/vedio_player_page.dart';
@@ -15,11 +15,11 @@ class AppRoutes {
   static const videoPlayer = '/videoPlayer';
   static const home = '/home';
   static const navBar = '/navBar';
-
-  static const categorySelector = '/categorySelector';
+  static const categoryCard = '/CategoryCard';
   static const categoryGold = '/categoryGold';
   static const categoryDiamond = '/categoryDiamond';
   static const categoryPlatinum = '/categoryPlatinum';
+  static const date = '/DateCard';
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -27,8 +27,7 @@ class AppRoutes {
     app: (context) => const App(),
     videoPlayer: (context) => const VideoPlayerPage(),
     home: (context) => const HomePage(),
-
     // Category Pages
-    categorySelector: (context) => const CategorySelector(),
+    categoryCard: (context) => const CategoryCard(),
   };
 }

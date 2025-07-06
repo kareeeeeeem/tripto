@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../presentation/pagess/RightButtonsPages/CategoryCard.dart';
 
 class RightButtons extends StatefulWidget {
   const RightButtons({super.key});
@@ -7,8 +8,54 @@ class RightButtons extends StatefulWidget {
   State<RightButtons> createState() => _RightButtonsState();
 }
 
+class _ButtonData {
+  final IconData icon;
+  final String label;
+
+  _ButtonData({required this.icon, required this.label});
+}
+
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1;
+
+  OverlayEntry? _categoryOverlay; // للتحكم في إظهار/إخفاء الكاتيجوري
+
+  final List<_ButtonData> _buttons = [
+    _ButtonData(icon: Icons.category, label: 'Category'),
+    _ButtonData(icon: Icons.directions_car, label: 'Car'),
+    _ButtonData(icon: Icons.bookmark_border, label: 'Save'),
+    _ButtonData(icon: Icons.share, label: 'Share'),
+    _ButtonData(icon: Icons.info_outline, label: 'Info'),
+  ];
+
+  static const double _verticalSpacing = 16.0;
+
+  void _toggleCategoryOverlay(BuildContext context) {
+    if (_categoryOverlay != null) {
+      _categoryOverlay!.remove();
+      _categoryOverlay = null;
+      return;
+    }
+
+    _categoryOverlay = OverlayEntry(
+      builder:
+          (context) => Positioned(
+            top: 100,
+            left: 10,
+            child: Material(
+              color: Colors.transparent,
+              child: CategoryCard(
+                onClose: () {
+                  _categoryOverlay?.remove();
+                  _categoryOverlay = null;
+                },
+              ),
+            ),
+          ),
+    );
+
+    Overlay.of(context).insert(_categoryOverlay!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +64,20 @@ class _RightButtonsState extends State<RightButtons> {
       bottom: 100,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildButton(Icons.category, 'Category', 0, () {
-            setState(() => selectedIndex = 0);
-            Navigator.pushNamed(context, '/categorySelector');
-          }),
+        children: List.generate(_buttons.length, (index) {
+          final buttonData = _buttons[index];
+          return Padding(
+            padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),
+            child: _buildButton(buttonData.icon, buttonData.label, index, () {
+              setState(() => selectedIndex = index);
 
-          const SizedBox(height: 16),
-          _buildButton(Icons.date_range, 'Date', 1, () {
-            setState(() => selectedIndex = 1);
-          }),
-
-          const SizedBox(height: 16),
-          _buildButton(Icons.directions_car, 'Car', 2, () {
-            setState(() => selectedIndex = 2);
-          }),
-
-          const SizedBox(height: 16),
-          _buildButton(Icons.bookmark_border, 'Save', 3, () {
-            setState(() => selectedIndex = 3);
-          }),
-
-          const SizedBox(height: 16),
-          _buildButton(Icons.share, 'Share', 4, () {
-            setState(() => selectedIndex = 4);
-          }),
-
-          const SizedBox(height: 16),
-          _buildButton(Icons.info_outline, 'Info', 5, () {
-            setState(() => selectedIndex = 5);
-          }),
-        ],
+              if (buttonData.label == 'Category') {
+                _toggleCategoryOverlay(context);
+              }
+              // يمكنك إضافة منطق لباقي الأزرار هنا حسب الحاجة
+            }),
+          );
+        }),
       ),
     );
   }
@@ -73,7 +103,7 @@ class _RightButtonsState extends State<RightButtons> {
             onPressed: onPressed,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: 1),
         Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ],
     );
