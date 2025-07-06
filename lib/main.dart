@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'core/routes/app_routes.dart';
 
 void main() {
