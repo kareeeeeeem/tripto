@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/before_start/welcome_page.dart';
 
 import '../pagess/navbar_pages/home_page.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await Future.delayed(Duration(seconds: 3));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomePage()),
+        MaterialPageRoute(builder: (_) => const App()),
       );
     }
   }
