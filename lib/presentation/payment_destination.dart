@@ -41,7 +41,42 @@ class _PaymentDestinationState extends State<PaymentDestination> {
             padding: const EdgeInsets.only(top: 40),
             child: Column(
               children: [
-                Center(child: Image.asset('assets/images/museum.png' , width:double.infinity) ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/museum.png',
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                const Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          "Destination :",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text("Egyptian Museum" , style: TextStyle( color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+                    SizedBox(width: 30,),
+                    Text('⭐ 4.9 ', style: TextStyle(fontSize: 20)),
+
+                  ],
+                ),
               ],
             ),
           ),
