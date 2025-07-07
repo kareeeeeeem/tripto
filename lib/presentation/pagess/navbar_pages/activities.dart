@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../data/models/activity_model.dart';
+import 'package:tripto/data/models/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
   final Activitymodel activity;
@@ -57,15 +57,18 @@ class ActivityCard extends StatelessWidget {
                   Text('For: ${activity.duration} min'),
                   const Icon(Icons.directions_car_filled_sharp, size: 20),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF2196F3)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF2196F3),
+                    ),
                     onPressed: () {},
-                    child: const Text('Book' , style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      'Book',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
-
               ),
             ],
-
           ),
         ),
       ),

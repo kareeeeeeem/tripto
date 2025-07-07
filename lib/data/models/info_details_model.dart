@@ -100,7 +100,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Tourism Company Section
-                Text(
+                const Text(
                   "Tourism Company",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -124,7 +124,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                         children: [
                           Text(
                             tourismcompanies[0].title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -148,7 +148,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                 const SizedBox(height: 16),
 
                 // Flying Company Section
-                Text(
+                const Text(
                   "Flying Company",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -170,7 +170,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                         children: [
                           Text(
                             flyingcompanies[0].title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -193,7 +193,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
 
                 const SizedBox(height: 16),
 
-                Text(
+                const Text(
                   "Reserve a Car",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -215,7 +215,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                         children: [
                           Text(
                             reservecars[0].title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -237,7 +237,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                 const Divider(thickness: 1, color: Colors.grey),
 
                 const SizedBox(height: 16),
-                Text(
+                const Text(
                   "Booking Hotels",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -259,7 +259,7 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
                         children: [
                           Text(
                             bookinghotels[0].title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -328,7 +328,7 @@ void openbottomsheet(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          child: InfoDetailsModel(),
+          child: const InfoDetailsModel(),
         ),
   );
 }

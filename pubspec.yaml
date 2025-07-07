@@ -77,6 +77,7 @@ dependencies:
 
   # For data modeling and JSON serialization
   json_annotation: ^4.8.1
+  table_calendar: ^3.1.3
  
 
  

@@ -13,8 +13,11 @@ class AppRoutes {
   static const welcome = '/welcomePage';
   static const app = '/app';
   static const videoPlayer = '/videoPlayer';
+
   static const home = '/home';
-  static const navBar = '/navBar';
+  static const Activities = '/activities';
+
+  // Category Routes
   static const categoryCard = '/CategoryCard';
   static const categoryGold = '/categoryGold';
   static const categoryDiamond = '/categoryDiamond';
@@ -26,7 +29,10 @@ class AppRoutes {
     welcome: (context) => const WelcomePage(),
     app: (context) => const App(),
     videoPlayer: (context) => const VideoPlayerPage(),
+
     home: (context) => const HomePage(),
+    //activities: (context) => const Activities(),
+
     // Category Pages
     categoryCard: (context) => const CategoryCard(),
   };
