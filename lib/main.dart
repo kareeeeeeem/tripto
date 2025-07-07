@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+
+import 'data/models/info_details_model.dart';
 
 void main() {
   runApp(const TripToApp());
@@ -14,8 +17,9 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: AppRoutes.routes,
+      // initialRoute: '/',
+      // routes: AppRoutes.routes,
+      home: ProfilePage(),
     );
   }
 }
