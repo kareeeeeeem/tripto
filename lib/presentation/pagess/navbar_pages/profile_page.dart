@@ -28,19 +28,44 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 35,
                 backgroundImage: AssetImage("assets/images/shika.png"),
               ),
-            textfield(label: "Name", onEdit: (){}
-            ),
-              textfield(label: "Email", onEdit: (){}
-              ),
-              textfield(label: "phone", onEdit: (){}
-              ),
-              textfield(label: "phone", onEdit: (){}
-              ),
-              textfield(label: "Password", onEdit: (){}
+              SizedBox(height: 60,),
+              textfield(label: "Name", onEdit: () {}),
+              SizedBox(height: 30,),
+              textfield(label: "Email", onEdit: () {}),
+              SizedBox(height: 30,),
+              textfield(label: "phone", onEdit: () {}),
+              SizedBox(height: 30,),
+              textfield(label: "phone", onEdit: () {}),
+              SizedBox(height: 30,),
+              textfield(label: "Password", onEdit: () {}),
+              const SizedBox(height: 60),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF2196F3),
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Save",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

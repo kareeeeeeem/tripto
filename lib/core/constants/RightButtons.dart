@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
+import 'package:tripto/data/models/info_details_model.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 
@@ -86,8 +87,7 @@ class _RightButtonsState extends State<RightButtons> {
         icon: Icons.info_outline,
         label: 'Info',
         onPressed: () async {
-          // منطق زر المعلومات
-          ;
+        openbottomsheet(context)  ;
         },
       ),
     ];
