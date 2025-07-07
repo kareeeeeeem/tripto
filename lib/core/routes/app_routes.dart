@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
 import '../../presentation/pagess/navbar_pages/activities.dart';
 import '../../presentation/pagess/navbar_pages/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
@@ -22,6 +23,7 @@ class AppRoutes {
   static const categoryDiamond = '/categoryDiamond';
   static const categoryPlatinum = '/categoryPlatinum';
   static const date = '/DateCard';
+  static const profile = '/ProfileCard';
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -30,7 +32,7 @@ class AppRoutes {
     videoPlayer: (context) => const VideoPlayerPage(),
     activities: (context) => const Activities(),
     home: (context) => const HomePage(),
-
+    profile : (context) => const ProfilePage(),
     // Category Pages
     categoryCard: (context) => const CategoryCard(),
   };
