@@ -24,13 +24,13 @@ class SelectRightButton extends StatelessWidget {
             // لون الخلفية يعتمد على ما إذا كان الزر محدداً أم لا
             color: isSelected ? Colors.blueAccent : Colors.transparent,
           ),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(6),
           child: IconButton(
             icon: Icon(icon, size: 28, color: Colors.white),
             onPressed: onPressed,
           ),
         ),
-        const SizedBox(height: 1), // مسافة صغيرة بين الأيقونة والنص
+        const SizedBox(height: 2), // مسافة صغيرة بين الأيقونة والنص
         Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ],
     );

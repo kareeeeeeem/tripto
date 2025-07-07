@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/RightButtons.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -14,9 +16,9 @@ class _AppState extends State<App> {
 
   final List<Widget> _pages = const [
     VideoPlayerPage(),
-    Center(child: Text("Activities Page", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Profile Page", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Favorites Page", style: TextStyle(color: Colors.white))),
+
+    //ActivityCard(),
+    //ProfilePage(),
   ];
 
   final List<IconData> _icons = const [
@@ -60,7 +62,10 @@ class _AppState extends State<App> {
                         onTap: () => _changePage(index),
                         child: Icon(
                           _icons[index],
-                          color: _currentIndex == index ? Colors.white : Colors.grey,
+                          color:
+                              _currentIndex == index
+                                  ? Colors.white
+                                  : Colors.grey,
                           size: 28,
                         ),
                       );

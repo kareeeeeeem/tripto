@@ -19,10 +19,8 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
-      // initialRoute: '/',
-      // routes: AppRoutes.routes,
-      home: PaymentOption(),
-
+      initialRoute: '/',
+      routes: AppRoutes.routes,
     );
   }
 }

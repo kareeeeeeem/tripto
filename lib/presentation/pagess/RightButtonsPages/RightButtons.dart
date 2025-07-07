@@ -1,6 +1,10 @@
+// lib/presentation/pagess/RightButtons.dart
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
-import 'package:tripto/data/models/info_details_model.dart';
+import 'package:tripto/data/models/CarModel.dart';
+// import 'package:tripto/data/models/info_details_model.dart'; // لم تعد بحاجة لهذا الاستيراد هنا لـ Carmodel إذا فصلتها
+import 'package:tripto/presentation/pagess/RightButtonsPages/CarCard.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 
@@ -23,6 +27,26 @@ class RightButtons extends StatefulWidget {
 
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1; // لتتبع الزر المحدد، -1 يعني لا يوجد زر محدد
+
+  // دالة مساعدة لفتح الـ bottom sheet (إذا كانت موجودة في مكان آخر)
+  void openbottomsheet(BuildContext context) {
+    // مثال لـ Bottom Sheet بسيط
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          color: Colors.white,
+          child: const Center(
+            child: Text(
+              'Info Details will go here!',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +90,28 @@ class _RightButtonsState extends State<RightButtons> {
         },
       ),
       _ButtonData(
+        icon: Icons.car_rental_outlined,
+        label: 'car',
+        onPressed: () async {
+          // **التصحيح هنا:** استدعاء CarSelectionDialog
+          final Carmodel? selectedCar = await showDialog<Carmodel>(
+            // نحدد نوع القيمة المرتجعة
+            context: context,
+            builder: (BuildContext context) {
+              return const CarSelectionDialog(); // <--- يتم عرض هذا الـ Dialog الآن
+            },
+          );
+          // هنا يتم التعامل مع السيارة التي تم اختيارها بعد إغلاق الـ Dialog
+          if (selectedCar != null) {
+            debugPrint('Selected Car: ${selectedCar.title}');
+            // يمكنك هنا تحديث أي حالة في شاشتك الرئيسية بناءً على السيارة المختارة.
+          } else {
+            debugPrint('Car selection cancelled or no car selected.');
+          }
+        },
+      ),
+
+      _ButtonData(
         icon: Icons.bookmark_border,
         label: 'Save',
         onPressed: () {
@@ -87,12 +133,12 @@ class _RightButtonsState extends State<RightButtons> {
         icon: Icons.info_outline,
         label: 'Info',
         onPressed: () async {
-        openbottomsheet(context)  ;
+          openbottomsheet(context);
         },
       ),
     ];
 
-    const double _verticalSpacing = 16.0;
+    const double _verticalSpacing = 2.0;
 
     return Positioned(
       right: 12,
