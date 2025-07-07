@@ -4,6 +4,7 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/infocard.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
 import 'package:tripto/presentation/pagess/payment_option.dart';
+import 'package:tripto/presentation/payment_destination.dart';
 
 import 'data/models/info_details_model.dart';
 
@@ -21,7 +22,7 @@ class TripToApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: '/',
       // routes: AppRoutes.routes,
-      home: PaymentOption(),
+      home: PaymentDestination(),
 
     );
   }
