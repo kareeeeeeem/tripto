@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 
 void main() {
   runApp(const TripToApp());
@@ -13,7 +14,7 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/', 
+      initialRoute: '/',
       routes: AppRoutes.routes,
     );
   }

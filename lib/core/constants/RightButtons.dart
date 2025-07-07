@@ -25,7 +25,8 @@ class _RightButtonsState extends State<RightButtons> {
     _ButtonData(icon: Icons.directions_car, label: 'Car'),
     _ButtonData(icon: Icons.bookmark_border, label: 'Save'),
     _ButtonData(icon: Icons.share, label: 'Share'),
-    _ButtonData(icon: Icons.info_outline, label: 'Info'),
+    _ButtonData(icon: Icons.info_outline, label: 'Info'
+    ),
   ];
 
   static const double _verticalSpacing = 16.0;

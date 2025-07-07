@@ -8,66 +8,65 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: SizedBox(
-        height: 136,
-        width: 250,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                height: double.infinity,
-                width: 60,
-                child: Image.asset(
-                  "assets/images/museum.png",
-                  height: 30,
-                  width: 30,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(width: 25),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        activity.title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text('Price: \$${activity.price.toStringAsFixed(0)}'),
-                      Text('Number: ${activity.number}'),
-                    ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: SizedBox(
+          height: 136,
+          width: 130,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  height: double.infinity,
+                  width: 60,
+                  child: Image.asset(
+                    "assets/images/museum.png",
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 4),
-                  SizedBox(width: 50),
-
-
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Text(' ⭐ ${activity.rate} '),
-                Text('For: ${activity.duration} min'),
-                const Icon(Icons.directions_car_filled_sharp, size: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Book'),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(width: 25),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      activity.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text('Price: \$${activity.price.toStringAsFixed(0)}'),
+                    const SizedBox(height: 4),
+                    Text('Number: ${activity.number}'),
+                  ],
+                ),
+              ),
 
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(' ⭐ ${activity.rate} '),
+                  Text('For: ${activity.duration} min'),
+                  const Icon(Icons.directions_car_filled_sharp, size: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF2196F3)),
+                    onPressed: () {},
+                    child: const Text('Book' , style: TextStyle(color: Colors.white),),
+                  ),
+                ],
+
+              ),
+            ],
+
+          ),
         ),
       ),
     );
