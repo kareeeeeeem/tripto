@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SelectRightButton extends StatelessWidget {
-  final IconData icon;
+  final Widget iconWidget; // تم تغييره من IconData إلى Widget
   final String label;
   final bool isSelected;
   final VoidCallback onPressed;
 
   const SelectRightButton({
     super.key,
-    required this.icon,
+    required this.iconWidget,
     required this.label,
     required this.isSelected,
     required this.onPressed,
@@ -21,16 +21,16 @@ class SelectRightButton extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            // لون الخلفية يعتمد على ما إذا كان الزر محدداً أم لا
             color: isSelected ? Colors.blueAccent : Colors.transparent,
           ),
           padding: const EdgeInsets.all(6),
           child: IconButton(
-            icon: Icon(icon, size: 28, color: Colors.white),
+            icon: iconWidget, // 👈 استخدام الودجت المخصص بدل Icon(icon)
+            iconSize: 28,
             onPressed: onPressed,
           ),
         ),
-        const SizedBox(height: 2), // مسافة صغيرة بين الأيقونة والنص
+        const SizedBox(height: 2),
         Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ],
     );

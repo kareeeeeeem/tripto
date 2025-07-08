@@ -10,20 +10,19 @@ class VideoPlayerPage extends StatefulWidget {
 
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   final List<String> videoUrls = [
-   
-  'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-  'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-  'https://samplelib.com/lib/preview/mp4/sample-5s.mp4',
-  'https://samplelib.com/lib/preview/mp4/sample-10s.mp4',
-  'https://samplelib.com/lib/preview/mp4/sample-15s.mp4',
-  'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-  'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4',
-  
-   // Add more video URLs as needed
+    'https://media.w3.org/2010/05/sintel/trailer.mp4',
+    'https://media.w3.org/2010/05/bunny/trailer.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/elephant.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/horse.mp4',
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+    'https://filesamples.com/samples/video/mp4/sample_960x400_ocean_with_audio.mp4',
   ];
 
   late VideoPlayerController _controller;
   int _currentPage = 0;
+  bool _hasError = false;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -32,13 +31,25 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   }
 
   Future<void> _initializeVideo(int index) async {
-    if (mounted && index < videoUrls.length) {
+    try {
+      setState(() {
+        _hasError = false;
+        _errorMessage = '';
+      });
+
       _controller = VideoPlayerController.network(videoUrls[index]);
       await _controller.initialize();
       _controller.setLooping(true);
-      _controller.setVolume(0.0);
+      _controller.setVolume(1.0);
       await _controller.play();
+
       setState(() {});
+    } catch (e) {
+      setState(() {
+        _hasError = true;
+        _errorMessage = 'Video loading failed. Please try again later.';
+        print('Video error: $e');
+      });
     }
   }
 
@@ -68,20 +79,42 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          if (_hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.red, size: 50),
+                  const SizedBox(height: 12),
+                  Text(
+                    _errorMessage,
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => _initializeVideo(_currentPage),
+                    child: const Text(' try again'),
+                  ),
+                ],
+              ),
+            );
+          }
+
           return _controller.value.isInitialized
               ? Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: _controller.value.size.width,
-                        height: _controller.value.size.height,
-                        child: VideoPlayer(_controller),
-                      ),
+                fit: StackFit.expand,
+                children: [
+                  FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: _controller.value.size.width,
+                      height: _controller.value.size.height,
+                      child: VideoPlayer(_controller),
                     ),
-                  ],
-                )
+                  ),
+                ],
+              )
               : const Center(child: CircularProgressIndicator());
         },
       ),

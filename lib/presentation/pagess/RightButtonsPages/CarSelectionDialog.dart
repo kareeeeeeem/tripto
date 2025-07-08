@@ -16,17 +16,12 @@ class _CarSelectionDialogState extends State<CarSelectionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        'Select a Car',
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      ),
+      backgroundColor: Colors.white, //
+
       content: SizedBox(
-        // استخدم SizedBox لتحديد ارتفاع ثابت أو مرن
-        width: MediaQuery.of(context).size.width * 0.8, // عرض 80% من الشاشة
-        height:
-            MediaQuery.of(context).size.height * 0.6, // ارتفاع 60% من الشاشة
+        width: MediaQuery.of(context).size.width * 0.8, // عرض 80% من
+        height: MediaQuery.of(context).size.height * 0.6,
         child: ListView.builder(
-          // استخدام ListView.builder لعرض القائمة بكفاءة
           itemCount: carsList.length,
           itemBuilder: (context, index) {
             final carItem = carsList[index];
@@ -44,22 +39,22 @@ class _CarSelectionDialogState extends State<CarSelectionDialog> {
           },
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            // عند الضغط على "Select"، نرجع السيارة المختارة
-            Navigator.of(context).pop(_selectedCar);
-          },
-          child: const Text('Select'),
-        ),
-        TextButton(
-          onPressed: () {
-            // عند الإلغاء، نرجع null
-            Navigator.of(context).pop(null);
-          },
-          child: const Text('Cancel'),
-        ),
-      ],
+      // actions: [
+      //   TextButton(
+      //     onPressed: () {
+      //       // عند الضغط على "Select"، نرجع السيارة المختارة
+      //       Navigator.of(context).pop(_selectedCar);
+      //     },
+      //     child: const Text('Select'),
+      //   ),
+      //   TextButton(
+      //     onPressed: () {
+      //       // عند الإلغاء، نرجع null
+      //       Navigator.of(context).pop(null);
+      //     },
+      //     child: const Text('Cancel'),
+      //   ),
+      // ],
     );
   }
 }

@@ -81,14 +81,14 @@ class _DatecardState extends State<Datecard> {
             ),
             const SizedBox(height: 20), // مسافة فاصلة
             // زر التأكيد لإغلاق مربع الحوار وإرجاع التاريخ المختار
-            ElevatedButton(
-              onPressed: () {
-                // نغلق مربع الحوار ونمرر التاريخ المختار
-                // إذا لم يختار المستخدم أي تاريخ، ستكون القيمة null
-                Navigator.of(context).pop(_selectedDay);
-              },
-              child: const Text('ok'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // نغلق مربع الحوار ونمرر التاريخ المختار
+            //     // إذا لم يختار المستخدم أي تاريخ، ستكون القيمة null
+            //     Navigator.of(context).pop(_selectedDay);
+            //   },
+            //   child: const Text('ok'),
+            // ),
           ],
         ),
       ),

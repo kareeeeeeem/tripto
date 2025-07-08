@@ -67,7 +67,6 @@ class Bookinghotel {
   });
 }
 
-// ================== DATA ==================
 
 List<Tourismcompany> tourismcompanies = [
   Tourismcompany(
@@ -102,16 +101,15 @@ List<Bookinghotel> bookinghotels = [
   ),
 ];
 
-// ================== UI CALLER ==================
 
 void openbottomsheet(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(50),
       ),
-      child: InfoCard(), // هتبدلها بـ InfoCard بعدين
+      child:  InfoCard(),
     ),
   );
 }
