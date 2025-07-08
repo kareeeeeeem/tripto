@@ -29,17 +29,18 @@ class textfield extends StatelessWidget {
                   width: 1,
                 ),
               ),
+              suffixIcon: TextButton.icon(
+                onPressed: onEdit,
+                icon: const Icon(Icons.mode_edit_outlined),
+                label: const Text(
+                  "_Edit",
+                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                ),
+              ),
             ),
           ),
         ),
-        TextButton.icon(
-          onPressed: onEdit,
-          icon: const Icon(Icons.mode_edit_outlined),
-          label: const Text(
-            "_Edit",
-            style: TextStyle(color: Colors.grey, fontSize: 18),
-          ),
-        ),
+
       ],
     );
   }
