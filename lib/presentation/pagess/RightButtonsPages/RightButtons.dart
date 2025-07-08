@@ -1,21 +1,24 @@
-// lib/presentation/pagess/RightButtons.dart
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/data/models/CarModel.dart';
-// import 'package:tripto/data/models/info_details_model.dart'; // لم تعد بحاجة لهذا الاستيراد هنا لـ Carmodel إذا فصلتها
-import 'package:tripto/presentation/pagess/RightButtonsPages/CarCard.dart';
+
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 
-// تأكد من المسارات الصحيحة للـ CategoryCard و Datecard و SelectRightButton
-// كلاس مساعد لتخزين بيانات الزر الواحد
 class _ButtonData {
-  final IconData icon;
+  final IconData? icon;
+  final Widget? iconWidget;
   final String label;
-  final VoidCallback? onPressed; // دالة يتم تنفيذها عند الضغط على الزر
+  final VoidCallback? onPressed;
 
-  _ButtonData({required this.icon, required this.label, this.onPressed});
+  _ButtonData({
+    this.icon,
+    this.iconWidget,
+    required this.label,
+    this.onPressed,
+  });
 }
 
 class RightButtons extends StatefulWidget {
@@ -26,11 +29,9 @@ class RightButtons extends StatefulWidget {
 }
 
 class _RightButtonsState extends State<RightButtons> {
-  int selectedIndex = -1; // لتتبع الزر المحدد، -1 يعني لا يوجد زر محدد
+  int selectedIndex = -1;
 
-  // دالة مساعدة لفتح الـ bottom sheet (إذا كانت موجودة في مكان آخر)
   void openbottomsheet(BuildContext context) {
-    // مثال لـ Bottom Sheet بسيط
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -50,61 +51,65 @@ class _RightButtonsState extends State<RightButtons> {
 
   @override
   Widget build(BuildContext context) {
-    // تعريف قائمة الأزرار مع الإجراءات الخاصة بكل زر
     final List<_ButtonData> _buttons = [
       _ButtonData(
-        icon: Icons.category,
+        icon: Icons.local_offer,
         label: 'Category',
         onPressed: () async {
-          // عرض CategoryCard كـ Dialog
-          final dynamic selectedCategory = await showDialog(
+          final selectedCategory = await showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const CategoryCard(); // استخدم CategoryCard التي تم تعديلها لتكون Dialog
+              return const CategoryCard();
             },
           );
-          // هنا يمكنك التعامل مع selectedCategory إذا كنت ترجع قيمة من CategoryCard
           if (selectedCategory != null) {
             debugPrint('Selected Category: $selectedCategory');
-            // يمكنك تحديث حالة في الشاشة الرئيسية بناءً على الفئة المختارة
+          }
+        },
+      ),
+
+      // ✅ الزر المعدل لأيقونة التاريخ مع الرقم الحالي
+      _ButtonData(
+        iconWidget: Stack(
+          alignment: Alignment.center,
+          children: [
+            const Icon(Icons.calendar_today, size: 30, color: Colors.white),
+            Text(
+              DateFormat('d').format(DateTime.now()),
+              style: const TextStyle(
+                fontSize: 10,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        label: 'Date',
+        onPressed: () async {
+          final DateTime? selectedDate = await showDialog<DateTime>(
+            context: context,
+            builder: (BuildContext context) {
+              return const Datecard();
+            },
+          );
+          if (selectedDate != null) {
+            debugPrint('Selected Date: ${selectedDate.toLocal()}');
           }
         },
       ),
 
       _ButtonData(
-        icon: Icons.calendar_today, // أيقونة لزر التاريخ
-        label: 'Date',
+        icon: Icons.directions_car,
+        label: 'Car',
         onPressed: () async {
-          // عرض Datecard كـ Dialog
-          final DateTime? selectedDate = await showDialog<DateTime>(
-            context: context,
-            builder: (BuildContext context) {
-              return const Datecard(); // استخدم Datecard التي تم تعديلها لتكون Dialog
-            },
-          );
-          // هنا يمكنك التعامل مع التاريخ المحدد
-          if (selectedDate != null) {
-            debugPrint('Selected Date: ${selectedDate.toLocal()}');
-            // يمكنك تحديث حالة في الشاشة الرئيسية بناءً على التاريخ المختار
-          }
-        },
-      ),
-      _ButtonData(
-        icon: Icons.car_rental_outlined,
-        label: 'car',
-        onPressed: () async {
-          // **التصحيح هنا:** استدعاء CarSelectionDialog
           final Carmodel? selectedCar = await showDialog<Carmodel>(
-            // نحدد نوع القيمة المرتجعة
             context: context,
             builder: (BuildContext context) {
-              return const CarSelectionDialog(); // <--- يتم عرض هذا الـ Dialog الآن
+              return const CarSelectionDialog();
             },
           );
-          // هنا يتم التعامل مع السيارة التي تم اختيارها بعد إغلاق الـ Dialog
           if (selectedCar != null) {
             debugPrint('Selected Car: ${selectedCar.title}');
-            // يمكنك هنا تحديث أي حالة في شاشتك الرئيسية بناءً على السيارة المختارة.
           } else {
             debugPrint('Car selection cancelled or no car selected.');
           }
@@ -115,7 +120,6 @@ class _RightButtonsState extends State<RightButtons> {
         icon: Icons.bookmark_border,
         label: 'Save',
         onPressed: () {
-          // منطق زر الحفظ
           debugPrint('Save button pressed');
         },
       ),
@@ -124,7 +128,6 @@ class _RightButtonsState extends State<RightButtons> {
         icon: Icons.share,
         label: 'Share',
         onPressed: () {
-          // منطق زر المشاركة
           debugPrint('Share button pressed');
         },
       ),
@@ -132,7 +135,7 @@ class _RightButtonsState extends State<RightButtons> {
       _ButtonData(
         icon: Icons.info_outline,
         label: 'Info',
-        onPressed: () async {
+        onPressed: () {
           openbottomsheet(context);
         },
       ),
@@ -150,13 +153,12 @@ class _RightButtonsState extends State<RightButtons> {
           return Padding(
             padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),
             child: SelectRightButton(
-              // هنا بنستخدم الـ Widget اللي انت عاملها
-              icon: buttonData.icon,
+              iconWidget: buttonData.iconWidget ?? Icon(buttonData.icon),
               label: buttonData.label,
               isSelected: selectedIndex == index,
               onPressed: () {
-                setState(() => selectedIndex = index); // تحديث الزر المحدد
-                buttonData.onPressed?.call(); // تنفيذ الدالة الخاصة بالزر
+                setState(() => selectedIndex = index);
+                buttonData.onPressed?.call();
               },
             ),
           );
