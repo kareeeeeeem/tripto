@@ -22,9 +22,6 @@ class TripToApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: AppRoutes.routes,
-      // initialRoute: '/',
-      // routes: AppRoutes.routes,
-      home: Activities(),
 
     );
   }

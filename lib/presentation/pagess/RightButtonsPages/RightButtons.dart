@@ -8,6 +8,9 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 
+import '../../../data/models/info_details_model.dart';
+import 'infocard.dart';
+
 // تأكد من المسارات الصحيحة للـ CategoryCard و Datecard و SelectRightButton
 // كلاس مساعد لتخزين بيانات الزر الواحد
 class _ButtonData {
@@ -28,25 +31,7 @@ class RightButtons extends StatefulWidget {
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1; // لتتبع الزر المحدد، -1 يعني لا يوجد زر محدد
 
-  // دالة مساعدة لفتح الـ bottom sheet (إذا كانت موجودة في مكان آخر)
-  void openbottomsheet(BuildContext context) {
-    // مثال لـ Bottom Sheet بسيط
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          color: Colors.white,
-          child: const Center(
-            child: Text(
-              'Info Details will go here!',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +117,7 @@ class _RightButtonsState extends State<RightButtons> {
       _ButtonData(
         icon: Icons.info_outline,
         label: 'Info',
-        onPressed: () async {
+        onPressed: ()  {
           openbottomsheet(context);
         },
       ),
