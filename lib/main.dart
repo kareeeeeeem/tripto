@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/infocard.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
-import 'package:tripto/presentation/pagess/payment_option.dart';
-import 'package:tripto/presentation/payment_destination.dart';
-import 'data/models/info_details_model.dart';
 
 void main() {
   runApp(const TripToApp());
@@ -19,22 +13,12 @@ class TripToApp extends StatelessWidget {
     return MaterialApp(
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
 
       initialRoute: '/',
       routes: AppRoutes.routes,
 
       // initialRoute: '/',
       // routes: AppRoutes.routes,
-=======
-      // initialRoute: '/',
-      // routes: AppRoutes.routes,
-      home: ProfilePage(),
-
-
-
-
->>>>>>> 0d239c34d2fb85929190fe07b0076ff1eae25341
     );
   }
 }
