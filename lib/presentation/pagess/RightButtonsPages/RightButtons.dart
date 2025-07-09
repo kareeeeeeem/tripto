@@ -1,16 +1,14 @@
+// lib/presentation/pagess/RightButtons.dart
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/data/models/CarModel.dart';
-
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
+import 'InfoCard.dart'; // تأكد أن هذا المسار صحيح
 
-
-
-// تأكد من المسارات الصحيحة للـ CategoryCard و Datecard و SelectRightButton
-// كلاس مساعد لتخزين بيانات الزر الواحد
 class _ButtonData {
   final IconData? icon;
   final Widget? iconWidget;
@@ -34,23 +32,25 @@ class RightButtons extends StatefulWidget {
 
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1;
+  late FocusScopeNode _focusScopeNode;
 
-  void openbottomsheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          color: Colors.white,
-          child: const Center(
-            child: Text(
-              'Info Details will go here!',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        );
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
+    _focusScopeNode = FocusScopeNode();
+    _focusScopeNode.addListener(() {
+      if (!_focusScopeNode.hasFocus && selectedIndex != -1) {
+        setState(() {
+          selectedIndex = -1;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusScopeNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -71,8 +71,6 @@ class _RightButtonsState extends State<RightButtons> {
           }
         },
       ),
-
-      // ✅ الزر المعدل لأيقونة التاريخ مع الرقم الحالي
       _ButtonData(
         iconWidget: Stack(
           alignment: Alignment.center,
@@ -90,18 +88,29 @@ class _RightButtonsState extends State<RightButtons> {
         ),
         label: 'Date',
         onPressed: () async {
-          final DateTime? selectedDate = await showDialog<DateTime>(
+          final result = await showDialog<Map<String, DateTime?>>(
             context: context,
             builder: (BuildContext context) {
               return const Datecard();
             },
           );
-          if (selectedDate != null) {
-            debugPrint('Selected Date: ${selectedDate.toLocal()}');
+          if (result != null) {
+            final DateTime? startDate = result['start'];
+            final DateTime? endDate = result['end'];
+            if (startDate != null && endDate != null) {
+              debugPrint(
+                'Selected Range: ${DateFormat('d MMM').format(startDate)} - ${DateFormat('d MMM').format(endDate)}',
+              );
+            } else if (startDate != null) {
+              debugPrint(
+                'Selected Single Day: ${DateFormat('d MMM').format(startDate)}',
+              );
+            }
+          } else {
+            debugPrint('Date selection cancelled or no date selected.');
           }
         },
       ),
-
       _ButtonData(
         icon: Icons.directions_car,
         label: 'Car',
@@ -114,12 +123,9 @@ class _RightButtonsState extends State<RightButtons> {
           );
           if (selectedCar != null) {
             debugPrint('Selected Car: ${selectedCar.title}');
-          } else {
-            debugPrint('Car selection cancelled or no car selected.');
           }
         },
       ),
-
       _ButtonData(
         icon: Icons.bookmark_border,
         label: 'Save',
@@ -127,7 +133,6 @@ class _RightButtonsState extends State<RightButtons> {
           debugPrint('Save button pressed');
         },
       ),
-
       _ButtonData(
         icon: Icons.share,
         label: 'Share',
@@ -135,10 +140,22 @@ class _RightButtonsState extends State<RightButtons> {
           debugPrint('Share button pressed');
         },
       ),
-
       _ButtonData(
         icon: Icons.info_outline,
         label: 'Info',
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const InfoCard(),
+              );
+            },
+          );
+        },
       ),
     ];
 
@@ -146,24 +163,28 @@ class _RightButtonsState extends State<RightButtons> {
 
     return Positioned(
       right: 12,
-      bottom: 100,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(_buttons.length, (index) {
-          final buttonData = _buttons[index];
-          return Padding(
-            padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),
-            child: SelectRightButton(
-              iconWidget: buttonData.iconWidget ?? Icon(buttonData.icon),
-              label: buttonData.label,
-              isSelected: selectedIndex == index,
-              onPressed: () {
-                setState(() => selectedIndex = index);
-                buttonData.onPressed?.call();
-              },
-            ),
-          );
-        }),
+      bottom: 150,
+      child: FocusScope(
+        node: _focusScopeNode,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(_buttons.length, (index) {
+            final buttonData = _buttons[index];
+            return Padding(
+              padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),
+              child: SelectRightButton(
+                iconWidget: buttonData.iconWidget ?? Icon(buttonData.icon),
+                label: buttonData.label,
+                isSelected: selectedIndex == index,
+                onPressed: () {
+                  _focusScopeNode.requestFocus();
+                  setState(() => selectedIndex = index);
+                  buttonData.onPressed?.call();
+                },
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

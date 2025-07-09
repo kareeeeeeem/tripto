@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:tripto/core/constants/CustomButton.dart';
+import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/activities.dart'; // Correctly import the Activities page
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -13,12 +15,13 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _currentIndex = 0;
+  double _bookingPricePerPerson = 250.0;
 
+  // Ensure the order of pages matches the order of icons.
+  // Add placeholder widgets for the remaining icons if you don't have full pages for them yet.
   final List<Widget> _pages = const [
-    VideoPlayerPage(),
-
-    //ActivityCard(),
-    //ProfilePage(),
+    VideoPlayerPage(), // Index 0: Home/Video Player (Icons.home)
+    Activities(),
   ];
 
   final List<IconData> _icons = const [
@@ -36,18 +39,83 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          // 1. Main content (the selected page)
+          // The background color of the scaffold is black,
+          // so ensure your pages have their own background if needed.
+          // For Activities page, it has a white AppBar and body, so it will cover the black.
           _pages[_currentIndex],
 
-          // ✅ Right Side Buttons
-          const RightButtons(),
+          // 2. Right-side buttons - only visible on the VideoPlayerPage (index 0)
+          if (_currentIndex == 0)
+            Positioned(
+              right: 15,
+              bottom: screenHeight * 0.23,
+              child: const RightButtons(),
+            ),
 
-          // ✅ Bottom Navigation
-          Align(
-            alignment: Alignment.bottomCenter,
+          // 3. "Alex, Egypt" text and Person Counter - only visible on the VideoPlayerPage (index 0)
+          if (_currentIndex == 0)
+            Positioned(
+              bottom: screenHeight * 0.25,
+              left: 20,
+              right: screenWidth * 0.25,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Alex, Egypt',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Colors.black54,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  PersonCounterWithPriceWithContry(
+                    basePricePerPerson: _bookingPricePerPerson,
+                    textColor: Colors.white,
+                    iconColor: Colors.black,
+                    backgroundColor: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+
+          // 4. "Book Now" button - only visible on the VideoPlayerPage (index 0)
+          if (_currentIndex == 0)
+            Positioned(
+              bottom: screenHeight * 0.12,
+              left: 20,
+              right: 20,
+              child: Center(
+                child: CustomButton(
+                  text: "Book Now",
+                  onPressed: () => print('Booking initiated!'),
+                  width: screenWidth * 0.70,
+                  height: 40,
+                ),
+              ),
+            ),
+
+          // 5. Bottom Navigation Bar
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 30, left: 32, right: 32),
               child: ClipRRect(

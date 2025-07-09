@@ -2,18 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
 
-
-
-
-
 class ProfilePage extends StatefulWidget {
-   ProfilePage({super.key});
-
-
+  ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
-
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -26,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isPhoneReadOnly = true;
   bool isPasswordReadOnly = true;
   bool isEditing = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +45,28 @@ class _ProfilePageState extends State<ProfilePage> {
                   backgroundImage: AssetImage("assets/images/shika.png"),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-                Profiletextfield(label: "Name", isReadOnly: isNameReadOnly, controller: nameController,),
+                Profiletextfield(
+                  label: "Name",
+                  isReadOnly: isNameReadOnly,
+                  controller: nameController,
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                Profiletextfield(label: "Email", isReadOnly: isEmailReadOnly, controller: emailController,),
+                Profiletextfield(
+                  label: "Email",
+                  isReadOnly: isEmailReadOnly,
+                  controller: emailController,
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                Profiletextfield(label: "Phone1", isReadOnly: isPhoneReadOnly, controller: phoneController,),
+                Profiletextfield(
+                  label: "Phone1",
+                  isReadOnly: isPhoneReadOnly,
+                  controller: phoneController,
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                 Profiletextfield(
                   label: "Password",
-                  isReadOnly: isPasswordReadOnly,controller: passwordController,
+                  isReadOnly: isPasswordReadOnly,
+                  controller: passwordController,
                 ),
                 const SizedBox(height: 60),
                 Row(
@@ -70,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.all(10),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
-                        height:MediaQuery.of(context).size.height * 0.06,
+                        height: MediaQuery.of(context).size.height * 0.06,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: btn_background_color_gradiant,
@@ -106,7 +111,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-
                       ),
                     ),
                   ],

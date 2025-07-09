@@ -32,7 +32,7 @@ class AppRoutes {
     videoPlayer: (context) => const VideoPlayerPage(),
     activities: (context) => const Activities(),
     home: (context) => const HomePage(),
-    profile : (context) =>  ProfilePage(),
+    profile: (context) => ProfilePage(),
     // Category Pages
     categoryCard: (context) => const CategoryCard(),
   };

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart'; // لا تنسى استيراد table_calendar
+import 'package:table_calendar/table_calendar.dart'; // Don't forget to import table_calendar
 
 class Datecard extends StatefulWidget {
   const Datecard({super.key});
@@ -9,86 +9,111 @@ class Datecard extends StatefulWidget {
 }
 
 class _DatecardState extends State<Datecard> {
-  // تعريف متغير لحفظ اليوم الذي يركز عليه التقويم
   DateTime _focusedDay = DateTime.now();
-  // تعريف متغير لحفظ اليوم الذي يختاره المستخدم، ويجب أن يكون nullable في البداية
-  DateTime? _selectedDay; // <-- تم التعديل هنا: يجب أن يكون nullable
+  DateTime?
+  _rangeStart; // New: Variable to store the start of the selected range
+  DateTime? _rangeEnd; // New: Variable to store the end of the selected range
+  RangeSelectionMode _rangeSelectionMode =
+      RangeSelectionMode.toggledOn; // New: To manage range selection state
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // الشكل والحواف المستديرة لمربع الحوار
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      // هنا يجب أن يكون محتوى الـ Dialog وليس child للـ shape
       child: Padding(
-        // <-- أضفنا Padding ليعطي مساحة حول التقويم والأزرار
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize:
-              MainAxisSize.min, // لجعل العمود يأخذ أقل مساحة ممكنة عموديا
+          mainAxisSize: MainAxisSize.min,
           children: [
             TableCalendar(
-              // <-- تم التصحيح هنا: كان مكتوب TabelCalender
-              // تواريخ البداية والنهاية التي يمكن للمستخدم الاختيار منها
-              firstDay: DateTime.utc(
-                2010,
-                10,
-                16,
-              ), // <-- تم التصحيح هنا: كان مكتوب firstday
-              lastDay: DateTime.utc(
-                2030,
-                3,
-                14,
-              ), // <-- تم التصحيح هنا: كان مكتوب lastday
-              // اليوم الذي يظهر التقويم مركزًا عليه
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: _focusedDay,
+              // New: Enable range selection
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
+              rangeSelectionMode: _rangeSelectionMode,
 
-              // هذه الخاصية تحدد اليوم الذي يتم "تحديده" أو "تمييزه" في التقويم
-              // تعود بقيمة true إذا كان اليوم الحالي هو _selectedDay
+              // This property determines which days are highlighted as part of the range
+              // We'll rely on the built-in range selection highlighting of table_calendar
+              // You can still use selectedDayPredicate if you need custom single-day selection alongside range,
+              // but for a trip range, the rangeStartDay and rangeEndDay are key.
               selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
+                // We're not using this for single day selection anymore for trip booking
+                // but if you want to highlight a specific day even within a range, you could add logic here.
+                return false; // No single day selected highlighting by default for trip range
               },
 
-              // الدالة التي يتم استدعاؤها عند اختيار المستخدم ليوم جديد
+              // New: Callback for when a day is selected in range mode
+              onRangeSelected: (start, end, focusedDay) {
+                setState(() {
+                  _rangeStart = start;
+                  _rangeEnd = end;
+                  _focusedDay = focusedDay;
+                  // Ensure range selection mode is active if a range is being selected
+                  _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                });
+              },
+
+              // Existing: Callback for single day selection (can be used to initiate range)
               onDaySelected: (selectedDay, focusedDay) {
-                // نتحقق إذا كان اليوم المختار مختلفًا عن اليوم الحالي لنتجنب تحديث الحالة بدون داعي
-                if (!isSameDay(_selectedDay, selectedDay)) {
+                if (!isSameDay(_rangeStart, selectedDay)) {
                   setState(() {
-                    _selectedDay = selectedDay; // نحدث اليوم المختار
-                    _focusedDay = focusedDay; // نحدث اليوم المركز
+                    _rangeStart = selectedDay;
+                    _rangeEnd =
+                        null; // Reset end day when a new start day is selected
+                    _focusedDay = focusedDay;
+                    _rangeSelectionMode =
+                        RangeSelectionMode.toggledOn; // Start range selection
                   });
                 }
               },
 
-              // تخصيص رأس التقويم (الشهر والسنة)
               headerStyle: const HeaderStyle(
-                formatButtonVisible:
-                    false, // إخفاء زر تغيير العرض (شهر، أسبوع، أسبوعين)
-                titleCentered: true, // توسيط عنوان الشهر والسنة
+                formatButtonVisible: false,
+                titleCentered: true,
               ),
-              // تخصيص شكل الأيام في التقويم
               calendarStyle: CalendarStyle(
-                selectedDecoration: const BoxDecoration(
-                  color: Colors.blue, // لون تظليل اليوم المختار
-                  shape: BoxShape.circle, // شكل دائرة لليوم المختار
-                ),
-                todayDecoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.5), // لون اليوم الحالي
+                rangeHighlightColor:
+                    Colors
+                        .lightBlueAccent, // New: Color for the selected date range
+                rangeStartDecoration: const BoxDecoration(
+                  color: Colors.blue,
                   shape: BoxShape.circle,
                 ),
-                // يمكنك إضافة المزيد من التخصيصات هنا
+                rangeEndDecoration: const BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                withinRangeDecoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(
+                    0.3,
+                  ), // Color for days within the range
+                  shape: BoxShape.circle, // You can customize this
+                ),
+                selectedDecoration: const BoxDecoration(
+                  // This is for single selected day, less relevant for trip range
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                todayDecoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
-            const SizedBox(height: 20), // مسافة فاصلة
-            // زر التأكيد لإغلاق مربع الحوار وإرجاع التاريخ المختار
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // نغلق مربع الحوار ونمرر التاريخ المختار
-            //     // إذا لم يختار المستخدم أي تاريخ، ستكون القيمة null
-            //     Navigator.of(context).pop(_selectedDay);
-            //   },
-            //   child: const Text('ok'),
-            // ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Pass back the selected start and end dates
+                // You can return a Map, a custom Trip object, or just the two dates.
+                // For simplicity, let's return a Map.
+                Navigator.of(
+                  context,
+                ).pop({'startDate': _rangeStart, 'endDate': _rangeEnd});
+              },
+              child: const Text('Confirm Trip Dates'),
+            ),
           ],
         ),
       ),
