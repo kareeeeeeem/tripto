@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class textfield extends StatelessWidget {
+class Profiletextfield extends StatelessWidget {
   final String label;
   final VoidCallback onEdit;
 
 
-  const textfield({
+  const Profiletextfield({
     super.key,
     required this.label,
     required this.onEdit,
