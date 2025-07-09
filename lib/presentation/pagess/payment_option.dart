@@ -54,6 +54,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                     });
                   },
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.003,),
                 PaymentOptionCard(
                   imagePath: 'assets/images/paypal.png',
                   label: 'PayPal',
@@ -65,6 +66,8 @@ class _PaymentOptionState extends State<PaymentOption> {
                     });
                   },
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.003,),
+
                 PaymentOptionCard(
                   imagePath: 'assets/images/visa.png',
                   label: 'Visa',

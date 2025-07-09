@@ -22,101 +22,99 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Profile",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.settings, size: 35),
-            onPressed: () {},
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Profile",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage("assets/images/shika.png"),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-                Profiletextfield(
-                  label: "Name",
-                  isReadOnly: isNameReadOnly,
-                  controller: nameController,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                Profiletextfield(
-                  label: "Email",
-                  isReadOnly: isEmailReadOnly,
-                  controller: emailController,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                Profiletextfield(
-                  label: "Phone1",
-                  isReadOnly: isPhoneReadOnly,
-                  controller: phoneController,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                Profiletextfield(
-                  label: "Password",
-                  isReadOnly: isPasswordReadOnly,
-                  controller: passwordController,
-                ),
-                const SizedBox(height: 60),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: btn_background_color_gradiant,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.settings, size: 35),
+          onPressed: () {},
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const CircleAvatar(
+                radius: 35,
+                backgroundImage: AssetImage("assets/images/shika.png"),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+              Profiletextfield(
+                label: "Name",
+                isReadOnly: isNameReadOnly,
+                controller: nameController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Email",
+                isReadOnly: isEmailReadOnly,
+                controller: emailController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Phone1",
+                isReadOnly: isPhoneReadOnly,
+                controller: phoneController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Password",
+                isReadOnly: isPasswordReadOnly,
+                controller: passwordController,
+              ),
+              const SizedBox(height: 60),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: btn_background_color_gradiant,
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              if (isEditing) {
-                                // Save data here if needed
-                                isEditing = false;
-                                isNameReadOnly = true;
-                                isEmailReadOnly = true;
-                                isPhoneReadOnly = true;
-                                isPasswordReadOnly = true;
-                              } else {
-                                isEditing = true;
-                                isNameReadOnly = false;
-                                isEmailReadOnly = false;
-                                isPhoneReadOnly = false;
-                                isPasswordReadOnly = false;
-                              }
-                            });
-                          },
-                          child: Text(
-                            isEditing ? "Save" : "Edit",
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (isEditing) {
+                              // Save data here if needed
+                              isEditing = false;
+                              isNameReadOnly = true;
+                              isEmailReadOnly = true;
+                              isPhoneReadOnly = true;
+                              isPasswordReadOnly = true;
+                            } else {
+                              isEditing = true;
+                              isNameReadOnly = false;
+                              isEmailReadOnly = false;
+                              isPhoneReadOnly = false;
+                              isPasswordReadOnly = false;
+                            }
+                          });
+                        },
+                        child: Text(
+                          isEditing ? "Save" : "Edit",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
