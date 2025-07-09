@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/colors.dart';
-import 'package:tripto/core/constants/Textfield_profile.dart';
-import 'package:tripto/core/constants/colors.dart';
+import 'package:tripto/core/constants/Profiletextfield.dart';
+
+
 
 
 
@@ -51,14 +52,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   radius: 35,
                   backgroundImage: AssetImage("assets/images/shika.png"),
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                 Profiletextfield(label: "Name", isReadOnly: isNameReadOnly, controller: nameController,),
-                SizedBox(height: 30),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                 Profiletextfield(label: "Email", isReadOnly: isEmailReadOnly, controller: emailController,),
-                SizedBox(height: 30),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                 Profiletextfield(label: "Phone1", isReadOnly: isPhoneReadOnly, controller: phoneController,),
-                SizedBox(height: 30),
-                SizedBox(height: 30),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                 Profiletextfield(
                   label: "Password",
                   isReadOnly: isPasswordReadOnly,controller: passwordController,

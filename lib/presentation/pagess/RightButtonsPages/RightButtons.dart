@@ -7,14 +7,10 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 
-<<<<<<< HEAD
-=======
-import '../../../data/models/info_details_model.dart';
-import 'infocard.dart';
+
 
 // تأكد من المسارات الصحيحة للـ CategoryCard و Datecard و SelectRightButton
 // كلاس مساعد لتخزين بيانات الزر الواحد
->>>>>>> 0d239c34d2fb85929190fe07b0076ff1eae25341
 class _ButtonData {
   final IconData? icon;
   final Widget? iconWidget;
@@ -39,7 +35,6 @@ class RightButtons extends StatefulWidget {
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1;
 
-<<<<<<< HEAD
   void openbottomsheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -57,9 +52,6 @@ class _RightButtonsState extends State<RightButtons> {
       },
     );
   }
-=======
-
->>>>>>> 0d239c34d2fb85929190fe07b0076ff1eae25341
 
   @override
   Widget build(BuildContext context) {
@@ -147,13 +139,6 @@ class _RightButtonsState extends State<RightButtons> {
       _ButtonData(
         icon: Icons.info_outline,
         label: 'Info',
-<<<<<<< HEAD
-        onPressed: () {
-=======
-        onPressed: ()  {
->>>>>>> 0d239c34d2fb85929190fe07b0076ff1eae25341
-          openbottomsheet(context);
-        },
       ),
     ];
 
