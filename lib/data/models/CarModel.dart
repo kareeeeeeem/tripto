@@ -1,51 +1,49 @@
-// carmodel.dart
+// lib/data/models/CarModel.dart
 import 'package:flutter/material.dart';
 
 class Carmodel {
   final String image;
   final String title;
-  final int colorValue; // استخدمنا int عشان قيم الألوان Hex
+  final int colorValue;
   final int person;
+  final int? year;
 
   const Carmodel({
     required this.image,
     required this.title,
     required this.colorValue,
     required this.person,
+    this.year,
   });
 }
 
 final List<Carmodel> carsList = [
   const Carmodel(
-    image: 'assets/images/carphoto.png', // تأكد إن المسار ده صح
-    title: 'Toyota Corolla', // اسم العربية في الصورة
-    colorValue: 0xFF2196F3, // ده لون أزرق قريب من اللي في الصورة
-    person: 4, // عدد الركاب في الصورة
-  ),
-  const Carmodel(
     image: 'assets/images/carphoto.png',
-    title: 'Hyundai Tucson', // اسم العربية في الصورة
-    colorValue: 0xFFD32F2F, // أحمر كمثال
-    person: 6,
-  ),
-  const Carmodel(
-    image: 'assets/images/carphoto.png',
-    title: 'Mercedes C180', // اسم العربية في الصورة
-    colorValue: 0xFF424242, // أسود غامق كمثال
+    title: 'Toyota Corolla',
+    colorValue: 0xFF2196F3,
     person: 4,
+    year: 2020,
   ),
   const Carmodel(
     image: 'assets/images/carphoto.png',
-    title: 'GMC', // اسم العربية في الصورة
-    colorValue: 0xFF9E9E9E, // رمادي كمثال
+    title: 'Hyundai Tucson',
+    colorValue: 0xFFD32F2F,
     person: 6,
+    year: 2022,
   ),
-  // لو عندك عربيات تانية في قائمتك الأصلية، ضيفها هنا
-  // مثلاً:
-  // Carmodel(
-  //   image: 'assets/images/carphoto.png',
-  //   title: 'Honda Civic',
-  //   colorValue: 0xFF283593,
-  //   person: 5,
-  // ),
+  const Carmodel(
+    image: 'assets/images/carphoto.png',
+    title: 'Mercedes C180',
+    colorValue: 0xFF424242,
+    person: 4,
+    year: 2021,
+  ),
+  const Carmodel(
+    image: 'assets/images/carphoto.png',
+    title: 'GMC',
+    colorValue: 0xFF9E9E9E,
+    person: 6,
+    year: 2019,
+  ),
 ];

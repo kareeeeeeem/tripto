@@ -63,7 +63,7 @@ class CustomButton extends StatelessWidget {
                 textStyle ??
                 const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w900,
                   letterSpacing: 1.1,
                 ),
           ),

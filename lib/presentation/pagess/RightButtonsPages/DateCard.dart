@@ -103,17 +103,6 @@ class _DatecardState extends State<Datecard> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Pass back the selected start and end dates
-                // You can return a Map, a custom Trip object, or just the two dates.
-                // For simplicity, let's return a Map.
-                Navigator.of(
-                  context,
-                ).pop({'startDate': _rangeStart, 'endDate': _rangeEnd});
-              },
-              child: const Text('Confirm Trip Dates'),
-            ),
           ],
         ),
       ),

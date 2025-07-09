@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/infocard.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/InfoCard.dart';
 
 class InfoDetailsModel extends StatefulWidget {
   const InfoDetailsModel({super.key});
@@ -67,7 +67,6 @@ class Bookinghotel {
   });
 }
 
-
 List<Tourismcompany> tourismcompanies = [
   Tourismcompany(
     title: "Happy Tour",
@@ -101,15 +100,15 @@ List<Bookinghotel> bookinghotels = [
   ),
 ];
 
-
 void openbottomsheet(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) => Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child:  InfoCard(),
-    ),
+    builder:
+        (context) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: InfoCard(),
+        ),
   );
 }
