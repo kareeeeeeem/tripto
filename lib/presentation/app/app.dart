@@ -4,7 +4,8 @@ import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/activities.dart'; // Correctly import the Activities page
+import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart'; // Correctly import the Activities page
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -19,9 +20,10 @@ class _AppState extends State<App> {
 
   // Ensure the order of pages matches the order of icons.
   // Add placeholder widgets for the remaining icons if you don't have full pages for them yet.
-  final List<Widget> _pages = const [
-    VideoPlayerPage(), // Index 0: Home/Video Player (Icons.home)
-    Activities(),
+  final List<Widget> _pages = [
+    const VideoPlayerPage(), // Index 0: Home/Video Player (Icons.home)
+    const Activities(),
+    ProfilePage(), // Index
   ];
 
   final List<IconData> _icons = const [
@@ -52,6 +54,19 @@ class _AppState extends State<App> {
           // For Activities page, it has a white AppBar and body, so it will cover the black.
           _pages[_currentIndex],
 
+          if (_currentIndex == 0)
+            Positioned(
+              top: screenHeight * 0.08,
+              right: screenWidth * 0.38,
+              child: const Text(
+                'Egypt',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           // 2. Right-side buttons - only visible on the VideoPlayerPage (index 0)
           if (_currentIndex == 0)
             Positioned(
@@ -63,7 +78,7 @@ class _AppState extends State<App> {
           // 3. "Alex, Egypt" text and Person Counter - only visible on the VideoPlayerPage (index 0)
           if (_currentIndex == 0)
             Positioned(
-              bottom: screenHeight * 0.25,
+              bottom: screenHeight * 0.20,
               left: 20,
               right: screenWidth * 0.25,
               child: Column(
@@ -105,7 +120,7 @@ class _AppState extends State<App> {
                 child: CustomButton(
                   text: "Book Now",
                   onPressed: () => print('Booking initiated!'),
-                  width: screenWidth * 0.70,
+                  width: screenWidth * 0.80,
                   height: 40,
                 ),
               ),
