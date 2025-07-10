@@ -73,4 +73,20 @@ List<Activitymodel> exmactivities = [
     duration: 50,
     rate: 1,
   ),
+  Activitymodel(
+    title: "Egyptian Museum",
+    image: "assets/images/museum.png",
+    price: 55,
+    number: 1,
+    duration: 50,
+    rate: 1,
+  ),
+  Activitymodel(
+    title: "Egyptian Museum",
+    image: "assets/images/museum.png",
+    price: 55,
+    number: 1,
+    duration: 50,
+    rate: 1,
+  ),
 ];

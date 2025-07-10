@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+import '../../data/models/activity_model.dart';
+import '../../presentation/pagess/navbar_pages/Activity_details_page.dart';
 import '../../presentation/pagess/navbar_pages/activities.dart';
 import '../../presentation/pagess/navbar_pages/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
@@ -28,6 +30,7 @@ class AppRoutes {
   static const categoryPlatinum = '/categoryPlatinum';
   static const date = '/DateCard';
   static const profile = '/ProfileCard';
+  static const activityDetailsPageRoute = '/activityDetailsPage';
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -39,6 +42,10 @@ class AppRoutes {
     profile: (context) => ProfilePage(),
     paymentOption: (context) => const PaymentOption(),
     paymentDestination: (context) => const PaymentDestination(),
+    activityDetailsPageRoute: (context) {
+      final activity = ModalRoute.of(context)!.settings.arguments as Activitymodel;
+      return ActivityDetailsPage(activity: activity);
+    },
     // Category Pages
     categoryCard: (context) => const CategoryCard(),
   };

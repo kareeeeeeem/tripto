@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/data/models/activity_model.dart';
 
 import '../../../core/constants/colors.dart';
+import '../../../core/routes/app_routes.dart';
 class ActivityCard extends StatelessWidget {
   final Activitymodel activity;
 
@@ -11,108 +12,118 @@ class ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: SizedBox(
-          height: 136,
-          width: 130,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                    height: double.infinity,
-                    width: 100,
-                    child: Image.asset(
-                      "assets/images/museum.png",
-                      fit: BoxFit.cover,
+      child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.activityDetailsPageRoute,
+              arguments: activity,
+            );
+          },
+
+          child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: SizedBox(
+            height: 136,
+            width: 130,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      height: double.infinity,
+                      width: 100,
+                      child: Image.asset(
+                        "assets/images/museum.png",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 25),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        activity.title,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      // Text('Price: \$${activity.price.toStringAsFixed(0)} '),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Price: ',
-                              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                            ),
-                            TextSpan(
-                              text: '\$',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black, // لون علامة الدولار
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '${activity.price.toStringAsFixed(0)}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black, // لون السعر
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-
-                      // const SizedBox(height: 4),
-                      // Text('Number: ${activity.number}'),
-                    ],
-                  ),
-                ),
-
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  const SizedBox(width: 25),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(' ⭐ ${activity.rate} '),
+                        Text(
+                          activity.title,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Text('Price: \$${activity.price.toStringAsFixed(0)} '),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Price: ',
+                                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                              ),
+                              TextSpan(
+                                text: '\$',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black, // لون علامة الدولار
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${activity.price.toStringAsFixed(0)}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black, // لون السعر
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
 
-                        SizedBox(height: MediaQuery.of(context).size.height * 0.0001),
-                        Text('For: ${activity.duration} min'),
-                        SizedBox(height: MediaQuery.of(context).size.height * 0.001),
-
-                        const Icon(Icons.directions_car_filled_sharp, size: 20),
+                        // const SizedBox(height: 4),
+                        // Text('Number: ${activity.number}'),
                       ],
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(110, 37),
-                        backgroundColor: btn_background_color_gradiant,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                  ),
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(' ⭐ ${activity.rate} '),
+
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.0001),
+                          Text('For: ${activity.duration} min'),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.001),
+
+                          const Icon(Icons.directions_car_filled_sharp, size: 20),
+                        ],
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(110, 37),
+                          backgroundColor: btn_background_color_gradiant,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {},
+
+                        child: const Text(
+                          'Book',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      onPressed: () {},
-
-                      child: const Text(
-                        'Book',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

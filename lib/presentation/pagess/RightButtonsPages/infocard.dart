@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/constants/colors.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../data/models/info_details_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +16,6 @@ class InfoCard extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.6,
         child: Column(
           children: [
-            // 🔼 الجزء القابل للتمرير
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -228,7 +228,9 @@ class InfoCard extends StatelessWidget {
                       width: 110,
                       height: 46,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, AppRoutes.paymentOption);
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
