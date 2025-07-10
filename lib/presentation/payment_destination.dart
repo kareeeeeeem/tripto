@@ -251,21 +251,26 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                       ),
                     ),
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Card Number',
-                          labelStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 18,
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
+                    child: Align(
+                      alignment:Alignment.centerLeft ,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Card Number',
+                            labelStyle: TextStyle(
                               color: Colors.grey,
-                              width: 1,
+                              fontSize: 18,
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
                             ),
                           ),
                         ),

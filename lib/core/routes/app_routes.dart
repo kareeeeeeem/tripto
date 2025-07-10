@@ -9,6 +9,8 @@ import '../../presentation/pagess/navbar_pages/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
 import '../../presentation/app/vedio_player_page.dart';
 import '../../presentation/before_start/welcome_page.dart';
+import '../../presentation/pagess/payment_option.dart';
+import '../../presentation/payment_destination.dart';
 
 class AppRoutes {
   static const splash = '/';
@@ -17,6 +19,8 @@ class AppRoutes {
   static const videoPlayer = '/videoPlayer';
   static const home = '/home';
   static const activities = '/activities';
+  static const paymentOption = '/paymentOption';
+  static const paymentDestination = '/paymentDestination';
   // Category Routes
   static const categoryCard = '/CategoryCard';
   static const categoryGold = '/categoryGold';
@@ -33,6 +37,8 @@ class AppRoutes {
     activities: (context) => const Activities(),
     home: (context) => const HomePage(),
     profile: (context) => ProfilePage(),
+    paymentOption: (context) => const PaymentOption(),
+    paymentDestination: (context) => const PaymentDestination(),
     // Category Pages
     categoryCard: (context) => const CategoryCard(),
   };
