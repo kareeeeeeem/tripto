@@ -97,8 +97,10 @@ class _Saved_HistoryState extends State<Saved_History>
           tabs: [
             Tab(
               child: Row(
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.favorite, color: Colors.black),
+                SizedBox(width:MediaQuery.of(context).size.width*0.02),
                   Text("Saved"),
                   SizedBox(width: 10),
                 ],
@@ -108,6 +110,7 @@ class _Saved_HistoryState extends State<Saved_History>
               child: Row(
                 children: [
                   Icon(Icons.history, color: Colors.black),
+                  SizedBox(width:MediaQuery.of(context).size.width*0.02),
                   Text("History"),
                   SizedBox(width: 10),
                 ],
@@ -132,9 +135,19 @@ class _Saved_HistoryState extends State<Saved_History>
       itemBuilder: (context, index) {
         final activity = favoriteActivities[index];
         return Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blue,
+                width: 2,
+              ),
+            ),
             padding: EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width * 0.7,
             child: Row(
               children: [
                 Container(
@@ -181,13 +194,19 @@ class _Saved_HistoryState extends State<Saved_History>
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(20),
+
                             ),
                           ),
                           child: Text(activity.tabType == "saved"
                               ? "Book"
-                              : "Rebook"),
+                              : "Rebook",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                          ),
                         ),
+                      ),
                       ),
                     ],
                   ),
