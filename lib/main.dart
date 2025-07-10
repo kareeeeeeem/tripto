@@ -17,10 +17,10 @@ class TripToApp extends StatelessWidget {
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
 
-      // initialRoute: '/',
-      // routes: AppRoutes.routes,
-      home:  PaymentDestination(),
+      initialRoute: '/',
+      routes: AppRoutes.routes,
 
+      //home:  PaymentDestination(),
     );
   }
 }

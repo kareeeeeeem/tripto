@@ -10,8 +10,8 @@ class ConstButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.width,   // يمكن تحديده من الخارج
-    this.height,  // يمكن تحديده من الخارج
+    this.width, // يمكن تحديده من الخارج
+    this.height, // يمكن تحديده من الخارج
   });
 
   @override
@@ -21,15 +21,11 @@ class ConstButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(8), // خفف الزوايا ليكون أقرب للمستطيل
       child: Container(
         width: width ?? 333, // ← العرض الكامل أو قيمة مخصصة
-        height: height ?? 50,            // ← ارتفاع افتراضي لو مش محدد
+        height: height ?? 50, // ← ارتفاع افتراضي لو مش محدد
         alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [
-              Color(0xFF2196F3),
-              Color(0xFF42A5F5),
-              Color(0xFF00BCD4),
-            ],
+            colors: [Color(0xFF2196F3), Color(0xFF42A5F5), Color(0xFF00BCD4)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

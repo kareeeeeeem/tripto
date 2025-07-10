@@ -5,7 +5,8 @@ import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dar
 import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart'; // Correctly import the Activities page
+import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+import 'package:tripto/presentation/pagess/payment_option.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -18,12 +19,10 @@ class _AppState extends State<App> {
   int _currentIndex = 0;
   double _bookingPricePerPerson = 250.0;
 
-  // Ensure the order of pages matches the order of icons.
-  // Add placeholder widgets for the remaining icons if you don't have full pages for them yet.
   final List<Widget> _pages = [
-    const VideoPlayerPage(), // Index 0: Home/Video Player (Icons.home)
+    const VideoPlayerPage(),
     const Activities(),
-    ProfilePage(), // Index
+    ProfilePage(),
   ];
 
   final List<IconData> _icons = const [
@@ -48,15 +47,18 @@ class _AppState extends State<App> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. Main content (the selected page)
-          // The background color of the scaffold is black,
-          // so ensure your pages have their own background if needed.
-          // For Activities page, it has a white AppBar and body, so it will cover the black.
           _pages[_currentIndex],
 
           if (_currentIndex == 0)
             Positioned(
-              top: screenHeight * 0.08,
+              top: screenHeight * 0.07,
+              right: screenWidth * 0.05,
+              child: const Icon(Icons.search, color: Colors.white, size: 30),
+            ),
+
+          if (_currentIndex == 0)
+            Positioned(
+              top: screenHeight * 0.1,
               right: screenWidth * 0.38,
               child: const Text(
                 'Egypt',
@@ -67,7 +69,7 @@ class _AppState extends State<App> {
                 ),
               ),
             ),
-          // 2. Right-side buttons - only visible on the VideoPlayerPage (index 0)
+
           if (_currentIndex == 0)
             Positioned(
               right: 15,
@@ -75,7 +77,6 @@ class _AppState extends State<App> {
               child: const RightButtons(),
             ),
 
-          // 3. "Alex, Egypt" text and Person Counter - only visible on the VideoPlayerPage (index 0)
           if (_currentIndex == 0)
             Positioned(
               bottom: screenHeight * 0.20,
@@ -110,7 +111,6 @@ class _AppState extends State<App> {
               ),
             ),
 
-          // 4. "Book Now" button - only visible on the VideoPlayerPage (index 0)
           if (_currentIndex == 0)
             Positioned(
               bottom: screenHeight * 0.12,
@@ -119,14 +119,18 @@ class _AppState extends State<App> {
               child: Center(
                 child: CustomButton(
                   text: "Book Now",
-                  onPressed: () => print('Booking initiated!'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PaymentOption()),
+                    );
+                  },
                   width: screenWidth * 0.80,
                   height: 40,
                 ),
               ),
             ),
 
-          // 5. Bottom Navigation Bar
           Positioned(
             bottom: 0,
             left: 0,
