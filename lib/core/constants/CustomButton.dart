@@ -6,7 +6,6 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double borderRadius;
-  final Gradient? gradient;
   final TextStyle? textStyle;
 
   const CustomButton({
@@ -16,25 +15,16 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.borderRadius = 8,
-    this.gradient,
     this.textStyle,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Gradient buttonGradient =
-        gradient ??
-        const LinearGradient(
-          colors: [Color(0xFF2196F3), Color(0xFF42A5F5), Color(0xFF00BCD4)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        );
-
     return Container(
-      width: width ?? double.infinity,
-      height: height ?? 50,
+      width: 300, // ✅ تم التصحيح هنا
+      height: 50, // ✅ وتم التصحيح هنا أيضًا
       decoration: BoxDecoration(
-        gradient: buttonGradient,
+        color: const Color(0xFF002E70),
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
@@ -48,8 +38,8 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          backgroundColor: Colors.transparent, // مهم جدًا لتفعيل الـ gradient
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
@@ -62,9 +52,9 @@ class CustomButton extends StatelessWidget {
             style:
                 textStyle ??
                 const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.1,
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
           ),
         ),

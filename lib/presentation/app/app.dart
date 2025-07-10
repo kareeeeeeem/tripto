@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart'; // تأكد من استيراده الصحيح
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
@@ -17,7 +17,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _currentIndex = 0;
-  double _bookingPricePerPerson = 250.0;
+  final double _bookingPricePerPerson = 250.0;
 
   final List<Widget> _pages = [
     const VideoPlayerPage(),
@@ -29,7 +29,6 @@ class _AppState extends State<App> {
     Icons.home,
     Icons.extension,
     Icons.person_2_outlined,
-    Icons.favorite_border,
   ];
 
   void _changePage(int index) {
@@ -49,6 +48,7 @@ class _AppState extends State<App> {
         children: [
           _pages[_currentIndex],
 
+          // أيقونة البحث
           if (_currentIndex == 0)
             Positioned(
               top: screenHeight * 0.07,
@@ -56,6 +56,7 @@ class _AppState extends State<App> {
               child: const Icon(Icons.search, color: Colors.white, size: 30),
             ),
 
+          // عنوان الدولة
           if (_currentIndex == 0)
             Positioned(
               top: screenHeight * 0.1,
@@ -70,13 +71,21 @@ class _AppState extends State<App> {
               ),
             ),
 
+          // الزرار الجانبية (RightButtons)
           if (_currentIndex == 0)
-            Positioned(
-              right: 15,
-              bottom: screenHeight * 0.23,
-              child: const RightButtons(),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: SizedBox(
+                  // هذا الـ SizedBox يمنح RightButtons ارتفاعًا محددًا
+                  height: screenHeight * 0.5,
+                  child: const RightButtons(),
+                ),
+              ),
             ),
 
+          // نص المدينة وعداد الأشخاص
           if (_currentIndex == 0)
             Positioned(
               bottom: screenHeight * 0.20,
@@ -111,6 +120,7 @@ class _AppState extends State<App> {
               ),
             ),
 
+          // زر Book Now
           if (_currentIndex == 0)
             Positioned(
               bottom: screenHeight * 0.12,
@@ -131,6 +141,7 @@ class _AppState extends State<App> {
               ),
             ),
 
+          // شريط التنقل السفلي
           Positioned(
             bottom: 0,
             left: 0,

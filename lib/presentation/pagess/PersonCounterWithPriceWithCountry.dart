@@ -75,7 +75,7 @@ class _PersonCounterWithPriceWithContryState
         vertical: 15, // مسافة رأسية ثابتة
       ),
       decoration: BoxDecoration(
-        color: widget.backgroundColor.withOpacity(0.2), // شفافية بسيطة للخلفية
+        color: widget.backgroundColor.withOpacity(0.0), // شفافية بسيطة للخلفية
         borderRadius: BorderRadius.circular(25), // حواف دائرية
       ),
       child: Row(
@@ -132,7 +132,7 @@ class _PersonCounterWithPriceWithContryState
             color: widget.textColor,
             size: responsiveIconSize,
           ), // استخدام حجم أيقونة متجاوب
-          const SizedBox(width: 5), // مسافة ثابتة
+          const SizedBox(width: 2), // مسافة ثابتة
           // 5. السعر
           Text(
             '${_totalPrice.toStringAsFixed(0)}\$', // عرض السعر بدون كسور

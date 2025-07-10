@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/data/models/activity_model.dart';
+import 'package:tripto/core/models/activity_model.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/routes/app_routes.dart';
+
 class ActivityCard extends StatelessWidget {
   final Activitymodel activity;
 
@@ -13,16 +14,18 @@ class ActivityCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.activityDetailsPageRoute,
-              arguments: activity,
-            );
-          },
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            AppRoutes.activityDetailsPageRoute,
+            arguments: activity,
+          );
+        },
 
-          child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: SizedBox(
             height: 136,
             width: 130,
@@ -62,7 +65,10 @@ class ActivityCard extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: 'Price: ',
-                                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[600],
+                                ),
                               ),
                               TextSpan(
                                 text: '\$',
@@ -82,7 +88,7 @@ class ActivityCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                        )
+                        ),
 
                         // const SizedBox(height: 4),
                         // Text('Number: ${activity.number}'),
@@ -98,11 +104,18 @@ class ActivityCard extends StatelessWidget {
                         children: [
                           Text(' ⭐ ${activity.rate} '),
 
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.0001),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.0001,
+                          ),
                           Text('For: ${activity.duration} min'),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.001),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.001,
+                          ),
 
-                          const Icon(Icons.directions_car_filled_sharp, size: 20),
+                          const Icon(
+                            Icons.directions_car_filled_sharp,
+                            size: 20,
+                          ),
                         ],
                       ),
                       ElevatedButton(

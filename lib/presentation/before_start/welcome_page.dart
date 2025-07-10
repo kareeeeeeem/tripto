@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tripto/core/constants/button_lets.dart';
+import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -15,7 +15,7 @@ class WelcomePage extends StatelessWidget {
         children: [
           const Image(image: AssetImage('assets/images/welcome.png')),
           const SizedBox(height: 222),
-          ConstButton(
+          CustomButton(
             text: "Let's Go",
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();

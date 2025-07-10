@@ -1,6 +1,5 @@
-// lib/presentation/pagess/RightButtonsPages/CarCard.dart
 import 'package:flutter/material.dart';
-import 'package:tripto/data/models/CarModel.dart';
+import 'package:tripto/core/models/CarModel.dart';
 
 const Map<int, String> colorNames = {
   0xFF2196F3: 'Blue',
@@ -24,7 +23,7 @@ class CarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = isSelected ? Colors.white : Colors.black;
-    final subtitleColor = isSelected ? Colors.white70 : Colors.grey[700];
+    final subtitleColor = isSelected ? Colors.white70 : Colors.grey[600];
     final displayColor = colorNames[car.colorValue] ?? 'N/A';
 
     return InkWell(
@@ -33,21 +32,18 @@ class CarCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue[700] : Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border:
-              isSelected
-                  ? null
-                  : Border.all(color: Colors.grey[200]!, width: 1),
+          border: isSelected ? null : Border.all(color: Colors.grey.shade300),
           boxShadow:
               isSelected
                   ? [
                     BoxShadow(
-                      color: Colors.blue.withOpacity(0.3),
-                      blurRadius: 10,
+                      color: Colors.blue.withOpacity(0.25),
+                      blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
                   ]
@@ -55,16 +51,8 @@ class CarCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                car.image,
-                width: 45,
-                height: 45,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 15),
+            Icon(Icons.directions_car, size: 30, color: textColor),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,13 +61,13 @@ class CarCard extends StatelessWidget {
                     car.title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 15,
                       color: textColor,
                     ),
                   ),
                   Text(
                     'Year: ${car.year ?? "N/A"}',
-                    style: TextStyle(fontSize: 14, color: subtitleColor),
+                    style: TextStyle(fontSize: 13, color: subtitleColor),
                   ),
                 ],
               ),
@@ -89,19 +77,19 @@ class CarCard extends StatelessWidget {
               children: [
                 Text(
                   'Color: $displayColor',
-                  style: TextStyle(fontSize: 14, color: textColor),
+                  style: TextStyle(fontSize: 13, color: textColor),
                 ),
                 Row(
                   children: [
                     Text(
                       '${car.person}',
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         color: textColor,
                       ),
                     ),
-                    Icon(Icons.person, color: textColor, size: 18),
+                    Icon(Icons.person, color: textColor, size: 16),
                   ],
                 ),
               ],

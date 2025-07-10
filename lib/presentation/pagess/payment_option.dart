@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/paymentoption_model.dart';
+import '../../core/models/paymentoption_model.dart';
 
 class PaymentOption extends StatefulWidget {
   const PaymentOption({super.key});
@@ -27,17 +27,18 @@ class _PaymentOptionState extends State<PaymentOption> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35, color: Colors.black),
+          icon: const Icon(
+            Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Column(
@@ -53,7 +54,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                   });
                 },
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.003,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.003),
               PaymentOptionCard(
                 imagePath: 'assets/images/paypal.png',
                 label: 'PayPal',
@@ -65,7 +66,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                   });
                 },
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.003,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.003),
 
               PaymentOptionCard(
                 imagePath: 'assets/images/visa.png',
@@ -78,9 +79,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                   });
                 },
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: ElevatedButton(
@@ -99,7 +98,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -1,26 +1,20 @@
-// lib/presentation/pagess/RightButtons.dart
+// lib/presentation/pagess/RightButtonsPages/RightButtons.dart
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
-import 'package:tripto/data/models/CarModel.dart';
+import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
-import 'InfoCard.dart'; // تأكد أن هذا المسار صحيح
+import 'InfoCard.dart';
 
 class _ButtonData {
-  final IconData? icon;
-  final Widget? iconWidget;
+  final Widget iconWidget;
   final String label;
   final VoidCallback? onPressed;
 
-  _ButtonData({
-    this.icon,
-    this.iconWidget,
-    required this.label,
-    this.onPressed,
-  });
+  _ButtonData({required this.iconWidget, required this.label, this.onPressed});
 }
 
 class RightButtons extends StatefulWidget {
@@ -55,16 +49,20 @@ class _RightButtonsState extends State<RightButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final Color defaultIconColor = Colors.white;
+    final Color selectedIconColor = Colors.blue;
+
     final List<_ButtonData> _buttons = [
       _ButtonData(
-        icon: Icons.local_offer,
+        iconWidget: Icon(
+          Icons.local_offer,
+          color: selectedIndex == 0 ? selectedIconColor : defaultIconColor,
+        ),
         label: 'Category',
         onPressed: () async {
           final selectedCategory = await showDialog(
             context: context,
-            builder: (BuildContext context) {
-              return const CategoryCard();
-            },
+            builder: (context) => const CategoryCard(),
           );
           if (selectedCategory != null) {
             debugPrint('Selected Category: $selectedCategory');
@@ -75,12 +73,16 @@ class _RightButtonsState extends State<RightButtons> {
         iconWidget: Stack(
           alignment: Alignment.center,
           children: [
-            const Icon(Icons.calendar_today, size: 30, color: Colors.white),
+            Icon(
+              Icons.calendar_today,
+              size: 30,
+              color: selectedIndex == 1 ? selectedIconColor : defaultIconColor,
+            ),
             Text(
               DateFormat('d').format(DateTime.now()),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 10,
-                color: Colors.black,
+                color: selectedIndex == 1 ? defaultIconColor : Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -90,36 +92,41 @@ class _RightButtonsState extends State<RightButtons> {
         onPressed: () async {
           final result = await showDialog<Map<String, DateTime?>>(
             context: context,
-            builder: (BuildContext context) {
-              return const Datecard();
-            },
+            builder: (context) => const Datecard(),
           );
           if (result != null) {
-            final DateTime? startDate = result['start'];
-            final DateTime? endDate = result['end'];
-            if (startDate != null && endDate != null) {
+            final start = result['start'];
+            final end = result['end'];
+            if (start != null && end != null) {
               debugPrint(
-                'Selected Range: ${DateFormat('d MMM').format(startDate)} - ${DateFormat('d MMM').format(endDate)}',
+                'Range: ${DateFormat('d MMM').format(start)} - ${DateFormat('d MMM').format(end)}',
               );
-            } else if (startDate != null) {
-              debugPrint(
-                'Selected Single Day: ${DateFormat('d MMM').format(startDate)}',
-              );
+            } else if (start != null) {
+              debugPrint('Day: ${DateFormat('d MMM').format(start)}');
             }
-          } else {
-            debugPrint('Date selection cancelled or no date selected.');
           }
         },
       ),
       _ButtonData(
-        icon: Icons.directions_car,
+        iconWidget: Icon(
+          Icons.hotel,
+          color: selectedIndex == 2 ? selectedIconColor : defaultIconColor,
+        ),
+        label: 'Hotel',
+        onPressed: () {
+          debugPrint('Hotel pressed');
+        },
+      ),
+      _ButtonData(
+        iconWidget: Icon(
+          Icons.directions_car,
+          color: selectedIndex == 3 ? selectedIconColor : defaultIconColor,
+        ),
         label: 'Car',
         onPressed: () async {
-          final Carmodel? selectedCar = await showDialog<Carmodel>(
+          final Carmodel? selectedCar = await showDialog(
             context: context,
-            builder: (BuildContext context) {
-              return const CarSelectionPage();
-            },
+            builder: (context) => const CarSelectionPage(),
           );
           if (selectedCar != null) {
             debugPrint('Selected Car: ${selectedCar.title}');
@@ -127,33 +134,41 @@ class _RightButtonsState extends State<RightButtons> {
         },
       ),
       _ButtonData(
-        icon: Icons.bookmark_border,
+        iconWidget: Icon(
+          Icons.bookmark_border,
+          color: selectedIndex == 4 ? selectedIconColor : defaultIconColor,
+        ),
         label: 'Save',
         onPressed: () {
-          debugPrint('Save button pressed');
+          debugPrint('Save pressed');
         },
       ),
       _ButtonData(
-        icon: Icons.share,
+        iconWidget: Icon(
+          Icons.share,
+          color: selectedIndex == 5 ? selectedIconColor : defaultIconColor,
+        ),
         label: 'Share',
         onPressed: () {
-          debugPrint('Share button pressed');
+          debugPrint('Share pressed');
         },
       ),
       _ButtonData(
-        icon: Icons.info_outline,
+        iconWidget: Icon(
+          Icons.info_outline,
+          color: selectedIndex == 6 ? selectedIconColor : defaultIconColor,
+        ),
         label: 'Info',
         onPressed: () async {
           await showDialog(
             context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+            builder:
+                (context) => Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const InfoCard(),
                 ),
-                child: const InfoCard(),
-              );
-            },
           );
         },
       ),
@@ -161,19 +176,22 @@ class _RightButtonsState extends State<RightButtons> {
 
     const double _verticalSpacing = 2.0;
 
-    return Positioned(
-      right: 12,
-      bottom: 150,
-      child: FocusScope(
-        node: _focusScopeNode,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(_buttons.length, (index) {
-            final buttonData = _buttons[index];
-            return Padding(
+    return FocusScope(
+      node: _focusScopeNode,
+      child: Column(
+        // استخدم mainAxisAlignment.spaceAround لتوزيع الأزرار بالتساوي
+        // داخل المساحة العمودية المتاحة.
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // تأكد أن mainAxisSize هو MainAxisSize.max ليأخذ الـ Column كل المساحة المتاحة له من الأب.
+        mainAxisSize: MainAxisSize.max,
+        children: List.generate(_buttons.length, (index) {
+          final buttonData = _buttons[index];
+          // **هنا وضعنا Expanded حول كل زر (داخل الـ Padding)**
+          return Expanded(
+            child: Padding(
               padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),
               child: SelectRightButton(
-                iconWidget: buttonData.iconWidget ?? Icon(buttonData.icon),
+                iconWidget: buttonData.iconWidget,
                 label: buttonData.label,
                 isSelected: selectedIndex == index,
                 onPressed: () {
@@ -182,9 +200,9 @@ class _RightButtonsState extends State<RightButtons> {
                   buttonData.onPressed?.call();
                 },
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

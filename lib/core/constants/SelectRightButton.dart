@@ -1,7 +1,9 @@
+// lib/core/constants/SelectRightButton.dart
+
 import 'package:flutter/material.dart';
 
 class SelectRightButton extends StatelessWidget {
-  final Widget iconWidget; // تم تغييره من IconData إلى Widget
+  final Widget iconWidget;
   final String label;
   final bool isSelected;
   final VoidCallback onPressed;
@@ -16,23 +18,44 @@ class SelectRightButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isSelected ? Colors.blueAccent : Colors.transparent,
-          ),
-          padding: const EdgeInsets.all(6),
-          child: IconButton(
-            icon: iconWidget, // 👈 استخدام الودجت المخصص بدل Icon(icon)
-            iconSize: 28,
-            onPressed: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        // يمكنك تحديد عرض ثابت هنا إذا كنت ترغب في تثبيت عرض الأزرار،
+        // وإلا فسيأخذ العرض المتاح له من الأب.
+        // مثال: width: 60,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.blueAccent : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        // **هنا بنضيف FittedBox لحل مشكلة التجاوز**
+        child: FittedBox(
+          fit: BoxFit.scaleDown, // بيصغر المحتوى لو أكبر من اللازم
+          alignment: Alignment.center, // بيخلي المحتوى في المنتصف
+          child: Column(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // بيوسّط الأيقونة والنص عموديًا
+            mainAxisSize:
+                MainAxisSize
+                    .min, // بيخلي الـ Column ياخد أقل مساحة ممكنة لمحتواه
+            children: [
+              iconWidget,
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: const TextStyle(
+                  // استخدم const مع TextStyle إذا كانت القيم ثابتة
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center, // وسّط النص أفقيًا
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 2),
-        Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
-      ],
+      ),
     );
   }
 }

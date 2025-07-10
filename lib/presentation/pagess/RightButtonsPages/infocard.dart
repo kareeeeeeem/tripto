@@ -1,10 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/constants/colors.dart';
+import 'package:tripto/core/models/info_details_model.dart';
 import '../../../core/routes/app_routes.dart';
-import '../../../data/models/info_details_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class InfoCard extends StatelessWidget {
   const InfoCard({super.key});
@@ -61,12 +62,12 @@ class InfoCard extends StatelessWidget {
                                         fontSize: 14,
                                       ),
                                     ),
-                                    Text(' ⭐ 4.9'),
+                                    const Text(' ⭐ 4.9'),
                                   ],
                                 ),
-                                ExpandedText(
+                                const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
                                 ),
                               ],
@@ -112,7 +113,7 @@ class InfoCard extends StatelessWidget {
                                 //   maxLines: 2,
                                 //   overflow: TextOverflow.ellipsis,
                                 // ),
-                                ExpandedText(
+                                const ExpandedText(
                                   text:
                                       "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
@@ -154,9 +155,9 @@ class InfoCard extends StatelessWidget {
                                     fontSize: 14,
                                   ),
                                 ),
-                                ExpandedText(
+                                const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
                                 ),
                               ],
@@ -196,9 +197,9 @@ class InfoCard extends StatelessWidget {
                                     fontSize: 14,
                                   ),
                                 ),
-                                ExpandedText(
+                                const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
                                 ),
                               ],
@@ -235,11 +236,14 @@ class InfoCard extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          backgroundColor: Color(0xFF002E70),
+                          backgroundColor: const Color(0xFF002E70),
                         ),
                         child: const Text(
                           "Next",
-                          style: TextStyle(color: Colors.white , fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),

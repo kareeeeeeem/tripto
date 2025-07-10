@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
-import 'package:tripto/data/models/activity_model.dart';
+import 'package:tripto/core/models/activity_model.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/routes/app_routes.dart';
@@ -8,10 +8,7 @@ import '../../../core/routes/app_routes.dart';
 class ActivityDetailsPage extends StatefulWidget {
   final Activitymodel activity;
 
-  const ActivityDetailsPage({
-    super.key, required this.activity,
-
-  });
+  const ActivityDetailsPage({super.key, required this.activity});
 
   @override
   State<ActivityDetailsPage> createState() => _ActivityDetailsPageState();
@@ -26,7 +23,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:  Text(
+        title: Text(
           widget.activity.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -59,7 +56,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     borderRadius: BorderRadius.circular(16),
                     child: Center(
                       child: Image.asset(
-                       widget.activity.image,
+                        widget.activity.image,
                         height: MediaQuery.of(context).size.height * 0.2342,
                         width: MediaQuery.of(context).size.width * 0.9,
                         fit: BoxFit.cover,
