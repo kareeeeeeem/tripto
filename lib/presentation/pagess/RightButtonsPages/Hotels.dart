@@ -7,7 +7,9 @@ import '../../../core/models/Hotels_details_model.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Hotels  extends StatelessWidget {
+import 'CarSelectionDialog.dart';
+
+class Hotels extends StatelessWidget {
   const Hotels({super.key});
 
   @override
@@ -28,12 +30,18 @@ class Hotels  extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Booking Hotels",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Text(' ⭐ 4.9'),
+                        ],
                       ),
                       Row(
                         children: [
@@ -60,8 +68,23 @@ class Hotels  extends StatelessWidget {
                                 ),
                                 const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "Price: \$150",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -69,12 +92,19 @@ class Hotels  extends StatelessWidget {
                         ],
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+
+                      Row(
+                        children: [
+                          const Text(
+                            "Booking Hotels",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Text(' ⭐ 4.9'),
+                        ],
                       ),
                       Row(
                         children: [
@@ -101,8 +131,23 @@ class Hotels  extends StatelessWidget {
                                 ),
                                 const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "Price: \$150",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -110,12 +155,18 @@ class Hotels  extends StatelessWidget {
                         ],
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Booking Hotels",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Text(' ⭐ 4.9'),
+                        ],
                       ),
                       Row(
                         children: [
@@ -142,8 +193,23 @@ class Hotels  extends StatelessWidget {
                                 ),
                                 const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "Price: \$150",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -151,12 +217,18 @@ class Hotels  extends StatelessWidget {
                         ],
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Booking Hotels",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Text(' ⭐ 4.9'),
+                        ],
                       ),
                       Row(
                         children: [
@@ -183,8 +255,23 @@ class Hotels  extends StatelessWidget {
                                 ),
                                 const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "Price: \$150",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -192,54 +279,19 @@ class Hotels  extends StatelessWidget {
                         ],
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       Row(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
+                          const Text(
+                            "Booking Hotels",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const ExpandedText(
-                                  text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
+                          const Spacer(),
+                          const Text(' ⭐ 4.9'),
                         ],
                       ),
-                      const Divider(thickness: 1, color: Colors.grey),
-                      const Text(
-                        "Booking Hotels",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       Row(
                         children: [
                           ClipRRect(
@@ -265,8 +317,23 @@ class Hotels  extends StatelessWidget {
                                 ),
                                 const ExpandedText(
                                   text:
-                                  "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
                                   maxLines: 2,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.012,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "Price: \$150",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -296,7 +363,13 @@ class Hotels  extends StatelessWidget {
                       height: 46,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.pushNamed(context, AppRoutes.paymentOption);
+                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder:
+                                (BuildContext context) =>
+                                    const CarSelectionPage(),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -314,7 +387,6 @@ class Hotels  extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-
                   ],
                 ),
               ),
