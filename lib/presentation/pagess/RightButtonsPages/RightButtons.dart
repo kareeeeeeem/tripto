@@ -1,5 +1,3 @@
-// lib/presentation/pagess/RightButtonsPages/RightButtons.dart
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
@@ -19,6 +17,19 @@ class _ButtonData {
   _ButtonData({required this.iconWidget, required this.label, this.onPressed});
 }
 
+Color _getColorForCategory(CategoryType type) {
+  switch (type) {
+    case CategoryType.gold:
+      return const Color(0xFFF1B31C);
+    case CategoryType.diamond:
+      return const Color(0xFF70D0E0);
+    case CategoryType.platinum:
+      return const Color(0xFFC0C0C0);
+    default:
+      return Colors.grey;
+  }
+}
+
 class RightButtons extends StatefulWidget {
   const RightButtons({super.key});
 
@@ -29,6 +40,9 @@ class RightButtons extends StatefulWidget {
 class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1;
   late FocusScopeNode _focusScopeNode;
+
+  // ✅ لحفظ نوع الفئة المختارة
+  CategoryType selectedCategoryType = CategoryType.none;
 
   @override
   void initState() {
@@ -56,18 +70,29 @@ class _RightButtonsState extends State<RightButtons> {
 
     final List<_ButtonData> _buttons = [
       _ButtonData(
-        iconWidget: Icon(
-          Icons.local_offer,
-          color: selectedIndex == 0 ? selectedIconColor : defaultIconColor,
+        iconWidget: Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()..scale(-1.0, 1.0), // عكس أفقي
+          child: Icon(
+            Icons.local_offer,
+            color:
+                selectedIndex == 0
+                    ? Colors.white
+                    : _getColorForCategory(selectedCategoryType),
+          ),
         ),
+
         label: 'Category',
         onPressed: () async {
-          final selectedCategory = await showDialog(
+          final selectedCategory = await showDialog<CategoryType>(
             context: context,
             builder: (context) => const CategoryCard(),
           );
           if (selectedCategory != null) {
-            debugPrint('Selected Category: $selectedCategory');
+            setState(() {
+              selectedIndex = 0;
+              selectedCategoryType = selectedCategory;
+            });
           }
         },
       ),
@@ -190,14 +215,10 @@ class _RightButtonsState extends State<RightButtons> {
     return FocusScope(
       node: _focusScopeNode,
       child: Column(
-        // استخدم mainAxisAlignment.spaceAround لتوزيع الأزرار بالتساوي
-        // داخل المساحة العمودية المتاحة.
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        // تأكد أن mainAxisSize هو MainAxisSize.max ليأخذ الـ Column كل المساحة المتاحة له من الأب.
         mainAxisSize: MainAxisSize.max,
         children: List.generate(_buttons.length, (index) {
           final buttonData = _buttons[index];
-          // **هنا وضعنا Expanded حول كل زر (داخل الـ Padding)**
           return Expanded(
             child: Padding(
               padding: EdgeInsets.only(top: index == 0 ? 0 : _verticalSpacing),

@@ -11,16 +11,30 @@ class CategoryCard extends StatefulWidget {
   State<CategoryCard> createState() => _CategoryCardState();
 }
 
+enum CategoryType { none, gold, diamond, platinum }
+
 class _CategoryCardState extends State<CategoryCard> {
   int _selectIndex = -1;
 
-  void _onCategorySelected(int index) {
+  void _onCategorySelected(int index) async {
     setState(() {
       _selectIndex = index;
     });
-    Future.delayed(const Duration(milliseconds: 150), () {
-      Navigator.pop(context);
-      showDialog(
+
+    CategoryType selectedType = CategoryType.none;
+
+    if (index == 0) {
+      selectedType = CategoryType.gold;
+    } else if (index == 1) {
+      selectedType = CategoryType.diamond;
+    } else if (index == 2) {
+      selectedType = CategoryType.platinum;
+    }
+
+    // ✅ Pop with selected value then await DateCard
+    Future.delayed(const Duration(milliseconds: 150), () async {
+      Navigator.pop<CategoryType>(context, selectedType); // Pop value
+      await showDialog(
         context: context,
         builder: (BuildContext context) => const Datecard(),
       );

@@ -22,7 +22,6 @@
 #import "FVPVideoPlayerPlugin.h"
 #import "FVPVideoPlayerPlugin_Test.h"
 #import "FVPVideoPlayer_Internal.h"
-#import "FVPVideoPlayer_Test.h"
 #import "FVPViewProvider.h"
 #import "messages.g.h"
 

@@ -83,15 +83,18 @@ class _DatecardState extends State<Datecard> {
             const SizedBox(height: 20),
 
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(
-                  context,
-                ); // قفل الـ Dialog الحالي (مثلاً Datecard)
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => const CarSelectionPage(),
-                );
-              },
+              onPressed:
+                  (_rangeStart != null && _rangeEnd != null)
+                      ? () {
+                        Navigator.pop(context);
+                        showDialog(
+                          context: context,
+                          builder:
+                              (BuildContext context) =>
+                                  const CarSelectionPage(),
+                        );
+                      }
+                      : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
