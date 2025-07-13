@@ -7,6 +7,8 @@ import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/Hotels.dart';
+import '../../../core/models/Hotels_details_model.dart';
 import 'InfoCard.dart';
 
 class _ButtonData {
@@ -113,8 +115,17 @@ class _RightButtonsState extends State<RightButtons> {
           color: selectedIndex == 2 ? selectedIconColor : defaultIconColor,
         ),
         label: 'Hotel',
-        onPressed: () {
-          debugPrint('Hotel pressed');
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            builder:
+                (context) => Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child:  Hotels(),
+            ),
+          );
         },
       ),
       _ButtonData(

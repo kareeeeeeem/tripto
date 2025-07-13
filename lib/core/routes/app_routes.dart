@@ -25,6 +25,7 @@ class AppRoutes {
   static const activities = '/activities';
   static const paymentOption = '/paymentOption';
   static const paymentDestination = '/paymentDestination';
+  static const CarCard = '/CarCard';
   // Category Routes
   static const categoryCard = '/CategoryCard';
   static const categoryGold = '/categoryGold';
