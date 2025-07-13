@@ -157,11 +157,18 @@ class Activities extends StatelessWidget {
         title: const Text(
           "Activities",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ListView.builder(
         itemCount: exmactivities.length,
