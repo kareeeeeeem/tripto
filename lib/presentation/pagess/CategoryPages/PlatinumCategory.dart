@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/DiagonalPainter.dart';
 
 class PlatinumCategory extends StatelessWidget {
-  const PlatinumCategory({super.key});
+  final bool isSelected;
+  const PlatinumCategory({super.key, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,27 +16,28 @@ class PlatinumCategory extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFDADADA0), // Platinum Silver-ish
-            Color(0x55C2C3C7),
+            Color(0xFFE1E1E1), // Light Silver
+            Color(0xFFC2C3C7), // Slight darker
           ],
         ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
+          if (isSelected)
+            const BoxShadow(
+              color: Colors.blueAccent,
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
         ],
-        border: Border.all(color: Colors.white70, width: 2),
+        border: Border.all(
+          color: isSelected ? Colors.blueAccent : Colors.white70,
+          width: isSelected ? 3 : 2,
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Stack(
           children: [
-            // ✅ الجزء العلوي بلون قوي
             Positioned.fill(child: CustomPaint(painter: DiagonalPainter())),
-
-            // ✅ نص Diamond داخل الجزء العلوي الملون
             const Positioned(
               top: 10,
               left: 10,
@@ -48,13 +50,11 @@ class PlatinumCategory extends StatelessWidget {
                 ),
               ),
             ),
-
-            // ✅ أيقونة في الوسط
             const Center(
               child: Icon(
                 Icons.diamond_outlined,
                 size: 50,
-                color: Color(0xFFDADADA0), // ✅ صحيح
+                color: Color(0xFFE1E1E1),
               ),
             ),
           ],

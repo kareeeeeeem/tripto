@@ -62,12 +62,16 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.03),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.03,
+                      ),
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.01, // أو النسبة اللي تناسبك
+                          left:
+                              MediaQuery.of(context).size.width *
+                              0.01, // أو النسبة اللي تناسبك
                         ),
-                        child: Text(
+                        child: const Text(
                           "Destination :",
                           style: TextStyle(
                             fontSize: 18,
@@ -78,7 +82,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                       ),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                    Text(
+                    const Text(
                       "Egyptian Museum",
                       style: TextStyle(
                         color: Colors.black,
@@ -87,7 +91,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                       ),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-                    Text(
+                    const Text(
                       '⭐ 4.9 ',
                       style: TextStyle(
                         fontSize: 20,
@@ -102,7 +106,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Number :",
                         style: TextStyle(
                           fontSize: 18,
@@ -110,8 +114,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(width: 5),
-                      Text(
+                      const SizedBox(width: 5),
+                      const Text(
                         "1",
                         style: TextStyle(
                           color: Colors.black,
@@ -119,7 +123,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         children: [
                           Container(
@@ -127,10 +131,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                             height: 35,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
+                              border: Border.all(color: Colors.black, width: 2),
                             ),
                             child: IconButton(
                               padding: EdgeInsets.zero,
@@ -140,29 +141,26 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                                   _numberOfPeople++;
                                 });
                               },
-                              icon: Icon(Icons.add, color: Colors.black),
+                              icon: const Icon(Icons.add, color: Colors.black),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             "$_numberOfPeople",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           // زر -
                           Container(
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
+                              border: Border.all(color: Colors.black, width: 2),
                             ),
                             child: IconButton(
                               padding: EdgeInsets.zero,
@@ -174,11 +172,14 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                                   }
                                 });
                               },
-                              icon: Icon(Icons.remove, color: Colors.black),
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          Icon(Icons.person_2_outlined),
+                          const SizedBox(width: 10),
+                          const Icon(Icons.person_2_outlined),
                         ],
                       ),
                     ],
@@ -187,10 +188,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
 
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Category :",
                         style: TextStyle(
                           fontSize: 18,
@@ -199,7 +200,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      Text(
+                      const Text(
                         "Gold",
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
@@ -212,10 +213,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Price :",
                         style: TextStyle(
                           fontSize: 18,
@@ -224,7 +225,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      Text(
+                      const Text(
                         "55 \$",
                         style: TextStyle(
                           color: Colors.black,
@@ -236,7 +237,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -253,12 +254,12 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
-                    alignment:Alignment.centerLeft ,
+                    alignment: Alignment.centerLeft,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      child: TextField(
+                      child: const TextField(
                         decoration: InputDecoration(
                           labelText: 'Card Number',
                           labelStyle: TextStyle(
@@ -278,12 +279,12 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               labelText: 'Expiry',
@@ -300,8 +301,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                             ),
                           ),
                         ),
-                        SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                        Expanded(
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.01,
+                        ),
+                        const Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               labelText: 'CVV',
@@ -335,12 +338,12 @@ class _PaymentDestinationState extends State<PaymentDestination> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: btn_background_color_gradiant,
-            minimumSize: Size(double.infinity, 50),
+            minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Text(
+          child: const Text(
             'Pay',
             style: TextStyle(
               fontSize: 22,

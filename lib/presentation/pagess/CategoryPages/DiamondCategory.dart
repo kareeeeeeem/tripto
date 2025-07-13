@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/DiagonalPainter.dart';
 
 class DiamondCategory extends StatelessWidget {
-  const DiamondCategory({super.key});
+  final bool isSelected;
+  const DiamondCategory({super.key, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +21,28 @@ class DiamondCategory extends StatelessWidget {
           ],
         ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
+          if (isSelected)
+            const BoxShadow(
+              color: Colors.blueAccent,
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
         ],
-        border: Border.all(color: Colors.cyanAccent, width: 2),
+        border: Border.all(
+          color: isSelected ? Colors.blueAccent : Colors.cyanAccent,
+          width: isSelected ? 3 : 2,
+        ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Stack(
           children: [
-            // ✅ الجزء العلوي بلون قوي
             Positioned.fill(child: CustomPaint(painter: DiagonalPainter())),
-
-            // ✅ نص Diamond داخل الجزء العلوي الملون
             const Positioned(
               top: 10,
               left: 10,
               child: Text(
-                'Dimond',
+                'Diamond',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -48,8 +50,6 @@ class DiamondCategory extends StatelessWidget {
                 ),
               ),
             ),
-
-            // ✅ أيقونة في الوسط
             const Center(
               child: Icon(
                 Icons.diamond_outlined,

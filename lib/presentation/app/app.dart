@@ -29,6 +29,7 @@ class _AppState extends State<App> {
     Icons.home,
     Icons.extension,
     Icons.person_2_outlined,
+    Icons.favorite_border,
   ];
 
   void _changePage(int index) {
@@ -109,7 +110,7 @@ class _AppState extends State<App> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 1),
                   PersonCounterWithPriceWithContry(
                     basePricePerPerson: _bookingPricePerPerson,
                     textColor: Colors.white,
