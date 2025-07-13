@@ -30,8 +30,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.settings, size: 35),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back_ios_new, size: 35),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(

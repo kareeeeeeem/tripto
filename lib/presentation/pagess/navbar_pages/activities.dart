@@ -126,7 +126,9 @@ class ActivityCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, AppRoutes.paymentOption);
+                        },
 
                         child: const Text(
                           'Book',

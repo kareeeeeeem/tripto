@@ -89,7 +89,9 @@ class _Saved_HistoryState extends State<Saved_History>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: (){
+            Navigator.pop(context);
+          },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
         backgroundColor: Colors.white,
