@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:tripto/core/constants/CustomButton.dart'; // تأكد من استيراده
+import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart'; // تأكد من استيراده
+import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart'; // تأكد من استيراده
+import 'package:tripto/presentation/pagess/payment_option.dart'; // تأكد من استيراده
+
 class VideoPlayerPage extends StatefulWidget {
   const VideoPlayerPage({super.key});
 
@@ -9,9 +14,7 @@ class VideoPlayerPage extends StatefulWidget {
 }
 
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
-  // **تعديل قائمة الـ URLs لتبقى مسارات ملفات لوكال**
   final List<String> videoUrls = [
-    // تم إصلاح الأخطاء هنا: كل المسارات الآن بين علامات اقتباس
     'assets/images/vedio2.mp4',
     'assets/images/vedio1.mp4',
     'assets/images/vedio3.mp4',
@@ -20,15 +23,14 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     'assets/images/vedio6.mp4',
     'assets/images/vedio7.mp4',
     'assets/images/vedio8.mp4',
-
-    // أضف كل مسارات فيديوهاتك هنا
   ];
 
   late VideoPlayerController _controller;
   int _currentPage = 0;
   bool _hasError = false;
   String _errorMessage = '';
-  bool _isMuted = false; // تبدأ الفيديوهات بالصوت افتراضيًا
+  bool _isMuted = false;
+  final double _bookingPricePerPerson = 250.0; // نقلها إلى هنا
 
   @override
   void initState() {
@@ -43,7 +45,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         _errorMessage = '';
       });
 
-      // **التعديل هنا: استخدام VideoPlayerController.asset**
       _controller = VideoPlayerController.asset(videoUrls[index]);
       await _controller.initialize();
       _controller.setLooping(true);
@@ -61,7 +62,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   }
 
   Future<void> _changeVideo(int newIndex) async {
-    // التأكد أن الـ controller مش null قبل الـ dispose
     if (_controller.value.isInitialized) {
       await _controller.pause();
       await _controller.dispose();
@@ -92,6 +92,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: PageView.builder(
@@ -99,12 +102,14 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         itemCount: videoUrls.length,
         onPageChanged: _changeVideo,
         itemBuilder: (context, index) {
+          // إذا لم تكن هذه هي الصفحة الحالية، اعرض مؤشر التحميل فقط
           if (index != _currentPage) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.white),
             );
           }
 
+          // عرض رسالة الخطأ إذا كان هناك خطأ في تشغيل الفيديو
           if (_hasError) {
             return Center(
               child: Column(
@@ -127,12 +132,14 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             );
           }
 
+          // عرض الفيديو والعناصر المتراكبة عليه
           return _controller.value.isInitialized
               ? Stack(
                 fit: StackFit.expand,
                 children: [
+                  // مشغل الفيديو
                   GestureDetector(
-                    onTap: _toggleMute,
+                    onTap: _toggleMute, // يمكن التفاعل مع الفيديو بالنقر
                     child: FittedBox(
                       fit: BoxFit.cover,
                       child: SizedBox(
@@ -142,15 +149,99 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       ),
                     ),
                   ),
+
+                  // زر كتم/إظهار الصوت (متحرك مع الفيديو)
                   Positioned(
-                    top: MediaQuery.of(context).size.height * 0.07,
-                    left: MediaQuery.of(context).size.width * 0.05,
+                    top: screenHeight * 0.07,
+                    left: screenWidth * 0.05,
                     child: GestureDetector(
                       onTap: _toggleMute,
                       child: Icon(
                         _isMuted ? Icons.volume_off : Icons.volume_up,
                         color: Colors.white,
                         size: 30,
+                      ),
+                    ),
+                  ),
+
+                  // عنوان الدولة (متحرك مع الفيديو)
+                  Positioned(
+                    top: screenHeight * 0.1, // نفس الارتفاع النسبي
+                    right: screenWidth * 0.38, // نفس الموقع النسبي
+                    child: const Text(
+                      'Egypt', // سيتم تكراره لكل فيديو، إذا أردت تغيير الدولة لكل فيديو، تحتاج لقائمة من أسماء الدول
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  // الأزرار الجانبية (RightButtons) (متحركة مع الفيديو)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: SizedBox(
+                        height: screenHeight * 0.5,
+                        child: const RightButtons(),
+                      ),
+                    ),
+                  ),
+
+                  // نص المدينة وعداد الأشخاص (متحرك مع الفيديو)
+                  Positioned(
+                    bottom: screenHeight * 0.20, // نفس الارتفاع النسبي
+                    left: 20,
+                    right: screenWidth * 0.25,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Alex, Egypt', // سيتم تكراره لكل فيديو، إذا أردت تغيير المدينة، تحتاج لقائمة من أسماء المدن
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 5.0,
+                                color: Colors.black54,
+                                offset: Offset(2.0, 2.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 1),
+                        PersonCounterWithPriceWithContry(
+                          basePricePerPerson: _bookingPricePerPerson,
+                          textColor: Colors.white,
+                          iconColor: Colors.black,
+                          backgroundColor: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // زر Book Now (متحرك مع الفيديو)
+                  Positioned(
+                    bottom: screenHeight * 0.12, // نفس الارتفاع النسبي
+                    left: 20,
+                    right: 20,
+                    child: Center(
+                      child: CustomButton(
+                        text: "Book Now",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentOption(),
+                            ),
+                          );
+                        },
+                        width: screenWidth * 0.80,
+                        height: 40,
                       ),
                     ),
                   ),

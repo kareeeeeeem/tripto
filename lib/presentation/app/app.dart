@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:tripto/core/constants/CustomButton.dart';
+import 'package:tripto/core/constants/CustomButton.dart'; // سيبقى هنا إذا احتجته في App
 import 'package:tripto/data/models/Saved_model.dart';
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart'; // تأكد من استيراده الصحيح
+import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
@@ -19,12 +19,14 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _currentIndex = 0;
-  final double _bookingPricePerPerson = 250.0;
+  // لن نستخدم bookingPricePerPerson هنا لأنه سيتم التعامل معه في VideoPlayerPage
+  // final double _bookingPricePerPerson = 250.0;
+
   final List<Widget> _pages = [
-    const VideoPlayerPage(),
+    const VideoPlayerPage(), // VideoPlayerPage ستحتوي على عناصرها الخاصة الآن
     const Activities(),
-    ProfilePage(),
-    const Saved_History(),
+    ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
+    //const SavedHistory(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
   ];
 
   final List<IconData> _icons = const [
@@ -49,102 +51,17 @@ class _AppState extends State<App> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          // تعرض الصفحة الحالية (بما في ذلك VideoPlayerPage مع عناصرها الآن)
           _pages[_currentIndex],
 
-          // أيقونة البحث
-          if (_currentIndex == 0)
-            Positioned(
-              top: screenHeight * 0.07,
-              right: screenWidth * 0.05,
-              child: const Icon(Icons.search, color: Colors.white, size: 30),
-            ),
+          // أيقونة البحث - ستظل ثابتة
+          Positioned(
+            top: screenHeight * 0.07,
+            right: screenWidth * 0.05,
+            child: const Icon(Icons.search, color: Colors.white, size: 30),
+          ),
 
-          // عنوان الدولة
-          if (_currentIndex == 0)
-            Positioned(
-              top: screenHeight * 0.1,
-              right: screenWidth * 0.38,
-              child: const Text(
-                'Egypt',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-          // الزرار الجانبية (RightButtons)
-          if (_currentIndex == 0)
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: SizedBox(
-                  // هذا الـ SizedBox يمنح RightButtons ارتفاعًا محددًا
-                  height: screenHeight * 0.5,
-                  child: const RightButtons(),
-                ),
-              ),
-            ),
-
-          // نص المدينة وعداد الأشخاص
-          if (_currentIndex == 0)
-            Positioned(
-              bottom: screenHeight * 0.20,
-              left: 20,
-              right: screenWidth * 0.25,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Alex, Egypt',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 5.0,
-                          color: Colors.black54,
-                          offset: Offset(2.0, 2.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  PersonCounterWithPriceWithContry(
-                    basePricePerPerson: _bookingPricePerPerson,
-                    textColor: Colors.white,
-                    iconColor: Colors.black,
-                    backgroundColor: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-
-          // زر Book Now
-          if (_currentIndex == 0)
-            Positioned(
-              bottom: screenHeight * 0.12,
-              left: 20,
-              right: 20,
-              child: Center(
-                child: CustomButton(
-                  text: "Book Now",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PaymentOption()),
-                    );
-                  },
-                  width: screenWidth * 0.80,
-                  height: 40,
-                ),
-              ),
-            ),
-
-          // شريط التنقل السفلي
+          // شريط التنقل السفلي - سيظل ثابتًا
           Positioned(
             bottom: 0,
             left: 0,
