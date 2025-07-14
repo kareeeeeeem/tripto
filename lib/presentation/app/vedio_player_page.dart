@@ -9,20 +9,23 @@ class VideoPlayerPage extends StatefulWidget {
 }
 
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
+  // **تعديل قائمة الـ URLs لتبقى مسارات ملفات لوكال**
   final List<String> videoUrls = [
-    'https://media.w3.org/2010/05/sintel/trailer.mp4',
-    'https://media.w3.org/2010/05/bunny/trailer.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/elephant.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/horse.mp4',
-    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    'https://filesamples.com/samples/video/mp4/sample_960x400_ocean_with_audio.mp4',
+    // تم إصلاح الأخطاء هنا: كل المسارات الآن بين علامات اقتباس
+    'assets/images/vedio2.mp4',
+    'assets/images/vedio1.mp4',
+    'assets/images/vedio3.mp4',
+    'assets/images/vedio4.mp4',
+    'assets/images/vedio5.mp4',
+    'assets/images/vedio6.mp4',
+    // أضف كل مسارات فيديوهاتك هنا
   ];
 
   late VideoPlayerController _controller;
   int _currentPage = 0;
   bool _hasError = false;
   String _errorMessage = '';
+  bool _isMuted = false; // تبدأ الفيديوهات بالصوت افتراضيًا
 
   @override
   void initState() {
@@ -37,27 +40,45 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         _errorMessage = '';
       });
 
-      _controller = VideoPlayerController.network(videoUrls[index]);
+      // **التعديل هنا: استخدام VideoPlayerController.asset**
+      _controller = VideoPlayerController.asset(videoUrls[index]);
       await _controller.initialize();
       _controller.setLooping(true);
-      _controller.setVolume(1.0);
+      _controller.setVolume(_isMuted ? 0.0 : 1.0);
       await _controller.play();
 
       setState(() {});
     } catch (e) {
       setState(() {
         _hasError = true;
-        _errorMessage = 'Video loading failed. Please try again later.';
-        print('Video error: $e');
+        _errorMessage = 'فشل تشغيل الفيديو المحلي. يرجى التأكد من المسار.';
+        print('خطأ في الفيديو المحلي: $e');
       });
     }
   }
 
   Future<void> _changeVideo(int newIndex) async {
-    await _controller.pause();
-    await _controller.dispose();
-    setState(() => _currentPage = newIndex);
+    // التأكد أن الـ controller مش null قبل الـ dispose
+    if (_controller.value.isInitialized) {
+      await _controller.pause();
+      await _controller.dispose();
+    }
+    setState(() {
+      _currentPage = newIndex;
+      _isMuted = false;
+    });
     await _initializeVideo(newIndex);
+  }
+
+  void _toggleMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+      if (_isMuted) {
+        _controller.setVolume(0.0);
+      } else {
+        _controller.setVolume(1.0);
+      }
+    });
   }
 
   @override
@@ -76,7 +97,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         onPageChanged: _changeVideo,
         itemBuilder: (context, index) {
           if (index != _currentPage) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            );
           }
 
           if (_hasError) {
@@ -94,7 +117,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () => _initializeVideo(_currentPage),
-                    child: const Text(' try again'),
+                    child: const Text('أعد المحاولة'),
                   ),
                 ],
               ),
@@ -105,17 +128,34 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
               ? Stack(
                 fit: StackFit.expand,
                 children: [
-                  FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _controller.value.size.width,
-                      height: _controller.value.size.height,
-                      child: VideoPlayer(_controller),
+                  GestureDetector(
+                    onTap: _toggleMute,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SizedBox(
+                        width: _controller.value.size.width,
+                        height: _controller.value.size.height,
+                        child: VideoPlayer(_controller),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.07,
+                    left: MediaQuery.of(context).size.width * 0.05,
+                    child: GestureDetector(
+                      onTap: _toggleMute,
+                      child: Icon(
+                        _isMuted ? Icons.volume_off : Icons.volume_up,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],
               )
-              : const Center(child: CircularProgressIndicator());
+              : const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              );
         },
       ),
     );

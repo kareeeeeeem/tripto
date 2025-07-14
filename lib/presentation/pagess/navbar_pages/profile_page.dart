@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
+import 'package:tripto/presentation/app/app.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
@@ -32,7 +33,14 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 35),
           onPressed: () {
-            Navigator.pop(context);
+            // هنا التعديل
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const App(),
+              ), // العودة إلى App
+              (Route<dynamic> route) => false, // إزالة جميع المسارات السابقة
+            );
           },
         ),
       ),

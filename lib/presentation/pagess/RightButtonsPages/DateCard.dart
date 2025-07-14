@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarCard.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart'; // تأكد أن المسار صحيح
+import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/Hotels.dart'; // تأكد أن المسار صحيح
 
 class Datecard extends StatefulWidget {
   const Datecard({super.key});
@@ -89,9 +90,7 @@ class _DatecardState extends State<Datecard> {
                         Navigator.pop(context);
                         showDialog(
                           context: context,
-                          builder:
-                              (BuildContext context) =>
-                                  const CarSelectionPage(),
+                          builder: (BuildContext context) => const Hotels(),
                         );
                       }
                       : null,
@@ -103,7 +102,7 @@ class _DatecardState extends State<Datecard> {
                   vertical: 12,
                 ),
               ),
-              child: const Text("Select Car"),
+              child: const Text("Select a Hotel"),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/activity_model.dart';
+import 'package:tripto/presentation/app/app.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/routes/app_routes.dart';
@@ -157,7 +158,6 @@ class Activities extends StatelessWidget {
         title: const Text(
           "Activities",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -166,7 +166,14 @@ class Activities extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.pop(context);
+            // هنا التعديل
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const App(),
+              ), // العودة إلى App
+              (Route<dynamic> route) => false, // إزالة جميع المسارات السابقة
+            );
           },
         ),
       ),

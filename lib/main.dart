@@ -22,8 +22,6 @@ class TripToApp extends StatelessWidget {
 
       initialRoute: '/',
       routes: AppRoutes.routes,
-
-
     );
   }
 }

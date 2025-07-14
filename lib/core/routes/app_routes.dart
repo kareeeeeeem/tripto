@@ -44,7 +44,7 @@ class AppRoutes {
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
     welcome: (context) => const WelcomePage(),
-    app: (context) => const App(),
+    app: (context) => App(),
     videoPlayer: (context) => const VideoPlayerPage(),
     activities: (context) => const Activities(),
     home: (context) => const HomePage(),
