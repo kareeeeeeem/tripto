@@ -35,7 +35,7 @@ List<Bookinghotel> bookinghotels = [
   ),
 ];
 
-void openbottomsheet(BuildContext context) {
+void openbottomsheetforhotel(BuildContext context) {
   showDialog(
     context: context,
     builder:

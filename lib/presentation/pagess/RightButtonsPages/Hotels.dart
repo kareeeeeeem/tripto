@@ -9,8 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'CarSelectionDialog.dart';
 
-class Hotels extends StatelessWidget {
+class Hotels extends StatefulWidget {
   const Hotels({super.key});
+
+  @override
+  State<Hotels> createState() => _HotelsState();
+}
+
+class _HotelsState extends State<Hotels> {
+  int? selectedHotelIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -29,324 +36,83 @@ class Hotels extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "Booking Hotels",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          const Text(' ⭐ 4.9'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const ExpandedText(
-                                  text:
-                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                      0.012,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Price: \$150",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(thickness: 1, color: Colors.grey),
+                    children: List.generate(bookinghotels.length, (index) {
+                      final hotel = bookinghotels[index];
+                      final isSelected = selectedHotelIndex == index;
 
-                      Row(
+                      return Column(
                         children: [
-                          const Text(
-                            "Booking Hotels",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          const Text(' ⭐ 4.9'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedHotelIndex = index;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: isSelected ? Colors.blue[50] : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isSelected ? Colors.blue : Colors.grey.shade300,
+                                  width: isSelected ? 2 : 1,
                                 ),
-                                const ExpandedText(
-                                  text:
-                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                      0.012,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Price: \$150",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                              ),
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      hotel.image,
+                                      width: 100,
+                                      height: 50,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(thickness: 1, color: Colors.grey),
-                      Row(
-                        children: [
-                          const Text(
-                            "Booking Hotels",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          const Text(' ⭐ 4.9'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const ExpandedText(
-                                  text:
-                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                      0.012,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Price: \$150",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          hotel.title,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const ExpandedText(
+                                          text:
+                                          "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                          maxLines: 2,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(
+                                            "Price: \$150",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
+                          const Divider(thickness: 1, color: Colors.grey),
                         ],
-                      ),
-                      const Divider(thickness: 1, color: Colors.grey),
-                      Row(
-                        children: [
-                          const Text(
-                            "Booking Hotels",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          const Text(' ⭐ 4.9'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const ExpandedText(
-                                  text:
-                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                      0.012,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Price: \$150",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(thickness: 1, color: Colors.grey),
-                      Row(
-                        children: [
-                          const Text(
-                            "Booking Hotels",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          const Text(' ⭐ 4.9'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/hilton.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  bookinghotels[0].title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const ExpandedText(
-                                  text:
-                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                  maxLines: 2,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height *
-                                      0.012,
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "Price: \$150",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(thickness: 1, color: Colors.grey),
-                    ],
+                      );
+                    }),
                   ),
                 ),
               ),
             ),
-
             Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -362,15 +128,19 @@ class Hotels extends StatelessWidget {
                       width: 110,
                       height: 46,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: selectedHotelIndex != null
+                            ? () {
+                          final selectedHotel = bookinghotels[selectedHotelIndex!];
+
                           Navigator.pop(context);
+
                           showDialog(
                             context: context,
-                            builder:
-                                (BuildContext context) =>
-                                    const CarSelectionPage(),
+                            builder: (BuildContext context) =>
+                            const CarSelectionPage(),
                           );
-                        },
+                        }
+                            : null,
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -386,7 +156,6 @@ class Hotels extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
                   ],
                 ),
               ),
@@ -397,3 +166,4 @@ class Hotels extends StatelessWidget {
     );
   }
 }
+

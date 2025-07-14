@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tripto/core/models/CarModel.dart';
+import 'package:tripto/core/models/Hotels_details_model.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/Hotels.dart'; // تأكد أن المسار صحيح
@@ -84,17 +85,13 @@ class _DatecardState extends State<Datecard> {
             const SizedBox(height: 20),
 
             ElevatedButton(
-              onPressed:
-                  (_rangeStart != null && _rangeEnd != null)
-                      ? () {
-                        Navigator.pop(context);
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => const Hotels(),
-                        );
-                      }
-                      : null,
-              style: ElevatedButton.styleFrom(
+              onPressed:() {
+                if (_rangeStart != null && _rangeEnd != null) {
+                  Navigator.pop(context);
+                  openbottomsheetforhotel(context);
+                }
+              },
+      style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(
