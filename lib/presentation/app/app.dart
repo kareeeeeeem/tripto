@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/data/models/Saved_model.dart';
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/Favorite_page.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart'; // تأكد من استيراده الصحيح
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';

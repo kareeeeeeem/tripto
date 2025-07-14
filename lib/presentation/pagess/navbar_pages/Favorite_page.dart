@@ -20,7 +20,8 @@ class _Saved_HistoryState extends State<Saved_History>
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Cairo",
-      description: "This is a dummy activity used just to preview the UI structure.",
+      description:
+          "This is a dummy activity used just to preview the UI structure.",
       tabType: "saved",
     ),
     Activitysaved(
@@ -74,9 +75,7 @@ class _Saved_HistoryState extends State<Saved_History>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-
   }
-
 
   @override
   void dispose() {
@@ -89,7 +88,7 @@ class _Saved_HistoryState extends State<Saved_History>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_new),
@@ -104,7 +103,7 @@ class _Saved_HistoryState extends State<Saved_History>
                 // mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.favorite, color: Colors.black),
-                SizedBox(width:MediaQuery.of(context).size.width*0.02),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                   Text("Saved"),
                 ],
               ),
@@ -113,7 +112,7 @@ class _Saved_HistoryState extends State<Saved_History>
               child: Row(
                 children: [
                   Icon(Icons.history, color: Colors.black),
-                  SizedBox(width:MediaQuery.of(context).size.width*0.02),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                   Text("History"),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                 ],
@@ -134,33 +133,35 @@ class _Saved_HistoryState extends State<Saved_History>
 
   Widget _buildFavoriteList(List<Activitysaved> favoriteActivities) {
     return ListView.builder(
+      padding: EdgeInsets.only(
+        bottom:
+            MediaQuery.of(context).size.height * 0.12, // تقريبًا 12% من الشاشة
+      ),
       itemCount: favoriteActivities.length,
       itemBuilder: (context, index) {
         final activity = favoriteActivities[index];
+        // ... باقي الكود زي ما هو
+
         return Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.blue,
-                width: 2,
-              ),
+              border: Border.all(color: Colors.blue, width: 2),
               borderRadius: BorderRadius.circular(16),
             ),
             padding: EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.width * 0.7,
-            child: Row(
+            child: Column(
               children: [
-                Column(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      // margin: EdgeInsets.only(bottom: 46),
-                      width: MediaQuery.of(context).size.width * 0.35,  // بدل 150
-                      height: MediaQuery.of(context).size.height * 0.15, // بدل 140
-
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.15,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         image: DecorationImage(
@@ -169,87 +170,96 @@ class _Saved_HistoryState extends State<Saved_History>
                         ),
                       ),
                     ),
-                    if (activity.tabType == "saved") ...[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.020,
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //     top: MediaQuery.of(context).size.height * 0.1,
+                          //   ),
+                          //   child:
+                              Text(
+                              activity.country,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          child: Text(
-                            "Unsave",
+                          // ),
+                          // SizedBox(
+                          //   height: MediaQuery.of(context).size.height * 0.009,
+                          // ),
+                          Text(
+                            activity.city,
                             style: TextStyle(
-                              color: Colors.black,
+                              fontSize: 16,
+                              color: Colors.blue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ),
-                      Spacer(),
-                    ] else ...[
-                      Spacer(), // مهم عشان يزق الزرار اللي بعده ناحية اليمين
-                    ],
-                  ],
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.01,
-                        ),
-                        child: Text(activity.country,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.009),
-                      Text(activity.city,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.009),
-                      ExpandedText(
-                        text: activity.description,
-                      ),
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => PaymentOption()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: Text(
-                              activity.tabType == "saved" ? "Book" : "Rebook",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.009,
                           ),
+                          ExpandedText(text: activity.description),
                         ],
                       ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.015, // أو أي نسبة مناسبة ليك
+                ),
 
-                    ],
-                  ),
+                /// ✅ هنا الزرارين تحت الصورة والوصف، خارج Row الصورة
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (activity.tabType == "saved")
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text(
+                          "Unsave",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox(), // فراغ لو مش Saved
+
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentOption(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        activity.tabType == "saved" ? "Book" : "Rebook",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

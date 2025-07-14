@@ -69,11 +69,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 isReadOnly: isPasswordReadOnly,
                 controller: passwordController,
               ),
-              const SizedBox(height: 60),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.075, // تقريبًا 7.5% من ارتفاع الشاشة
+              ),
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.035),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.85,
                       height: MediaQuery.of(context).size.height * 0.06,

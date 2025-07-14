@@ -8,7 +8,7 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
 // import '../../data/models/activity_model.dart';
-import '../../presentation/pagess/RightButtonsPages/Favorite_page.dart';
+import '../../presentation/pagess/navbar_pages/Favorite_page.dart';
 import '../../presentation/pagess/navbar_pages/Activity_details_page.dart';
 import '../../presentation/pagess/navbar_pages/activities.dart';
 import '../../presentation/pagess/navbar_pages/home_page.dart';

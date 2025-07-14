@@ -171,6 +171,9 @@ class Activities extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.12, // تقريبًا 12% من الشاشة
+        ),
         itemCount: exmactivities.length,
         itemBuilder: (context, index) {
           final activity = exmactivities[index];
