@@ -55,8 +55,8 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     } catch (e) {
       setState(() {
         _hasError = true;
-        _errorMessage = 'فشل تشغيل الفيديو المحلي. يرجى التأكد من المسار.';
-        print('خطأ في الفيديو المحلي: $e');
+        _errorMessage = 'Error.';
+        print('Error: $e');
       });
     }
   }
@@ -125,7 +125,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () => _initializeVideo(_currentPage),
-                    child: const Text('أعد المحاولة'),
+                    child: const Text('Try Again'),
                   ),
                 ],
               ),
