@@ -108,7 +108,7 @@ void openbottomsheet(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          child: InfoCard(),
+          // child: InfoCard(),
         ),
   );
 }
