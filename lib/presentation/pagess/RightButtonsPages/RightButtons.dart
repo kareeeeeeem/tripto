@@ -145,11 +145,11 @@ class _RightButtonsState extends State<RightButtons> {
             context: context,
             builder:
                 (context) => Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child:  Hotels(),
-            ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Hotels(),
+                ),
           );
         },
       ),
@@ -185,7 +185,7 @@ class _RightButtonsState extends State<RightButtons> {
           color: selectedIndex == 5 ? selectedIconColor : defaultIconColor,
         ),
         label: 'Share',
-        onPressed: () {
+        onPressed: () async {
           debugPrint('Share pressed');
         },
       ),

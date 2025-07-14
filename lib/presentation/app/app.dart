@@ -8,7 +8,6 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
-import 'package:tripto/presentation/pagess/payment_option.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
