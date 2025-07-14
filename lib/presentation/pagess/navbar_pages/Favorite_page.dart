@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import '../../../data/models/Saved_model.dart';
 import '../payment_option.dart';
+import '../../app/app.dart'; // لازم تضيف استيراد App
 
 class Saved_History extends StatefulWidget {
   const Saved_History({super.key});
@@ -14,7 +15,6 @@ class _Saved_HistoryState extends State<Saved_History>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // بيانات تجريبية علشان تعرض الكروت
   final List<Activitysaved> savedActivities = [
     const Activitysaved(
       imagePath: "assets/images/museum.png",
@@ -31,34 +31,7 @@ class _Saved_HistoryState extends State<Saved_History>
       description: "Visit the beautiful temples and enjoy the Nile.",
       tabType: "saved",
     ),
-    const Activitysaved(
-      imagePath: "assets/images/museum.png",
-      country: "Egypt",
-      city: "Aswan",
-      description: "Visit the beautiful temples and enjoy the Nile.",
-      tabType: "saved",
-    ),
-    const Activitysaved(
-      imagePath: "assets/images/museum.png",
-      country: "Egypt",
-      city: "Aswan",
-      description: "Visit the beautiful temples and enjoy the Nile.",
-      tabType: "saved",
-    ),
-    const Activitysaved(
-      imagePath: "assets/images/museum.png",
-      country: "Egypt",
-      city: "Aswan",
-      description: "Visit the beautiful temples and enjoy the Nile.",
-      tabType: "saved",
-    ),
-    const Activitysaved(
-      imagePath: "assets/images/museum.png",
-      country: "Egypt",
-      city: "Aswan",
-      description: "Visit the beautiful temples and enjoy the Nile.",
-      tabType: "saved",
-    ),
+    // ... كرر نفس العنصر عدة مرات حسب رغبتك
   ];
 
   final List<Activitysaved> historyActivities = [
@@ -89,7 +62,11 @@ class _Saved_HistoryState extends State<Saved_History>
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const App()),
+              (route) => false,
+            );
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
@@ -97,26 +74,11 @@ class _Saved_HistoryState extends State<Saved_History>
         foregroundColor: Colors.black,
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
+            Tab(icon: Icon(Icons.favorite, color: Colors.black), text: "Saved"),
             Tab(
-              child: Row(
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.favorite, color: Colors.black),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  const Text("Saved"),
-                ],
-              ),
-            ),
-            Tab(
-              child: Row(
-                children: [
-                  const Icon(Icons.history, color: Colors.black),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  const Text("History"),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.025),
-                ],
-              ),
+              icon: Icon(Icons.history, color: Colors.black),
+              text: "History",
             ),
           ],
         ),
@@ -134,13 +96,11 @@ class _Saved_HistoryState extends State<Saved_History>
   Widget _buildFavoriteList(List<Activitysaved> favoriteActivities) {
     return ListView.builder(
       padding: EdgeInsets.only(
-        bottom:
-            MediaQuery.of(context).size.height * 0.12, // تقريبًا 12% من الشاشة
+        bottom: MediaQuery.of(context).size.height * 0.12,
       ),
       itemCount: favoriteActivities.length,
       itemBuilder: (context, index) {
         final activity = favoriteActivities[index];
-        // ... باقي الكود زي ما هو
 
         return Card(
           shape: RoundedRectangleBorder(
@@ -175,11 +135,6 @@ class _Saved_HistoryState extends State<Saved_History>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //     top: MediaQuery.of(context).size.height * 0.1,
-                          //   ),
-                          //   child:
                           Text(
                             activity.country,
                             style: const TextStyle(
@@ -187,10 +142,6 @@ class _Saved_HistoryState extends State<Saved_History>
                               fontSize: 16,
                             ),
                           ),
-                          // ),
-                          // SizedBox(
-                          //   height: MediaQuery.of(context).size.height * 0.009,
-                          // ),
                           Text(
                             activity.city,
                             style: const TextStyle(
@@ -208,19 +159,15 @@ class _Saved_HistoryState extends State<Saved_History>
                     ),
                   ],
                 ),
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height *
-                      0.015, // أو أي نسبة مناسبة ليك
-                ),
-
-                /// ✅ هنا الزرارين تحت الصورة والوصف، خارج Row الصورة
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (activity.tabType == "saved")
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // احذف من قائمة الـ saved مثلًا أو اعمل setState
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -236,7 +183,7 @@ class _Saved_HistoryState extends State<Saved_History>
                         ),
                       )
                     else
-                      const SizedBox(), // فراغ لو مش Saved
+                      const SizedBox(),
 
                     ElevatedButton(
                       onPressed: () {
