@@ -6,6 +6,7 @@ import 'package:tripto/presentation/pagess/RightButtonsPages/CarSelectionDialog.
 import 'package:tripto/presentation/pagess/RightButtonsPages/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/DateCard.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/Hotels.dart';
+import 'package:tripto/presentation/pagess/RightButtonsPages/Share.dart';
 import '../../../core/models/Hotels_details_model.dart';
 import 'InfoCard.dart';
 
@@ -65,8 +66,8 @@ class _RightButtonsState extends State<RightButtons> {
 
   @override
   Widget build(BuildContext context) {
-    final Color defaultIconColor = Colors.white;
-    final Color selectedIconColor = Colors.blue;
+    const Color defaultIconColor = Colors.white;
+    const Color selectedIconColor = Colors.blue;
 
     final List<_ButtonData> _buttons = [
       _ButtonData(
@@ -186,7 +187,11 @@ class _RightButtonsState extends State<RightButtons> {
         ),
         label: 'Share',
         onPressed: () async {
-          debugPrint('Share pressed');
+          await showDialog(
+            context: context,
+            builder: (context) => const Share(),
+          ); // هذا الجزء صحيح
+          debugPrint('Share pressed'); // هذا سيعمل بعد إغلاق الـ dialog
         },
       ),
       _ButtonData(

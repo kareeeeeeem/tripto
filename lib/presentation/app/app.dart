@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:tripto/core/constants/CustomButton.dart'; // سيبقى هنا إذا احتجته في App
-import 'package:tripto/data/models/Saved_model.dart';
-import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
 import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
+import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
 import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
 
@@ -25,7 +21,7 @@ class _AppState extends State<App> {
     const VideoPlayerPage(), // VideoPlayerPage ستحتوي على عناصرها الخاصة الآن
     const Activities(),
     ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
-    //const SavedHistory(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
+    Saved_History(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
   ];
 
   final List<IconData> _icons = const [

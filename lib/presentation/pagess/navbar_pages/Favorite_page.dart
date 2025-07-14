@@ -16,7 +16,7 @@ class _Saved_HistoryState extends State<Saved_History>
 
   // بيانات تجريبية علشان تعرض الكروت
   final List<Activitysaved> savedActivities = [
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Cairo",
@@ -24,35 +24,35 @@ class _Saved_HistoryState extends State<Saved_History>
           "This is a dummy activity used just to preview the UI structure.",
       tabType: "saved",
     ),
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Aswan",
       description: "Visit the beautiful temples and enjoy the Nile.",
       tabType: "saved",
     ),
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Aswan",
       description: "Visit the beautiful temples and enjoy the Nile.",
       tabType: "saved",
     ),
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Aswan",
       description: "Visit the beautiful temples and enjoy the Nile.",
       tabType: "saved",
     ),
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Aswan",
       description: "Visit the beautiful temples and enjoy the Nile.",
       tabType: "saved",
     ),
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Aswan",
@@ -62,7 +62,7 @@ class _Saved_HistoryState extends State<Saved_History>
   ];
 
   final List<Activitysaved> historyActivities = [
-    Activitysaved(
+    const Activitysaved(
       imagePath: "assets/images/museum.png",
       country: "Egypt",
       city: "Alexandria",
@@ -102,18 +102,18 @@ class _Saved_HistoryState extends State<Saved_History>
               child: Row(
                 // mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.favorite, color: Colors.black),
+                  const Icon(Icons.favorite, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  Text("Saved"),
+                  const Text("Saved"),
                 ],
               ),
             ),
             Tab(
               child: Row(
                 children: [
-                  Icon(Icons.history, color: Colors.black),
+                  const Icon(Icons.history, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  Text("History"),
+                  const Text("History"),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                 ],
               ),
@@ -151,7 +151,7 @@ class _Saved_HistoryState extends State<Saved_History>
               border: Border.all(color: Colors.blue, width: 2),
               borderRadius: BorderRadius.circular(16),
             ),
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.width * 0.7,
             child: Column(
@@ -180,20 +180,20 @@ class _Saved_HistoryState extends State<Saved_History>
                           //     top: MediaQuery.of(context).size.height * 0.1,
                           //   ),
                           //   child:
-                              Text(
-                              activity.country,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                          Text(
+                            activity.country,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
+                          ),
                           // ),
                           // SizedBox(
                           //   height: MediaQuery.of(context).size.height * 0.009,
                           // ),
                           Text(
                             activity.city,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
@@ -209,7 +209,9 @@ class _Saved_HistoryState extends State<Saved_History>
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.015, // أو أي نسبة مناسبة ليك
+                  height:
+                      MediaQuery.of(context).size.height *
+                      0.015, // أو أي نسبة مناسبة ليك
                 ),
 
                 /// ✅ هنا الزرارين تحت الصورة والوصف، خارج Row الصورة
@@ -241,7 +243,7 @@ class _Saved_HistoryState extends State<Saved_History>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PaymentOption(),
+                            builder: (context) => const PaymentOption(),
                           ),
                         );
                       },

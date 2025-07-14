@@ -25,7 +25,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
         elevation: 0,
         title: Text(
           widget.activity.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
             color: Colors.black,
@@ -75,7 +75,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.01,
                         ),
-                        child: Text(
+                        child: const Text(
                           "Destination :",
                           style: TextStyle(
                             fontSize: 18,
@@ -88,7 +88,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                     Text(
                       widget.activity.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     SizedBox(width: MediaQuery.of(context).size.width * 0.1),
                     Text(
                       '⭐ ${widget.activity.rate}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -105,7 +105,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -122,7 +122,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Number of People :",
                         style: TextStyle(
                           fontSize: 18,
@@ -130,9 +130,9 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
 
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         children: [
                           Container(
@@ -150,19 +150,19 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                                   _numberOfPeople++;
                                 });
                               },
-                              icon: Icon(Icons.add, color: Colors.black),
+                              icon: const Icon(Icons.add, color: Colors.black),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             "$_numberOfPeople",
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Container(
                             width: 35,
                             height: 35,
@@ -180,11 +180,14 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                                   }
                                 });
                               },
-                              icon: Icon(Icons.remove, color: Colors.black),
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          Icon(Icons.person_2_outlined),
+                          const SizedBox(width: 10),
+                          const Icon(Icons.person_2_outlined),
                         ],
                       ),
                     ],
@@ -192,10 +195,10 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Category :",
                         style: TextStyle(
                           fontSize: 18,
@@ -204,7 +207,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      Text(
+                      const Text(
                         "Gold",
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
@@ -217,10 +220,10 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Price :",
                         style: TextStyle(
                           fontSize: 18,
@@ -231,7 +234,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                       Text(
                         "${widget.activity.price} \$",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -254,12 +257,12 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: btn_background_color_gradiant,
-            minimumSize: Size(double.infinity, 50),
+            minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Text(
+          child: const Text(
             'Confirm',
             style: TextStyle(
               fontSize: 22,
