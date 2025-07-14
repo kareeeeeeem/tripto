@@ -18,6 +18,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     'assets/images/vedio4.mp4',
     'assets/images/vedio5.mp4',
     'assets/images/vedio6.mp4',
+    'assets/images/vedio7.mp4',
+    'assets/images/vedio8.mp4',
+
     // أضف كل مسارات فيديوهاتك هنا
   ];
 
