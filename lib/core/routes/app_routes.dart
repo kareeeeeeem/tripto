@@ -1,4 +1,3 @@
-// ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/CarDetials.dart';
@@ -8,7 +7,6 @@ import 'package:tripto/presentation/pagess/NavBar/Favorite_page.dart';
 import 'package:tripto/presentation/pagess/SlideBar/CarCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
-// import '../../data/models/activity_model.dart';
 import '../../presentation/pagess/NavBar/Favorite_page.dart';
 import '../../presentation/pagess/NavBar/Activity_details_page.dart';
 import '../../presentation/pagess/NavBar/activities_page.dart';

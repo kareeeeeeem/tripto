@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
-// import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-// import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
-// import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
-// import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+
 
 import '../pagess/NavBar/Favorite_page.dart';
 import '../pagess/NavBar/activities_page.dart';
