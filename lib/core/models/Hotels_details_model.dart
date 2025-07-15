@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/Hotels.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/InfoCard.dart';
+import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
 
 class HotelsDetailsModel extends StatefulWidget {
   const HotelsDetailsModel({super.key});
@@ -15,6 +14,7 @@ class _HotelsDetailsModel extends State<HotelsDetailsModel> {
     return const SizedBox(); // UI اتمسح
   }
 }
+
 class Bookinghotel {
   final String title;
   final String image;
@@ -40,14 +40,14 @@ void openbottomsheetforhotel(BuildContext context) {
     context: context,
     builder:
         (context) => Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.65,
             width: MediaQuery.of(context).size.width * 0.9,
             child: const Hotels(),
           ),
-    ),
+        ),
   );
 }

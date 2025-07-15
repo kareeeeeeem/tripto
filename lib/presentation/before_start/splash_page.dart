@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/before_start/welcome_page.dart';
 
-import '../pagess/navbar_pages/home_page.dart';
+import '../pagess/NavBar/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -41,8 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-     backgroundColor: Colors.white,
-     body: Center(child: Image(image: AssetImage("assets/images/splash.png"))),
+      backgroundColor: Colors.white,
+      body: Center(child: Image(image: AssetImage("assets/images/splash.png"))),
     );
   }
 }

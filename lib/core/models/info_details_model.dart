@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/InfoCard.dart';
 
 class InfoDetailsModel extends StatefulWidget {
   const InfoDetailsModel({super.key});

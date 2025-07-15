@@ -39,6 +39,9 @@ dependencies:
   # iOS-style icons
   cupertino_icons: ^1.0.8
 
+  # app icon
+  flutter_launcher_icons: "^0.13.1" 
+
   # BLoC state management (Cubit included)
   flutter_bloc: ^8.1.3
 

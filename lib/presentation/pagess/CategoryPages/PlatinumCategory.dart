@@ -17,7 +17,7 @@ class PlatinumCategory extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             Color(0xFFE1E1E1), // Light Silver
-            Color(0xFFC2C3C7), // Slight darker
+            Color.fromARGB(255, 247, 248, 250), // Slight darker
           ],
         ),
         boxShadow: [

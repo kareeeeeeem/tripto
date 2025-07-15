@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/RightButtonsPages/RightButtons.dart';
+import 'package:tripto/presentation/pagess/NavBar/activities_page.dart';
+import 'package:tripto/presentation/pagess/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/Favorite_page.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/activities.dart';
-import 'package:tripto/presentation/pagess/navbar_pages/profile_page.dart';
+import 'package:tripto/presentation/pagess/NavBar/Favorite_page.dart';
+import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -21,7 +21,7 @@ class _AppState extends State<App> {
     const VideoPlayerPage(), // VideoPlayerPage ستحتوي على عناصرها الخاصة الآن
     const Activities(),
     ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
-    Saved_History(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
+    const FavoritePage(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
   ];
 
   final List<IconData> _icons = const [
@@ -50,11 +50,11 @@ class _AppState extends State<App> {
           _pages[_currentIndex],
 
           // أيقونة البحث - ستظل ثابتة
-          Positioned(
-            top: screenHeight * 0.07,
-            right: screenWidth * 0.05,
-            child: const Icon(Icons.search, color: Colors.white, size: 30),
-          ),
+          // Positioned(
+          //   top: screenHeight * 0.07,
+          //   right: screenWidth * 0.05,
+          //   child: const Icon(Icons.search, color: Colors.white, size: 30),
+          // ),
 
           // شريط التنقل السفلي - سيظل ثابتًا
           Positioned(
