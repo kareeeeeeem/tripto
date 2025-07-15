@@ -25,7 +25,7 @@ class Signuporlogin extends StatelessWidget {
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -33,11 +33,12 @@ class Signuporlogin extends StatelessWidget {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
             Row(
               children: [
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02),
                     height: 1,
                     color: Colors.black45,
                   ),
@@ -45,7 +46,7 @@ class Signuporlogin extends StatelessWidget {
                 const Text("OR"),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02),
                     height: 1,
                     color: Colors.black45,
                   ),
@@ -62,7 +63,7 @@ class Signuporlogin extends StatelessWidget {
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.blue),
+                    side: const BorderSide(color: Colors.blue , width: 2),
                   ),
                 ),
                 onPressed: () {
@@ -75,7 +76,7 @@ class Signuporlogin extends StatelessWidget {
                 child: const Text(
                   'Log in',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF002E70),
                   ),

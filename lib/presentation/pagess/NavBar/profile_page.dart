@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 35),
+          icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
           onPressed: () {
             // هنا التعديل
             Navigator.pushAndRemoveUntil(
@@ -90,7 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btn_background_color_gradiant,
-                          minimumSize: const Size(double.infinity, 50),
+                          minimumSize: Size(
+                            MediaQuery.of(context).size.width,
+                            MediaQuery.of(context).size.height * 0.06,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
