@@ -233,6 +233,7 @@ class _FavoritePageState extends State<FavoritePage>
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
+                            side: const BorderSide(color: Color(0xFF002E70), width: 2),
                           ),
                         ),
                         child: const Text(
