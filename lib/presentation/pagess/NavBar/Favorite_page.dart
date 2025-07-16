@@ -96,8 +96,11 @@ class _FavoritePageState extends State<FavoritePage>
               (route) => false,
             );
           },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
+          icon: const Icon(
+            Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         bottom: TabBar(
