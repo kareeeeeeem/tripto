@@ -1,9 +1,7 @@
-// ignore_for_file: file_names, unused_local_variable
-
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import '../../../core/models/Hotels_details_model.dart';
-
 import 'CarCard.dart';
 
 class Hotels extends StatefulWidget {
@@ -33,10 +31,9 @@ class _HotelsState extends State<Hotels> {
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(bookinghotels.length, (index) {
-                      final hotel = bookinghotels[index];
+                    children: List.generate(4, (index) {
+                      final hotel = bookinghotels[0]; // نفس العنصر 4 مرات
                       final isSelected = selectedHotelIndex == index;
-
                       return Column(
                         children: [
                           GestureDetector(
@@ -47,14 +44,10 @@ class _HotelsState extends State<Hotels> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color:
-                                    isSelected ? Colors.blue[50] : Colors.white,
+                                color: isSelected ? Colors.blue[50] : Colors.white,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color:
-                                      isSelected
-                                          ? Colors.blue
-                                          : Colors.grey.shade300,
+                                  color: isSelected ? Colors.blue : Colors.grey.shade300,
                                   width: isSelected ? 2 : 1,
                                 ),
                               ),
@@ -73,8 +66,7 @@ class _HotelsState extends State<Hotels> {
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           hotel.title,
@@ -83,10 +75,8 @@ class _HotelsState extends State<Hotels> {
                                             fontSize: 14,
                                           ),
                                         ),
-                                        const ExpandedText(
-                                          text:
-                                              "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                          maxLines: 2,
+                                        const Text(
+                                          "This is the description of the company. This is the description of the company This is the description of the company",
                                         ),
                                         const SizedBox(height: 8),
                                         const Align(
@@ -129,22 +119,16 @@ class _HotelsState extends State<Hotels> {
                       width: 110,
                       height: 46,
                       child: ElevatedButton(
-                        onPressed:
-                            selectedHotelIndex != null
-                                ? () {
-                                  final selectedHotel =
-                                      bookinghotels[selectedHotelIndex!];
-
-                                  Navigator.pop(context);
-
-                                  showDialog(
-                                    context: context,
-                                    builder:
-                                        (BuildContext context) =>
-                                            const CarSelectionPage(),
-                                  );
-                                }
-                                : null,
+                        onPressed: selectedHotelIndex != null
+                            ? () {
+                          final selectedHotel = bookinghotels[selectedHotelIndex!];
+                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const CarSelectionPage(),
+                          );
+                        }
+                            : null,
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
