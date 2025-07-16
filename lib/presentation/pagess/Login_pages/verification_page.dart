@@ -27,6 +27,7 @@ class _VerificationState extends State<Verification> {
   void startTimer() {
     _start = 59;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) return; // ✅ نتأكد إن الwidget لسه موجود
       setState(() {
         if (_start > 0) {
           _start--;
@@ -36,6 +37,12 @@ class _VerificationState extends State<Verification> {
       });
     });
   }
+  @override
+  void dispose() {
+    _timer?.cancel(); // لازم نلغي التايمر لما الصفحة تتقفل
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

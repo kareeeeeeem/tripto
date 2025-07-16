@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 
 // تأكد من المسارات الصحيحة لـ AppRoutes
@@ -148,8 +149,8 @@ class ActivitiesListDialog extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const VideoPlayerPage(),
-                      ),
+                        builder: (_) => const App(initialIndex: 0),
+                      ), // مثال
                     );
                   },
                   width: screenWidth * 0.80,

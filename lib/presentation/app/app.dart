@@ -1,27 +1,35 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
-
+import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
 import '../pagess/NavBar/Favorite_page.dart';
 import '../pagess/NavBar/ActivityPage/activities_page.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
+  const App({super.key, this.initialIndex = 0});
+
+  final int initialIndex;
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  int _currentIndex = 0;
+  late int _currentIndex; // <-- استخدم late بدل = 0
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
 
   final List<Widget> _pages = [
     const VideoPlayerPage(), // VideoPlayerPage ستحتوي على عناصرها الخاصة الآن
     const ActivityPage(),
     const Signuporlogin(),
-    // ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
+     ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
     const FavoritePage(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
   ];
 
