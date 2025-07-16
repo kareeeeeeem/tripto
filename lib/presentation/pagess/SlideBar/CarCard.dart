@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/CarModel.dart';
-import 'package:tripto/presentation/CarDetials.dart';
+import 'package:tripto/presentation/pagess/CarDetials.dart';
 import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart'; // مهم فيه ActivityCard و openActivitiesCard
 
 class CarSelectionPage extends StatefulWidget {
@@ -69,10 +69,11 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                           Navigator.of(context).pop(carsList[selectedIndex!]);
 
                           Future.delayed(const Duration(milliseconds: 100), () {
-                            openActivitiesCard(
-                              context,
-                              exmactivities[0],
-                            ); // عرض أول نشاط
+                            showDialog(
+                              context: context,
+                              builder:
+                                  (context) => const ActivitiesListDialog(),
+                            );
                           });
 
                           debugPrint('Selected car index: $selectedIndex');

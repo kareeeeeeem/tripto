@@ -78,12 +78,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 controller: passwordController,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.075, // تقريبًا 7.5% من ارتفاع الشاشة
+                height:
+                    MediaQuery.of(context).size.height *
+                    0.075, // تقريبًا 7.5% من ارتفاع الشاشة
               ),
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.035),
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.035,
+                    ),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.85,
                       height: MediaQuery.of(context).size.height * 0.06,

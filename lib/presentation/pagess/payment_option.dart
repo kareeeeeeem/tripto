@@ -17,6 +17,7 @@ class _PaymentOptionState extends State<PaymentOption> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+
         title: const Text(
           'Payment',
           style: TextStyle(
@@ -25,6 +26,7 @@ class _PaymentOptionState extends State<PaymentOption> {
             color: Colors.black,
           ),
         ),
+
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(
@@ -55,6 +57,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                 },
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.003),
+
               PaymentOptionCard(
                 imagePath: 'assets/images/paypal.png',
                 label: 'PayPal',

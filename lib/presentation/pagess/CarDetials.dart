@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/CarModel.dart';
-import 'package:tripto/presentation/pagess/SlideBar/InfoCard.dart';
 
 const Map<int, String> colorNames = {
   0xFF2196F3: 'Blue',

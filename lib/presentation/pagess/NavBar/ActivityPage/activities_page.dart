@@ -1,17 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/models/activity_model.dart';
-import 'package:tripto/presentation/app/app.dart';
+import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
 
-import '../../../core/constants/colors.dart';
-import '../../../core/routes/app_routes.dart';
+import '../../../../core/constants/colors.dart'; // تأكد من المسار الصحيح لـ colors
+import '../../../../core/routes/app_routes.dart'; // تأكد من المسار الصحيح لـ routes
 
-class ActivityCard extends StatelessWidget {
-  final Activitymodel activity;
-
-  const ActivityCard({required this.activity, super.key});
+class ActivityPage extends StatelessWidget {
+  // تم تغيير الاسم هنا إلى ActivityPage
+  const ActivityPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Activities",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            // العودة إلى App وإزالة جميع المسارات السابقة
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const App()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.only(
+          bottom:
+              MediaQuery.of(context).size.height *
+              0.12, // تقريبًا 12% من الشاشة
+        ),
+        itemCount: exmactivities.length,
+        itemBuilder: (context, index) {
+          final activity = exmactivities[index];
+          // استدعاء الويدجت الفرعي الذي يعرض تفاصيل النشاط
+          return _buildActivityCard(context, activity);
+        },
+      ),
+    );
+  }
+
+  // دالة مساعدة لإنشاء بطاقة النشاط الفردي
+  Widget _buildActivityCard(BuildContext context, Activitymodel activity) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
@@ -22,19 +61,20 @@ class ActivityCard extends StatelessWidget {
             arguments: activity,
           );
         },
-
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: SizedBox(
             height: 136,
-            width: 130,
+            width:
+                double.infinity, // استخدام double.infinity ليأخذ العرض المتاح
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // الصورة
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
@@ -46,7 +86,8 @@ class ActivityCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 25),
+                  const SizedBox(width: 25), // زيادة المسافة لتناسب المحتوى
+                  // تفاصيل النشاط (العنوان والسعر)
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,9 +99,12 @@ class ActivityCard extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
+                          maxLines: 2, // لضمان عدم تجاوز السطرين
+                          overflow:
+                              TextOverflow
+                                  .ellipsis, // لإضافة ... إذا كان النص طويلاً
                         ),
                         const SizedBox(height: 6),
-                        // Text('Price: \$${activity.price.toStringAsFixed(0)} '),
                         Text.rich(
                           TextSpan(
                             children: [
@@ -75,7 +119,7 @@ class ActivityCard extends StatelessWidget {
                                 text: '\$',
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.black, // لون علامة الدولار
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -84,27 +128,25 @@ class ActivityCard extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black, // لون السعر
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
                           ),
                         ),
-
-                        // const SizedBox(height: 4),
-                        // Text('Number: ${activity.number}'),
                       ],
                     ),
                   ),
 
+                  // التقييم، المدة، والأيقونة، وزر الحجز
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end, // محاذاة لليمين
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(' ⭐ ${activity.rate} '),
-
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.0001,
                           ),
@@ -112,7 +154,6 @@ class ActivityCard extends StatelessWidget {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.001,
                           ),
-
                           const Icon(
                             Icons.directions_car_filled_sharp,
                             size: 20,
@@ -130,7 +171,6 @@ class ActivityCard extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.paymentOption);
                         },
-
                         child: const Text(
                           'Book',
                           style: TextStyle(color: Colors.white),
@@ -143,51 +183,6 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class Activities extends StatelessWidget {
-  const Activities({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Activities",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            // هنا التعديل
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const App(),
-              ), // العودة إلى App
-              (Route<dynamic> route) => false, // إزالة جميع المسارات السابقة
-            );
-          },
-        ),
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(
-          bottom:
-              MediaQuery.of(context).size.height *
-              0.12, // تقريبًا 12% من الشاشة
-        ),
-        itemCount: exmactivities.length,
-        itemBuilder: (context, index) {
-          final activity = exmactivities[index];
-          return ActivityCard(activity: activity);
-        },
       ),
     );
   }

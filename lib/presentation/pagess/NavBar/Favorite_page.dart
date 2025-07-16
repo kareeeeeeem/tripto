@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/presentation/app/app.dart';
-import '../../../data/models/Saved_model.dart';
+import '../../../core/models/Saved_model.dart';
 import '../payment_option.dart';
 
 class FavoritePage extends StatefulWidget {

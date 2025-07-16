@@ -14,8 +14,6 @@ class _InfoDetailsModelState extends State<InfoDetailsModel> {
   }
 }
 
-// ================== MODELS ==================
-
 class Tourismcompany {
   final String title;
   final String image;

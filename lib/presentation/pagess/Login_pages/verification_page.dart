@@ -45,7 +45,7 @@ class _VerificationState extends State<Verification> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, size: 35 ),
+          icon: const Icon(Icons.arrow_back, size: 35),
         ),
       ),
       body: Center(
@@ -169,7 +169,6 @@ class _VerificationState extends State<Verification> {
               )
             else
               const SizedBox.shrink(),
-
           ],
         ),
       ),

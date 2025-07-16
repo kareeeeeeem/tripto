@@ -21,9 +21,6 @@ class SelectRightButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        // يمكنك تحديد عرض ثابت هنا إذا كنت ترغب في تثبيت عرض الأزرار،
-        // وإلا فسيأخذ العرض المتاح له من الأب.
-        // مثال: width: 60,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blueAccent : Colors.transparent,

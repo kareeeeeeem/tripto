@@ -1,10 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
-import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
-import 'package:tripto/presentation/pagess/payment_option.dart';
-import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
-import 'package:tripto/presentation/payment_destination.dart';
+import 'package:tripto/presentation/pagess/NavBar/ActivityPage/activities_page.dart';
+import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
 
 void main() {
   runApp(const TripToApp());
@@ -21,7 +20,7 @@ class TripToApp extends StatelessWidget {
 
       initialRoute: '/',
       routes: AppRoutes.routes,
-      // home: const Signuporlogin(),
+      // home: const ActivityCard(),
     );
   }
 }

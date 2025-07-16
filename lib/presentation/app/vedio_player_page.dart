@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-
 import 'package:tripto/core/constants/CustomButton.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/SlideBar/RightButtons.dart'; // تأكد من استيراده

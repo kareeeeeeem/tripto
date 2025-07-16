@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
-
+import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
 
 import '../pagess/NavBar/Favorite_page.dart';
-import '../pagess/NavBar/activities_page.dart';
+import '../pagess/NavBar/ActivityPage/activities_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -16,15 +16,13 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _currentIndex = 0;
-  // لن نستخدم bookingPricePerPerson هنا لأنه سيتم التعامل معه في VideoPlayerPage
-  // final double _bookingPricePerPerson = 250.0;
 
   final List<Widget> _pages = [
     const VideoPlayerPage(), // VideoPlayerPage ستحتوي على عناصرها الخاصة الآن
-    const Activities(),
+    const ActivityPage(),
     const Signuporlogin(),
     // ProfilePage(), // افتراض أن ProfilePage يمكن أن تكون ثابتة
-     const FavoritePage(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
+    const FavoritePage(), // تم تغيير الاسم ليتوافق مع اصطلاحات التسمية
   ];
 
   final List<IconData> _icons = const [
@@ -49,15 +47,13 @@ class _AppState extends State<App> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // تعرض الصفحة الحالية (بما في ذلك VideoPlayerPage مع عناصرها الآن)
           _pages[_currentIndex],
 
-          // أيقونة البحث - ستظل ثابتة
-          Positioned(
-            top: screenHeight * 0.07,
-            right: screenWidth * 0.05,
-            child: const Icon(Icons.search, color: Colors.white, size: 30),
-          ),
+          // Positioned(
+          //   top: screenHeight * 0.07,
+          //   right: screenWidth * 0.05,
+          //   child: const Icon(Icons.search, color: Colors.white, size: 30),
+          // ),
 
           // شريط التنقل السفلي - سيظل ثابتًا
           Positioned(

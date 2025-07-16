@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
-import 'package:tripto/core/models/activity_model.dart';
+import 'package:tripto/core/models/activityPageModel.dart';
 
-import '../../../core/constants/colors.dart';
-import '../../../core/routes/app_routes.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/routes/app_routes.dart';
 
 class ActivityDetailsPage extends StatefulWidget {
   final Activitymodel activity;

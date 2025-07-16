@@ -1,4 +1,3 @@
-
 class Activitysaved {
   final String imagePath;
   final String country;
@@ -14,15 +13,17 @@ class Activitysaved {
     required this.tabType,
   });
 }
+
 final List<Activitysaved> favoriteActivities = [
-  Activitysaved(
+  const Activitysaved(
     imagePath: "assets/images/museum.png",
     country: "Egypt",
     city: "Cairo",
-    description: "This is a dummy activity used just to preview the UI structure.",
+    description:
+        "This is a dummy activity used just to preview the UI structure.",
     tabType: "saved",
   ),
-  Activitysaved(
+  const Activitysaved(
     imagePath: "assets/images/museum.png",
     country: "Italy",
     city: "Rome",
@@ -30,4 +31,3 @@ final List<Activitysaved> favoriteActivities = [
     tabType: "saved",
   ),
 ];
-

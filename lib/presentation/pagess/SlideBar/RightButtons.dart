@@ -1,14 +1,15 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/core/models/CarModel.dart';
+import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/CarCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/DateCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/InfoCard.dart';
-import 'package:tripto/presentation/pagess/SlideBar/ShareCard.dart';
-import '../../../core/models/Hotels_details_model.dart';
 
 class _ButtonData {
   final Widget iconWidget;
@@ -97,6 +98,7 @@ class _RightButtonsState extends State<RightButtons> {
           }
         },
       ),
+
       _ButtonData(
         iconWidget: Stack(
           alignment: Alignment.center,
@@ -154,6 +156,7 @@ class _RightButtonsState extends State<RightButtons> {
           );
         },
       ),
+
       _ButtonData(
         iconWidget: Icon(
           Icons.directions_car,
@@ -177,8 +180,11 @@ class _RightButtonsState extends State<RightButtons> {
           color: selectedIndex == 4 ? selectedIconColor : defaultIconColor,
         ),
         label: 'activities',
-        onPressed: () {
-          debugPrint('activities pressed');
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            builder: (context) => const ActivitiesListDialog(), // ✅ الحل الصحيح
+          );
         },
       ),
 
