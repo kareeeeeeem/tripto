@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/presentation/app/vedio_player_page.dart';
 
 // تأكد من المسارات الصحيحة لـ AppRoutes
 import '../../../../core/routes/app_routes.dart';
@@ -102,6 +104,8 @@ class ActivitiesListDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
@@ -111,10 +115,12 @@ class ActivitiesListDialog extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'activities',
+                'Activities',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
+
+            // ✅ قائمة الأنشطة
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(6),
@@ -122,6 +128,33 @@ class ActivitiesListDialog extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ActivityCard(activity: exmactivities[index]);
                 },
+              ),
+            ),
+
+            // ✅ زر Book Now تحت خالص
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 8.0,
+                left: 20.0,
+                right: 20.0,
+                top: 8.0,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: CustomButton(
+                  text: "Finish",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const VideoPlayerPage(),
+                      ),
+                    );
+                  },
+                  width: screenWidth * 0.80,
+                  height: 40,
+                ),
               ),
             ),
           ],

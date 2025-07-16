@@ -91,7 +91,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   ),
                 ),
                 child: const Text(
-                  'Next',
+                  'Select Activity',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
