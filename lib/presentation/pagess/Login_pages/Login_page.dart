@@ -17,10 +17,22 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
+      ),
+      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.14 // تقريبًا تعادل 110 على شاشة ارتفاعها ~800
+            top: MediaQuery.of(context).size.height * 0.07 // تقريبًا تعادل 110 على شاشة ارتفاعها ~800
           ),
           child: Column(
             children: [

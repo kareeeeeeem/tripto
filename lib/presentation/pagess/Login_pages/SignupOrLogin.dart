@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../../app/app.dart';
 import 'Login_page.dart';
+import 'SignUp_page.dart';
+
 class Signuporlogin extends StatelessWidget {
   const Signuporlogin({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const App()),
+            (route) => false,
+      );
+    },
+          icon: const Icon(
+            Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),        ),
+      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+                height: MediaQuery.of(context).size.height*0.160,
+                width: MediaQuery.of(context).size.width*0.925,
+                child: Image(image: AssetImage("assets/images/Logo.png"),)),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.878,
               height: MediaQuery.of(context).size.height * 0.05875,
@@ -21,11 +46,16 @@ class Signuporlogin extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {} ,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignupPage()),
+                  );
+                },
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -38,7 +68,9 @@ class Signuporlogin extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.04,
+                    ),
                     height: 1,
                     color: Colors.black45,
                   ),
@@ -46,7 +78,9 @@ class Signuporlogin extends StatelessWidget {
                 const Text("OR"),
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.04,
+                    ),
                     height: 1,
                     color: Colors.black45,
                   ),
@@ -63,28 +97,26 @@ class Signuporlogin extends StatelessWidget {
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.blue , width: 2),
+                    side: const BorderSide(color: Color(0xFF002E70), width: 2),
                   ),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Login()
-                    ),
+                    MaterialPageRoute(builder: (context) => const Login()),
                   );
-                } ,
+                },
                 child: const Text(
                   'Log in',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF002E70),
                   ),
                 ),
               ),
             ),
-
-          ]
+          ],
         ),
       ),
     );
