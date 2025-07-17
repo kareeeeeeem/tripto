@@ -23,10 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isPasswordReadOnly = true;
   bool isEditing = false;
 
-  // نحدد currentIndex الحالي كـ 2 لأن دي صفحة البروفايل
   final int _currentIndex = 2;
 
-  // دالة التنقل
   void _changePage(int index) {
     Navigator.pushReplacement(
       context,
@@ -57,9 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            padding: const EdgeInsets.only(
-              bottom: 100,
-            ), // عشان نسيب مساحة للنافيجيشن
+            padding: const EdgeInsets.only(bottom: 100),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -105,20 +101,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          if (isEditing) {
-                            // حفظ البيانات
-                            isEditing = false;
-                            isNameReadOnly = true;
-                            isEmailReadOnly = true;
-                            isPhoneReadOnly = true;
-                            isPasswordReadOnly = true;
-                          } else {
-                            isEditing = true;
-                            isNameReadOnly = false;
-                            isEmailReadOnly = false;
-                            isPhoneReadOnly = false;
-                            isPasswordReadOnly = false;
-                          }
+                          isEditing = !isEditing;
+                          isNameReadOnly = !isEditing;
+                          isEmailReadOnly = !isEditing;
+                          isPhoneReadOnly = !isEditing;
+                          isPasswordReadOnly = !isEditing;
                         });
                       },
                       child: Text(
@@ -136,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
 
-          /// ✅ شريط التنقل السفلي
+          // ✅ Bottom Navigation Bar ثابت في الأسفل
           Positioned(
             bottom: 0,
             left: 0,

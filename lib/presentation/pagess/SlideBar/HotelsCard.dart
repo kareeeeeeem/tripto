@@ -48,10 +48,16 @@ class _HotelsState extends State<Hotels> {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: isSelected ? Colors.blue[50] : Colors.white,
+                                  color:
+                                      isSelected
+                                          ? Colors.blue[50]
+                                          : Colors.white,
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
-                                    color: isSelected ? Colors.blue : Colors.grey.shade300,
+                                    color:
+                                        isSelected
+                                            ? Colors.blue
+                                            : Colors.grey.shade300,
                                     width: isSelected ? 2 : 1,
                                   ),
                                 ),
@@ -70,7 +76,8 @@ class _HotelsState extends State<Hotels> {
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             hotel.title,
@@ -124,17 +131,20 @@ class _HotelsState extends State<Hotels> {
                       width: 110,
                       height: 46,
                       child: ElevatedButton(
-                        onPressed: selectedHotelIndex != null
-                            ? () {
-                          //  final selectedHotel = bookinghotels[selectedHotelIndex!];
-                          final selectedHotel = bookinghotels[0];
-                          Navigator.pop(context);
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => const CarSelectionPage(),
-                          );
-                        }
-                            : null,
+                        onPressed:
+                            selectedHotelIndex != null
+                                ? () {
+                                  //  final selectedHotel = bookinghotels[selectedHotelIndex!];
+                                  final selectedHotel = bookinghotels[0];
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    builder:
+                                        (BuildContext context) =>
+                                            const CarSelectionPage(),
+                                  );
+                                }
+                                : null,
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
