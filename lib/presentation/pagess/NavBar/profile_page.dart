@@ -23,15 +23,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isPasswordReadOnly = true;
   bool isEditing = false;
 
-  final int _currentIndex = 2;
-
-  void _changePage(int index) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => App(initialIndex: index)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,86 +43,98 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 100),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const CircleAvatar(
+                radius: 35,
+                backgroundImage: AssetImage("assets/images/shika.png"),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+              Profiletextfield(
+                label: "Name",
+                isReadOnly: isNameReadOnly,
+                controller: nameController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Email",
+                isReadOnly: isEmailReadOnly,
+                controller: emailController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Phone1",
+                isReadOnly: isPhoneReadOnly,
+                controller: phoneController,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.050),
+              Profiletextfield(
+                label: "Password",
+                isReadOnly: isPasswordReadOnly,
+                controller: passwordController,
+              ),
+              SizedBox(
+                height:
+                    MediaQuery.of(context).size.height *
+                    0.075, // تقريبًا 7.5% من ارتفاع الشاشة
+              ),
+              Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 35,
-                    backgroundImage: AssetImage("assets/images/shika.png"),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-                  Profiletextfield(
-                    label: "Name",
-                    isReadOnly: isNameReadOnly,
-                    controller: nameController,
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                  Profiletextfield(
-                    label: "Email",
-                    isReadOnly: isEmailReadOnly,
-                    controller: emailController,
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                  Profiletextfield(
-                    label: "Phone1",
-                    isReadOnly: isPhoneReadOnly,
-                    controller: phoneController,
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.050),
-                  Profiletextfield(
-                    label: "Password",
-                    isReadOnly: isPasswordReadOnly,
-                    controller: passwordController,
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.075),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: btn_background_color_gradiant,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isEditing = !isEditing;
-                          isNameReadOnly = !isEditing;
-                          isEmailReadOnly = !isEditing;
-                          isPhoneReadOnly = !isEditing;
-                          isPasswordReadOnly = !isEditing;
-                        });
-                      },
-                      child: Text(
-                        isEditing ? "Save" : "Edit",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                  Padding(
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * 0.035,
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: btn_background_color_gradiant,
+                            minimumSize: Size(
+                              MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.06,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              if (isEditing) {
+                                // Save data here if needed
+                                isEditing = false;
+                                isNameReadOnly = true;
+                                isEmailReadOnly = true;
+                                isPhoneReadOnly = true;
+                                isPasswordReadOnly = true;
+                              } else {
+                                isEditing = true;
+                                isNameReadOnly = false;
+                                isEmailReadOnly = false;
+                                isPhoneReadOnly = false;
+                                isPasswordReadOnly = false;
+                              }
+                            });
+                          },
+                          child: Text(
+                            isEditing ? "Save" : "Edit",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-
-          // ✅ Bottom Navigation Bar ثابت في الأسفل
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CustomBottomNavBar(
-              currentIndex: _currentIndex,
-              onTap: _changePage,
-            ),
+            ],
           ),
         ],
       ),
