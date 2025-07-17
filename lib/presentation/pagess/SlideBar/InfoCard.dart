@@ -7,6 +7,8 @@ import 'package:tripto/core/models/info_details_model.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class InfoCard extends StatelessWidget {
   const InfoCard({super.key});
 
@@ -28,8 +30,8 @@ class InfoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Tourism Company",
+                     Text(
+                       AppLocalizations.of(context)!.tourismcompany,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -77,8 +79,8 @@ class InfoCard extends StatelessWidget {
                     ),
                     const Divider(thickness: 1, color: Colors.grey),
                     const SizedBox(height: 16),
-                    const Text(
-                      "Flying Company",
+                     Text(
+                      AppLocalizations.of(context)!.flyingcompany,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -119,8 +121,8 @@ class InfoCard extends StatelessWidget {
                     ),
                     const Divider(thickness: 1, color: Colors.grey),
                     const SizedBox(height: 16),
-                    const Text(
-                      "Reserve a Car",
+                     Text(
+                      AppLocalizations.of(context)!.reserveacar,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -161,8 +163,8 @@ class InfoCard extends StatelessWidget {
                     ),
                     const Divider(thickness: 1, color: Colors.grey),
                     const SizedBox(height: 16),
-                    const Text(
-                      "Booking Hotels",
+                     Text(
+                      AppLocalizations.of(context)!.bookinghotel,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

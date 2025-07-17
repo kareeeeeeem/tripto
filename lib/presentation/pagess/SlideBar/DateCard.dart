@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tripto/core/models/Hotels_details_model.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class Datecard extends StatefulWidget {
   const Datecard({super.key});
 

@@ -3,7 +3,9 @@ import 'package:video_player/video_player.dart';
 import 'package:tripto/core/constants/CustomButton.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/SlideBar/RightButtons.dart'; // تأكد من استيراده
-import 'package:tripto/presentation/pagess/payment_option.dart'; // تأكد من استيراده
+import 'package:tripto/presentation/pagess/payment_option.dart';
+
+import '../../l10n/app_localizations.dart'; // تأكد من استيراده
 
 class VideoPlayerPage extends StatefulWidget {
   const VideoPlayerPage({super.key});
@@ -152,7 +154,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   // زر كتم/إظهار الصوت (متحرك مع الفيديو)
                   Positioned(
                     top: screenHeight * 0.07,
-                    left: screenWidth * 0.05,
+                    left: Directionality.of(context) == TextDirection.rtl ? null : screenWidth * 0.05,
+                    right: Directionality.of(context) == TextDirection.rtl ? screenWidth * 0.05 : null,
+
                     child: GestureDetector(
                       onTap: _toggleMute,
                       child: Icon(
@@ -168,7 +172,8 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                     top: screenHeight * 0.1, // نفس الارتفاع النسبي
                     right: screenWidth * 0.38, // نفس الموقع النسبي
                     child: const Text(
-                      'Egypt', // سيتم تكراره لكل فيديو، إذا أردت تغيير الدولة لكل فيديو، تحتاج لقائمة من أسماء الدول
+                      'Egypt',
+                      // سيتم تكراره لكل فيديو، إذا أردت تغيير الدولة لكل فيديو، تحتاج لقائمة من أسماء الدول
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -179,7 +184,10 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
                   // الأزرار الجانبية (RightButtons) (متحركة مع الفيديو)
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? Alignment.centerLeft
+                            : Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: SizedBox(
@@ -191,15 +199,19 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
                   // نص المدينة وعداد الأشخاص (متحرك مع الفيديو)
                   Positioned(
-                    bottom: screenHeight * 0.20, // نفس الارتفاع النسبي
-                    left: 20,
-                    right: screenWidth * 0.25,
+
+                    bottom: screenHeight * 0.20,
+                    left: Directionality.of(context) == TextDirection.rtl ? null : 20,
+                    right: Directionality.of(context) == TextDirection.rtl ? 0 : screenWidth * 0.25,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: Directionality.of(context) == TextDirection.rtl
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+
                       children: [
-                        const Text(
-                          'Alex, Egypt', // سيتم تكراره لكل فيديو، إذا أردت تغيير المدينة، تحتاج لقائمة من أسماء المدن
-                          style: TextStyle(
+                        Text(
+                          'Alex, Egypt',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -211,7 +223,11 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                               ),
                             ],
                           ),
+                          textAlign: Directionality.of(context) == TextDirection.rtl
+                              ? TextAlign.right
+                              : TextAlign.left,
                         ),
+
                         const SizedBox(height: 1),
                         PersonCounterWithPriceWithContry(
                           basePricePerPerson: _bookingPricePerPerson,
@@ -230,7 +246,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                     right: 20,
                     child: Center(
                       child: CustomButton(
-                        text: "Book Now",
+                        text: AppLocalizations.of(context)!.booknow,
                         onPressed: () {
                           Navigator.push(
                             context,

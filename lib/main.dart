@@ -38,6 +38,8 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/', // أو حط اسم أول Route عندك هنا
       routes: AppRoutes.routes,
+
+      // home: const Hotels(),
     );
   }
 }

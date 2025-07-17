@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -23,8 +25,10 @@ class _SignupPageState extends State<SignupPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),
@@ -42,7 +46,8 @@ class _SignupPageState extends State<SignupPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Name" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.name
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.925,
@@ -59,7 +64,8 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
-                  Text("Email" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.email
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                   SizedBox(height: MediaQuery.of(context).size.height*0.008),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.925,
@@ -77,7 +83,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
 
-                  Text("Password" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.password
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.925,
@@ -108,7 +115,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
 
-                  Text("Confirm Password" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.confirmpassword
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.925,
@@ -139,7 +147,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
 
-                  Text("Location" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.location
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.925,
@@ -156,7 +165,8 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height*0.009),
-                  Text("Gender" , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                  Text(AppLocalizations.of(context)!.gender
+                    , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
 
                 ],
               ),
@@ -169,14 +179,14 @@ class _SignupPageState extends State<SignupPage> {
                       gender = value;
                     });
                   }),
-                  Text("Male"),
+                  Text(AppLocalizations.of(context)!.male),
                   SizedBox(width: MediaQuery.of(context).size.width*0.09),
                   Radio(value: 2, groupValue: gender, onChanged: (value){
                     setState(() {
                       gender = value;
                     });
                   }),
-                  Text("Female"),
+                  Text(AppLocalizations.of(context)!.female),
 
                 ]
               ),
@@ -193,9 +203,9 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   onPressed: () {},
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.signup,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,

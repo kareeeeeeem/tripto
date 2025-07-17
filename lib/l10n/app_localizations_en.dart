@@ -22,4 +22,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get or => 'Or';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get joinusviaphonenumber => 'Join us via phone number';
+
+  @override
+  String get wewilltextacodetoverfiyyournumber =>
+      'We will text a code to verfiy your number';
+
+  @override
+  String get enterthecode => 'Enter the code';
+
+  @override
+  String get wesentyouacode => 'We sent you a code';
+
+  @override
+  String get wesentitto => 'We sent it to';
+
+  @override
+  String request_code_again_timer(Object time) {
+    return 'You can request code again in $time s';
+  }
+
+  @override
+  String get request_code_again => 'You can request the code again';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get resendcode => 'Resend code';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmpassword => 'Confirm Password';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get selectahotel => 'Select a Hotel';
+
+  @override
+  String get selectactivity => 'Select Activity';
+
+  @override
+  String get finish => 'Finish';
+
+  @override
+  String get tourismcompany => 'Tourism Company';
+
+  @override
+  String get flyingcompany => 'Flying Company';
+
+  @override
+  String get reserveacar => 'Reserve a Car';
+
+  @override
+  String get bookinghotel => 'Booking Hotel';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get diamond => 'Diamond';
+
+  @override
+  String get platinum => 'Platinum';
+
+  @override
+  String get booknow => 'Book Now';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get hotel => 'Hotel';
+
+  @override
+  String get car => 'Car';
+
+  @override
+  String get activities => 'Activities';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get info => 'Info';
 }

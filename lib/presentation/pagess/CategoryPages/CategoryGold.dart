@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/DiagonalPainter.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class GoldCategory extends StatelessWidget {
   final bool isSelected;
   const GoldCategory({super.key, this.isSelected = false});
@@ -35,12 +37,12 @@ class GoldCategory extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(child: CustomPaint(painter: DiagonalPainter())),
-            const Positioned(
+            Positioned(
               top: 10,
               left: 10,
               child: Text(
-                'Gold',
-                style: TextStyle(
+                AppLocalizations.of(context)!.gold,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,

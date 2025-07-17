@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
 class Verification extends StatefulWidget {
   final String phoneNumber;
@@ -26,7 +27,7 @@ class _VerificationState extends State<Verification> {
 
   void startTimer() {
     _start = 59;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return; // ✅ نتأكد إن الwidget لسه موجود
       setState(() {
         if (_start > 0) {
@@ -37,34 +38,43 @@ class _VerificationState extends State<Verification> {
       });
     });
   }
+
   @override
   void dispose() {
     _timer?.cancel(); // لازم نلغي التايمر لما الصفحة تتقفل
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
+            size: 35,
+          ),
         ),
       ),
       body: Center(
         child: Column(
           children: [
-            const Text(
-              "Enter the code",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            Text(
+              AppLocalizations.of(context)!.enterthecode,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const Text(
-              "We sent You a code",
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.wesentyouacode,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFF8A8A8A),
@@ -74,9 +84,9 @@ class _VerificationState extends State<Verification> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "We sent it to  ",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.request_code_again,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF8A8A8A),
@@ -123,8 +133,10 @@ class _VerificationState extends State<Verification> {
             ),
             Text(
               _start > 0
-                  ? "You can request code again in $_start s"
-                  : "You can request the code again",
+                  ? AppLocalizations.of(
+                    context,
+                  )!.request_code_again_timer(_start.toString())
+                  : AppLocalizations.of(context)!.request_code_again,
               style: const TextStyle(fontSize: 16),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -148,9 +160,9 @@ class _VerificationState extends State<Verification> {
                             Navigator.pushNamed(context, '/ProfileCard');
                           }
                           : null,
-                  child: const Text(
-                    'Confirm',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.confirm,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
@@ -170,7 +182,7 @@ class _VerificationState extends State<Verification> {
                     onPressed: () {
                       startTimer();
                     },
-                    child: const Text("Resend Code"),
+                    child: Text(AppLocalizations.of(context)!.resendcode),
                   ),
                 ),
               )

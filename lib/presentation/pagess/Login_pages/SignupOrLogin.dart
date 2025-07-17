@@ -17,25 +17,31 @@ class Signuporlogin extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const App()),
-            (route) => false,
-      );
-    },
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const App()),
+              (route) => false,
+            );
+          },
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons
+                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
-          ),        ),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           children: [
             SizedBox(
-                height: MediaQuery.of(context).size.height*0.160,
-                width: MediaQuery.of(context).size.width*0.925,
-                child: Image(image: AssetImage("assets/images/Logo.png"),)),
+              height: MediaQuery.of(context).size.height * 0.160,
+              width: MediaQuery.of(context).size.width * 0.925,
+              child: const Image(image: AssetImage("assets/images/Logo.png")),
+            ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.878,
@@ -53,9 +59,10 @@ class Signuporlogin extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SignupPage()),
                   );
                 },
-                child:  Text(AppLocalizations.of(context)!.signup,
+                child: Text(
+                  AppLocalizations.of(context)!.signup,
 
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -107,8 +114,9 @@ class Signuporlogin extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const Login()),
                   );
                 },
-                child:  Text(AppLocalizations.of(context)!.login,
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.login,
+                  style: const TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF002E70),
