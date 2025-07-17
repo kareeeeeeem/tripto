@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomBottomNavBar.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
+import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
 import '../pagess/NavBar/Favorite_page.dart';
 import '../pagess/NavBar/ActivityPage/activities_page.dart';
 
@@ -26,7 +27,7 @@ class _AppState extends State<App> {
   }
 
   final List<Widget> _pages = [
-    const VideoPlayerPage(),
+    const HomePage(),
     const ActivityPage(),
     const Signuporlogin(),
     const FavoritePage(),

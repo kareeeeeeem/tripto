@@ -88,14 +88,25 @@ class _DatecardState extends State<Datecard> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: const Color(0xFF002E70), // ✅ اللون الهادي
                 foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
-                  vertical: 12,
+                  vertical: 14,
+                ),
+                elevation: 0,
+              ),
+              child: const Text(
+                "Select a Hotel",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              child: const Text("Select a Hotel"),
             ),
           ],
         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/routes/app_routes.dart';
+import 'package:tripto/presentation/app/app.dart';
+import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
 
 class ActivityCard extends StatelessWidget {
   final Activitymodel activity;
@@ -145,11 +147,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                   onPressed: () {
                     if (selectedIndex != null) {
                       final selectedActivity = exmactivities[selectedIndex!];
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.activityDetailsPageRoute,
-                        arguments: selectedActivity,
-                      );
+
+                      /// ✅ أقفل الـ Dialog وارجع النشاط المحدد (اختياريًا)
+                      Navigator.pop(context, selectedActivity);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -158,6 +158,7 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                       );
                     }
                   },
+
                   width: screenWidth * 0.80,
                   height: 40,
                 ),

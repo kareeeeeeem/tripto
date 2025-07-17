@@ -80,7 +80,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                         }
                         : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: const Color(0xFF002E70), // ✅ اللون الموحد
                   foregroundColor: Colors.white,
                   minimumSize: Size(
                     MediaQuery.of(context).size.width * 0.7,
@@ -89,10 +89,15 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  elevation: 0,
                 ),
                 child: const Text(
                   'Select Activity',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
