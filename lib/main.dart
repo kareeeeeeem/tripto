@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
@@ -21,16 +20,13 @@ class TripToApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: Locale('ar'), // أو Locale('ar') للتجربة
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      // localizationsDelegates: const [
+      //   AppLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
 
