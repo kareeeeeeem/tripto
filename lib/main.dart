@@ -4,9 +4,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
+import 'package:tripto/presentation/pagess/Login_pages/SignUp_page.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
+import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
 import 'package:tripto/presentation/pagess/NavBar/ActivityPage/activities_page.dart';
 import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
+import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
 
 import 'l10n/app_localizations.dart';
 
@@ -35,8 +38,9 @@ class TripToApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       initialRoute: '/',
-      // home: const Signuporlogin(),
       routes: AppRoutes.routes,
+      // home: const Hotels(),
+
     );
   }
 }

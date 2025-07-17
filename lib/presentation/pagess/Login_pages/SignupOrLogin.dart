@@ -17,17 +17,21 @@ class Signuporlogin extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const App()),
-            (route) => false,
-      );
-    },
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const App()),
+                  (route) => false,
+            );
+          },
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,  // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
-          ),        ),
+          ),
+        ),
+
       ),
       body: Center(
         child: Column(

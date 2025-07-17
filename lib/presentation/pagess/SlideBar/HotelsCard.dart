@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import '../../../core/models/Hotels_details_model.dart';
+import '../../../l10n/app_localizations.dart';
 import 'CarCard.dart';
 
 class Hotels extends StatefulWidget {
@@ -90,11 +91,12 @@ class _HotelsState extends State<Hotels> {
                                             "This is the description of the company. This is the description of the company This is the description of the company",
                                           ),
                                           const SizedBox(height: 8),
-                                          const Align(
+                                          Align(
+
                                             alignment: Alignment.bottomRight,
-                                            child: Text(
-                                              "Price: \$150",
-                                              style: TextStyle(
+                                            child:
+                                              Text("${AppLocalizations.of(context)!.price}: \$150",
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -151,8 +153,8 @@ class _HotelsState extends State<Hotels> {
                           ),
                           backgroundColor: const Color(0xFF002E70),
                         ),
-                        child: const Text(
-                          "Next",
+                        child:  Text(
+                          AppLocalizations.of(context)!.next,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,

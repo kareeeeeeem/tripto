@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/pagess/CarDetials.dart';
-import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart'; // مهم فيه ActivityCard و openActivitiesCard
+import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
+
+import '../../../l10n/app_localizations.dart'; // مهم فيه ActivityCard و openActivitiesCard
 
 class CarSelectionPage extends StatefulWidget {
   const CarSelectionPage({super.key});
@@ -90,8 +92,8 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Select Activity',
+                child:  Text(
+                  AppLocalizations.of(context)!.selectactivity,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),

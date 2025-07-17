@@ -127,6 +127,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Or'**
   String get or;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @joinusviaphonenumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Join us via phone number'**
+  String get joinusviaphonenumber;
+
+  /// No description provided for @wewilltextacodetoverfiyyournumber.
+  ///
+  /// In en, this message translates to:
+  /// **'We will text a code to verfiy your number'**
+  String get wewilltextacodetoverfiyyournumber;
+
+  /// No description provided for @enterthecode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code'**
+  String get enterthecode;
+
+  /// No description provided for @wesentyouacode.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent you a code'**
+  String get wesentyouacode;
+
+  /// No description provided for @wesentitto.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent it to'**
+  String get wesentitto;
+
+  /// No description provided for @request_code_again_timer.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request code again in {time} s'**
+  String request_code_again_timer(Object time);
+
+  /// No description provided for @request_code_again.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request the code again'**
+  String get request_code_again;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @resendcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get resendcode;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @confirmpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmpassword;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @selectahotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Hotel'**
+  String get selectahotel;
+
+  /// No description provided for @selectactivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Activity'**
+  String get selectactivity;
+
+  /// No description provided for @finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finish;
+
+  /// No description provided for @tourismcompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Tourism Company'**
+  String get tourismcompany;
+
+  /// No description provided for @flyingcompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Flying Company'**
+  String get flyingcompany;
+
+  /// No description provided for @reserveacar.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve a Car'**
+  String get reserveacar;
+
+  /// No description provided for @bookinghotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking Hotel'**
+  String get bookinghotel;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @gold.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get gold;
+
+  /// No description provided for @diamond.
+  ///
+  /// In en, this message translates to:
+  /// **'Diamond'**
+  String get diamond;
+
+  /// No description provided for @platinum.
+  ///
+  /// In en, this message translates to:
+  /// **'Platinum'**
+  String get platinum;
+
+  /// No description provided for @booknow.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get booknow;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @hotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel'**
+  String get hotel;
+
+  /// No description provided for @car.
+  ///
+  /// In en, this message translates to:
+  /// **'Car'**
+  String get car;
+
+  /// No description provided for @activities.
+  ///
+  /// In en, this message translates to:
+  /// **'Activities'**
+  String get activities;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get info;
 }
 
 class _AppLocalizationsDelegate

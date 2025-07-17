@@ -3,6 +3,8 @@ import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class ActivityCard extends StatelessWidget {
   final Activitymodel activity;
   final bool isSelected;
@@ -141,7 +143,7 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                 width: double.infinity,
                 height: 45,
                 child: CustomButton(
-                  text: "Finish",
+                  text: AppLocalizations.of(context)!.finish,
                   onPressed: () {
                     if (selectedIndex != null) {
                       final selectedActivity = exmactivities[selectedIndex!];

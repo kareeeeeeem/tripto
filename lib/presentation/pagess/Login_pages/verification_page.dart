@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
 class Verification extends StatefulWidget {
   final String phoneNumber;
@@ -52,18 +53,21 @@ class _VerificationState extends State<Verification> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+          icon: Icon(
+              Localizations.localeOf(context).languageCode == 'ar'
+                  ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                  : Icons.keyboard_arrow_left_outlined, size: 35),
         ),
       ),
       body: Center(
         child: Column(
           children: [
-            const Text(
-              "Enter the code",
+             Text(
+              AppLocalizations.of(context)!.enterthecode,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const Text(
-              "We sent You a code",
+             Text(
+              AppLocalizations.of(context)!.wesentyouacode,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -74,9 +78,9 @@ class _VerificationState extends State<Verification> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "We sent it to  ",
-                  style: TextStyle(
+                 Text(
+                   AppLocalizations.of(context)!.request_code_again,
+                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF8A8A8A),
@@ -123,8 +127,8 @@ class _VerificationState extends State<Verification> {
             ),
             Text(
               _start > 0
-                  ? "You can request code again in $_start s"
-                  : "You can request the code again",
+                  ? AppLocalizations.of(context)!.request_code_again_timer(_start.toString())
+                  : AppLocalizations.of(context)!.request_code_again,
               style: const TextStyle(fontSize: 16),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -148,8 +152,8 @@ class _VerificationState extends State<Verification> {
                             Navigator.pushNamed(context, '/ProfileCard');
                           }
                           : null,
-                  child: const Text(
-                    'Confirm',
+                  child:  Text(
+                    AppLocalizations.of(context)!.confirm,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -170,7 +174,9 @@ class _VerificationState extends State<Verification> {
                     onPressed: () {
                       startTimer();
                     },
-                    child: const Text("Resend Code"),
+                    child:  Text(
+                      AppLocalizations.of(context)!.resendcode,
+                    ),
                   ),
                 ),
               )

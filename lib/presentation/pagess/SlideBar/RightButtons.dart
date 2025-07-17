@@ -11,6 +11,8 @@ import 'package:tripto/presentation/pagess/SlideBar/DateCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/InfoCard.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 class _ButtonData {
   final Widget iconWidget;
   final String label;
@@ -84,7 +86,7 @@ class _RightButtonsState extends State<RightButtons> {
           ),
         ),
 
-        label: 'Category',
+        label: AppLocalizations.of(context)!.category,
         onPressed: () async {
           final selectedCategory = await showDialog<CategoryType>(
             context: context,
@@ -118,7 +120,7 @@ class _RightButtonsState extends State<RightButtons> {
             ),
           ],
         ),
-        label: 'Date',
+        label: AppLocalizations.of(context)!.date,
         onPressed: () async {
           final result = await showDialog<Map<String, DateTime?>>(
             context: context,
@@ -142,7 +144,7 @@ class _RightButtonsState extends State<RightButtons> {
           Icons.hotel,
           color: selectedIndex == 2 ? selectedIconColor : defaultIconColor,
         ),
-        label: 'Hotel',
+        label: AppLocalizations.of(context)!.hotel,
         onPressed: () async {
           await showDialog(
             context: context,
@@ -162,7 +164,7 @@ class _RightButtonsState extends State<RightButtons> {
           Icons.directions_car,
           color: selectedIndex == 3 ? selectedIconColor : defaultIconColor,
         ),
-        label: 'Car',
+        label: AppLocalizations.of(context)!.car,
         onPressed: () async {
           final Carmodel? selectedCar = await showDialog(
             context: context,
@@ -179,7 +181,7 @@ class _RightButtonsState extends State<RightButtons> {
           Icons.category_outlined,
           color: selectedIndex == 4 ? selectedIconColor : defaultIconColor,
         ),
-        label: 'activities',
+        label: AppLocalizations.of(context)!.activities,
         onPressed: () async {
           await showDialog(
             context: context,
@@ -193,7 +195,7 @@ class _RightButtonsState extends State<RightButtons> {
           Icons.bookmark_border,
           color: selectedIndex == 5 ? selectedIconColor : defaultIconColor,
         ),
-        label: 'Save',
+        label: AppLocalizations.of(context)!.save,
         onPressed: () {
           debugPrint('Save pressed');
         },
@@ -218,7 +220,7 @@ class _RightButtonsState extends State<RightButtons> {
           Icons.info_outline,
           color: selectedIndex == 7 ? selectedIconColor : defaultIconColor,
         ),
-        label: 'Info',
+        label: AppLocalizations.of(context)!.info,
         onPressed: () async {
           await showDialog(
             context: context,
