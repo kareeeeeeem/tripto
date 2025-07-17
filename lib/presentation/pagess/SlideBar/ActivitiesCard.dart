@@ -1,96 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
-import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/app/vedio_player_page.dart';
-
-// تأكد من المسارات الصحيحة لـ AppRoutes
-import '../../../../core/routes/app_routes.dart';
+import 'package:tripto/core/routes/app_routes.dart';
 
 class ActivityCard extends StatelessWidget {
-  // تم تغيير الاسم إلى ActivityCard
-  final Activitymodel activity; // Activitymodel الآن هي معلمة مطلوبة
+  final Activitymodel activity;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-  const ActivityCard({required this.activity, super.key});
+  const ActivityCard({
+    required this.activity,
+    required this.isSelected,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
-          // عند النقر، يتم الانتقال إلى صفحة تفاصيل النشاط
-          Navigator.pushNamed(
-            context,
-            AppRoutes.activityDetailsPageRoute,
-            arguments: activity,
-          );
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            border:
+                isSelected
+                    ? Border.all(color: Colors.blueAccent, width: 3)
+                    : null,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: SizedBox(
-            height: 136,
-            width:
-                double.infinity, // استخدام double.infinity ليأخذ العرض المتاح
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // الصورة
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      height: double.infinity,
-                      width: 100,
-                      child: Image.asset(
-                        "assets/images/museum.png", // استخدام صورة المتحف
-                        fit: BoxFit.cover,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: SizedBox(
+              height: 136,
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        height: double.infinity,
+                        width: 100,
+                        child: Image.asset(
+                          "assets/images/museum.png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 25), // زيادة المسافة لتناسب المحتوى
-                  // تفاصيل النشاط (العنوان فقط)
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          activity.title,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 2, // لضمان عدم تجاوز السطرين
-                          overflow:
-                              TextOverflow
-                                  .ellipsis, // لإضافة ... إذا كان النص طويلاً
-                        ),
-                        const SizedBox(height: 6),
-                        // تم إزالة عرض السعر هنا
-                      ],
-                    ),
-                  ),
-
-                  // التقييم فقط
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end, // محاذاة لليمين
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                    const SizedBox(width: 25),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(' ⭐ ${activity.rate} '), // عرض التقييم
-                          // تم إزالة عرض المدة وصورة السيارة هنا
+                          Text(
+                            activity.title,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
                         ],
                       ),
-                      // تم إزالة زر الحجز هنا
-                    ],
-                  ),
-                ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [Text(' ⭐ ${activity.rate} ')],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -100,8 +86,15 @@ class ActivityCard extends StatelessWidget {
   }
 }
 
-class ActivitiesListDialog extends StatelessWidget {
+class ActivitiesListDialog extends StatefulWidget {
   const ActivitiesListDialog({super.key});
+
+  @override
+  State<ActivitiesListDialog> createState() => _ActivitiesListDialogState();
+}
+
+class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
+  int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +113,23 @@ class ActivitiesListDialog extends StatelessWidget {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
-
-            // ✅ قائمة الأنشطة
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(6),
                 itemCount: exmactivities.length,
                 itemBuilder: (context, index) {
-                  return ActivityCard(activity: exmactivities[index]);
+                  return ActivityCard(
+                    activity: exmactivities[index],
+                    isSelected: selectedIndex == index,
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  );
                 },
               ),
             ),
-
-            // ✅ زر Book Now تحت خالص
             Padding(
               padding: const EdgeInsets.only(
                 bottom: 8.0,
@@ -146,12 +143,20 @@ class ActivitiesListDialog extends StatelessWidget {
                 child: CustomButton(
                   text: "Finish",
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const App(initialIndex: 0),
-                      ), // مثال
-                    );
+                    if (selectedIndex != null) {
+                      final selectedActivity = exmactivities[selectedIndex!];
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.activityDetailsPageRoute,
+                        arguments: selectedActivity,
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please select an activity first'),
+                        ),
+                      );
+                    }
                   },
                   width: screenWidth * 0.80,
                   height: 40,

@@ -8,7 +8,6 @@ class Login extends StatefulWidget {
 
   @override
   State<Login> createState() => _LoginState();
-
 }
 
 class _LoginState extends State<Login> {
@@ -16,8 +15,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -27,12 +27,14 @@ class _LoginState extends State<Login> {
             size: 35,
             color: Colors.black,
           ),
-      ),
+        ),
       ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.07 // تقريبًا تعادل 110 على شاشة ارتفاعها ~800
+            top:
+                MediaQuery.of(context).size.height *
+                0.07, // تقريبًا تعادل 110 على شاشة ارتفاعها ~800
           ),
           child: Column(
             children: [
@@ -55,7 +57,9 @@ class _LoginState extends State<Login> {
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04), // حوالي 4% من العرض
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.04,
+                ), // حوالي 4% من العرض
                 child: IntlPhoneField(
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
@@ -70,7 +74,9 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.025),
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.025,
+                ),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.878,
                   height: MediaQuery.of(context).size.height * 0.05875,
@@ -81,14 +87,17 @@ class _LoginState extends State<Login> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-
                     ),
                     onPressed: () {
-                      if (completePhoneNumber != null && completePhoneNumber!.isNotEmpty) {
+                      if (completePhoneNumber != null &&
+                          completePhoneNumber!.isNotEmpty) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Verification(phoneNumber: completePhoneNumber!),
+                            builder:
+                                (context) => Verification(
+                                  phoneNumber: completePhoneNumber!,
+                                ),
                           ),
                         );
                       } else {
@@ -107,12 +116,10 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-            ]
+            ],
           ),
         ),
-
       ),
-
     );
   }
 }

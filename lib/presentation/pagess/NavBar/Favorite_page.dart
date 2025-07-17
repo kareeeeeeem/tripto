@@ -100,7 +100,8 @@ class _FavoritePageState extends State<FavoritePage>
             Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
-          ),        ),
+          ),
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         bottom: TabBar(
@@ -233,7 +234,10 @@ class _FavoritePageState extends State<FavoritePage>
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(color: Color(0xFF002E70), width: 2),
+                            side: const BorderSide(
+                              color: Color(0xFF002E70),
+                              width: 2,
+                            ),
                           ),
                         ),
                         child: const Text(

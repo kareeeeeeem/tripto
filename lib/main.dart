@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/pagess/NavBar/ActivityPage/activities_page.dart';
-import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
 
 void main() {
   runApp(const TripToApp());

@@ -33,18 +33,21 @@ class ActivityPage extends StatelessWidget {
           },
         ),
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(
-          bottom:
-              MediaQuery.of(context).size.height *
-              0.12, // تقريبًا 12% من الشاشة
+      body: Container(
+        decoration: BoxDecoration(color: Colors.white),
+        child: ListView.builder(
+          padding: EdgeInsets.only(
+            bottom:
+                MediaQuery.of(context).size.height *
+                0.12, // تقريبًا 12% من الشاشة
+          ),
+          itemCount: exmactivities.length,
+          itemBuilder: (context, index) {
+            final activity = exmactivities[index];
+            // استدعاء الويدجت الفرعي الذي يعرض تفاصيل النشاط
+            return _buildActivityCard(context, activity);
+          },
         ),
-        itemCount: exmactivities.length,
-        itemBuilder: (context, index) {
-          final activity = exmactivities[index];
-          // استدعاء الويدجت الفرعي الذي يعرض تفاصيل النشاط
-          return _buildActivityCard(context, activity);
-        },
       ),
     );
   }
@@ -62,6 +65,7 @@ class ActivityPage extends StatelessWidget {
           );
         },
         child: Card(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
