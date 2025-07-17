@@ -5,7 +5,8 @@ import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dar
 import 'package:tripto/presentation/pagess/SlideBar/RightButtons.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/payment_option.dart';
 
-import '../../l10n/app_localizations.dart'; // تأكد من استيراده
+import '../../l10n/app_localizations.dart';
+import '../../main.dart'; // تأكد من استيراده
 
 class VideoPlayerPage extends StatefulWidget {
   const VideoPlayerPage({super.key});
@@ -166,6 +167,25 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    top: screenHeight * 0.07,
+                    left: Directionality.of(context) == TextDirection.rtl ? screenWidth * 0.05 : null,
+                    right: Directionality.of(context) == TextDirection.rtl ? null : screenWidth * 0.05,
+                    child: GestureDetector(
+                      onTap: () {
+                        final currentLocale = Localizations.localeOf(context).languageCode;
+                        final newLocale = currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+                        TripToApp.setLocale(context, newLocale);
+                        setState(() {});
+                      },
+                      child: const Icon(
+                        Icons.language,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+
 
                   // عنوان الدولة (متحرك مع الفيديو)
                   Positioned(
@@ -189,7 +209,10 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                             ? Alignment.centerLeft
                             : Alignment.centerRight,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
+                      padding: EdgeInsets.only(
+                        right: Directionality.of(context) == TextDirection.ltr ? 10 : 0,
+                        left: Directionality.of(context) == TextDirection.rtl ? 10 : 0,
+                      ),
                       child: SizedBox(
                         height: screenHeight * 0.5,
                         child: const RightButtons(),
@@ -199,7 +222,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
                   // نص المدينة وعداد الأشخاص (متحرك مع الفيديو)
                   Positioned(
-
                     bottom: screenHeight * 0.20,
                     left: Directionality.of(context) == TextDirection.rtl ? null : 20,
                     right: Directionality.of(context) == TextDirection.rtl ? 0 : screenWidth * 0.25,

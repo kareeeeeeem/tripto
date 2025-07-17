@@ -1,45 +1,62 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/l10n/app_localizations.dart'; // تأكد أن المسار صحيح حسب مشروعك
+import 'package:tripto/presentation/pagess/Login_pages/Login_page.dart';
+import 'package:tripto/presentation/pagess/Login_pages/SignUp_page.dart';
+import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
+import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
+import 'package:tripto/presentation/pagess/NavBar/ActivityPage/activities_page.dart';
+import 'package:tripto/presentation/pagess/SlideBar/ActivitiesCard.dart';
+import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
+
+import 'l10n/app_localizations.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TripToApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TripToApp extends StatefulWidget {
+  const TripToApp({super.key});
 
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    final _TripToAppState? state = context.findAncestorStateOfType<_TripToAppState>();
+    state?.setLocale(newLocale);
+  }
+  @override
+  State<TripToApp> createState() => _TripToAppState();
+}
+
+class _TripToAppState extends State<TripToApp> {
+  Locale _locale = const Locale('en');
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      // ← هنا تحدد اللغة الافتراضية
-      locale: const Locale('en'), // غيّر لـ 'ar' لو عايز التطبيق يبدأ بالعربي
-      // ← اللغات المدعومة
-      supportedLocales: const [Locale('en'), Locale('ar')],
-
-      // ← الديليجات الخاصة بالترجمة
+      locale: _locale, // أو Locale('ar') للتجربة
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
       localizationsDelegates: const [
-        AppLocalizations.delegate, // ← دي لازم تكون موجودة
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      title: 'TripTo',
+      debugShowCheckedModeBanner: false,
 
-      title: 'Tripto',
-
-      // ← لو عندك Theme خاص
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Cairo', // ← حط اسم الخط اللي ضايفه في pubspec.yaml
-      ),
-
-      initialRoute: '/', // أو حط اسم أول Route عندك هنا
+      initialRoute: '/',
       routes: AppRoutes.routes,
-
       // home: const Hotels(),
+
     );
   }
 }
