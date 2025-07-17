@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../app/app.dart';
 import 'Login_page.dart';
 import 'SignUp_page.dart';
@@ -52,8 +53,8 @@ class Signuporlogin extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SignupPage()),
                   );
                 },
-                child: const Text(
-                  'Sign Up',
+                child:  Text(AppLocalizations.of(context)!.signup,
+
                   style: TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
@@ -75,7 +76,7 @@ class Signuporlogin extends StatelessWidget {
                     color: Colors.black45,
                   ),
                 ),
-                const Text("OR"),
+                Text(AppLocalizations.of(context)!.or),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(
@@ -106,8 +107,7 @@ class Signuporlogin extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const Login()),
                   );
                 },
-                child: const Text(
-                  'Log in',
+                child:  Text(AppLocalizations.of(context)!.login,
                   style: TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,

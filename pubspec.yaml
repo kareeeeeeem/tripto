@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+      sdk: flutter
   #verification code
 
   video_player: ^2.5.0
@@ -66,7 +68,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
 
   # Internationalization (date formatting, etc.)
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # Caching network images
   cached_network_image: ^3.3.1
@@ -121,6 +123,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
