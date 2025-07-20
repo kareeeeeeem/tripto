@@ -20,193 +20,195 @@ class InfoCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Text(
-                       AppLocalizations.of(context)!.tourismcompany,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            "assets/images/tourism.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: SingleChildScrollView(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                         AppLocalizations.of(context)!.tourismcompany,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    tourismcompanies[0].title,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                      ),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              "assets/images/tourism.png",
+                              width: 100,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      tourismcompanies[0].title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
                                     ),
+                                    const Text(' ⭐ 4.9'),
+                                  ],
+                                ),
+                                const ExpandedText(
+                                  text:
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                  maxLines: 2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(thickness: 1, color: Colors.grey),
+                      const SizedBox(height: 16),
+                       Text(
+                        AppLocalizations.of(context)!.flyingcompany,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              "assets/images/egyptair.png",
+                              width: 100,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  flyingcompanies[0].title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
                                   ),
-                                  const Text(' ⭐ 4.9'),
-                                ],
-                              ),
-                              const ExpandedText(
-                                text:
-                                    "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                maxLines: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(thickness: 1, color: Colors.grey),
-                    const SizedBox(height: 16),
-                     Text(
-                      AppLocalizations.of(context)!.flyingcompany,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            "assets/images/egyptair.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                flyingcompanies[0].title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
                                 ),
-                              ),
-                              const ExpandedText(
-                                text:
-                                    "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                maxLines: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(thickness: 1, color: Colors.grey),
-                    const SizedBox(height: 16),
-                     Text(
-                      AppLocalizations.of(context)!.reserveacar,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            "assets/images/kia.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                reservecars[0].title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                                const ExpandedText(
+                                  text:
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                  maxLines: 2,
                                 ),
-                              ),
-                              const ExpandedText(
-                                text:
-                                    "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                maxLines: 2,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const Divider(thickness: 1, color: Colors.grey),
-                    const SizedBox(height: 16),
-                     Text(
-                      AppLocalizations.of(context)!.bookinghotel,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            "assets/images/hilton.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
+                      const Divider(thickness: 1, color: Colors.grey),
+                      const SizedBox(height: 16),
+                       Text(
+                        AppLocalizations.of(context)!.reserveacar,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                bookinghotels[0].title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                      ),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              "assets/images/kia.png",
+                              width: 100,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  reservecars[0].title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              const ExpandedText(
-                                text:
-                                    "This is the description of the company.This is the description of the companyThis is the description of the company",
-                                maxLines: 2,
-                              ),
-                            ],
+                                const ExpandedText(
+                                  text:
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                  maxLines: 2,
+                                ),
+                              ],
+                            ),
                           ),
+                        ],
+                      ),
+                      const Divider(thickness: 1, color: Colors.grey),
+                      const SizedBox(height: 16),
+                       Text(
+                        AppLocalizations.of(context)!.bookinghotel,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
-                    // SizedBox(
-                    //   height: MediaQuery.of(context).size.height * 0.02, // حوالي 16 لو الشاشة 800
-                    // ),
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              "assets/images/hilton.png",
+                              width: 100,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  bookinghotels[0].title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const ExpandedText(
+                                  text:
+                                      "This is the description of the company.This is the description of the companyThis is the description of the company",
+                                  maxLines: 2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).size.height * 0.02, // حوالي 16 لو الشاشة 800
+                      // ),
+                    ],
+                  ),
                 ),
               ),
             ),

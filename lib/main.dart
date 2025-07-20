@@ -54,8 +54,6 @@ class _TripToAppState extends State<TripToApp> {
 
       initialRoute: '/',
       routes: AppRoutes.routes,
-
-      // home: const Hotels(),
     );
   }
 }
