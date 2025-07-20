@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/presentation/pagess/CountryWithCity.dart';
 import 'package:video_player/video_player.dart';
 import 'package:tripto/core/constants/CustomButton.dart'; // تأكد من استيراده
-import 'package:tripto/presentation/pagess/PersonCounterWithPriceWithCountry.dart'; // تأكد من استيراده
+import 'package:tripto/presentation/pagess/PersonCounterWithPrice.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/SlideBar/RightButtons.dart'; // تأكد من استيراده
 import 'package:tripto/presentation/pagess/payment_option.dart';
 
@@ -155,8 +156,14 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   // زر كتم/إظهار الصوت (متحرك مع الفيديو)
                   Positioned(
                     top: screenHeight * 0.07,
-                    left: Directionality.of(context) == TextDirection.rtl ? null : screenWidth * 0.05,
-                    right: Directionality.of(context) == TextDirection.rtl ? screenWidth * 0.05 : null,
+                    left:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? null
+                            : screenWidth * 0.05,
+                    right:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? screenWidth * 0.05
+                            : null,
 
                     child: GestureDetector(
                       onTap: _toggleMute,
@@ -169,12 +176,22 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   ),
                   Positioned(
                     top: screenHeight * 0.07,
-                    left: Directionality.of(context) == TextDirection.rtl ? screenWidth * 0.05 : null,
-                    right: Directionality.of(context) == TextDirection.rtl ? null : screenWidth * 0.05,
+                    left:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? screenWidth * 0.05
+                            : null,
+                    right:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? null
+                            : screenWidth * 0.05,
                     child: GestureDetector(
                       onTap: () {
-                        final currentLocale = Localizations.localeOf(context).languageCode;
-                        final newLocale = currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+                        final currentLocale =
+                            Localizations.localeOf(context).languageCode;
+                        final newLocale =
+                            currentLocale == 'ar'
+                                ? const Locale('en')
+                                : const Locale('ar');
                         TripToApp.setLocale(context, newLocale);
                         setState(() {});
                       },
@@ -185,7 +202,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       ),
                     ),
                   ),
-
 
                   // عنوان الدولة (متحرك مع الفيديو)
                   Positioned(
@@ -210,8 +226,14 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                             : Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        right: Directionality.of(context) == TextDirection.ltr ? 10 : 0,
-                        left: Directionality.of(context) == TextDirection.rtl ? 10 : 0,
+                        right:
+                            Directionality.of(context) == TextDirection.ltr
+                                ? 10
+                                : 0,
+                        left:
+                            Directionality.of(context) == TextDirection.rtl
+                                ? 10
+                                : 0,
                       ),
                       child: SizedBox(
                         height: screenHeight * 0.5,
@@ -223,35 +245,29 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   // نص المدينة وعداد الأشخاص (متحرك مع الفيديو)
                   Positioned(
                     bottom: screenHeight * 0.20,
-                    left: Directionality.of(context) == TextDirection.rtl ? null : 20,
-                    right: Directionality.of(context) == TextDirection.rtl ? 0 : screenWidth * 0.25,
+                    left:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? null
+                            : 20,
+                    right:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 0
+                            : screenWidth * 0.25,
                     child: Column(
-                      crossAxisAlignment: Directionality.of(context) == TextDirection.rtl
-                          ? CrossAxisAlignment.end
-                          : CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? CrossAxisAlignment.end
+                              : CrossAxisAlignment.start,
 
                       children: [
-                        Text(
-                          'Alex, Egypt',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 5.0,
-                                color: Colors.black54,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
-                          ),
-                          textAlign: Directionality.of(context) == TextDirection.rtl
-                              ? TextAlign.right
-                              : TextAlign.left,
+                        const Countrywithcity(
+                          countryName: 'Egypt',
+                          cityName: 'Alex',
                         ),
 
                         const SizedBox(height: 1),
-                        PersonCounterWithPriceWithContry(
+
+                        PersonCounterWithPrice(
                           basePricePerPerson: _bookingPricePerPerson,
                           textColor: Colors.white,
                           iconColor: Colors.black,
@@ -273,7 +289,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PaymentOption(),
+                              builder: (context) => const PaymentOption(),
                             ),
                           );
                         },

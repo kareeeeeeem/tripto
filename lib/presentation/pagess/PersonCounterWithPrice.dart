@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-// هذا الـ Widget يمكنك استخدامه في أي مكان في شاشتك
-// فقط قم بتحديد مكانه داخل الـ Column أو Row أو Stack حسب تصميمك
-class PersonCounterWithPriceWithContry extends StatefulWidget {
+class PersonCounterWithPrice extends StatefulWidget {
   final double
   basePricePerPerson; // السعر الأساسي للشخص الواحد (يمكن تحديده عند الاستخدام)
   final Color textColor; // لون النص (يمكن تحديده عند الاستخدام)
   final Color iconColor; // لون الأيقونات (يمكن تحديده عند الاستخدام)
   final Color backgroundColor; // لون خلفية العداد (يمكن تحديده عند الاستخدام)
 
-  const PersonCounterWithPriceWithContry({
+  const PersonCounterWithPrice({
     super.key,
     this.basePricePerPerson = 250.0, // قيمة افتراضية
     this.textColor = Colors.white,
@@ -19,12 +17,10 @@ class PersonCounterWithPriceWithContry extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _PersonCounterWithPriceWithContryState createState() =>
-      _PersonCounterWithPriceWithContryState();
+  _PersonCounterWithPriceState createState() => _PersonCounterWithPriceState();
 }
 
-class _PersonCounterWithPriceWithContryState
-    extends State<PersonCounterWithPriceWithContry> {
+class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   int _numberOfPeople = 1; // العدد الأولي للأشخاص
   double _totalPrice = 0.0; // السعر الإجمالي
 
@@ -57,11 +53,8 @@ class _PersonCounterWithPriceWithContryState
 
   @override
   Widget build(BuildContext context) {
-    // الحصول على عرض الشاشة من MediaQuery
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    // تحديد أحجام متجاوبة بناءً على عرض الشاشة
-    // هذه القيم هي أمثلة، يمكنك تعديل النسب (0.045, 0.05, 0.055) لتناسب تصميمك
     final double responsiveRadius =
         screenWidth * 0.045; // نصف قطر دائرة الأيقونات
     final double responsiveIconSize =
@@ -111,6 +104,7 @@ class _PersonCounterWithPriceWithContryState
               ],
             ),
           ),
+
           const SizedBox(width: 10), // مسافة ثابتة
           // 3. زر النقصان (-)
           GestureDetector(
@@ -125,6 +119,7 @@ class _PersonCounterWithPriceWithContryState
               ), // استخدام حجم أيقونة متجاوب
             ),
           ),
+
           const SizedBox(width: 20), // مسافة ثابتة
           // 4. أيقونة الشخص
           Icon(
@@ -132,6 +127,7 @@ class _PersonCounterWithPriceWithContryState
             color: widget.textColor,
             size: responsiveIconSize,
           ), // استخدام حجم أيقونة متجاوب
+
           const SizedBox(width: 2), // مسافة ثابتة
           // 5. السعر
           Text(

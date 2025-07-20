@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/CustomBottomNavBar.dart';
+import 'package:tripto/core/constants/CustomNavBar.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
 import 'package:tripto/presentation/app/app.dart';

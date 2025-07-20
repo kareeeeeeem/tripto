@@ -1,6 +1,5 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/Expanded_text.dart';
 import '../../../core/models/Hotels_details_model.dart';
 import '../../../l10n/app_localizations.dart';
 import 'CarCard.dart';
@@ -92,10 +91,9 @@ class _HotelsState extends State<Hotels> {
                                           ),
                                           const SizedBox(height: 8),
                                           Align(
-
                                             alignment: Alignment.bottomRight,
-                                            child:
-                                              Text("${AppLocalizations.of(context)!.price}: \$150",
+                                            child: Text(
+                                              "${AppLocalizations.of(context)!.price}: \$150",
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
@@ -148,16 +146,25 @@ class _HotelsState extends State<Hotels> {
                                 }
                                 : null,
                         style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          backgroundColor: const Color(
+                            0xFF002E70,
+                          ), // ✅ اللون الموحد
+                          foregroundColor: Colors.white,
+                          minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.7,
+                            45,
                           ),
-                          backgroundColor: const Color(0xFF002E70),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
                         ),
-                        child:  Text(
-                          AppLocalizations.of(context)!.next,
+                        child: const Text(
+                          'Select Car',
                           style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),

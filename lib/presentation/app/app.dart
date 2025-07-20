@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/CustomBottomNavBar.dart';
+import 'package:tripto/core/constants/CustomNavBar.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
@@ -16,7 +16,6 @@ class App extends StatefulWidget {
   @override
   State<App> createState() => _AppState();
 }
-
 
 class _AppState extends State<App> {
   late int _currentIndex;
