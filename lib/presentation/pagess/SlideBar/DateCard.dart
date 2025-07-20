@@ -101,8 +101,8 @@ class _DatecardState extends State<Datecard> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                "Select a Hotel",
+              child:  Text(
+                AppLocalizations.of(context)!.selectahotel,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

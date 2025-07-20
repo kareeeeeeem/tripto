@@ -21,6 +21,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -37,9 +38,9 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
                 ? Icons
-                .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                .keyboard_arrow_right_outlined
                 : Icons
-                .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+                .keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),

@@ -445,6 +445,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Number'**
   String get number;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'For'**
+  String get duration;
+
+  /// No description provided for @min.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get min;
 }
 
 class _AppLocalizationsDelegate

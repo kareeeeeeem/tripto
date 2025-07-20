@@ -184,4 +184,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get number => 'العدد';
+
+  @override
+  String get duration => 'لمدة';
+
+  @override
+  String get min => 'دقيقة';
 }

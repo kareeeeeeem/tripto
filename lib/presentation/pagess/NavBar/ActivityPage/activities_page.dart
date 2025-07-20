@@ -163,7 +163,19 @@ class ActivityPage extends StatelessWidget {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.0001,
                           ),
-                          Text('For: ${activity.duration} min'),
+                          Row(
+                            children: Localizations.localeOf(context).languageCode == 'ar'
+                                ? [
+                              Text(" ${AppLocalizations.of(context)!.duration}" + ": "),
+                              Text("${activity.duration} "),
+                              Text(AppLocalizations.of(context)!.min),
+                            ]
+                                : [
+                              Text(AppLocalizations.of(context)!.min),
+                              Text("${activity.duration} "),
+                              Text(": ${AppLocalizations.of(context)!.duration}"),
+                            ],
+                          ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.001,
                           ),

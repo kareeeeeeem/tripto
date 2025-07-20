@@ -93,8 +93,8 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Select Activity',
+                child:  Text(
+                  AppLocalizations.of(context)!.selectactivity,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

@@ -184,4 +184,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get number => 'Number';
+
+  @override
+  String get duration => 'For';
+
+  @override
+  String get min => 'min';
 }
