@@ -15,7 +15,7 @@
    "request_code_again": "تقدر تطلب الرمز مرة ثانية",
   "confirm":"تأكيد",
   "resendcode": "إعاده إرسال الرمز",
-  "name" : "الأسم",
+  "name" : "الإسم",
   "email" : "البريد الإلكتروني",
     "password" : "كلمة المرور",
   "confirmpassword" : "تأكيد كلمة المرور",
@@ -60,7 +60,11 @@
   "number" : "العدد",
   "duration": "لمدة",
   "min" : "دقيقة",
-  "selectacar" : "اختر السيارة"
+  "selectacar" : "اختر السيارة",
+  "profile": "الملف الشخصي",
+  "phone" : "الجوال",
+  "edit" : "تعديل"
+
 
 
 

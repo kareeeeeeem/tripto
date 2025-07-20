@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomNavBar.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/app/app.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -36,8 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
+        title:  Text(
+          AppLocalizations.of(context) !.profile,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         centerTitle: true,
@@ -45,7 +46,13 @@ class _ProfilePageState extends State<ProfilePage> {
         scrolledUnderElevation: 0,
 
         leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
@@ -70,25 +77,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                   Profiletextfield(
-                    label: "Name",
+                    label: AppLocalizations.of(context)!.name,
                     isReadOnly: isNameReadOnly,
                     controller: nameController,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                   Profiletextfield(
-                    label: "Email",
+                    label: AppLocalizations.of(context)!.email,
                     isReadOnly: isEmailReadOnly,
                     controller: emailController,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                   Profiletextfield(
-                    label: "Phone1",
+                    label: AppLocalizations.of(context)!.phone,
                     isReadOnly: isPhoneReadOnly,
                     controller: phoneController,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.050),
                   Profiletextfield(
-                    label: "Password",
+                    label: AppLocalizations.of(context)!.password,
                     isReadOnly: isPasswordReadOnly,
                     controller: passwordController,
                   ),
@@ -132,7 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               });
                             },
                             child: Text(
-                              isEditing ? "Save" : "Edit",
+                              isEditing ?
+                                   AppLocalizations.of(context)!.save
+                                  : AppLocalizations.of(context)!.edit,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

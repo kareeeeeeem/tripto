@@ -60,5 +60,9 @@
      "number" : "Number",
       "duration" : "For",
       "min" : "min",
-      "selectacar" : "Select a Car"
+      "selectacar" : "Select a Car",
+  "profile": "Profile",
+  "phone" : "Phone",
+  "edit" : "Edit"
+
 }

@@ -57,7 +57,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get resendcode => 'إعاده إرسال الرمز';
 
   @override
-  String get name => 'الأسم';
+  String get name => 'الإسم';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -193,4 +193,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get selectacar => 'اختر السيارة';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get phone => 'الجوال';
+
+  @override
+  String get edit => 'تعديل';
 }

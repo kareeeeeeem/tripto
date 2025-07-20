@@ -193,4 +193,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectacar => 'Select a Car';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get edit => 'Edit';
 }
