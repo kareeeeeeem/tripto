@@ -43,8 +43,10 @@ class _CategoryCardState extends State<CategoryCard> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isRTL = Directionality.of(context) == TextDirection.rtl;
+
     return Transform.translate(
-      offset: const Offset(-30, 0),
+      offset: Offset(isRTL ? 30 : -30, 0),
       child: Dialog(
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(

@@ -155,7 +155,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Please select an activity first'),
+                          content: Text(
+                            ' Please select an activity first "To Finish" ',
+                          ),
                         ),
                       );
                     }

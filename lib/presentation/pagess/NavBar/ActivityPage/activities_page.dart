@@ -14,7 +14,7 @@ class ActivityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           AppLocalizations.of(context)!.activities,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
@@ -24,9 +24,11 @@ class ActivityPage extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon:  Icon(Localizations.localeOf(context).languageCode == 'ar'
-              ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
-              : Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),
@@ -182,7 +184,7 @@ class ActivityPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.paymentOption);
                         },
-                        child:  Text(
+                        child: Text(
                           AppLocalizations.of(context)!.book,
                           style: TextStyle(color: Colors.white),
                         ),

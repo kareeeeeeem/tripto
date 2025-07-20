@@ -41,6 +41,9 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+
         leading: IconButton(
           icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
           onPressed: () {
