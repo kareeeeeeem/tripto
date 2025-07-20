@@ -50,7 +50,14 @@
          "more" : "المزيد",
        "less" : "أقل",
   "destination" : "الوجهة ",
-  "numberofpeople" : "عدد الأشخاص "
+  "numberofpeople" : "عدد الأشخاص ",
+  "payment" : "الدفع",
+  "cardnumber" : "رقم الكارت",
+  "expiry" : "تاريخ الإنتهاء",
+  "cvv" : "رمز التحقق (CVV)",
+  "pay" : "ادفع",
+  "checkout" : "إتمام الشراء",
+  "number" : "العدد"
 
 
 }

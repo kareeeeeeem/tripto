@@ -248,15 +248,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                     left:
                         Directionality.of(context) == TextDirection.rtl
                             ? null
-                            : 20,
+                            : screenWidth * 0.025,
                     right:
                         Directionality.of(context) == TextDirection.rtl
-                            ? 0
-                            : screenWidth * 0.25,
+                             ? screenWidth * 0.025
+                            : screenWidth * 0.025,
                     child: Column(
                       crossAxisAlignment:
                           Directionality.of(context) == TextDirection.rtl
-                              ? CrossAxisAlignment.end
+                              ? CrossAxisAlignment.start
                               : CrossAxisAlignment.start,
 
                       children: [
@@ -265,7 +265,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                           cityName: 'Alex',
                         ),
 
-                        const SizedBox(height: 1),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.001),
 
                         PersonCounterWithPrice(
                           basePricePerPerson: _bookingPricePerPerson,

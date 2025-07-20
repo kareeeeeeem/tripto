@@ -163,4 +163,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get numberofpeople => 'Number of People ';
+
+  @override
+  String get payment => 'Payment';
+
+  @override
+  String get cardnumber => 'Card Number';
+
+  @override
+  String get expiry => 'Expiry';
+
+  @override
+  String get cvv => 'CVV';
+
+  @override
+  String get pay => 'Pay';
+
+  @override
+  String get checkout => 'Checkout';
+
+  @override
+  String get number => 'Number';
 }

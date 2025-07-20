@@ -60,6 +60,20 @@ class _SignupPageState extends State<SignupPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(1),
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(1),
+                          borderSide: BorderSide(
+                            color: Colors.black45,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(1),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
+                        ),
                       )
                     ),
                   ),
@@ -77,6 +91,20 @@ class _SignupPageState extends State<SignupPage> {
                           fillColor: Color(0xFFD9D9D9).withOpacity(0.2),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.black45,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
                           ),
                         )
                     ),
@@ -110,6 +138,20 @@ class _SignupPageState extends State<SignupPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(1),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.black45,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                          ),
                         )
                     ),
                   ),
@@ -142,6 +184,20 @@ class _SignupPageState extends State<SignupPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(1),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.black45,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                          ),
                         )
                     ),
                   ),
@@ -161,6 +217,20 @@ class _SignupPageState extends State<SignupPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(1),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.black45,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(1),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                          ),
                         )
                     ),
                   ),
@@ -178,14 +248,19 @@ class _SignupPageState extends State<SignupPage> {
                     setState(() {
                       gender = value;
                     });
-                  }),
+                  },
+                    activeColor: Color(0xFF002E70),
+                  ),
                   Text(AppLocalizations.of(context)!.male),
                   SizedBox(width: MediaQuery.of(context).size.width*0.09),
                   Radio(value: 2, groupValue: gender, onChanged: (value){
                     setState(() {
                       gender = value;
                     });
-                  }),
+                  },
+                    activeColor: Color(0xFF002E70),
+                  ),
+
                   Text(AppLocalizations.of(context)!.female),
 
                 ]

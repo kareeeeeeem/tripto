@@ -50,6 +50,13 @@
       "more" : "More",
       "less" : "Less",
       "destination" : "Destination ",
-      "numberofpeople" : "Number of People "
+      "numberofpeople" : "Number of People ",
+      "payment" : "Payment",
+      "cardnumber" : "Card Number",
+      "expiry" : "Expiry",
+      "cvv" : "CVV",
+     "pay" : "Pay",
+     "checkout" : "Checkout",
+     "number" : "Number"
 
 }

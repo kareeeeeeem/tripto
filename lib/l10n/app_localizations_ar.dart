@@ -163,4 +163,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get numberofpeople => 'عدد الأشخاص ';
+
+  @override
+  String get payment => 'الدفع';
+
+  @override
+  String get cardnumber => 'رقم الكارت';
+
+  @override
+  String get expiry => 'تاريخ الإنتهاء';
+
+  @override
+  String get cvv => 'رمز التحقق (CVV)';
+
+  @override
+  String get pay => 'ادفع';
+
+  @override
+  String get checkout => 'إتمام الشراء';
+
+  @override
+  String get number => 'العدد';
 }

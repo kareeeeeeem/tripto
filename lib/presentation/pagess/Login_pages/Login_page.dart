@@ -73,6 +73,20 @@ class _LoginState extends State<Login> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: BorderSide(
+                          color: Colors.black45, // لون الحافة في حالة غير مفعّلة
+                          width: 1,           // ← عرض الحافة لما يكون Unfocused
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                      ),
                     ),
                     initialCountryCode: 'SA',
                     onChanged: (phone) {

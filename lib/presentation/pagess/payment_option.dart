@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/models/paymentoption_model.dart';
+import '../../l10n/app_localizations.dart';
 
 class PaymentOption extends StatefulWidget {
   const PaymentOption({super.key});
@@ -18,8 +19,8 @@ class _PaymentOptionState extends State<PaymentOption> {
         backgroundColor: Colors.white,
         elevation: 0,
 
-        title: const Text(
-          'Payment',
+        title:  Text(
+           AppLocalizations.of(context)!.payment,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -29,8 +30,10 @@ class _PaymentOptionState extends State<PaymentOption> {
 
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),
@@ -96,8 +99,8 @@ class _PaymentOptionState extends State<PaymentOption> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Next',
+                  child:  Text(
+                    AppLocalizations.of(context)!.next,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

@@ -42,6 +42,7 @@ class PaymentOptionCard extends StatelessWidget {
             value: value,
             groupValue: groupValue,
             onChanged: onChanged,
+            activeColor: Color(0xFF002E70),
           ),
         ],
       ),

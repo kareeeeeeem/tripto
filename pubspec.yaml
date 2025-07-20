@@ -68,7 +68,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
 
   # Internationalization (date formatting, etc.)
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # Caching network images
   cached_network_image: ^3.3.1

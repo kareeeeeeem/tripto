@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/colors.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
 class PaymentDestination extends StatefulWidget {
   const PaymentDestination({super.key});
@@ -17,8 +18,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Checkout',
+        title:  Text(
+          AppLocalizations.of(context) !.checkout,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -27,8 +28,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),
@@ -71,8 +74,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                               MediaQuery.of(context).size.width *
                               0.01, // أو النسبة اللي تناسبك
                         ),
-                        child: const Text(
-                          "Destination :",
+                        child:  Text(
+                          AppLocalizations.of(context)!.destination + " :",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -106,8 +109,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Number :",
+                       Text(
+                        AppLocalizations.of(context)!.number + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -191,8 +194,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Category :",
+                       Text(
+                        AppLocalizations.of(context)!.category + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -200,8 +203,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      const Text(
-                        "Gold",
+                       Text(
+                       AppLocalizations.of(context)!.gold + " :" ,
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
                           fontSize: 20,
@@ -216,8 +219,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Price :",
+                       Text(
+                        AppLocalizations.of(context)!.price + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -237,12 +240,14 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Directionality.of(context) == TextDirection.rtl
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
                     child: Text(
-                      "Payment :",
+                      AppLocalizations.of(context)!.payment + " :",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -259,17 +264,24 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      child: const TextField(
+                      child:  TextField(
                         decoration: InputDecoration(
-                          labelText: 'Card Number',
+
+                          labelText: AppLocalizations.of(context)!.cardnumber,
                           labelStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 18,
                           ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.grey,
+                              color: Colors.black45,
                               width: 1,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
                             ),
                           ),
                         ),
@@ -284,10 +296,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       children: [
-                        const Expanded(
+                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              labelText: 'Expiry',
+                              labelText: AppLocalizations.of(context)!.expiry,
                               labelStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -298,16 +310,22 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                                   width: 1,
                                 ),
                               ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 2,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.01,
                         ),
-                        const Expanded(
+                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              labelText: 'CVV',
+                              labelText: AppLocalizations.of(context)!.cvv,
                               labelStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -316,6 +334,12 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                                 borderSide: BorderSide(
                                   color: Colors.grey,
                                   width: 1,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey,
+                                  width: 2,
                                 ),
                               ),
                             ),
@@ -343,8 +367,9 @@ class _PaymentDestinationState extends State<PaymentDestination> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: const Text(
-            'Pay',
+          child:  Text(
+            AppLocalizations.of(context)!.pay,
+
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
