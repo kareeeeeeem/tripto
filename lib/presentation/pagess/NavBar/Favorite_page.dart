@@ -3,6 +3,8 @@ import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/presentation/app/app.dart';
 import '../../../core/models/Saved_model.dart';
 import '../payment_option.dart';
+import 'package:tripto/l10n/app_localizations.dart';
+
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -96,8 +98,12 @@ class _FavoritePageState extends State<FavoritePage>
               (route) => false,
             );
           },
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons
+                .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons
+                .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
           ),
@@ -113,7 +119,7 @@ class _FavoritePageState extends State<FavoritePage>
                 children: [
                   const Icon(Icons.favorite, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  const Text("Saved"),
+                   Text(AppLocalizations.of(context)!.saved),
                 ],
               ),
             ),
@@ -122,7 +128,7 @@ class _FavoritePageState extends State<FavoritePage>
                 children: [
                   const Icon(Icons.history, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                  const Text("History"),
+                   Text(AppLocalizations.of(context)!.history),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                 ],
               ),
@@ -240,8 +246,8 @@ class _FavoritePageState extends State<FavoritePage>
                             ),
                           ),
                         ),
-                        child: const Text(
-                          "Unsave",
+                        child:  Text(
+                          AppLocalizations.of(context)!.unsave,
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -267,7 +273,9 @@ class _FavoritePageState extends State<FavoritePage>
                         ),
                       ),
                       child: Text(
-                        activity.tabType == "saved" ? "Book" : "Rebook",
+                        activity.tabType == "saved"
+                       ? AppLocalizations.of(context)!.book
+                      : AppLocalizations.of(context)!.rebook,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

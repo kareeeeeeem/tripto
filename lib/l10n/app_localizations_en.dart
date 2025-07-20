@@ -136,4 +136,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get info => 'Info';
+
+  @override
+  String get book => 'Book';
+
+  @override
+  String get saved => 'Saved';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get unsave => 'Unsave';
+
+  @override
+  String get rebook => 'Rebook';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get less => 'Less';
+
+  @override
+  String get destination => 'Destination ';
+
+  @override
+  String get numberofpeople => 'Number of People ';
 }

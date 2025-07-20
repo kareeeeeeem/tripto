@@ -349,6 +349,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Info'**
   String get info;
+
+  /// No description provided for @book.
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get book;
+
+  /// No description provided for @saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get saved;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @unsave.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsave'**
+  String get unsave;
+
+  /// No description provided for @rebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebook'**
+  String get rebook;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get less;
+
+  /// No description provided for @destination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination '**
+  String get destination;
+
+  /// No description provided for @numberofpeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of People '**
+  String get numberofpeople;
 }
 
 class _AppLocalizationsDelegate

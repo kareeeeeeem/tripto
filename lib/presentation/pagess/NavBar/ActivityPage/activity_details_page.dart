@@ -4,6 +4,7 @@ import 'package:tripto/core/models/activityPageModel.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ActivityDetailsPage extends StatefulWidget {
   final Activitymodel activity;
@@ -33,8 +34,12 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
-            Icons.keyboard_arrow_left_outlined,
+          icon: Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons
+                .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons
+                .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
           ),
@@ -75,8 +80,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.01,
                         ),
-                        child: const Text(
-                          "Destination :",
+                        child:  Text(
+                          AppLocalizations.of(context)!.destination + " : ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -122,8 +127,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Number of People :",
+                       Text(
+                        AppLocalizations.of(context)!.numberofpeople + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -198,8 +203,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Category :",
+                       Text(
+                        AppLocalizations.of(context)!.category + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -207,8 +212,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                      const Text(
-                        "Gold",
+                       Text(
+                        AppLocalizations.of(context)!.gold,
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
                           fontSize: 20,
@@ -223,8 +228,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                      const Text(
-                        "Price :",
+                       Text(
+                        AppLocalizations.of(context)!.price + " :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

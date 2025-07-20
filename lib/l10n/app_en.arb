@@ -41,5 +41,15 @@
       "car": "Car",
       "activities": "Activities",
       "save": "Save",
-      "info": "Info"
+      "info": "Info",
+      "book" : "Book",
+      "saved" : "Saved",
+      "history" : "History",
+      "unsave" : "Unsave",
+      "rebook": "Rebook",
+      "more" : "More",
+      "less" : "Less",
+      "destination" : "Destination ",
+      "numberofpeople" : "Number of People "
+
 }

@@ -3,7 +3,8 @@ import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
 
 import '../../../../core/constants/colors.dart'; // تأكد من المسار الصحيح لـ colors
-import '../../../../core/routes/app_routes.dart'; // تأكد من المسار الصحيح لـ routes
+import '../../../../core/routes/app_routes.dart';
+import '../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
 
 class ActivityPage extends StatelessWidget {
   // تم تغيير الاسم هنا إلى ActivityPage
@@ -13,8 +14,8 @@ class ActivityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Activities",
+        title:  Text(
+          AppLocalizations.of(context)!.activities,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         centerTitle: true,
@@ -113,7 +114,7 @@ class ActivityPage extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Price: ',
+                                text: AppLocalizations.of(context)!.price,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[600],
@@ -175,8 +176,8 @@ class ActivityPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.paymentOption);
                         },
-                        child: const Text(
-                          'Book',
+                        child:  Text(
+                          AppLocalizations.of(context)!.book,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

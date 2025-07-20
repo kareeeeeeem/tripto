@@ -136,4 +136,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get info => 'معلومات';
+
+  @override
+  String get book => 'احجز';
+
+  @override
+  String get saved => 'حفظ';
+
+  @override
+  String get history => 'السجل';
+
+  @override
+  String get unsave => 'إلغاء الحفظ';
+
+  @override
+  String get rebook => 'احجز مرة أخرى';
+
+  @override
+  String get more => 'المزيد';
+
+  @override
+  String get less => 'أقل';
+
+  @override
+  String get destination => 'الوجهة ';
+
+  @override
+  String get numberofpeople => 'عدد الأشخاص ';
 }

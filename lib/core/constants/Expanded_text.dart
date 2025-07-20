@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:tripto/l10n/app_localizations.dart';
+
 
 class ExpandedText extends StatefulWidget {
   final String text;
@@ -44,7 +46,9 @@ class _ExpandedTextState extends State<ExpandedText> {
               ),
             ),
             TextSpan(
-              text: isExpanded ? ' Less' : ' More...',
+              text: isExpanded ?
+              AppLocalizations.of(context)!.less :
+              AppLocalizations.of(context)!.more,
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.blue,
