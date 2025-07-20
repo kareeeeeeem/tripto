@@ -22,8 +22,14 @@ class ActivityPage extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon:  Icon(Localizations.localeOf(context).languageCode == 'ar'
+              ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+              : Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
           onPressed: () {
             // العودة إلى App وإزالة جميع المسارات السابقة
             Navigator.pushAndRemoveUntil(
