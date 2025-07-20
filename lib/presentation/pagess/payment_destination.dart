@@ -93,7 +93,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.07),
                     const Text(
                       '⭐ 4.9 ',
                       style: TextStyle(
@@ -106,7 +106,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.04,), // مثلًا 4% من عرض الشاشة
                   child: Row(
                     children: [
                        Text(

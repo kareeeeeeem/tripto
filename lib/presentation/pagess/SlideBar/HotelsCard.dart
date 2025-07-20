@@ -124,50 +124,55 @@ class _HotelsState extends State<Hotels> {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 0.02, // 2% من الارتفاع
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 110,
-                      height: 46,
-                      child: ElevatedButton(
-                        onPressed:
-                            selectedHotelIndex != null
-                                ? () {
-                                  //  final selectedHotel = bookinghotels[selectedHotelIndex!];
-                                  final selectedHotel = bookinghotels[0];
-                                  Navigator.pop(context);
-                                  showDialog(
-                                    context: context,
-                                    builder:
-                                        (BuildContext context) =>
-                                            const CarSelectionPage(),
-                                  );
-                                }
-                                : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(
-                            0xFF002E70,
-                          ), // ✅ اللون الموحد
-                          foregroundColor: Colors.white,
-                          minimumSize: Size(
-                            MediaQuery.of(context).size.width * 0.7,
-                            45,
+                    Expanded(
+                      child: SizedBox(
+                        // width: MediaQuery.of(context).size.width * 0.20,   // 110 من عرض 390 تقريبًا
+                        height: MediaQuery.of(context).size.height * 0.055, // 46 من ارتفاع 800 تقريبًا
+
+                        child: ElevatedButton(
+                          onPressed:
+                              selectedHotelIndex != null
+                                  ? () {
+                                    //  final selectedHotel = bookinghotels[selectedHotelIndex!];
+                                    final selectedHotel = bookinghotels[0];
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      context: context,
+                                      builder:
+                                          (BuildContext context) =>
+                                              const CarSelectionPage(),
+                                    );
+                                  }
+                                  : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(
+                              0xFF002E70,
+                            ), // ✅ اللون الموحد
+                            foregroundColor: Colors.white,
+                          //   minimumSize: Size(
+                          //   MediaQuery.of(context).size.width * 0.7,
+                          //   45,
+                          // ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 0,
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 0,
-                        ),
-                        child: const Text(
-                          'Select Car',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                          child:  Text(
+                            AppLocalizations.of(context)!.selectacar,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

@@ -171,9 +171,10 @@ class ActivityPage extends StatelessWidget {
                               Text(AppLocalizations.of(context)!.min),
                             ]
                                 : [
-                              Text(AppLocalizations.of(context)!.min),
+
+                              Text("${AppLocalizations.of(context)!.duration}" + ": "),
                               Text("${activity.duration} "),
-                              Text(": ${AppLocalizations.of(context)!.duration}"),
+                              Text(AppLocalizations.of(context)!.min),
                             ],
                           ),
                           SizedBox(

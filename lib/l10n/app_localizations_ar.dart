@@ -190,4 +190,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get min => 'دقيقة';
+
+  @override
+  String get selectacar => 'اختر السيارة';
 }

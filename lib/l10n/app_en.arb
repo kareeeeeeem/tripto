@@ -59,5 +59,6 @@
      "checkout" : "Checkout",
      "number" : "Number",
       "duration" : "For",
-      "min" : "min"
+      "min" : "min",
+      "selectacar" : "Select a Car"
 }

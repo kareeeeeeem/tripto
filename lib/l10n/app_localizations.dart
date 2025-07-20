@@ -457,6 +457,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'min'**
   String get min;
+
+  /// No description provided for @selectacar.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Car'**
+  String get selectacar;
 }
 
 class _AppLocalizationsDelegate

@@ -143,7 +143,8 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
               ),
               child: SizedBox(
                 width: double.infinity,
-                height: 45,
+                height: MediaQuery.of(context).size.height * 0.055, // تقريبًا 45 من ارتفاع شاشة 800
+
                 child: CustomButton(
                   text: AppLocalizations.of(context)!.finish,
                   onPressed: () {

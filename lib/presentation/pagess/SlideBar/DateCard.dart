@@ -82,31 +82,37 @@ class _DatecardState extends State<Datecard> {
             ),
             const SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () {
-                if (_rangeStart != null && _rangeEnd != null) {
-                  Navigator.pop(context);
-                  openbottomsheetforhotel(context);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF002E70), // ✅ اللون الهادي
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.055, // تقريبًا 45 من ارتفاع شاشة 800
+
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_rangeStart != null && _rangeEnd != null) {
+                    Navigator.pop(context);
+                    openbottomsheetforhotel(context);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF002E70), // ✅ اللون الهادي
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  // padding: EdgeInsets.symmetric(
+                  //   horizontal: MediaQuery.of(context).size.width * 0.06, // تقريبًا بدل 24
+                  //   vertical: MediaQuery.of(context).size.height * 0.017, // تقريبًا بدل 14
+                  // ),
+
+                  elevation: 0,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 14,
-                ),
-                elevation: 0,
-              ),
-              child:  Text(
-                AppLocalizations.of(context)!.selectahotel,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                child:  Text(
+                  AppLocalizations.of(context)!.selectahotel,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

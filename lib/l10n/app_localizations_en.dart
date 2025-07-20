@@ -190,4 +190,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get min => 'min';
+
+  @override
+  String get selectacar => 'Select a Car';
 }
