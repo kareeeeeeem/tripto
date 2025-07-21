@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 
 import 'l10n/app_localizations.dart';
@@ -49,6 +50,9 @@ class _TripToAppState extends State<TripToApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      theme: ThemeData(
+        textTheme: GoogleFonts.markaziTextTextTheme(), // ← هنا السطر المهم
+      ),
       title: 'TripTo',
       debugShowCheckedModeBanner: false,
 

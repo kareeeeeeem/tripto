@@ -63,7 +63,12 @@
   "selectacar" : "اختر السيارة",
   "profile": "الملف الشخصي",
   "phone" : "الجوال",
-  "edit" : "تعديل"
+  "edit" : "تعديل",
+  "pleaseselectanactivityfirsttoFinish" : "برجاء اختيار النشاط للإنتهاء",
+  "customtrip" : "تخصيص رحلة",
+  "customTripMessage" : "مرحبا، أريد الاستفسار عن رحلة مخصصة",
+  "cannotOpenWhatsapp": "لا يمكن فتح واتساب على هذا الجهاز"
+
 
 
 

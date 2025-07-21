@@ -56,9 +56,9 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     final double responsiveRadius =
-        screenWidth * 0.045; // نصف قطر دائرة الأيقونات
+        screenWidth * 0.035; // نصف قطر دائرة الأيقونات
     final double responsiveIconSize =
-        screenWidth * 0.05; // حجم الأيقونات (الزائد والناقص والشخص)
+        screenWidth * 0.04; // حجم الأيقونات (الزائد والناقص والشخص)
     final double responsiveFontSize = screenWidth * 0.055; // حجم الخطوط
 
     return Container(

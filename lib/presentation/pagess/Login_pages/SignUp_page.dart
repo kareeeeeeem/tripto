@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../l10n/app_localizations.dart';
 
@@ -51,7 +52,7 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.name,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   SizedBox(
@@ -82,7 +83,7 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   Text(
                     AppLocalizations.of(context)!.email,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.008),
                   SizedBox(
@@ -114,7 +115,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Text(
                     AppLocalizations.of(context)!.password,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   SizedBox(
@@ -158,7 +159,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Text(
                     AppLocalizations.of(context)!.confirmpassword,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   SizedBox(
@@ -202,7 +203,7 @@ class _SignupPageState extends State<SignupPage> {
 
                   Text(
                     AppLocalizations.of(context)!.location,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   SizedBox(
@@ -233,7 +234,7 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.009),
                   Text(
                     AppLocalizations.of(context)!.gender,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -251,7 +252,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                     activeColor: Color(0xFF002E70),
                   ),
-                  Text(AppLocalizations.of(context)!.male),
+                  Text(AppLocalizations.of(context)!.male , style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500)),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.09),
                   Radio(
                     value: 2,
@@ -264,7 +265,7 @@ class _SignupPageState extends State<SignupPage> {
                     activeColor: Color(0xFF002E70),
                   ),
 
-                  Text(AppLocalizations.of(context)!.female),
+                  Text(AppLocalizations.of(context)!.female , style: GoogleFonts.markaziText(fontSize: 16, fontWeight: FontWeight.w500)),
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -282,7 +283,7 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () {},
                   child: Text(
                     AppLocalizations.of(context)!.signup,
-                    style: const TextStyle(
+                    style:  GoogleFonts.markaziText(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,

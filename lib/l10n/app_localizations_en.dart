@@ -202,4 +202,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get pleaseselectanactivityfirsttoFinish =>
+      'Please select an activity first to Finish';
+
+  @override
+  String get customtrip => 'Custom Trip';
+
+  @override
+  String get customTripMessage =>
+      'Hello, I would like to inquire about a custom trip.';
+
+  @override
+  String get cannotOpenWhatsapp => 'Cannot open WhatsApp on this device';
 }

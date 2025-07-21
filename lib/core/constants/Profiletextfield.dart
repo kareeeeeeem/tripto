@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Profiletextfield extends StatefulWidget {
   final String label;
@@ -25,17 +26,20 @@ class _textfieldState extends State<Profiletextfield> {
       children: [
         Expanded(
           child: TextField(
+            cursorColor: Colors.black,
             controller: widget.controller,
             readOnly: widget.isReadOnly,
             keyboardType: TextInputType.text,
             obscureText: widget.label == "Password" ? true : false,
             decoration: InputDecoration(
               labelText: widget.label,
-              labelStyle: const TextStyle(color: Colors.grey, fontSize: 18),
+              labelStyle:  GoogleFonts.markaziText(color: Colors.grey, fontSize: 18),
               enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderSide: BorderSide(color: Colors.black45, width: 1),
               ),
-
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 2),
+              ),
             ),
           ),
         ),

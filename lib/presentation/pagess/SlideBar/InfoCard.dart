@@ -46,7 +46,7 @@ class InfoCard extends StatelessWidget {
                               "assets/images/tourism.png",
                               width: 100,
                               height: 50,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                             ),
                           ),
                           const SizedBox(width: 8),

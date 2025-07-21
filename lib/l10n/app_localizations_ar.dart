@@ -202,4 +202,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get edit => 'تعديل';
+
+  @override
+  String get pleaseselectanactivityfirsttoFinish =>
+      'برجاء اختيار النشاط للإنتهاء';
+
+  @override
+  String get customtrip => 'تخصيص رحلة';
+
+  @override
+  String get customTripMessage => 'مرحبا، أريد الاستفسار عن رحلة مخصصة';
+
+  @override
+  String get cannotOpenWhatsapp => 'لا يمكن فتح واتساب على هذا الجهاز';
 }

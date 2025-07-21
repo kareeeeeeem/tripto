@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/core/constants/CustomNavBar.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
@@ -39,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title:  Text(
           AppLocalizations.of(context) !.profile,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          style: GoogleFonts.markaziText(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -142,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               isEditing ?
                                    AppLocalizations.of(context)!.save
                                   : AppLocalizations.of(context)!.edit,
-                              style: const TextStyle(
+                              style:  GoogleFonts.markaziText(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,

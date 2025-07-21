@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../app/app.dart';
@@ -64,11 +65,12 @@ class Signuporlogin extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.signup,
 
-                  style: const TextStyle(
+                  style: GoogleFonts.markaziText(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
+
                 ),
               ),
             ),
@@ -85,8 +87,14 @@ class Signuporlogin extends StatelessWidget {
                     color: Colors.black45,
                   ),
                 ),
-                Text(AppLocalizations.of(context)!.or),
-                Expanded(
+                Text(
+                  AppLocalizations.of(context)!.or,
+                  style: GoogleFonts.markaziText(
+                    fontSize: 15, // غيّر الحجم حسب الحاجة
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black, // أو أي لون يناسبك
+                  ),
+                ),                Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.04,
@@ -118,7 +126,7 @@ class Signuporlogin extends StatelessWidget {
                 },
                 child: Text(
                   AppLocalizations.of(context)!.login,
-                  style: const TextStyle(
+                  style: GoogleFonts.markaziText(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF002E70),
