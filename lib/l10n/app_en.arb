@@ -63,6 +63,11 @@
       "selectacar" : "Select a Car",
   "profile": "Profile",
   "phone" : "Phone",
-  "edit" : "Edit"
+  "edit" : "Edit",
+  "pleaseselectanactivityfirsttoFinish" : "Please select an activity first to Finish",
+  "customtrip" : "Custom Trip",
+  "customTripMessage" : "Hello, I would like to inquire about a custom trip.",
+  "cannotOpenWhatsapp": "Cannot open WhatsApp on this device"
+
 
 }

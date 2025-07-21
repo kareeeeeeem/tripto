@@ -110,10 +110,10 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
         height: 600,
         child: Column(
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Activities',
+                AppLocalizations.of(context)!.activities,
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
@@ -155,9 +155,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                       Navigator.pop(context, selectedActivity);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                         SnackBar(
                           content: Text(
-                            ' Please select an activity first "To Finish" ',
+                            AppLocalizations.of(context)!.pleaseselectanactivityfirsttoFinish,
                           ),
                         ),
                       );

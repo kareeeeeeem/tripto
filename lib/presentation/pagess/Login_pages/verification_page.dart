@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
@@ -70,11 +71,11 @@ class _VerificationState extends State<Verification> {
           children: [
             Text(
               AppLocalizations.of(context)!.enterthecode,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              style:  GoogleFonts.markaziText(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             Text(
               AppLocalizations.of(context)!.wesentyouacode,
-              style: const TextStyle(
+              style:  GoogleFonts.markaziText(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFF8A8A8A),
@@ -86,7 +87,7 @@ class _VerificationState extends State<Verification> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.request_code_again,
-                  style: const TextStyle(
+                  style:  GoogleFonts.markaziText(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF8A8A8A),
@@ -95,7 +96,7 @@ class _VerificationState extends State<Verification> {
                 SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                 Text(
                   ("${widget.phoneNumber}"),
-                  style: const TextStyle(
+                  style:  GoogleFonts.markaziText(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
@@ -137,7 +138,7 @@ class _VerificationState extends State<Verification> {
                     context,
                   )!.request_code_again_timer(_start.toString())
                   : AppLocalizations.of(context)!.request_code_again,
-              style: const TextStyle(fontSize: 16),
+              style:  GoogleFonts.markaziText(fontSize: 16),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Padding(
@@ -162,7 +163,7 @@ class _VerificationState extends State<Verification> {
                           : null,
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
-                    style: const TextStyle(
+                    style:  GoogleFonts.markaziText(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,

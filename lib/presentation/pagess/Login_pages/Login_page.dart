@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
               children: [
                 Text(
                 AppLocalizations.of(context)!.joinusviaphonenumber,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.markaziText(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                   ),
@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Text(
                   AppLocalizations.of(context)!.wewilltextacodetoverfiyyournumber,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.markaziText(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF989898),
@@ -128,7 +128,7 @@ class _LoginState extends State<Login> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.next,
-                        style: GoogleFonts.lateef(
+                        style: GoogleFonts.markaziText(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,

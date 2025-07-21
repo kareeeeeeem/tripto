@@ -112,6 +112,9 @@ class _FavoritePageState extends State<FavoritePage>
         foregroundColor: Colors.black,
         bottom: TabBar(
           controller: _tabController,
+          indicatorColor: Color(0xFF002E70),
+          labelColor: Color(0xFF002E70),
+          unselectedLabelColor: Colors.black,
           tabs: [
             Tab(
               child: Row(

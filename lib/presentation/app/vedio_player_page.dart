@@ -244,15 +244,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
 
                   // نص المدينة وعداد الأشخاص (متحرك مع الفيديو)
                   Positioned(
-                    bottom: screenHeight * 0.20,
+                    bottom: screenHeight * 0.18,
                     left:
                         Directionality.of(context) == TextDirection.rtl
                             ? null
-                            : screenWidth * 0.025,
+                            : screenWidth * 0.060,
                     right:
                         Directionality.of(context) == TextDirection.rtl
-                             ? screenWidth * 0.025
-                            : screenWidth * 0.025,
+                             ? screenWidth * 0.060
+                            : screenWidth * 0.060,
                     child: Column(
                       crossAxisAlignment:
                           Directionality.of(context) == TextDirection.rtl
@@ -260,9 +260,19 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                               : CrossAxisAlignment.start,
 
                       children: [
-                        const Countrywithcity(
-                          countryName: 'Egypt',
-                          cityName: 'Alex',
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Localizations.localeOf(context).languageCode == 'ar'
+                                ? 0
+                                : MediaQuery.of(context).size.width * 0.025,
+                            right: Localizations.localeOf(context).languageCode == 'ar'
+                                ? MediaQuery.of(context).size.width * 0.025
+                                : 0,
+                          ),
+                          child: const Countrywithcity(
+                            countryName: 'Egypt',
+                            cityName: 'Alex',
+                          ),
                         ),
 
                         SizedBox(height: MediaQuery.of(context).size.height * 0.001),

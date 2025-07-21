@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
 
@@ -40,7 +41,7 @@ class _ExpandedTextState extends State<ExpandedText> {
           children: [
             TextSpan(
               text: displayText,
-              style: TextStyle(
+              style: GoogleFonts.markaziText(
                 fontSize: 16,
                 color: Colors.grey[700],
               ),
@@ -49,7 +50,7 @@ class _ExpandedTextState extends State<ExpandedText> {
               text: isExpanded ?
               AppLocalizations.of(context)!.less :
               AppLocalizations.of(context)!.more,
-              style: const TextStyle(
+              style:  GoogleFonts.markaziText(
                 fontSize: 14,
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,

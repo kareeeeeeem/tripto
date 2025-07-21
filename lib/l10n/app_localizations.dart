@@ -481,6 +481,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @pleaseselectanactivityfirsttoFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an activity first to Finish'**
+  String get pleaseselectanactivityfirsttoFinish;
+
+  /// No description provided for @customtrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Trip'**
+  String get customtrip;
+
+  /// No description provided for @customTripMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, I would like to inquire about a custom trip.'**
+  String get customTripMessage;
+
+  /// No description provided for @cannotOpenWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open WhatsApp on this device'**
+  String get cannotOpenWhatsapp;
 }
 
 class _AppLocalizationsDelegate
