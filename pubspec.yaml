@@ -47,10 +47,10 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # app icon
-  flutter_launcher_icons: "^0.13.1" 
+  flutter_launcher_icons: ^0.14.4 
 
   # BLoC state management (Cubit included)
-  flutter_bloc: ^8.1.3
+  flutter_bloc: ^9.1.1
 
   # For API requests
   dio: ^5.4.0
@@ -83,10 +83,10 @@ dependencies:
   flutter_screenutil: ^5.9.0
 
   # Navigation management (optional, cleaner than Navigator)
-  go_router: ^13.0.1
+  go_router: ^16.0.0
 
   # Dependency injection (used with services and repositories)
-  get_it: ^7.6.7
+  get_it: ^8.0.3
 
   # For data modeling and JSON serialization
   json_annotation: ^4.8.1
@@ -110,7 +110,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
 
   # Recommended lint rules for clean code
-  flutter_lints: ^3.0.1
+  flutter_lints: ^6.0.0
 
   # For generating vedio 
 # For information on the generic Dart part of this file, see
