@@ -268,8 +268,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: const Text(
-            'Confirm',
+          child:  Text(
+            AppLocalizations.of(context)!.confirm,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
