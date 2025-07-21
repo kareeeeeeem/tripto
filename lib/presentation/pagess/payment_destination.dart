@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/colors.dart';
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/presentation/app/app.dart';
 
 class PaymentDestination extends StatefulWidget {
   const PaymentDestination({super.key});
@@ -18,8 +19,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:  Text(
-          AppLocalizations.of(context) !.checkout,
+        title: Text(
+          AppLocalizations.of(context)!.checkout,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -30,7 +31,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
         leading: IconButton(
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
                 : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
@@ -74,7 +76,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                               MediaQuery.of(context).size.width *
                               0.01, // أو النسبة اللي تناسبك
                         ),
-                        child:  Text(
+                        child: Text(
                           AppLocalizations.of(context)!.destination + " :",
                           style: TextStyle(
                             fontSize: 18,
@@ -107,10 +109,11 @@ class _PaymentDestinationState extends State<PaymentDestination> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.04,), // مثلًا 4% من عرض الشاشة
+                    horizontal: MediaQuery.of(context).size.width * 0.04,
+                  ), // مثلًا 4% من عرض الشاشة
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.number + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -195,7 +198,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.category + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -204,8 +207,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                       Text(
-                       AppLocalizations.of(context)!.gold + " :" ,
+                      Text(
+                        AppLocalizations.of(context)!.gold + " :",
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
                           fontSize: 20,
@@ -220,7 +223,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.price + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -241,12 +244,13 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
-                    alignment: Directionality.of(context) == TextDirection.rtl
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
+                    alignment:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
                     child: Text(
                       AppLocalizations.of(context)!.payment + " :",
                       style: TextStyle(
@@ -265,9 +269,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      child:  TextField(
+                      child: TextField(
                         decoration: InputDecoration(
-
                           labelText: AppLocalizations.of(context)!.cardnumber,
                           labelStyle: TextStyle(
                             color: Colors.grey,
@@ -297,7 +300,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       children: [
-                         Expanded(
+                        Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.expiry,
@@ -323,7 +326,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.01,
                         ),
-                         Expanded(
+                        Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.cvv,
@@ -358,8 +361,13 @@ class _PaymentDestinationState extends State<PaymentDestination> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: ElevatedButton(
+          // يجب وضع دالة onPressed هنا
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const App()),
+              (route) => false,
+            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: btn_background_color_gradiant,
@@ -368,9 +376,8 @@ class _PaymentDestinationState extends State<PaymentDestination> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child:  Text(
+          child: Text(
             AppLocalizations.of(context)!.pay,
-
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
