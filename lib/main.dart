@@ -14,6 +14,7 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(const TripToApp());
 }
@@ -51,7 +52,13 @@ class _TripToAppState extends State<TripToApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
-        textTheme: GoogleFonts.markaziTextTextTheme(), // ← هنا السطر المهم
+        textTheme: GoogleFonts.loraTextTheme(),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black,
+          selectionColor: Colors.grey,
+          selectionHandleColor: Colors.grey,
+        )
+
       ),
       title: 'TripTo',
       debugShowCheckedModeBanner: false,

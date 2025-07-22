@@ -37,7 +37,7 @@
     "booknow": "Book Now",
     "category": "Category",
     "date": "Date",
-      "hotel": "Hotel",
+    "hotel": "Hotel",
       "car": "Car",
       "activities": "Activities",
       "save": "Save",
@@ -67,7 +67,7 @@
   "pleaseselectanactivityfirsttoFinish" : "Please select an activity first to Finish",
   "customtrip" : "Custom Trip",
   "customTripMessage" : "Hello, I would like to inquire about a custom trip.",
-  "cannotOpenWhatsapp": "Cannot open WhatsApp on this device"
-
-
+  "cannotOpenWhatsapp": "Cannot open WhatsApp on this device",
+  "color" : "Color",
+  "year" : "Year"
 }

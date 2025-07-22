@@ -89,6 +89,7 @@ class _FavoritePageState extends State<FavoritePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -161,16 +162,17 @@ class _FavoritePageState extends State<FavoritePage>
         // ... باقي الكود زي ما هو
 
         return Card(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue, width: 2),
+              // border: Border.all(color: Colors.blue, width: 2),
               borderRadius: BorderRadius.circular(16),
             ),
-            padding: const EdgeInsets.all(10),
-            height: MediaQuery.of(context).size.height * 0.25,
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.025),
+            height: MediaQuery.of(context).size.height * 0.26,
             width: MediaQuery.of(context).size.width * 0.7,
             child: Column(
               children: [

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
-import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
-
 import '../../../l10n/app_localizations.dart';
 
 class ActivityCard extends StatelessWidget {

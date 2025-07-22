@@ -101,7 +101,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                   ),
                   child:  Text(
                     AppLocalizations.of(context)!.next,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white , fontSize: 18),
                   ),
                 ),
               ),

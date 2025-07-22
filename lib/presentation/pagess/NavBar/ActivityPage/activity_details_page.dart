@@ -98,7 +98,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                     Text(
                       '⭐ ${widget.activity.rate}',
                       style: const TextStyle(
