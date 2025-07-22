@@ -95,6 +95,8 @@ dependencies:
 
   font_awesome_flutter: ^10.7.0
 
+  http: ^1.4.0
+
 
   #chat to whatsapp
 
