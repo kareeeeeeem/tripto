@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tripto/core/constants/Colors_Fonts_Icons.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/app/app.dart';
@@ -270,6 +271,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: TextField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly, // تمنع أي حاجة غير الأرقام
+                        ],
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.cardnumber,
                           labelStyle: TextStyle(
@@ -302,6 +307,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                       children: [
                         Expanded(
                           child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly, // تمنع أي حاجة غير الأرقام
+                            ],
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.expiry,
                               labelStyle: TextStyle(
@@ -328,6 +337,10 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                         ),
                         Expanded(
                           child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly, // تمنع أي حاجة غير الأرقام
+                            ],
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.cvv,
                               labelStyle: TextStyle(
@@ -358,30 +371,36 @@ class _PaymentDestinationState extends State<PaymentDestination> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: ElevatedButton(
-          // يجب وضع دالة onPressed هنا
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const App()),
-              (route) => false,
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: btn_background_color_gradiant,
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05,  // 5% من عرض الشاشة
+            vertical: MediaQuery.of(context).size.height * 0.04,   // 4% من ارتفاع الشاشة
           ),
-          child: Text(
-            AppLocalizations.of(context)!.pay,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          child: ElevatedButton(
+            // يجب وضع دالة onPressed هنا
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const App()),
+                (route) => false,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: btn_background_color_gradiant,
+              minimumSize: const Size(double.infinity, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Text(
+              AppLocalizations.of(context)!.pay,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
