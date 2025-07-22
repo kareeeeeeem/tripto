@@ -34,13 +34,13 @@ class SelectRightButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               iconWidget,
-              const SizedBox(height: 6),
+              // const SizedBox(height: ),
               Text(
                 label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16, // ✅ حجم الخط أكبر
-                  fontWeight: FontWeight.w600, // ✅ أكثر وضوحًا
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20, // الحجم اللي إنت عايزه
+                  fontWeight: FontWeight.w700, // الوزن اللي إنت عايزه
+                  color: Colors.white, // اللون اللي انت عايزه
                 ),
                 textAlign: TextAlign.center,
               ),

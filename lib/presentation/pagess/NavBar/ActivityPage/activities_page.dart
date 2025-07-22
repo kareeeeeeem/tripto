@@ -122,14 +122,14 @@ class ActivityPage extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: AppLocalizations.of(context)!.price,
+                                text: AppLocalizations.of(context)!.price +' :',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[600],
                                 ),
                               ),
                               const TextSpan(
-                                text: '\$',
+                                text: ' \$',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
