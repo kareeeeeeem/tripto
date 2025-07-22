@@ -1,9 +1,6 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/CustomNavBar.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
-import 'package:tripto/presentation/app/vedio_player_page.dart';
 import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
 import '../pagess/NavBar/Favorite_page.dart';
 import '../pagess/NavBar/ActivityPage/activities_page.dart';
@@ -46,7 +43,6 @@ class _AppState extends State<App> {
       body: Stack(
         children: [
           _pages[_currentIndex],
-
           /// شريط التنقل السفلي المستقل
           Positioned(
             bottom: 0,

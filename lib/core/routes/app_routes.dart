@@ -6,7 +6,6 @@ import 'package:tripto/presentation/pagess/SlideBar/CarCard.dart';
 import 'package:tripto/presentation/pagess/SlideBar/CategoryCard.dart';
 import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
 import '../../presentation/pagess/NavBar/ActivityPage/activity_details_page.dart';
-import '../../presentation/pagess/NavBar/ActivityPage/activities_page.dart';
 import '../../presentation/pagess/NavBar/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
 import '../../presentation/app/vedio_player_page.dart';

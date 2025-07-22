@@ -1,6 +1,3 @@
-// lib/data/models/CarModel.dart
-import 'package:flutter/material.dart';
-
 class Carmodel {
   final String image;
   final String title;

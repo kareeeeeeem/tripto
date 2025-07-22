@@ -109,8 +109,7 @@ class _HotelsState extends State<Hotels> {
                                   ),
                                 ),
                               ),
-                              const Divider(thickness: 1, color: Colors.grey),
-                            ],
+                               SizedBox(height: MediaQuery.of(context).size.height * 0.008,),                                                  ],
                           ),
                         );
                       }),

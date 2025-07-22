@@ -40,7 +40,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wesentyouacode => 'رسلنا لك رمز ';
 
   @override
-  String get wesentitto => 'رسلناخ إلي';
+  String get wesentitto => 'رسلناه إلي';
 
   @override
   String request_code_again_timer(Object time) {
@@ -81,13 +81,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get female => 'أنثي';
 
   @override
-  String get selectahotel => 'اختر الفندق';
+  String get selectahotel => 'إختر الفندق';
 
   @override
-  String get selectactivity => 'أختر النشاط';
+  String get selectactivity => 'إختر الوجهة';
 
   @override
-  String get finish => 'انتهاء';
+  String get finish => 'إنتهاء';
 
   @override
   String get tourismcompany => 'ِشركة السياحة';
@@ -96,10 +96,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get flyingcompany => 'شركة الطيران';
 
   @override
-  String get reserveacar => 'حجز سيارة';
+  String get reserveacar => ' السيارة';
 
   @override
-  String get bookinghotel => 'حجز فندق';
+  String get bookinghotel => ' الفندق';
 
   @override
   String get price => 'السعر';
@@ -208,11 +208,17 @@ class AppLocalizationsAr extends AppLocalizations {
       'برجاء اختيار النشاط للإنتهاء';
 
   @override
-  String get customtrip => 'تخصيص رحلة';
+  String get customtrip => 'رحلة علي كيفك';
 
   @override
-  String get customTripMessage => 'مرحبا، أريد الاستفسار عن رحلة مخصصة';
+  String get customTripMessage => 'مرحبا، أريد الأستفسار عن رحلة مخصصة';
 
   @override
   String get cannotOpenWhatsapp => 'لا يمكن فتح واتساب على هذا الجهاز';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get year => 'السنة';
 }

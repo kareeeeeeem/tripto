@@ -216,4 +216,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cannotOpenWhatsapp => 'Cannot open WhatsApp on this device';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get year => 'Year';
 }

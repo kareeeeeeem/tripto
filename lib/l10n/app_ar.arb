@@ -10,7 +10,7 @@
   "wewilltextacodetoverfiyyournumber" : "راح نرسل لك رمز تحقق على رقم جوالك ",
   "enterthecode": "أدخل الرمز",
   "wesentyouacode" :"رسلنا لك رمز ",
-  "wesentitto":"رسلناخ إلي",
+  "wesentitto":"رسلناه إلي",
   "request_code_again_timer": "تقدر تطلب الرمز بعد {time} ثانية",
    "request_code_again": "تقدر تطلب الرمز مرة ثانية",
   "confirm":"تأكيد",
@@ -23,13 +23,13 @@
   "gender" : "الجنس",
   "male" : "ذكر",
   "female" : "أنثي",
-  "selectahotel": "اختر الفندق",
-  "selectactivity": "أختر النشاط",
-  "finish" : "انتهاء",
+  "selectahotel": "إختر الفندق",
+  "selectactivity": "إختر الوجهة",
+  "finish" : "إنتهاء",
    "tourismcompany": "ِشركة السياحة",
     "flyingcompany": "شركة الطيران",
-    "reserveacar" : "حجز سيارة",
-    "bookinghotel" : "حجز فندق",
+    "reserveacar" : " السيارة",
+    "bookinghotel" : " الفندق",
     "price" : "السعر",
      "gold": "ذهبي",
       "diamond": "ألماسي",
@@ -65,12 +65,9 @@
   "phone" : "الجوال",
   "edit" : "تعديل",
   "pleaseselectanactivityfirsttoFinish" : "برجاء اختيار النشاط للإنتهاء",
-  "customtrip" : "تخصيص رحلة",
-  "customTripMessage" : "مرحبا، أريد الاستفسار عن رحلة مخصصة",
-  "cannotOpenWhatsapp": "لا يمكن فتح واتساب على هذا الجهاز"
-
-
-
-
-
+  "customtrip" : "رحلة علي كيفك",
+  "customTripMessage" : "مرحبا، أريد الأستفسار عن رحلة مخصصة",
+  "cannotOpenWhatsapp": "لا يمكن فتح واتساب على هذا الجهاز",
+  "color" : "اللون",
+  "year" : "السنة"
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/CarModel.dart';
 
+import '../../l10n/app_localizations.dart';
+
 const Map<int, String> colorNames = {
   0xFF2196F3: 'Blue',
   0xFFD32F2F: 'Red',
@@ -66,7 +68,7 @@ class CarCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Year: ${car.year ?? "N/A"}',
+                    AppLocalizations.of(context)!.year + ': ${car.year ?? "N/A"}',
                     style: TextStyle(fontSize: 13, color: subtitleColor),
                   ),
                 ],
@@ -76,7 +78,7 @@ class CarCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Color: $displayColor',
+                   AppLocalizations.of(context)!.color + ': $displayColor',
                   style: TextStyle(fontSize: 13, color: textColor),
                 ),
                 Row(
