@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/pagess/CategoryPages/DiamondCategory.dart';
 import 'package:tripto/presentation/pagess/CategoryPages/CategoryGold.dart';
@@ -88,15 +90,22 @@ class _CategoryCardState extends State<CategoryCard> {
               ElevatedButton(
                 onPressed: () async {
                   const phoneNumber = '201028476944';
-                  final message = Uri.encodeComponent(AppLocalizations.of(context)!.customTripMessage);
+                  final message = Uri.encodeComponent(
+                    AppLocalizations.of(context)!.customTripMessage,
+                  );
                   final url = 'https://wa.me/$phoneNumber?text=$message';
 
                   if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                    await launchUrl(
+                      Uri.parse(url),
+                      mode: LaunchMode.externalApplication,
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.cannotOpenWhatsapp),
+                        content: Text(
+                          AppLocalizations.of(context)!.cannotOpenWhatsapp,
+                        ),
                       ),
                     );
                   }
@@ -122,7 +131,9 @@ class _CategoryCardState extends State<CategoryCard> {
                     //   height: 30,
                     //   fit: BoxFit.contain,
                     // ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.025), // ✅ مسافة متجاوبة
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.025,
+                    ), // ✅ مسافة متجاوبة
                     Text(
                       AppLocalizations.of(context)!.customtrip,
                       style: const TextStyle(
@@ -133,7 +144,6 @@ class _CategoryCardState extends State<CategoryCard> {
                     ),
                   ],
                 ),
-
               ),
             ],
           ),

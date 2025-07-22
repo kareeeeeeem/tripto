@@ -206,7 +206,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   // عنوان الدولة (متحرك مع الفيديو)
                   Positioned(
                     top: screenHeight * 0.1, // نفس الارتفاع النسبي
-                    right: screenWidth * 0.38, // نفس الموقع النسبي
+                    left:
+                        MediaQuery.of(context).size.width * 0.5 -
+                        50, // 50 هو نص عرض العنصر
                     child: const Text(
                       'Egypt',
                       // سيتم تكراره لكل فيديو، إذا أردت تغيير الدولة لكل فيديو، تحتاج لقائمة من أسماء الدول
@@ -251,7 +253,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                             : screenWidth * 0.060,
                     right:
                         Directionality.of(context) == TextDirection.rtl
-                             ? screenWidth * 0.060
+                            ? screenWidth * 0.060
                             : screenWidth * 0.060,
                     child: Column(
                       crossAxisAlignment:
@@ -262,12 +264,16 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                            left: Localizations.localeOf(context).languageCode == 'ar'
-                                ? 0
-                                : MediaQuery.of(context).size.width * 0.025,
-                            right: Localizations.localeOf(context).languageCode == 'ar'
-                                ? MediaQuery.of(context).size.width * 0.025
-                                : 0,
+                            left:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? 0
+                                    : MediaQuery.of(context).size.width * 0.025,
+                            right:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? MediaQuery.of(context).size.width * 0.025
+                                    : 0,
                           ),
                           child: const Countrywithcity(
                             countryName: 'Egypt',
@@ -275,7 +281,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                           ),
                         ),
 
-                        SizedBox(height: MediaQuery.of(context).size.height * 0.001),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.001,
+                        ),
 
                         PersonCounterWithPrice(
                           basePricePerPerson: _bookingPricePerPerson,

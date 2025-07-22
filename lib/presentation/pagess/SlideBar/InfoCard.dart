@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
-import 'package:tripto/core/constants/colors.dart';
+import 'package:tripto/core/constants/Colors_Fonts_Icons.dart';
 import 'package:tripto/core/models/info_details_model.dart';
 import '../../../core/routes/app_routes.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +16,7 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.48,
-      width: MediaQuery.of(context).size.width*0.75,
+      width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
         children: [
           Expanded(
@@ -24,15 +24,13 @@ class InfoCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20)),
               child: SingleChildScrollView(
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
+                  decoration: const BoxDecoration(color: Colors.white),
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
-                         AppLocalizations.of(context)!.tourismcompany,
+                      Text(
+                        AppLocalizations.of(context)!.tourismcompany,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -80,7 +78,7 @@ class InfoCard extends StatelessWidget {
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
                       const SizedBox(height: 16),
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.flyingcompany,
                         style: TextStyle(
                           fontSize: 20,
@@ -122,7 +120,7 @@ class InfoCard extends StatelessWidget {
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
                       const SizedBox(height: 16),
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.reserveacar,
                         style: TextStyle(
                           fontSize: 20,
@@ -164,7 +162,7 @@ class InfoCard extends StatelessWidget {
                       ),
                       const Divider(thickness: 1, color: Colors.grey),
                       const SizedBox(height: 16),
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.bookinghotel,
                         style: TextStyle(
                           fontSize: 20,

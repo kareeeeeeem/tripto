@@ -78,11 +78,20 @@ class _RightButtonsState extends State<RightButtons> {
           alignment: Alignment.center,
           transform: Matrix4.identity()..scale(-1.0, 1.0), // عكس أفقي
           child: Icon(
-            Icons.local_offer,
+            selectedCategoryType == CategoryType.none
+                ? Icons
+                    .local_offer // قبل اختيار فئة
+                : Icons.diamond_outlined, // بعد اختيار فئة
             color:
                 selectedIndex == 0
-                    ? Colors.white
-                    : _getColorForCategory(selectedCategoryType),
+                    ? Colors
+                        .white // لو الزر مفعّل
+                    : (selectedCategoryType == null
+                        ? Colors
+                            .white // قبل اختيار فئة
+                        : _getColorForCategory(
+                          selectedCategoryType!,
+                        )), // بعد اختيار فئة
           ),
         ),
 
@@ -107,7 +116,7 @@ class _RightButtonsState extends State<RightButtons> {
           children: [
             Icon(
               Icons.calendar_today,
-              size: 30,
+              size: 60,
               color: selectedIndex == 1 ? selectedIconColor : defaultIconColor,
             ),
             Text(

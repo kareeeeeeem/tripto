@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 
-import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/Colors_Fonts_Icons.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -37,10 +37,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
         leading: IconButton(
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons
-                .keyboard_arrow_right_outlined
-                : Icons
-                .keyboard_arrow_left_outlined,
+                ? Icons.keyboard_arrow_right_outlined
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
           ),
@@ -81,7 +79,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.01,
                         ),
-                        child:  Text(
+                        child: Text(
                           AppLocalizations.of(context)!.destination + " : ",
                           style: TextStyle(
                             fontSize: 18,
@@ -128,7 +126,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.numberofpeople + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -204,7 +202,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.category + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -213,7 +211,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         ),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.gold,
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
@@ -229,7 +227,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     children: [
-                       Text(
+                      Text(
                         AppLocalizations.of(context)!.price + " :",
                         style: TextStyle(
                           fontSize: 18,
@@ -268,7 +266,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child:  Text(
+          child: Text(
             AppLocalizations.of(context)!.confirm,
             style: TextStyle(
               fontSize: 22,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/core/constants/CustomNavBar.dart';
-import 'package:tripto/core/constants/colors.dart';
+import 'package:tripto/core/constants/Colors_Fonts_Icons.dart';
 import 'package:tripto/core/constants/Profiletextfield.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/app/app.dart';
@@ -38,9 +38,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
-          AppLocalizations.of(context) !.profile,
-          style: GoogleFonts.markaziText(fontWeight: FontWeight.bold, fontSize: 25),
+        title: Text(
+          AppLocalizations.of(context)!.profile,
+          style: GoogleFonts.markaziText(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -49,7 +52,8 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons.keyboard_arrow_right_outlined  // في العربي: سهم لليمين
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
                 : Icons.keyboard_arrow_left_outlined,
             size: 35,
             color: Colors.black,
@@ -140,10 +144,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               });
                             },
                             child: Text(
-                              isEditing ?
-                                   AppLocalizations.of(context)!.save
+                              isEditing
+                                  ? AppLocalizations.of(context)!.save
                                   : AppLocalizations.of(context)!.edit,
-                              style:  GoogleFonts.markaziText(
+                              style: GoogleFonts.markaziText(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,

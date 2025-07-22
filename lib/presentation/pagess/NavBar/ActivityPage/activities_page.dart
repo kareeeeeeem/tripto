@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
 
-import '../../../../core/constants/colors.dart'; // تأكد من المسار الصحيح لـ colors
+import '../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
 import '../../../../core/routes/app_routes.dart';
 import '../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
 
@@ -164,18 +164,25 @@ class ActivityPage extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 0.0001,
                           ),
                           Row(
-                            children: Localizations.localeOf(context).languageCode == 'ar'
-                                ? [
-                              Text(" ${AppLocalizations.of(context)!.duration}" + ": "),
-                              Text("${activity.duration} "),
-                              Text(AppLocalizations.of(context)!.min),
-                            ]
-                                : [
-
-                              Text("${AppLocalizations.of(context)!.duration}" + ": "),
-                              Text("${activity.duration} "),
-                              Text(AppLocalizations.of(context)!.min),
-                            ],
+                            children:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? [
+                                      Text(
+                                        " ${AppLocalizations.of(context)!.duration}" +
+                                            ": ",
+                                      ),
+                                      Text("${activity.duration} "),
+                                      Text(AppLocalizations.of(context)!.min),
+                                    ]
+                                    : [
+                                      Text(
+                                        "${AppLocalizations.of(context)!.duration}" +
+                                            ": ",
+                                      ),
+                                      Text("${activity.duration} "),
+                                      Text(AppLocalizations.of(context)!.min),
+                                    ],
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.001,

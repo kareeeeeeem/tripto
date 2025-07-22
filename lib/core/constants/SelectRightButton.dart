@@ -21,33 +21,28 @@ class SelectRightButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blueAccent : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
-        // **هنا بنضيف FittedBox لحل مشكلة التجاوز**
         child: FittedBox(
-          fit: BoxFit.scaleDown, // بيصغر المحتوى لو أكبر من اللازم
-          alignment: Alignment.center, // بيخلي المحتوى في المنتصف
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.center,
           child: Column(
-            mainAxisAlignment:
-                MainAxisAlignment.center, // بيوسّط الأيقونة والنص عموديًا
-            mainAxisSize:
-                MainAxisSize
-                    .min, // بيخلي الـ Column ياخد أقل مساحة ممكنة لمحتواه
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               iconWidget,
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Text(
                 label,
                 style: const TextStyle(
-                  // استخدم const مع TextStyle إذا كانت القيم ثابتة
                   color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16, // ✅ حجم الخط أكبر
+                  fontWeight: FontWeight.w600, // ✅ أكثر وضوحًا
                 ),
-                textAlign: TextAlign.center, // وسّط النص أفقيًا
+                textAlign: TextAlign.center,
               ),
             ],
           ),
