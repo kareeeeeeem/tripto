@@ -60,7 +60,7 @@ class _VerificationState extends State<Verification> {
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
                 ? Icons
-                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                .keyboard_arrow_right_outlined // في العربي: سهم لليمين
                 : Icons.keyboard_arrow_left_outlined,
             size: 35,
           ),
@@ -135,8 +135,8 @@ class _VerificationState extends State<Verification> {
             Text(
               _start > 0
                   ? AppLocalizations.of(
-                    context,
-                  )!.request_code_again_timer(_start.toString())
+                context,
+              )!.request_code_again_timer(_start.toString())
                   : AppLocalizations.of(context)!.request_code_again,
               style:  GoogleFonts.markaziText(fontSize: 16),
             ),
@@ -156,11 +156,11 @@ class _VerificationState extends State<Verification> {
                     ),
                   ),
                   onPressed:
-                      _isButtonEnabled
-                          ? () {
-                            Navigator.pushNamed(context, '/ProfileCard');
-                          }
-                          : null,
+                  _isButtonEnabled
+                      ? () {
+                    Navigator.pushNamed(context, '/ProfileCard');
+                  }
+                      : null,
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
                     style:  GoogleFonts.markaziText(
