@@ -221,4 +221,62 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get year => 'السنة';
+
+  @override
+  String get pleaseEnterYourName => 'الرجاء إدخال اسمك';
+
+  @override
+  String get pleaseEnterYourPhoneNumber => 'الرجاء إدخال رقم هاتفك';
+
+  @override
+  String get phoneNumberTooShort => 'رقم الهاتف قصير جداً';
+
+  @override
+  String get pleaseEnterYourEmail => 'الرجاء إدخال بريدك الإلكتروني';
+
+  @override
+  String get pleaseEnterValidEmail => 'الرجاء إدخال بريد إلكتروني صالح';
+
+  @override
+  String get pleaseEnterYourPassword => 'الرجاء إدخال كلمة المرور الخاصة بك';
+
+  @override
+  String get passwordTooShort => 'كلمة المرور قصيرة جداً (8 أحرف على الأقل)';
+
+  @override
+  String get pleaseConfirmYourPassword => 'الرجاء تأكيد كلمة المرور';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get atLeast8Chars => '8 أحرف على الأقل';
+
+  @override
+  String get atLeastOneLowercase => 'حرف صغير واحد على الأقل';
+
+  @override
+  String get atLeastOneUppercase => 'حرف كبير واحد على الأقل';
+
+  @override
+  String get atLeastOneDigit => 'رقم واحد على الأقل';
+
+  @override
+  String get passwordNotStrongEnough =>
+      'كلمة المرور ليست قوية بما فيه الكفاية. يرجى استيفاء جميع المتطلبات.';
+
+  @override
+  String get registrationSuccess => 'تم التسجيل بنجاح!';
+
+  @override
+  String get registrationFailed => 'فشل التسجيل. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get unexpectedError => 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.';
+
+  @override
+  String get loading => 'جاري التحميل!';
+
+  @override
+  String get failedToSend => 'فشل إرسال الطلب.';
 }

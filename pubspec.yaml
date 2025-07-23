@@ -94,6 +94,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
 
   http: ^1.4.0
+
   flutter_multi_formatter: ^2.13.7
 
   flutter_secure_storage: ^9.2.4

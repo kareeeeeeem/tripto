@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @wewilltextacodetoverfiyyournumber.
   ///
   /// In en, this message translates to:
-  /// **'We will text a code to verfiy your number'**
+  /// **'We will text a code to verify your number'**
   String get wewilltextacodetoverfiyyournumber;
 
   /// No description provided for @enterthecode.
@@ -517,6 +517,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Year'**
   String get year;
+
+  /// No description provided for @pleaseEnterYourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterYourName;
+
+  /// No description provided for @pleaseEnterYourPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number'**
+  String get pleaseEnterYourPhoneNumber;
+
+  /// No description provided for @phoneNumberTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is too short'**
+  String get phoneNumberTooShort;
+
+  /// No description provided for @pleaseEnterYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get pleaseEnterYourEmail;
+
+  /// No description provided for @pleaseEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get pleaseEnterValidEmail;
+
+  /// No description provided for @pleaseEnterYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get pleaseEnterYourPassword;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too short (min 8 characters)'**
+  String get passwordTooShort;
+
+  /// No description provided for @pleaseConfirmYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmYourPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @atLeast8Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get atLeast8Chars;
+
+  /// No description provided for @atLeastOneLowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one lowercase letter'**
+  String get atLeastOneLowercase;
+
+  /// No description provided for @atLeastOneUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get atLeastOneUppercase;
+
+  /// No description provided for @atLeastOneDigit.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one digit'**
+  String get atLeastOneDigit;
+
+  /// No description provided for @passwordNotStrongEnough.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is not strong enough. Please meet all requirements.'**
+  String get passwordNotStrongEnough;
+
+  /// No description provided for @registrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful!'**
+  String get registrationSuccess;
+
+  /// No description provided for @registrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get registrationFailed;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again later.'**
+  String get unexpectedError;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading!'**
+  String get loading;
+
+  /// No description provided for @failedToSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send request.'**
+  String get failedToSend;
 }
 
 class _AppLocalizationsDelegate

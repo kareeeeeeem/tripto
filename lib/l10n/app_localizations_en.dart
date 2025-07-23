@@ -31,7 +31,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wewilltextacodetoverfiyyournumber =>
-      'We will text a code to verfiy your number';
+      'We will text a code to verify your number';
 
   @override
   String get enterthecode => 'Enter the code';
@@ -222,4 +222,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get year => 'Year';
+
+  @override
+  String get pleaseEnterYourName => 'Please enter your name';
+
+  @override
+  String get pleaseEnterYourPhoneNumber => 'Please enter your phone number';
+
+  @override
+  String get phoneNumberTooShort => 'Phone number is too short';
+
+  @override
+  String get pleaseEnterYourEmail => 'Please enter your email';
+
+  @override
+  String get pleaseEnterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get pleaseEnterYourPassword => 'Please enter your password';
+
+  @override
+  String get passwordTooShort => 'Password is too short (min 8 characters)';
+
+  @override
+  String get pleaseConfirmYourPassword => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get atLeast8Chars => 'At least 8 characters';
+
+  @override
+  String get atLeastOneLowercase => 'At least one lowercase letter';
+
+  @override
+  String get atLeastOneUppercase => 'At least one uppercase letter';
+
+  @override
+  String get atLeastOneDigit => 'At least one digit';
+
+  @override
+  String get passwordNotStrongEnough =>
+      'Password is not strong enough. Please meet all requirements.';
+
+  @override
+  String get registrationSuccess => 'Registration successful!';
+
+  @override
+  String get registrationFailed => 'Registration failed. Please try again.';
+
+  @override
+  String get unexpectedError =>
+      'An unexpected error occurred. Please try again later.';
+
+  @override
+  String get loading => 'Loading!';
+
+  @override
+  String get failedToSend => 'Failed to send request.';
 }

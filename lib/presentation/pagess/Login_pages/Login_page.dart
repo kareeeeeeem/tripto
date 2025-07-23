@@ -1,11 +1,14 @@
+// login.dart
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tripto/core/services/api.dart'; // تأكد إن ده مسار ملف ApiConstants بتاعك
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/logic/blocs/auth/AuthBloc.dart';
+import 'package:tripto/logic/blocs/auth/AuthEvent.dart';
+import 'package:tripto/logic/blocs/auth/AuthState.dart';
 import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,52 +18,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String? completePhoneNumber; // هذا المتغير سيحمل الرقم كاملاً مع كود الدولة
+  String? completePhoneNumber;
+  final TextEditingController passwordController = TextEditingController();
+  bool obscurePassword = true;
 
-  Future<void> sendPhoneNumberToApi(String phone) async {
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}login',
-    ); // <--- عدّل الـ 'login' حسب الـ endpoint الصحيح في الـ Backend
-
-    print(
-      'Sending phone number payload: {"phone": "$phone"} to URL: $url',
-    ); // لطباعة الـ payload والـ URL
-
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'phone': phone}),
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final body = jsonDecode(response.body);
-        print(
-          '✅ Success API Response: $body',
-        ); // طباعة استجابة الـ API عند النجاح
-
-        // الانتقال لصفحة التحقق
-        // هنا أنت ترسل completePhoneNumber (الرقم بكود الدولة) إلى صفحة التحقق.
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Verification(phoneNumber: phone),
-          ),
-        );
-      } else {
-        print(
-          '❌ API Error: ${response.statusCode} - ${response.body}',
-        ); // طباعة تفاصيل الخطأ من الـ API
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('فشل الإرسال: ${response.statusCode}')),
-        );
-      }
-    } catch (e) {
-      print('🔴 Network Exception: $e'); // طباعة أي أخطاء في الاتصال
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('حدث خطأ أثناء الاتصال: $e')));
-    }
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -84,115 +49,202 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-      body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: screenHeight * 0.07),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.joinusviaphonenumber,
-                  style: GoogleFonts.markaziText(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textDirection:
-                      locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-                ),
-                SizedBox(height: screenHeight * 0.01),
-                Text(
-                  AppLocalizations.of(
-                    context,
-                  )!.wewilltextacodetoverfiyyournumber,
-                  style: GoogleFonts.markaziText(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xFF989898),
-                  ),
-                  textAlign: TextAlign.center,
-                  textDirection:
-                      locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-                ),
-                SizedBox(height: screenHeight * 0.08),
-
-                // رقم الهاتف
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                  child: IntlPhoneField(
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(
-                          color: Colors.black45,
-                          width: 1,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                          width: 2,
-                        ),
-                      ),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoading) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('جاري تسجيل الدخول...')));
+          } else if (state is LoginSuccess) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        Verification(phoneNumber: completePhoneNumber!),
+              ),
+            );
+          } else if (state is AuthFailure) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('فشل: ${state.error}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: Container(
+          color: Colors.white,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: screenHeight * 0.07),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.joinusviaphonenumber,
+                    style: GoogleFonts.markaziText(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
                     ),
-                    initialCountryCode: 'SA',
-                    onChanged: (phone) {
-                      // هنا بنخزن الرقم كاملاً بكود الدولة
-                      completePhoneNumber = phone.completeNumber;
-                    },
+                    textDirection:
+                        locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                   ),
-                ),
+                  SizedBox(height: screenHeight * 0.01),
+                  Text(
+                    AppLocalizations.of(
+                      context,
+                    )!.wewilltextacodetoverfiyyournumber,
+                    style: GoogleFonts.markaziText(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF989898),
+                    ),
+                    textAlign: TextAlign.center,
+                    textDirection:
+                        locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                  ),
+                  SizedBox(height: screenHeight * 0.08),
 
-                // زر "التالي"
-                Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.025),
-                  child: SizedBox(
-                    width: screenWidth * 0.878,
-                    height: screenHeight * 0.05875,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF002E70),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                  /// Phone Number Field
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                    ),
+                    child: IntlPhoneField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: locale == 'ar' ? 'رقم الهاتف' : 'Phone',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.black45,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        // هنا بنتأكد إن الرقم مش فاضي قبل ما نبعته
-                        if (completePhoneNumber != null &&
-                            completePhoneNumber!.isNotEmpty) {
-                          sendPhoneNumberToApi(completePhoneNumber!);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                locale == 'ar'
-                                    ? 'من فضلك أدخل رقم هاتف صحيح'
-                                    : 'Please enter a valid phone number.',
-                                textAlign: TextAlign.center,
-                              ),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
+                      initialCountryCode: 'SA',
+                      onChanged: (phone) {
+                        completePhoneNumber = phone.completeNumber;
+                        setState(() {});
                       },
-                      child: Text(
-                        AppLocalizations.of(context)!.login,
-                        style: GoogleFonts.markaziText(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                    ),
+                  ),
+
+                  /// Password Field
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical: 12,
+                    ),
+                    child: TextFormField(
+                      controller: passwordController,
+                      obscureText: obscurePassword,
+                      decoration: InputDecoration(
+                        labelText: locale == 'ar' ? 'كلمة المرور' : 'Password',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              obscurePassword = !obscurePassword;
+                            });
+                          },
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.black45,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+
+                  /// Login Button
+                  Padding(
+                    padding: EdgeInsets.all(screenWidth * 0.025),
+                    child: SizedBox(
+                      width: screenWidth * 0.878,
+                      height: screenHeight * 0.05875,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF002E70),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          if ((completePhoneNumber != null &&
+                              completePhoneNumber!.isNotEmpty &&
+                              passwordController.text.isNotEmpty)) {
+                            context.read<AuthBloc>().add(
+                              LoginRequested(
+                                phoneNumber: completePhoneNumber!,
+                                password: passwordController.text,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  locale == 'ar'
+                                      ? 'من فضلك أدخل رقم الهاتف وكلمة المرور'
+                                      : 'Please enter phone number and password.',
+                                  textAlign: TextAlign.center,
+                                ),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
+                          style: GoogleFonts.markaziText(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
