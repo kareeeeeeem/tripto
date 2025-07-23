@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/core/services/api.dart'; // تأكد إن ده مسار ملف ApiConstants بتاعك
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
 import 'package:http/http.dart' as http;
@@ -14,12 +15,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String? completePhoneNumber;
+  String? completePhoneNumber; // هذا المتغير سيحمل الرقم كاملاً مع كود الدولة
 
   Future<void> sendPhoneNumberToApi(String phone) async {
     final url = Uri.parse(
-      'https://tripto.blueboxpet.com/',
-    ); // ← عدّل هنا بالرابط الصحيح
+      '${ApiConstants.baseUrl}login',
+    ); // <--- عدّل الـ 'login' حسب الـ endpoint الصحيح في الـ Backend
+
+    print(
+      'Sending phone number payload: {"phone": "$phone"} to URL: $url',
+    ); // لطباعة الـ payload والـ URL
 
     try {
       final response = await http.post(
@@ -30,7 +35,12 @@ class _LoginState extends State<Login> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final body = jsonDecode(response.body);
+        print(
+          '✅ Success API Response: $body',
+        ); // طباعة استجابة الـ API عند النجاح
+
         // الانتقال لصفحة التحقق
+        // هنا أنت ترسل completePhoneNumber (الرقم بكود الدولة) إلى صفحة التحقق.
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -38,11 +48,15 @@ class _LoginState extends State<Login> {
           ),
         );
       } else {
+        print(
+          '❌ API Error: ${response.statusCode} - ${response.body}',
+        ); // طباعة تفاصيل الخطأ من الـ API
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('فشل الإرسال: ${response.statusCode}')),
         );
       }
     } catch (e) {
+      print('🔴 Network Exception: $e'); // طباعة أي أخطاء في الاتصال
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('حدث خطأ أثناء الاتصال: $e')));
@@ -129,6 +143,7 @@ class _LoginState extends State<Login> {
                     ),
                     initialCountryCode: 'SA',
                     onChanged: (phone) {
+                      // هنا بنخزن الرقم كاملاً بكود الدولة
                       completePhoneNumber = phone.completeNumber;
                     },
                   ),
@@ -148,6 +163,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       onPressed: () {
+                        // هنا بنتأكد إن الرقم مش فاضي قبل ما نبعته
                         if (completePhoneNumber != null &&
                             completePhoneNumber!.isNotEmpty) {
                           sendPhoneNumberToApi(completePhoneNumber!);
@@ -166,7 +182,7 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: Text(
-                        AppLocalizations.of(context)!.next,
+                        AppLocalizations.of(context)!.login,
                         style: GoogleFonts.markaziText(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

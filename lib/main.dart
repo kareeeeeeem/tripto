@@ -57,8 +57,7 @@ class _TripToAppState extends State<TripToApp> {
           cursorColor: Colors.black,
           selectionColor: Colors.grey,
           selectionHandleColor: Colors.grey,
-        )
-
+        ),
       ),
       title: 'TripTo',
       debugShowCheckedModeBanner: false,

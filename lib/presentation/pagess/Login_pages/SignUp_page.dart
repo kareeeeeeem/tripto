@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:tripto/core/services/api.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
 import 'package:http/http.dart' as http;
@@ -15,37 +16,36 @@ class SignupPage extends StatefulWidget {
 }
 
 class SignupPageState extends State<SignupPage> {
+  final _formKey = GlobalKey<FormState>();
+
   Future<void> registerUser() async {
-    final url = Uri.parse(
-      'https://tripto.blueboxpet.com/',
-    ); // ← غيّر الرابط حسب الـ endpoint الصح
+    if (!_formKey.currentState!.validate()) return;
+
+    final url = Uri.parse('${ApiConstants.baseUrl}register');
+
+    final bodyData = jsonEncode({
+      'name': nameController.text.trim(),
+      'email': emailController.text.trim(),
+      'phone': phoneNumber,
+      'password': passController.text.trim(),
+      'password_confirmation': confirmPassController.text.trim(),
+    });
 
     try {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'name': nameController.text.trim(),
-          'email': emailController.text.trim(),
-          'password': passController.text.trim(),
-          'confirm_password': confirmPassController.text.trim(),
-          'phone': completePhoneNumber,
-          'gender': gender == 1 ? 'male' : 'female',
-        }),
+        body: bodyData,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         print('✅ Success: $data');
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("تم التسجيل بنجاح")));
-        // Navigator.push(...);
       } else {
         print('❌ Error: ${response.body}');
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("فشل التسجيل")));
       }
     } catch (e) {
       print('🔴 Exception: $e');
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("حصل خطأ غير متوقع")));
     }
   }
 
@@ -58,7 +58,7 @@ class SignupPageState extends State<SignupPage> {
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
 
-  String? completePhoneNumber;
+  String? phoneNumber;
 
   @override
   void dispose() {
@@ -95,103 +95,85 @@ class SignupPageState extends State<SignupPage> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Image.asset("assets/images/Logo.png", height: 120),
-            buildLabel(AppLocalizations.of(context)!.name),
-            buildInputField(controller: nameController, icon: Icons.person),
-            buildLabel(AppLocalizations.of(context)!.email),
-            buildInputField(
-              controller: emailController,
-              icon: Icons.email_outlined,
-            ),
-            buildLabel(AppLocalizations.of(context)!.password),
-            buildPasswordField(
-              controller: passController,
-              obscure: obsecureText1,
-              toggle: () {
-                setState(() {
-                  obsecureText1 = !obsecureText1;
-                });
-              },
-            ),
-            buildLabel(AppLocalizations.of(context)!.confirmpassword),
-            buildPasswordField(
-              controller: confirmPassController,
-              obscure: obsecureText2,
-              toggle: () {
-                setState(() {
-                  obsecureText2 = !obsecureText2;
-                });
-              },
-            ),
-            buildLabel(AppLocalizations.of(context)!.phone),
-            IntlPhoneField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                suffixIcon: const Icon(Icons.phone),
-                filled: true,
-                fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                border: inputBorder,
-                enabledBorder: inputBorder,
-                focusedBorder: inputBorder.copyWith(
-                  borderSide: const BorderSide(color: Colors.grey, width: 2),
-                ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Image.asset("assets/images/Logo.png", height: 120),
+              buildLabel(AppLocalizations.of(context)!.name),
+              buildInputField(
+                controller: nameController,
+                icon: Icons.person,
+                validator: (value) => value!.isEmpty ? 'الاسم مطلوب' : null,
               ),
-              initialCountryCode: 'SA',
-              onChanged: (phone) {
-                completePhoneNumber = phone.completeNumber;
-              },
-            ),
-            buildLabel(AppLocalizations.of(context)!.gender),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Radio(
-                  value: 1,
-                  groupValue: gender,
-                  onChanged: (value) => setState(() => gender = value),
-                  activeColor: const Color(0xFF002E70),
-                ),
-                Text(AppLocalizations.of(context)!.male),
-                const SizedBox(width: 30),
-                Radio(
-                  value: 2,
-                  groupValue: gender,
-                  onChanged: (value) => setState(() => gender = value),
-                  activeColor: const Color(0xFF002E70),
-                ),
-                Text(AppLocalizations.of(context)!.female),
-              ],
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF002E70),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              buildLabel(AppLocalizations.of(context)!.phone),
+              IntlPhoneField(
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(Icons.phone),
+                  filled: true,
+                  fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                  border: inputBorder,
+                  enabledBorder: inputBorder,
+                  focusedBorder: inputBorder.copyWith(
+                    borderSide: const BorderSide(color: Colors.grey, width: 2),
                   ),
                 ),
-                onPressed: () {
-                  registerUser();
-
-                  // هنا تقدر تستخدم controllers و completePhoneNumber وترسلهم للـ API
+                initialCountryCode: 'SA',
+                onChanged: (phone) {
+                  phoneNumber = phone.number;
                 },
-                child: Text(
-                  AppLocalizations.of(context)!.signup,
-                  style: GoogleFonts.markaziText(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                validator: (phone) {
+                  if (phone == null || phone.number.length < 9) {
+                    return 'رقم الهاتف غير صحيح';
+                  }
+                  return null;
+                },
+              ),
+              buildLabel(AppLocalizations.of(context)!.password),
+              buildPasswordField(
+                controller: passController,
+                obscure: obsecureText1,
+                toggle: () => setState(() => obsecureText1 = !obsecureText1),
+                validator:
+                    (value) => value!.length < 6 ? 'كلمة المرور قصيرة' : null,
+              ),
+              buildLabel(AppLocalizations.of(context)!.confirmpassword),
+              buildPasswordField(
+                controller: confirmPassController,
+                obscure: obsecureText2,
+                toggle: () => setState(() => obsecureText2 = !obsecureText2),
+                validator:
+                    (value) =>
+                        value != passController.text
+                            ? 'كلمتا المرور غير متطابقتين'
+                            : null,
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF002E70),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: registerUser,
+                  child: Text(
+                    AppLocalizations.of(context)!.signup,
+                    style: GoogleFonts.markaziText(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-          ],
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
@@ -215,9 +197,11 @@ class SignupPageState extends State<SignupPage> {
   Widget buildInputField({
     required TextEditingController controller,
     required IconData icon,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      validator: validator,
       decoration: InputDecoration(
         suffixIcon: Icon(icon),
         filled: true,
@@ -239,10 +223,12 @@ class SignupPageState extends State<SignupPage> {
     required TextEditingController controller,
     required bool obscure,
     required VoidCallback toggle,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       obscureText: obscure,
+      validator: validator,
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: Icon(
