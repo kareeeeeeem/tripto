@@ -3,8 +3,12 @@ import 'package:tripto/data/repositories/UserRepository.dart';
 import 'package:tripto/logic/blocs/auth/AuthEvent.dart';
 import 'package:tripto/logic/blocs/auth/AuthState.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
+
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   AuthBloc({required this.userRepository}) : super(AuthInitial()) {
     on<LoginRequested>(_onLoginRequested);
@@ -18,13 +22,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     try {
+      final phoneNumber;
+
+      print('📞 رقم الهاتف بعد الإضافة: $event.phoneNumber');
+      print('🔐 كلمة المرور: ${event.password}');
+
       final response = await userRepository.loginUser(
         event.phoneNumber,
         event.password,
       );
-      emit(
-        LoginSuccess(message: response['message'] ?? 'تم تسجيل الدخول بنجاح!'),
-      );
+      emit(LoginSuccess(message: response['message_en'] ?? ' Succeessful!'));
+      print(response);
+      await _storage.write(key: 'token', value: response['token']);
+      String? token = await _storage.read(key: 'token');
+      print('التوكين: $token');
     } catch (e) {
       emit(AuthFailure(error: e.toString()));
     }
@@ -43,9 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.password,
         event.confirmPassword,
       );
-      emit(
-        RegisterSuccess(message: response['message'] ?? 'تم التسجيل بنجاح!'),
-      );
+      emit(RegisterSuccess(message: response['message'] ?? 'done!'));
     } catch (e) {
       emit(AuthFailure(error: e.toString()));
     }

@@ -1,7 +1,6 @@
-// login.dart
 // ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/logic/blocs/auth/AuthBloc.dart';
@@ -9,6 +8,8 @@ import 'package:tripto/logic/blocs/auth/AuthEvent.dart';
 import 'package:tripto/logic/blocs/auth/AuthState.dart';
 import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
+import 'package:flutter/services.dart'; // ضروري لإدخال الأرقام فقط
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,11 +21,13 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String? completePhoneNumber;
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   bool obscurePassword = true;
 
   @override
   void dispose() {
     passwordController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 
@@ -54,7 +57,7 @@ class _LoginState extends State<Login> {
           if (state is AuthLoading) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text('جاري تسجيل الدخول...')));
+            ).showSnackBar(SnackBar(content: Text('loading...')));
           } else if (state is LoginSuccess) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -65,11 +68,7 @@ class _LoginState extends State<Login> {
             );
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder:
-                    (context) =>
-                        Verification(phoneNumber: completePhoneNumber!),
-              ),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -114,15 +113,20 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: screenHeight * 0.08),
 
-                  /// Phone Number Field
+                  /// Phone Field (رقم الهاتف فقط أرقام)
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.04,
                     ),
-                    child: IntlPhoneField(
-                      keyboardType: TextInputType.phone,
+                    child: TextFormField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText: locale == 'ar' ? 'رقم الهاتف' : 'Phone',
+                        labelText:
+                            locale == 'ar' ? 'رقم الهاتف' : 'Phone Number',
+                        filled: true,
+                        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),
@@ -141,15 +145,13 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      initialCountryCode: 'SA',
-                      onChanged: (phone) {
-                        completePhoneNumber = phone.completeNumber;
-                        setState(() {});
+                      onChanged: (value) {
+                        completePhoneNumber = value;
                       },
                     ),
                   ),
 
-                  /// Password Field
+                  /// Password Field (بدون تغييرات)
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.04,
