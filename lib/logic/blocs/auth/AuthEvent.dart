@@ -7,16 +7,6 @@ abstract class AuthEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoginRequested extends AuthEvent {
-  final String phoneNumber;
-  final String password;
-
-  const LoginRequested({required this.phoneNumber, required this.password});
-
-  @override
-  List<Object?> get props => [phoneNumber, password];
-}
-
 class RegisterRequested extends AuthEvent {
   final String name;
   final String email;
@@ -40,6 +30,16 @@ class RegisterRequested extends AuthEvent {
     password,
     confirmPassword,
   ];
+}
+
+class LoginRequested extends AuthEvent {
+  final String phoneNumber;
+  final String password;
+
+  const LoginRequested({required this.phoneNumber, required this.password});
+
+  @override
+  List<Object?> get props => [phoneNumber, password];
 }
 
 class VerifyOtpRequested extends AuthEvent {

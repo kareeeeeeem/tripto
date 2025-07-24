@@ -439,9 +439,9 @@ class SignupPageState extends State<SignupPage> {
             TextButton(
               child: Text('ok', style: TextStyle(color: Colors.blue)),
               onPressed: () {
-                Navigator.of(context).pop(); // لإغلاق الـ dialog
+                // Navigator.of(context).pop(); // لإغلاق الـ dialog
                 // 🚀 هنا ممكن تنتقل لصفحة تسجيل الدخول أو صفحة رئيسية بعد إغلاق الـ dialog
-                // Navigator.of(context).pushReplacementNamed('/login');
+                Navigator.of(context).pushReplacementNamed('/app');
               },
             ),
           ],

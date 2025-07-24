@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/logic/blocs/auth/AuthBloc.dart';
 import 'package:tripto/logic/blocs/auth/AuthEvent.dart';
 import 'package:tripto/logic/blocs/auth/AuthState.dart';
-import 'package:tripto/presentation/pagess/Login_pages/verification_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
 import 'package:flutter/services.dart'; // ضروري لإدخال الأرقام فقط
 
@@ -20,9 +21,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String? completePhoneNumber;
+  bool obscurePassword = true;
+
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  bool obscurePassword = true;
+  final _storage = const FlutterSecureStorage();
 
   @override
   void dispose() {
@@ -53,12 +56,16 @@ class _LoginState extends State<Login> {
         ),
       ),
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthLoading) {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text('loading...')));
           } else if (state is LoginSuccess) {
+            //  await _storage.write(key: 'token', value: state.token);
+            //  print('🔐 Token: ${state.token}');
+            //print('👤 User: ${state.user['name']} (${state.user['email']})');
+
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -66,10 +73,7 @@ class _LoginState extends State<Login> {
                 backgroundColor: Colors.green,
               ),
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Navigator.of(context).pushReplacementNamed('/app');
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -97,7 +101,9 @@ class _LoginState extends State<Login> {
                     textDirection:
                         locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                   ),
+
                   SizedBox(height: screenHeight * 0.01),
+
                   Text(
                     AppLocalizations.of(
                       context,
@@ -111,6 +117,7 @@ class _LoginState extends State<Login> {
                     textDirection:
                         locale == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                   ),
+
                   SizedBox(height: screenHeight * 0.08),
 
                   /// Phone Field (رقم الهاتف فقط أرقام)

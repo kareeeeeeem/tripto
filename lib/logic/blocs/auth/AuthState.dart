@@ -20,29 +20,41 @@ class AuthFailure extends AuthState {
   List<Object?> get props => [error];
 }
 
-class LoginSuccess extends AuthState {
-  final String message;
-
-  const LoginSuccess({required this.message});
-
-  @override
-  List<Object?> get props => [message];
-}
-
 class RegisterSuccess extends AuthState {
   final String message;
+  final String token;
+  final Map<String, dynamic> user;
 
-  const RegisterSuccess({required this.message});
+  const RegisterSuccess({
+    required this.message,
+    required this.token,
+    required this.user,
+  });
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, token, user];
 }
 
-class OtpVerifiedSuccess extends AuthState {
+class LoginSuccess extends AuthState {
   final String message;
+  final String token;
+  final Map<String, dynamic> user;
 
-  const OtpVerifiedSuccess({required this.message});
+  const LoginSuccess({
+    required this.message,
+    required this.token,
+    required this.user,
+  });
 
   @override
   List<Object?> get props => [message];
 }
+
+// class OtpVerifiedSuccess extends AuthState {
+//   final String message;
+
+//   const OtpVerifiedSuccess({required this.message});
+
+//   @override
+//   List<Object?> get props => [message];
+// }

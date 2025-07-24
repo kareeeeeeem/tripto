@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
+
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  Future<bool> isLoggedIn() async {
+    final token = await _storage.read(key: 'token');
+    return token != null && token.isNotEmpty;
+  }
 
   const CustomBottomNavBar({
     super.key,

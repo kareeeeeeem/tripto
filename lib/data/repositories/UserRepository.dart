@@ -26,36 +26,6 @@ class UserRepository {
     return data['message'] ?? 'حدث خطأ غير متوقع (رمز: $statusCode)';
   }
 
-  /// 🚀 تسجيل الدخول
-  Future<Map<String, dynamic>> loginUser(
-    String phoneNumber,
-    String password,
-  ) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}login');
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'phone': phoneNumber, 'password': password}),
-      );
-
-      final data = json.decode(response.body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        if (data['token'] != null) {
-          await _storage.write(key: 'jwt_token', value: data['token']);
-        }
-        return data;
-      } else {
-        throw Exception(_getErrorMessage(data, response.statusCode));
-      }
-    } catch (e) {
-      throw Exception(
-        'خطأ في الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
-      );
-    }
-  }
-
   /// 🚀 التسجيل
   Future<Map<String, dynamic>> registerUser(
     String name,
@@ -85,7 +55,12 @@ class UserRepository {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (data['token'] != null) {
           await _storage.write(key: 'jwt_token', value: data['token']);
+          await _storage.write(
+            key: 'user_data',
+            value: json.encode(data['user']),
+          );
         }
+
         return data;
       } else {
         throw Exception(_getErrorMessage(data, response.statusCode));
@@ -95,24 +70,30 @@ class UserRepository {
     }
   }
 
-  /// 🚀 التحقق من كود الـ OTP
-  Future<Map<String, dynamic>> verifyOtp(
+  /// 🚀 تسجيل الدخول
+  Future<Map<String, dynamic>> loginUser(
     String phoneNumber,
-    String otpCode,
+    String password,
   ) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}verify-otp');
+    final url = Uri.parse('${ApiConstants.baseUrl}login');
     try {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'phone': phoneNumber, 'otp': otpCode}),
+        body: jsonEncode({'phone': phoneNumber, 'password': password}),
       );
+
       final data = json.decode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (data['token'] != null) {
           await _storage.write(key: 'jwt_token', value: data['token']);
+          await _storage.write(
+            key: 'user_data',
+            value: json.encode(data['user']),
+          );
         }
+
         return data;
       } else {
         throw Exception(_getErrorMessage(data, response.statusCode));
@@ -122,9 +103,5 @@ class UserRepository {
         'خطأ في الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
       );
     }
-  }
-
-  Future<List<dynamic>> fetchUsers() async {
-    return [];
   }
 }

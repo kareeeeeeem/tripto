@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/CustomNavBar.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tripto/core/constants/NavBar.dart';
 import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
+import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
 import '../pagess/NavBar/Favorite_page.dart';
 import '../pagess/NavBar/ActivityPage/activities_page.dart';
 
@@ -16,6 +18,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late int _currentIndex;
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -30,7 +33,19 @@ class _AppState extends State<App> {
     const FavoritePage(),
   ];
 
-  void _changePage(int index) {
+  void _changePage(int index) async {
+    if (index == 2) {
+      final token = await _storage.read(key: 'token');
+      if (token != null && token.isNotEmpty) {
+        // لو فيه توكن → نفتح صفحة البروفايل
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ProfilePage()),
+        );
+        return;
+      }
+    }
+
     setState(() {
       _currentIndex = index;
     });
@@ -43,7 +58,6 @@ class _AppState extends State<App> {
       body: Stack(
         children: [
           _pages[_currentIndex],
-          /// شريط التنقل السفلي المستقل
           Positioned(
             bottom: 0,
             left: 0,
