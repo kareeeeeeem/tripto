@@ -151,7 +151,7 @@ class SignupPageState extends State<SignupPage> {
                       borderSide: const BorderSide(color: Colors.red, width: 2),
                     ),
                   ),
-                  initialCountryCode: 'SA',
+                  initialCountryCode: 'EG',
                   onChanged: (phone) {
                     phoneNumber = phone.number;
                     completePhoneNumber =
@@ -407,14 +407,14 @@ class SignupPageState extends State<SignupPage> {
         children: [
           Icon(
             isValid ? Icons.check_circle : Icons.cancel,
-            color: isValid ? Colors.green : Colors.red,
+            color: isValid ? Colors.green : Colors.blueAccent,
             size: 16,
           ),
           const SizedBox(width: 8),
           Text(
             text,
             style: TextStyle(
-              color: isValid ? Colors.green : Colors.red,
+              color: isValid ? Colors.green : Colors.blueAccent,
               fontSize: 14,
             ),
           ),

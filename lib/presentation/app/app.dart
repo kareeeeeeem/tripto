@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/NavBar.dart';
@@ -9,7 +10,6 @@ import '../pagess/NavBar/ActivityPage/activities_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key, this.initialIndex = 0});
-
   final int initialIndex;
 
   @override
@@ -19,33 +19,26 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late int _currentIndex;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  bool hasToken = false;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    _checkToken();
   }
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const ActivityPage(),
-    const Signuporlogin(),
-    const FavoritePage(),
-  ];
+  Future<void> _checkToken() async {
+    final token = await _storage.read(key: 'jwt_token');
+    setState(() {
+      hasToken = token != null && token.isNotEmpty;
+    });
+  }
 
   void _changePage(int index) async {
     if (index == 2) {
-      final token = await _storage.read(key: 'token');
-      if (token != null && token.isNotEmpty) {
-        // لو فيه توكن → نفتح صفحة البروفايل
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const ProfilePage()),
-        );
-        return;
-      }
+      await _checkToken();
     }
-
     setState(() {
       _currentIndex = index;
     });
@@ -53,11 +46,18 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      const HomePage(), // index 0
+      const ActivityPage(), // index 1
+      hasToken ? const ProfilePage() : const Signuporlogin(), // index 2
+      const FavoritePage(), // index 3
+    ];
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          _pages[_currentIndex],
+          pages[_currentIndex],
           Positioned(
             bottom: 0,
             left: 0,

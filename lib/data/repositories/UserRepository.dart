@@ -99,9 +99,7 @@ class UserRepository {
         throw Exception(_getErrorMessage(data, response.statusCode));
       }
     } catch (e) {
-      throw Exception(
-        'خطأ في الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
-      );
+      throw Exception('error');
     }
   }
 }
