@@ -51,3 +51,9 @@ class VerifyOtpRequested extends AuthEvent {
   @override
   List<Object?> get props => [phoneNumber, otpCode];
 }
+// class FetchActivities  extends AuthEvent {
+//   const FetchActivities ();
+//
+//   @override
+//   List<Object?> get props => [];
+// }

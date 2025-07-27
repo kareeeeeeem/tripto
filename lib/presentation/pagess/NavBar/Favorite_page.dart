@@ -5,7 +5,6 @@ import '../../../core/models/Saved_model.dart';
 import '../payment_option.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
-
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
 
@@ -102,9 +101,9 @@ class _FavoritePageState extends State<FavoritePage>
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
                 ? Icons
-                .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
                 : Icons
-                .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
           ),
@@ -123,7 +122,7 @@ class _FavoritePageState extends State<FavoritePage>
                 children: [
                   const Icon(Icons.favorite, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                   Text(AppLocalizations.of(context)!.saved),
+                  Text(AppLocalizations.of(context)!.saved),
                 ],
               ),
             ),
@@ -132,7 +131,7 @@ class _FavoritePageState extends State<FavoritePage>
                 children: [
                   const Icon(Icons.history, color: Colors.black),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                   Text(AppLocalizations.of(context)!.history),
+                  Text(AppLocalizations.of(context)!.history),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                 ],
               ),
@@ -159,7 +158,7 @@ class _FavoritePageState extends State<FavoritePage>
       itemCount: favoriteActivities.length,
       itemBuilder: (context, index) {
         final activity = favoriteActivities[index];
-        // ... باقي الكود زي ما هو
+
 
         return Card(
           color: Colors.white,
@@ -251,7 +250,7 @@ class _FavoritePageState extends State<FavoritePage>
                             ),
                           ),
                         ),
-                        child:  Text(
+                        child: Text(
                           AppLocalizations.of(context)!.unsave,
                           style: TextStyle(
                             color: Colors.black,
@@ -279,8 +278,8 @@ class _FavoritePageState extends State<FavoritePage>
                       ),
                       child: Text(
                         activity.tabType == "saved"
-                       ? AppLocalizations.of(context)!.book
-                      : AppLocalizations.of(context)!.rebook,
+                            ? AppLocalizations.of(context)!.book
+                            : AppLocalizations.of(context)!.rebook,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

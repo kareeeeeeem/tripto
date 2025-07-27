@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/services/api.dart';
 
+import '../../core/models/ActivityCardModel.dart';
+
 class UserRepository {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
@@ -101,5 +103,20 @@ class UserRepository {
     } catch (e) {
       throw Exception('error');
     }
+    // activites page
+    // Future<List<ActivityCardmodel>> getActivities() async {
+    //   final response = await http.get(Uri.parse('${ApiConstants.baseUrl}activities'));
+    //
+    //   if (response.statusCode == 200 || response.statusCode == 201) {
+    //     final data = json.decode(response.body);
+    //     // final activities = <ActivityCardmodel>[];
+    //     return data.map((json) => ActivityCardmodel.fromjson(json)).toList();
+    //   } else {
+    //     throw Exception('Faild to load activites');
+    //   }
+    // }
   }
 }
+
+
+

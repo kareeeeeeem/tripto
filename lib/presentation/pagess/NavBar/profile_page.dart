@@ -219,8 +219,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-
-              const SizedBox.shrink(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05, // 5% من ارتفاع الشاشة
+              ),              // const SizedBox.shrink(),
             ],
           ),
         ),

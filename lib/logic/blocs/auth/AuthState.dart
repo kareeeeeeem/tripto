@@ -50,6 +50,16 @@ class LoginSuccess extends AuthState {
   List<Object?> get props => [message];
 }
 
+// class FetchActivities extends AuthState{
+//   final String message ;
+//
+//   const FetchActivities({required this.message});
+//
+// }
+
+
+
+
 // class OtpVerifiedSuccess extends AuthState {
 //   final String message;
 
