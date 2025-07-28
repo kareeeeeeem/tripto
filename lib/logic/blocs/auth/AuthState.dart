@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tripto/core/models/HomeApiModel.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -49,6 +50,34 @@ class LoginSuccess extends AuthState {
   @override
   List<Object?> get props => [message];
 }
+
+abstract class HomeApiModelState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class HomeApiModelInitial extends HomeApiModelState {}
+
+class HomeApiModelLoading extends HomeApiModelState {}
+
+class HomeApiModelLoaded extends HomeApiModelState {
+  final HomeApiModel homeData;
+
+  HomeApiModelLoaded(this.homeData);
+}
+
+class HomeApiModelError extends HomeApiModelState {
+  final String message;
+
+  HomeApiModelError(this.message);
+}
+
+
+
+
+
+
+
 
 // class FetchActivities extends AuthState{
 //   final String message ;

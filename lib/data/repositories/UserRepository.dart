@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/services/api.dart';
-
 import '../../core/models/ActivityCardModel.dart';
+import '../../core/models/HomeApiModel.dart';
 
 class UserRepository {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -103,20 +103,48 @@ class UserRepository {
     } catch (e) {
       throw Exception('error');
     }
-    // activites page
-    // Future<List<ActivityCardmodel>> getActivities() async {
-    //   final response = await http.get(Uri.parse('${ApiConstants.baseUrl}activities'));
-    //
-    //   if (response.statusCode == 200 || response.statusCode == 201) {
-    //     final data = json.decode(response.body);
-    //     // final activities = <ActivityCardmodel>[];
-    //     return data.map((json) => ActivityCardmodel.fromjson(json)).toList();
-    //   } else {
-    //     throw Exception('Faild to load activites');
-    //   }
-    // }
   }
+
+  /// 📥 تحميل بيانات الصفحة الرئيسية
+  Future<HomeApiModel> fetchHomeApiModel() async {
+    final url = Uri.parse('${ApiConstants.baseUrl}trips');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${await _storage.read(key: 'jwt_token')}',
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = json.decode(response.body);
+        return HomeApiModel.fromJson(data);
+      } else {
+        final data = json.decode(response.body);
+        throw Exception(_getErrorMessage(data, response.statusCode));
+      }
+    } catch (e) {
+      throw Exception('📛 Home Fetch Error: $e');
+    }
+  }
+
+  /// 🎯 الحصول على الأنشطة
+  // Future<List<ActivityCardmodel>> getActivities() async {
+  //   final url = Uri.parse('${ApiConstants.baseUrl}activities');
+  //   try {
+  //     final response = await http.get(url);
+
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       final List<dynamic> data = json.decode(response.body);
+  //       return data.map((json) => ActivityCardmodel.fromJson(json)).toList();
+  //     } else {
+  //       throw Exception('❌ Failed to load activities');
+  //     }
+  //   } catch (e) {
+  //     throw Exception('📛 Activity Fetch Error: $e');
+  //   }
+  // }
 }
-
-
-

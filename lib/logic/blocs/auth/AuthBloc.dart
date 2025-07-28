@@ -15,7 +15,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
     // on<FetchActivities>(_onFetchActivities);
-
   }
 
   Future<void> _onRegisterRequested(
@@ -87,6 +86,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthFailure(error: e.toString()));
     }
   }
+}
+
+class HomeApiModelBloc extends Bloc<HomeApiModelEvent, HomeApiModelState> {
+  final UserRepository userRepository;
+
+  HomeApiModelBloc(this.userRepository) : super(HomeApiModelInitial()) {
+    on<LoadHomeApiModelEvent>((event, emit) async {
+      emit(HomeApiModelLoading());
+      try {
+        final homeData =
+            await userRepository
+                .fetchHomeApiModel(); // ✅ استخدم الدالة الموجودة
+        emit(HomeApiModelLoaded(homeData));
+      } catch (e) {
+        emit(HomeApiModelError(e.toString()));
+      }
+    });
+  }
+}
+
+
+ 
   // Future<void> _onFetchActivities (
   //     FetchActivities event ,
   //     Emitter <AuthState> emit ,
@@ -99,4 +120,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   //      emit(AuthFailure(error: e.toString()));
   //    }
   //    }
-  }
+  

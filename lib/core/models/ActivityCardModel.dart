@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 
 class ActivityCardmodel {
   final String title;
@@ -17,18 +18,17 @@ class ActivityCardmodel {
     required this.rate,
   });
 
-  // factory ActivityCardmodel.fromjson(Map<String, dynamic> json){
-  //   return ActivityCardmodel(
-  //     title: json['title'],
-  //     image: json['image'],
-  //     price: json['price'],
-  //     number: json['number'],
-  //     duration: json['duration'],
-  //     rate: json['rate'],
-  //   );
-  // }
+  factory ActivityCardmodel.fromJson(Map<String, dynamic> json) {
+    return ActivityCardmodel(
+      title: json['title'] ?? '',
+      image: json['image'] ?? '',
+      price: (json['price'] as num).toDouble(),
+      number: json['number'] ?? 0,
+      duration: json['duration'] ?? 0,
+      rate: (json['rate'] as num).toDouble(),
+    );
+  }
 }
-
 
 List<ActivityCardmodel> exmactivities = [
   ActivityCardmodel(
