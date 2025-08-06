@@ -60,8 +60,8 @@ class GetTripModel {
       price: double.tryParse(json['price'].toString()) ?? 0.0,
       pricePerPerson:
           double.tryParse(json['price_per_person'].toString()) ?? 0.0,
-      fromDate: json['from_date'] as String, // تم التصحيح هنا
-      toDate: json['to_date'] as String, // تم التصحيح هنا
+      fromDate: json['from_date'] as String,
+      toDate: json['to_date'] as String,
       companyNameAr: json['company_name_ar'],
       companyNameEn: json['company_name_en'],
       companyDesAr: json['company_des_ar'],
@@ -87,7 +87,30 @@ class GetTripModel {
     );
   }
 
-  // دوال مساعدة للوصول إلى البيانات بسهولة
+  // Helper getters for dates
+  DateTime get safeFromDate {
+    try {
+      return DateTime.parse(fromDate).toLocal();
+    } catch (e) {
+      return DateTime.now();
+    }
+  }
+
+  DateTime get safeToDate {
+    try {
+      return DateTime.parse(toDate).toLocal();
+    } catch (e) {
+      return DateTime.now().add(const Duration(days: 7));
+    }
+  }
+
+  // Function to validate trip dates
+  bool get hasValidDates {
+    return safeFromDate.isBefore(safeToDate) ||
+        safeFromDate.isAtSameMomentAs(safeToDate);
+  }
+
+  // Other helper getters
   String get destinationNameAr => destination['name_ar'] as String? ?? '';
   String get destinationNameEn => destination['name_en'] as String? ?? '';
   String get subDestinationNameAr => subDestination['name_ar'] as String? ?? '';
@@ -96,8 +119,8 @@ class GetTripModel {
   Map<String, dynamic> toVideoPlayerJson() {
     return {
       'id': id,
-      'destination': destination, // أضف هذا السطر
-      'sub_destination': subDestination, // أضف هذا السطر
+      'destination': destination,
+      'sub_destination': subDestination,
       'destination_name_ar': destinationNameAr,
       'destination_name_en': destinationNameEn,
       'sub_destination_name_ar': subDestinationNameAr,

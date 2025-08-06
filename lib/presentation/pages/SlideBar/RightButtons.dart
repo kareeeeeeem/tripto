@@ -132,9 +132,7 @@ class _RightButtonsState extends State<RightButtons> {
       ),
     );
 
-    // Rest of your button code remains the same...
     // Date Button
-    // In the RightButtons widget, update the date button part:
     if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(

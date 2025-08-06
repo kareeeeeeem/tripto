@@ -18,7 +18,7 @@ class SelectRightButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // تحديد أبعاد ثابتة للزر
-    const double buttonSize = 80.0;
+    const double buttonSize = 60.0;
     const double iconSize = 30.0;
     const double fontSize = 12.0;
 

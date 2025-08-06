@@ -29,47 +29,37 @@ class _DateCardState extends State<DateCard> {
   @override
   void initState() {
     super.initState();
-    _focusedDay = widget.initialRangeStart ?? widget.firstDate;
+
+    _focusedDay = widget.initialRangeStart ?? DateTime.now();
     _rangeStart = widget.initialRangeStart;
     _rangeEnd = widget.initialRangeEnd;
+
+    // تأكيد أن التواريخ ضمن النطاق المحدد
+    _focusedDay = _clampDate(_focusedDay);
+    _rangeStart = _rangeStart != null ? _clampDate(_rangeStart!) : null;
+    _rangeEnd = _rangeEnd != null ? _clampDate(_rangeEnd!) : null;
   }
 
-  bool _isValidRange(DateTime start, DateTime end) {
-    // تحقق من أن الفترة ضمن النطاق المسموح
-    final isStartValid =
-        !start.isBefore(widget.firstDate) && !start.isAfter(widget.lastDate);
-    final isEndValid =
-        !end.isBefore(widget.firstDate) && !end.isAfter(widget.lastDate);
-
-    return isStartValid && isEndValid && !start.isAfter(end);
+  DateTime _clampDate(DateTime date) {
+    if (date.isBefore(widget.firstDate)) return widget.firstDate;
+    if (date.isAfter(widget.lastDate)) return widget.lastDate;
+    return date;
   }
 
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-    if (start == null || end == null) return;
-
-    if (!_isValidRange(start, end)) {
-      final dateFormat = DateFormat('yyyy-MM-dd');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "يجب أن تكون الفترة بين ${dateFormat.format(widget.firstDate)} و ${dateFormat.format(widget.lastDate)}",
-            textAlign: TextAlign.center,
-          ),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-      return;
-    }
-
     setState(() {
-      _rangeStart = start;
-      _rangeEnd = end;
-      _focusedDay = focusedDay;
+      _rangeStart = start != null ? _clampDate(start) : null;
+      _rangeEnd = end != null ? _clampDate(end) : null;
+      _focusedDay = _clampDate(focusedDay);
     });
   }
 
+  String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+
   @override
   Widget build(BuildContext context) {
+    final bool isSelectionValid = _rangeStart != null && _rangeEnd != null;
+
     return AlertDialog(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
@@ -80,12 +70,18 @@ class _DateCardState extends State<DateCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            /// العنوان مع التاريخ المتاح
             Text(
-              "اختر فترة (${DateFormat('yyyy-MM-dd').format(widget.firstDate)} إلى ${DateFormat('yyyy-MM-dd').format(widget.lastDate)})",
+              "اختر الفترة من ${_formatDate(widget.firstDate)} إلى ${_formatDate(widget.lastDate)}",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              textAlign: TextAlign.center,
             ),
+
             const SizedBox(height: 12),
+
+            /// تقويم الاختيار
             TableCalendar(
+              key: ValueKey('${widget.firstDate}-${widget.lastDate}'),
               firstDay: widget.firstDate,
               lastDay: widget.lastDate,
               focusedDay: _focusedDay,
@@ -93,16 +89,19 @@ class _DateCardState extends State<DateCard> {
               rangeEndDay: _rangeEnd,
               rangeSelectionMode: RangeSelectionMode.toggledOn,
               calendarFormat: _calendarFormat,
-              onFormatChanged:
-                  (format) => setState(() => _calendarFormat = format),
-              onRangeSelected: _onRangeSelected,
-              enabledDayPredicate: (day) {
-                return !day.isBefore(widget.firstDate) &&
-                    !day.isAfter(widget.lastDate);
+              onFormatChanged: (format) {
+                setState(() => _calendarFormat = format);
               },
+              onRangeSelected: _onRangeSelected,
+              enabledDayPredicate:
+                  (day) =>
+                      !day.isBefore(widget.firstDate) &&
+                      !day.isAfter(widget.lastDate),
               calendarStyle: CalendarStyle(
                 disabledTextStyle: const TextStyle(color: Colors.grey),
-                todayDecoration: BoxDecoration(
+                outsideTextStyle: const TextStyle(color: Colors.grey),
+                outsideDaysVisible: true,
+                todayDecoration: const BoxDecoration(
                   color: Colors.amber,
                   shape: BoxShape.circle,
                 ),
@@ -123,8 +122,23 @@ class _DateCardState extends State<DateCard> {
                 formatButtonVisible: false,
                 titleCentered: true,
               ),
+              sixWeekMonthsEnforced: true,
+              rowHeight: 40,
             ),
+
             const SizedBox(height: 16),
+
+            /// عرض التواريخ المختارة إن وجدت
+            if (isSelectionValid)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "الفترة المختارة: ${_formatDate(_rangeStart!)} إلى ${_formatDate(_rangeEnd!)}",
+                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                ),
+              ),
+
+            /// أزرار الإجراءات
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -134,20 +148,15 @@ class _DateCardState extends State<DateCard> {
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_rangeStart == null || _rangeEnd == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("الرجاء اختيار فترة صالحة"),
-                        ),
-                      );
-                      return;
-                    }
-                    Navigator.pop(context, {
-                      'range_start': _rangeStart!,
-                      'range_end': _rangeEnd!,
-                    });
-                  },
+                  onPressed:
+                      isSelectionValid
+                          ? () {
+                            Navigator.pop(context, {
+                              'range_start': _rangeStart!,
+                              'range_end': _rangeEnd!,
+                            });
+                          }
+                          : null,
                   child: const Text("تأكيد"),
                 ),
               ],
