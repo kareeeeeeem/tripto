@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 class DateCard extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
-  final DateTime? initialSelectedDate;
-  final bool allowRangeSelection;
+  final DateTime? initialRangeStart;
+  final DateTime? initialRangeEnd;
 
   const DateCard({
     super.key,
     required this.firstDate,
     required this.lastDate,
-    this.initialSelectedDate,
-    this.allowRangeSelection = true,
+    this.initialRangeStart,
+    this.initialRangeEnd,
   });
 
   @override
@@ -22,76 +22,49 @@ class DateCard extends StatefulWidget {
 
 class _DateCardState extends State<DateCard> {
   late DateTime _focusedDay;
-  DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-  late RangeSelectionMode _rangeSelectionMode;
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
   @override
   void initState() {
     super.initState();
-    _focusedDay = widget.initialSelectedDate ?? widget.firstDate;
-    _selectedDay = widget.initialSelectedDate;
-    _rangeSelectionMode =
-        widget.allowRangeSelection
-            ? RangeSelectionMode.toggledOff
-            : RangeSelectionMode.disabled;
+    _focusedDay = widget.initialRangeStart ?? widget.firstDate;
+    _rangeStart = widget.initialRangeStart;
+    _rangeEnd = widget.initialRangeEnd;
   }
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isWithinRange(selectedDay)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("التاريخ المحدد خارج نطاق الرحلة")),
-      );
-      return;
-    }
+  bool _isValidRange(DateTime start, DateTime end) {
+    // تحقق من أن الفترة ضمن النطاق المسموح
+    final isStartValid =
+        !start.isBefore(widget.firstDate) && !start.isAfter(widget.lastDate);
+    final isEndValid =
+        !end.isBefore(widget.firstDate) && !end.isAfter(widget.lastDate);
 
-    setState(() {
-      _selectedDay = selectedDay;
-      _focusedDay = focusedDay;
-      _rangeStart = null;
-      _rangeEnd = null;
-      _rangeSelectionMode = RangeSelectionMode.toggledOff;
-    });
+    return isStartValid && isEndValid && !start.isAfter(end);
   }
 
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
-    if (!widget.allowRangeSelection) return;
+    if (start == null || end == null) return;
 
-    if (start == null ||
-        end == null ||
-        !isWithinRange(start) ||
-        !isWithinRange(end)) {
+    if (!_isValidRange(start, end)) {
+      final dateFormat = DateFormat('yyyy-MM-dd');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("النطاق المحدد خارج نطاق الرحلة")),
+        SnackBar(
+          content: Text(
+            "يجب أن تكون الفترة بين ${dateFormat.format(widget.firstDate)} و ${dateFormat.format(widget.lastDate)}",
+            textAlign: TextAlign.center,
+          ),
+          duration: const Duration(seconds: 3),
+        ),
       );
       return;
     }
 
     setState(() {
-      _selectedDay = null;
-      _focusedDay = focusedDay;
       _rangeStart = start;
       _rangeEnd = end;
-      _rangeSelectionMode = RangeSelectionMode.toggledOn;
-    });
-  }
-
-  bool isWithinRange(DateTime day) {
-    return !day.isBefore(widget.firstDate) && !day.isAfter(widget.lastDate);
-  }
-
-  void _toggleRangeSelection() {
-    setState(() {
-      if (_rangeSelectionMode == RangeSelectionMode.toggledOff) {
-        _rangeSelectionMode = RangeSelectionMode.toggledOn;
-        _selectedDay = null;
-      } else {
-        _rangeSelectionMode = RangeSelectionMode.toggledOff;
-        _rangeStart = null;
-        _rangeEnd = null;
-      }
+      _focusedDay = focusedDay;
     });
   }
 
@@ -107,71 +80,49 @@ class _DateCardState extends State<DateCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "Choose Date",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Text(
+              "اختر فترة (${DateFormat('yyyy-MM-dd').format(widget.firstDate)} إلى ${DateFormat('yyyy-MM-dd').format(widget.lastDate)})",
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 12),
-
-            // زر التبديل بين اختيار يوم واحد أو فترة
-            if (widget.allowRangeSelection)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      _rangeSelectionMode == RangeSelectionMode.toggledOff
-                          ? "Choose one day"
-                          : " Choose a period",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.swap_horiz),
-                      onPressed: _toggleRangeSelection,
-                    ),
-                  ],
-                ),
-              ),
-
             TableCalendar(
               firstDay: widget.firstDate,
               lastDay: widget.lastDate,
               focusedDay: _focusedDay,
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               rangeStartDay: _rangeStart,
               rangeEndDay: _rangeEnd,
-              rangeSelectionMode: _rangeSelectionMode,
+              rangeSelectionMode: RangeSelectionMode.toggledOn,
               calendarFormat: _calendarFormat,
               onFormatChanged:
                   (format) => setState(() => _calendarFormat = format),
-              onDaySelected: _onDaySelected,
-              onRangeSelected:
-                  widget.allowRangeSelection ? _onRangeSelected : null,
-              enabledDayPredicate: isWithinRange,
-              calendarStyle: const CalendarStyle(
-                isTodayHighlighted: true,
-                rangeHighlightColor: Colors.blueAccent,
-                selectedDecoration: BoxDecoration(
-                  color: Colors.orange,
+              onRangeSelected: _onRangeSelected,
+              enabledDayPredicate: (day) {
+                return !day.isBefore(widget.firstDate) &&
+                    !day.isAfter(widget.lastDate);
+              },
+              calendarStyle: CalendarStyle(
+                disabledTextStyle: const TextStyle(color: Colors.grey),
+                todayDecoration: BoxDecoration(
+                  color: Colors.amber,
                   shape: BoxShape.circle,
                 ),
                 rangeStartDecoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
                 rangeEndDecoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
-                outsideDaysVisible: false,
-                disabledTextStyle: TextStyle(color: Colors.grey),
+                withinRangeDecoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  shape: BoxShape.rectangle,
+                ),
               ),
               headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
               ),
-              locale: 'en',
             ),
             const SizedBox(height: 16),
             Row(
@@ -179,27 +130,25 @@ class _DateCardState extends State<DateCard> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
+                  child: const Text("إلغاء"),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
-                    if (_selectedDay != null) {
-                      Navigator.pop(context, _selectedDay);
-                    } else if (_rangeStart != null && _rangeEnd != null) {
-                      Navigator.pop(context, {
-                        'range_start': _rangeStart!,
-                        'range_end': _rangeEnd!,
-                      });
-                    } else {
+                    if (_rangeStart == null || _rangeEnd == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Please select a date or period"),
+                          content: Text("الرجاء اختيار فترة صالحة"),
                         ),
                       );
+                      return;
                     }
+                    Navigator.pop(context, {
+                      'range_start': _rangeStart!,
+                      'range_end': _rangeEnd!,
+                    });
                   },
-                  child: const Text("ok"),
+                  child: const Text("تأكيد"),
                 ),
               ],
             ),

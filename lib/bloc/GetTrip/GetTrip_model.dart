@@ -60,8 +60,8 @@ class GetTripModel {
       price: double.tryParse(json['price'].toString()) ?? 0.0,
       pricePerPerson:
           double.tryParse(json['price_per_person'].toString()) ?? 0.0,
-      fromDate: json['from_date'],
-      toDate: json['to_date'],
+      fromDate: json['from_date'] as String, // تم التصحيح هنا
+      toDate: json['to_date'] as String, // تم التصحيح هنا
       companyNameAr: json['company_name_ar'],
       companyNameEn: json['company_name_en'],
       companyDesAr: json['company_des_ar'],

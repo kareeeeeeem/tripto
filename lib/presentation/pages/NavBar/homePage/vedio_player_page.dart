@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/widget/CountryWithCity.dart';
 import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
 import 'package:tripto/presentation/pages/widget/payment_option.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
@@ -37,9 +38,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _isInternetAvailable = true;
 
   // Video controllers
-  YoutubePlayerController? _youtubeController;
   VideoPlayerController? _videoController;
   ChewieController? _chewieController;
+  Timer? _retryTimer;
 
   @override
   void initState() {
@@ -120,19 +121,54 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       final videoUrl = _trips[index]['video_url']?.toString() ?? '';
       if (videoUrl.isEmpty) throw Exception('No video URL available');
 
-      if (_isYouTubeUrl(videoUrl)) {
-        final videoId = YoutubePlayer.convertUrlToId(videoUrl);
-        if (videoId == null) throw Exception('Invalid YouTube URL');
+      if (_isDriveUrl(videoUrl)) {
+        final directLink = await _getDirectDriveLink(videoUrl);
+        _videoController = VideoPlayerController.network(directLink);
 
-        _youtubeController = YoutubePlayerController(
-          initialVideoId: videoId,
-          flags: const YoutubePlayerFlags(
-            autoPlay: true,
-            mute: false,
-            loop: true,
-          ),
+        // إضافة listener لاكتشاف الأخطاء أثناء التشغيل
+        _videoController!.addListener(() {
+          if (_videoController!.value.hasError) {
+            setState(() {
+              _hasError = true;
+              _errorMessage =
+                  'Failed to play video: ${_videoController!.value.errorDescription}';
+            });
+          }
+        });
+
+        await _videoController!.initialize().timeout(
+          const Duration(seconds: 10),
+        );
+
+        _chewieController = ChewieController(
+          videoPlayerController: _videoController!,
+          autoPlay: true,
+          looping: true,
+          allowFullScreen: true,
+          errorBuilder: (context, errorMessage) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.cloud_off, size: 50, color: Colors.white),
+                  const SizedBox(height: 16),
+                  Text(
+                    errorMessage,
+                    style: const TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => _openInBrowser(_trips[index]['video_url']),
+                    child: const Text('Open in Browser'),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       } else {
+        // التعامل مع روابط الفيديو العادية
         _videoController = VideoPlayerController.network(videoUrl);
         await _videoController!.initialize();
         _chewieController = ChewieController(
@@ -142,16 +178,69 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           allowFullScreen: true,
         );
       }
+    } on TimeoutException {
+      setState(() {
+        _hasError = true;
+        _errorMessage = 'Video loading timed out';
+      });
+      _startRetryTimer(index);
     } catch (e) {
       debugPrint('Video initialization error: $e');
       setState(() {
         _hasError = true;
-        _errorMessage = 'Failed to load video';
+        _errorMessage =
+            e.toString().contains('404')
+                ? 'Video not found on Drive'
+                : 'Failed to load video: ${e.toString()}';
       });
+      _startRetryTimer(index);
     } finally {
       if (mounted) {
         setState(() => _isVideoInitializing = false);
       }
+    }
+  }
+
+  void _startRetryTimer(int index) {
+    _retryTimer?.cancel();
+    _retryTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted && _currentIndex == index) {
+        _initializeVideo(index);
+      }
+    });
+  }
+
+  bool _isDriveUrl(String url) {
+    return url.contains('drive.google.com');
+  }
+
+  Future<String> _getDirectDriveLink(String driveUrl) async {
+    // طريقة 1: تحويل مباشر (للفيديوهات الصغيرة)
+    try {
+      final regex = RegExp(r'file/d/([a-zA-Z0-9_-]+)');
+      final match = regex.firstMatch(driveUrl);
+
+      if (match != null && match.groupCount >= 1) {
+        final videoId = match.group(1);
+        return 'https://drive.google.com/uc?export=download&id=$videoId';
+      }
+    } catch (e) {
+      debugPrint('Error converting drive link: $e');
+    }
+
+    // طريقة 2: استخدام Google Drive API (إذا كانت الفيديوهات كبيرة)
+    // تحتاج إلى تفعيل Drive API والحصول على API Key
+    // return 'https://www.googleapis.com/drive/v3/files/$videoId?alt=media&key=YOUR_API_KEY';
+
+    // إذا فشل التحويل نعيد الرابط الأصلي
+    return driveUrl;
+  }
+
+  Future<void> _openInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      debugPrint('Could not launch $url');
     }
   }
 
@@ -161,8 +250,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   ) {
     try {
       final locale = Localizations.localeOf(context).languageCode;
-
-      // أولاً: تحقق من وجود البيانات في destination مباشرة
       if (trip['destination'] != null) {
         return locale == 'ar'
             ? trip['destination']['name_ar']?.toString() ??
@@ -172,8 +259,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 trip['destination']['name_ar']?.toString() ??
                 'Unknown';
       }
-
-      // ثانياً: تحقق من وجود البيانات المسطحة (من toVideoPlayerJson)
       return locale == 'ar'
           ? trip['destination_name_ar']?.toString() ??
               trip['destination_name_en']?.toString() ??
@@ -193,8 +278,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   ) {
     try {
       final locale = Localizations.localeOf(context).languageCode;
-
-      // أولاً: تحقق من وجود البيانات في sub_destination مباشرة
       if (trip['sub_destination'] != null) {
         return locale == 'ar'
             ? trip['sub_destination']['name_ar']?.toString() ??
@@ -204,8 +287,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 trip['sub_destination']['name_ar']?.toString() ??
                 '';
       }
-
-      // ثانياً: تحقق من وجود البيانات المسطحة (من toVideoPlayerJson)
       return locale == 'ar'
           ? trip['sub_destination_name_ar']?.toString() ??
               trip['sub_destination_name_en']?.toString() ??
@@ -219,19 +300,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
   }
 
-  void _videoListener() {
-    if (_youtubeController?.value.hasError ?? false) {
-      setState(() {
-        _hasError = true;
-        _errorMessage = 'YouTube error: ${_youtubeController!.value.errorCode}';
-      });
-    }
-  }
-
   void _disposeCurrentVideo() {
-    _youtubeController?.removeListener(_videoListener);
-    _youtubeController?.dispose();
-    _youtubeController = null;
+    _retryTimer?.cancel();
     _videoController?.dispose();
     _videoController = null;
     _chewieController?.dispose();
@@ -241,20 +311,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void _toggleMute() {
     setState(() {
       _isMuted = !_isMuted;
-      if (_youtubeController != null) {
-        _isMuted ? _youtubeController!.mute() : _youtubeController!.unMute();
-      } else if (_videoController != null) {
+      if (_videoController != null) {
         _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
       }
     });
-  }
-
-  bool _isYouTubeUrl(String url) {
-    return url.contains('youtube.com') || url.contains('youtu.be');
-  }
-
-  String? _extractYouTubeId(String url) {
-    return YoutubePlayer.convertUrlToId(url);
   }
 
   void _handleLanguageChange() {
@@ -340,7 +400,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         onPageChanged: (index) => _initializeVideo(index),
         itemBuilder: (context, index) {
           final currentTrip = _trips[index];
-
           final destinationName = _getLocalizedDestinationName(
             currentTrip,
             context,
@@ -352,13 +411,42 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
           return Stack(
             children: [
-              // Video Background (full screen)
+              // Video Background
               if (_isVideoInitializing && index == _currentIndex)
                 const Center(child: CircularProgressIndicator())
               else if (_hasError && index == _currentIndex)
-                _buildVideoErrorWidget()
+                _buildVideoErrorWidget(currentTrip['video_url'])
               else
                 Positioned.fill(child: _buildVideoPlayer()),
+
+              // Destination في الأعلى بالمنتصف
+              Positioned(
+                top:
+                    MediaQuery.of(context).padding.top +
+                    30, // تحت الـ status bar
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      destinationName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
               // Overlay UI Elements
               Positioned(
@@ -407,12 +495,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ? 10
                             : 0,
                   ),
-                  child: SizedBox(
-                    height: screenHeight * 0.5,
-                    child: RightButtons(
-                      selectedTripIndex: index,
-                      currentTripCategory: _trips[index]['category'] ?? 0,
-                    ),
+                  child: RightButtons(
+                    selectedTripIndex: index,
+                    currentTripCategory: _trips[index]['category'] ?? 0,
                   ),
                 ),
               ),
@@ -447,9 +532,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         cityName: subDestination,
                       ),
                     ),
+
                     SizedBox(height: screenHeight * 0.001),
+
                     PersonCounterWithPrice(
-                      basePricePerPerson: _bookingPricePerPerson,
+                      basePricePerPerson:
+                          double.tryParse(
+                            _trips[_currentIndex]['price_per_person']
+                                    ?.toString() ??
+                                '0',
+                          ) ??
+                          0,
+                      maxPersons: _trips[_currentIndex]['max_person'] ?? 30,
                       textColor: Colors.white,
                       iconColor: Colors.black,
                       backgroundColor: Colors.white,
@@ -487,40 +581,29 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   Widget _buildVideoPlayer() {
-    if (_youtubeController != null) {
-      return YoutubePlayer(
-        controller: _youtubeController!,
-        showVideoProgressIndicator: true,
-        progressColors: const ProgressBarColors(
-          playedColor: Colors.red,
-          handleColor: Colors.red,
-          bufferedColor: Colors.grey,
-          backgroundColor: Colors.grey,
-        ),
-        onEnded: (metaData) {
-          if (_currentIndex + 1 < _trips.length) {
-            _initializeVideo(_currentIndex + 1);
-          }
-        },
-      );
-    } else if (_chewieController != null) {
+    if (_chewieController != null) {
       return Chewie(controller: _chewieController!);
     } else {
       return Container(color: Colors.black);
     }
   }
 
-  Widget _buildVideoErrorWidget() {
+  Widget _buildVideoErrorWidget(String videoUrl) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.videocam_off, size: 50, color: Colors.white),
+          const Icon(Icons.cloud_off, size: 50, color: Colors.white),
           const SizedBox(height: 16),
           Text(
             _errorMessage,
             style: const TextStyle(color: Colors.white),
             textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => _openInBrowser(videoUrl),
+            child: const Text('Open in Browser'),
           ),
           const SizedBox(height: 16),
           ElevatedButton(

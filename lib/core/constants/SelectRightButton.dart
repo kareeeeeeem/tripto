@@ -1,5 +1,4 @@
 // lib/core/constants/SelectRightButton.dart
-
 import 'package:flutter/material.dart';
 
 class SelectRightButton extends StatelessWidget {
@@ -29,9 +28,7 @@ class SelectRightButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 4.0,
-          ), // تباعد ثابت بين الأزرار
+          // تم إزالة margin الذي كان يسبب الفراغات
           decoration: BoxDecoration(
             color: isSelected ? Colors.blueAccent : Colors.transparent,
             borderRadius: BorderRadius.circular(16),

@@ -94,48 +94,47 @@ class _RightButtonsState extends State<RightButtons> {
     final bool showHotel = trip.hasHotel == true || trip.hasHotel == 1;
     final bool showCar = trip.hasCar == true || trip.hasCar == 1;
     final bool showActivity = trip.hasActivity;
-    final bool showCategory = trip.category > 0;
 
     // Get the category value from the trip (converting from string if needed)
     final int categoryValue = int.tryParse(trip.category.toString()) ?? 0;
 
     // Category Button
-    if (showCategory) {
-      buttons.add(
-        _ButtonData(
-          iconWidget: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()..scale(-1.0, 1.0),
-            child: Icon(
-              Icons.diamond_outlined,
-              color: _getColorForCategory(categoryValue),
-            ),
+
+    buttons.add(
+      _ButtonData(
+        iconWidget: Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()..scale(-1.0, 1.0),
+          child: Icon(
+            Icons.diamond_outlined,
+            color: _getColorForCategory(categoryValue),
           ),
-          label: AppLocalizations.of(context)!.category,
-          onPressed: () async {
-            final int? selectedCategoryValue = await showDialog<int>(
-              context: context,
-              builder:
-                  (context) =>
-                      CategoryCard(initialSelectedCategory: categoryValue),
-            );
-            if (selectedCategoryValue != null) {
-              setState(() {
-                selectedIndex = buttons.length;
-                _selectedFilterDate = null;
-              });
-              context.read<GetTripBloc>().add(
-                FilterTripsByCategoryEvent(categoryId: selectedCategoryValue),
-              );
-              _focusScopeNode.unfocus();
-            }
-          },
         ),
-      );
-    }
+        label: AppLocalizations.of(context)!.category,
+        onPressed: () async {
+          final int? selectedCategoryValue = await showDialog<int>(
+            context: context,
+            builder:
+                (context) =>
+                    CategoryCard(initialSelectedCategory: categoryValue),
+          );
+          if (selectedCategoryValue != null) {
+            setState(() {
+              selectedIndex = buttons.length;
+              _selectedFilterDate = null;
+            });
+            context.read<GetTripBloc>().add(
+              FilterTripsByCategoryEvent(categoryId: selectedCategoryValue),
+            );
+            _focusScopeNode.unfocus();
+          }
+        },
+      ),
+    );
 
     // Rest of your button code remains the same...
     // Date Button
+    // In the RightButtons widget, update the date button part:
     if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
@@ -169,35 +168,51 @@ class _RightButtonsState extends State<RightButtons> {
                 ),
             ],
           ),
-
           label:
               trip.hasFly == true || trip.hasFly == 1
-                  ? AppLocalizations.of(context)!
-                      .fly // استخدم الترجمة الخاصة بـ fly إذا كانت متوفرة
+                  ? AppLocalizations.of(context)!.fly
                   : AppLocalizations.of(context)!.date,
-
           onPressed: () async {
             try {
               final firstDate = DateTime.parse(trip.fromDate);
               final lastDate = DateTime.parse(trip.toDate);
 
-              final result = await showDialog<dynamic>(
+              // إضافة تحقق مبدئي
+              if (firstDate.isAfter(lastDate)) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("تواريخ الرحلة غير صالحة")),
+                );
+                return;
+              }
+
+              final result = await showDialog<Map<String, DateTime>>(
                 context: context,
                 builder:
                     (context) => DateCard(
                       firstDate: firstDate,
                       lastDate: lastDate,
-                      initialSelectedDate: _selectedFilterDate,
-                      allowRangeSelection: true,
+                      initialRangeStart: _selectedFilterDate,
+                      initialRangeEnd:
+                          _selectedFilterDate != null
+                              ? _selectedFilterDate!.add(
+                                const Duration(days: 1),
+                              )
+                              : firstDate.add(
+                                const Duration(days: 1),
+                              ), // قيمة افتراضية أفضل
                     ),
               );
 
-              if (result is DateTime) {
-                setState(() => _selectedFilterDate = result);
-                context.read<GetTripBloc>().add(
-                  FilterTripsByDateEvent(selectedDate: result),
-                );
-              } else if (result is Map<String, DateTime>) {
+              if (result != null) {
+                // إضافة تحقق نهائي
+                if (result['range_start']!.isBefore(firstDate) ||
+                    result['range_end']!.isAfter(lastDate)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("الفترة المحددة غير صالحة")),
+                  );
+                  return;
+                }
+
                 setState(() => _selectedFilterDate = result['range_start']);
                 context.read<GetTripBloc>().add(
                   FilterTripsByDateRangeEvent(
@@ -249,7 +264,8 @@ class _RightButtonsState extends State<RightButtons> {
     }
 
     // Car Button
-    if (trip.hasCar == 1) {
+    // Car Button
+    if (showCar) {
       buttons.add(
         _ButtonData(
           iconWidget: Icon(
@@ -261,13 +277,30 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.car,
           onPressed: () async {
-            final Carmodel? selectedCar = await showModalBottomSheet(
+            final Carmodel? selectedCar = await showDialog<Carmodel>(
               context: context,
-              isScrollControlled: true,
-              builder: (context) => const CarSelectionPage(),
+              builder:
+                  (context) => Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    insetPadding: const EdgeInsets.all(20),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.16,
+                      ),
+                      child: const CarSelectionPage(),
+                    ),
+                  ),
             );
             if (selectedCar != null) {
               debugPrint('Selected Car: ${selectedCar.title}');
+
+              // افتح صفحة الأنشطة بعد اختيار السيارة
+              await showDialog(
+                context: context,
+                builder: (context) => const ActivitiesListDialog(),
+              );
             }
           },
         ),
@@ -340,24 +373,20 @@ class _RightButtonsState extends State<RightButtons> {
     return FocusScope(
       node: _focusScopeNode,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment:
+            MainAxisAlignment.center, // تغيير من spaceAround إلى center
+        mainAxisSize: MainAxisSize.min, // تغيير إلى min لتجنب المسافات الزائدة
         children: List.generate(buttons.length, (index) {
           final buttonData = buttons[index];
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: index == 0 ? 0 : 2.0),
-              child: SelectRightButton(
-                iconWidget: buttonData.iconWidget,
-                label: buttonData.label,
-                isSelected: selectedIndex == index,
-                onPressed: () {
-                  _focusScopeNode.requestFocus();
-                  setState(() => selectedIndex = index);
-                  buttonData.onPressed?.call();
-                },
-              ),
-            ),
+          return SelectRightButton(
+            iconWidget: buttonData.iconWidget,
+            label: buttonData.label,
+            isSelected: selectedIndex == index,
+            onPressed: () {
+              _focusScopeNode.requestFocus();
+              setState(() => selectedIndex = index);
+              buttonData.onPressed?.call();
+            },
           );
         }),
       ),
