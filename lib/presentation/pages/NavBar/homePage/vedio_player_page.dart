@@ -1,0 +1,534 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
+import 'package:tripto/presentation/pages/widget/CountryWithCity.dart';
+import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
+import 'package:tripto/presentation/pages/widget/payment_option.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tripto/core/constants/CustomButton.dart';
+import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/main.dart';
+
+class VideoPlayerScreen extends StatefulWidget {
+  const VideoPlayerScreen({super.key});
+
+  @override
+  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+}
+
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  final _storage = const FlutterSecureStorage();
+  final _scrollController = PageController();
+  final double _bookingPricePerPerson = 250.0;
+
+  List<Map<String, dynamic>> _trips = [];
+  int _currentIndex = 0;
+  bool _isLoading = true;
+  bool _isVideoInitializing = false;
+  bool _hasError = false;
+  String _errorMessage = '';
+  bool _isMuted = false;
+  bool _isInternetAvailable = true;
+
+  // Video controllers
+  YoutubePlayerController? _youtubeController;
+  VideoPlayerController? _videoController;
+  ChewieController? _chewieController;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkInternetConnection();
+    _fetchTrips();
+  }
+
+  Future<void> _checkInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      setState(() {
+        _isInternetAvailable =
+            result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+      });
+    } on SocketException catch (_) {
+      setState(() => _isInternetAvailable = false);
+    }
+  }
+
+  Future<void> _fetchTrips() async {
+    if (!_isInternetAvailable) {
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _errorMessage = 'No internet connection';
+      });
+      return;
+    }
+
+    try {
+      setState(() {
+        _isLoading = true;
+        _hasError = false;
+      });
+
+      final trips = await TripsRepository().fetchTrips();
+
+      if (trips.isEmpty) {
+        setState(() {
+          _isLoading = false;
+          _hasError = true;
+          _errorMessage = 'No trips available';
+        });
+        return;
+      }
+
+      setState(() {
+        _trips = trips.map((trip) => trip.toVideoPlayerJson()).toList();
+        _isLoading = false;
+      });
+
+      await _initializeVideo(0);
+    } catch (e) {
+      debugPrint('Error fetching trips: $e');
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _errorMessage =
+            e.toString().contains('HTML')
+                ? 'Server error: Please try again later'
+                : 'Failed to load trips: ${e.toString()}';
+      });
+    }
+  }
+
+  Future<void> _initializeVideo(int index) async {
+    if (index < 0 || index >= _trips.length) return;
+
+    _disposeCurrentVideo();
+    setState(() {
+      _currentIndex = index;
+      _isVideoInitializing = true;
+      _hasError = false;
+    });
+
+    try {
+      final videoUrl = _trips[index]['video_url']?.toString() ?? '';
+      if (videoUrl.isEmpty) throw Exception('No video URL available');
+
+      if (_isYouTubeUrl(videoUrl)) {
+        final videoId = YoutubePlayer.convertUrlToId(videoUrl);
+        if (videoId == null) throw Exception('Invalid YouTube URL');
+
+        _youtubeController = YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: const YoutubePlayerFlags(
+            autoPlay: true,
+            mute: false,
+            loop: true,
+          ),
+        );
+      } else {
+        _videoController = VideoPlayerController.network(videoUrl);
+        await _videoController!.initialize();
+        _chewieController = ChewieController(
+          videoPlayerController: _videoController!,
+          autoPlay: true,
+          looping: true,
+          allowFullScreen: true,
+        );
+      }
+    } catch (e) {
+      debugPrint('Video initialization error: $e');
+      setState(() {
+        _hasError = true;
+        _errorMessage = 'Failed to load video';
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _isVideoInitializing = false);
+      }
+    }
+  }
+
+  String _getLocalizedDestinationName(
+    Map<String, dynamic> trip,
+    BuildContext context,
+  ) {
+    try {
+      final locale = Localizations.localeOf(context).languageCode;
+
+      // أولاً: تحقق من وجود البيانات في destination مباشرة
+      if (trip['destination'] != null) {
+        return locale == 'ar'
+            ? trip['destination']['name_ar']?.toString() ??
+                trip['destination']['name_en']?.toString() ??
+                'Unknown'
+            : trip['destination']['name_en']?.toString() ??
+                trip['destination']['name_ar']?.toString() ??
+                'Unknown';
+      }
+
+      // ثانياً: تحقق من وجود البيانات المسطحة (من toVideoPlayerJson)
+      return locale == 'ar'
+          ? trip['destination_name_ar']?.toString() ??
+              trip['destination_name_en']?.toString() ??
+              'Unknown'
+          : trip['destination_name_en']?.toString() ??
+              trip['destination_name_ar']?.toString() ??
+              'Unknown';
+    } catch (e) {
+      debugPrint('Error getting destination name: $e');
+      return 'Unknown';
+    }
+  }
+
+  String _getLocalizedSubDestinationName(
+    Map<String, dynamic> trip,
+    BuildContext context,
+  ) {
+    try {
+      final locale = Localizations.localeOf(context).languageCode;
+
+      // أولاً: تحقق من وجود البيانات في sub_destination مباشرة
+      if (trip['sub_destination'] != null) {
+        return locale == 'ar'
+            ? trip['sub_destination']['name_ar']?.toString() ??
+                trip['sub_destination']['name_en']?.toString() ??
+                ''
+            : trip['sub_destination']['name_en']?.toString() ??
+                trip['sub_destination']['name_ar']?.toString() ??
+                '';
+      }
+
+      // ثانياً: تحقق من وجود البيانات المسطحة (من toVideoPlayerJson)
+      return locale == 'ar'
+          ? trip['sub_destination_name_ar']?.toString() ??
+              trip['sub_destination_name_en']?.toString() ??
+              ''
+          : trip['sub_destination_name_en']?.toString() ??
+              trip['sub_destination_name_ar']?.toString() ??
+              '';
+    } catch (e) {
+      debugPrint('Error getting sub-destination name: $e');
+      return '';
+    }
+  }
+
+  void _videoListener() {
+    if (_youtubeController?.value.hasError ?? false) {
+      setState(() {
+        _hasError = true;
+        _errorMessage = 'YouTube error: ${_youtubeController!.value.errorCode}';
+      });
+    }
+  }
+
+  void _disposeCurrentVideo() {
+    _youtubeController?.removeListener(_videoListener);
+    _youtubeController?.dispose();
+    _youtubeController = null;
+    _videoController?.dispose();
+    _videoController = null;
+    _chewieController?.dispose();
+    _chewieController = null;
+  }
+
+  void _toggleMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+      if (_youtubeController != null) {
+        _isMuted ? _youtubeController!.mute() : _youtubeController!.unMute();
+      } else if (_videoController != null) {
+        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
+      }
+    });
+  }
+
+  bool _isYouTubeUrl(String url) {
+    return url.contains('youtube.com') || url.contains('youtu.be');
+  }
+
+  String? _extractYouTubeId(String url) {
+    return YoutubePlayer.convertUrlToId(url);
+  }
+
+  void _handleLanguageChange() {
+    final currentLocale = Localizations.localeOf(context).languageCode;
+    final newLocale =
+        currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+    TripToApp.setLocale(context, newLocale);
+  }
+
+  @override
+  void dispose() {
+    _disposeCurrentVideo();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
+              Text(
+                'Loading trips...',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (_hasError && _trips.isEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                _isInternetAvailable ? Icons.error : Icons.wifi_off,
+                color: Colors.white,
+                size: 50,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  _errorMessage,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _fetchTrips,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: PageView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        itemCount: _trips.length,
+        onPageChanged: (index) => _initializeVideo(index),
+        itemBuilder: (context, index) {
+          final currentTrip = _trips[index];
+
+          final destinationName = _getLocalizedDestinationName(
+            currentTrip,
+            context,
+          );
+          final subDestination = _getLocalizedSubDestinationName(
+            currentTrip,
+            context,
+          );
+
+          return Stack(
+            children: [
+              // Video Background (full screen)
+              if (_isVideoInitializing && index == _currentIndex)
+                const Center(child: CircularProgressIndicator())
+              else if (_hasError && index == _currentIndex)
+                _buildVideoErrorWidget()
+              else
+                Positioned.fill(child: _buildVideoPlayer()),
+
+              // Overlay UI Elements
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 10,
+                left:
+                    Directionality.of(context) == TextDirection.rtl ? null : 10,
+                right:
+                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        _isMuted ? Icons.volume_off : Icons.volume_up,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: _toggleMute,
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.language,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      onPressed: _handleLanguageChange,
+                    ),
+                  ],
+                ),
+              ),
+
+              // Right Buttons
+              Align(
+                alignment:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? Alignment.centerLeft
+                        : Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right:
+                        Directionality.of(context) == TextDirection.ltr
+                            ? 10
+                            : 0,
+                    left:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 10
+                            : 0,
+                  ),
+                  child: SizedBox(
+                    height: screenHeight * 0.5,
+                    child: RightButtons(
+                      selectedTripIndex: index,
+                      currentTripCategory: _trips[index]['category'] ?? 0,
+                    ),
+                  ),
+                ),
+              ),
+
+              // Destination Info
+              Positioned(
+                bottom: screenHeight * 0.18,
+                left:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? null
+                        : screenWidth * 0.060,
+                right:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? screenWidth * 0.060
+                        : null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left:
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? 0
+                                : screenWidth * 0.025,
+                        right:
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? screenWidth * 0.025
+                                : 0,
+                      ),
+                      child: Countrywithcity(
+                        countryName: destinationName,
+                        cityName: subDestination,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.001),
+                    PersonCounterWithPrice(
+                      basePricePerPerson: _bookingPricePerPerson,
+                      textColor: Colors.white,
+                      iconColor: Colors.black,
+                      backgroundColor: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+
+              // Book Now Button
+              Positioned(
+                bottom: screenHeight * 0.12,
+                left: 20,
+                right: 20,
+                child: Center(
+                  child: CustomButton(
+                    text: AppLocalizations.of(context)!.booknow,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentOption(),
+                        ),
+                      );
+                    },
+                    width: screenWidth * 0.80,
+                    height: 40,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildVideoPlayer() {
+    if (_youtubeController != null) {
+      return YoutubePlayer(
+        controller: _youtubeController!,
+        showVideoProgressIndicator: true,
+        progressColors: const ProgressBarColors(
+          playedColor: Colors.red,
+          handleColor: Colors.red,
+          bufferedColor: Colors.grey,
+          backgroundColor: Colors.grey,
+        ),
+        onEnded: (metaData) {
+          if (_currentIndex + 1 < _trips.length) {
+            _initializeVideo(_currentIndex + 1);
+          }
+        },
+      );
+    } else if (_chewieController != null) {
+      return Chewie(controller: _chewieController!);
+    } else {
+      return Container(color: Colors.black);
+    }
+  }
+
+  Widget _buildVideoErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.videocam_off, size: 50, color: Colors.white),
+          const SizedBox(height: 16),
+          Text(
+            _errorMessage,
+            style: const TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => _initializeVideo(_currentIndex + 1),
+            child: const Text('Skip to next'),
+          ),
+        ],
+      ),
+    );
+  }
+}

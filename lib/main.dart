@@ -1,23 +1,25 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tripto/core/routes/app_routes.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // 🚀 ضفنا الـ import ده
-import 'package:tripto/data/repositories/UserRepository.dart';
-import 'package:tripto/logic/blocs/auth/AuthBloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/data/repositories/AuthRepository.dart';
+import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/core/routes/app_routes.dart';
 import 'l10n/app_localizations.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
   runApp(const TripToApp());
 }
 
@@ -36,6 +38,7 @@ class TripToApp extends StatefulWidget {
 
 class _TripToAppState extends State<TripToApp> {
   Locale _locale = const Locale('en');
+
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -45,30 +48,29 @@ class _TripToAppState extends State<TripToApp> {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      // 🚀 استخدمنا MultiRepositoryProvider لو عندك أكتر من Repository
       providers: [
-        RepositoryProvider<UserRepository>(
-          // 🚀 هنا بنوفر الـ UserRepository
-          create: (context) => UserRepository(),
-        ),
-        // ممكن تضيف هنا أي Repositories تانية
+        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
+        RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
       ],
       child: MultiBlocProvider(
-        // 🚀 استخدمنا MultiBlocProvider لو عندك أكتر من BLoC
         providers: [
           BlocProvider<AuthBloc>(
-            // 🚀 هنا بنوفر الـ AuthBloc
             create:
                 (context) => AuthBloc(
-                  userRepository: RepositoryProvider.of<UserRepository>(
+                  authRepository: RepositoryProvider.of<AuthRepository>(
                     context,
                   ),
                 ),
           ),
-          // ممكن تضيف هنا أي BLoCs تانية
+          BlocProvider<GetTripBloc>(
+            create:
+                (context) =>
+                    GetTripBloc(RepositoryProvider.of<TripsRepository>(context))
+                      ..add(FetchTrips()),
+          ),
         ],
         child: MaterialApp(
-          locale: _locale, // أو Locale('ar') للتجربة
+          locale: _locale,
           supportedLocales: const [Locale('en'), Locale('ar')],
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -86,7 +88,6 @@ class _TripToAppState extends State<TripToApp> {
           ),
           title: 'TripTo',
           debugShowCheckedModeBanner: false,
-
           initialRoute: '/',
           routes: AppRoutes.routes,
         ),

@@ -1,5 +1,5 @@
 class Carmodel {
-  final String image;
+  final String? image;
   final String title;
   final int colorValue;
   final int person;

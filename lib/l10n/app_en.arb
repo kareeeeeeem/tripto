@@ -88,5 +88,7 @@
   "registrationFailed": "Registration failed. Please try again.",
   "unexpectedError": "An unexpected error occurred. Please try again later.",
   "loading": "Loading!",
-  "failedToSend": "Failed to send request."
+  "failedToSend": "Failed to send request.",
+  "fly": "Fly"
+
 }

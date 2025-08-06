@@ -631,6 +631,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to send request.'**
   String get failedToSend;
+
+  /// No description provided for @fly.
+  ///
+  /// In en, this message translates to:
+  /// **'Fly'**
+  String get fly;
 }
 
 class _AppLocalizationsDelegate

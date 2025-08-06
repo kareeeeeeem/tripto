@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/NavBar.dart';
-import 'package:tripto/presentation/pagess/Login_pages/SignupOrLogin.dart';
-import 'package:tripto/presentation/pagess/NavBar/home_page.dart';
-import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
-import '../pagess/NavBar/Favorite_page.dart';
-import '../pagess/NavBar/ActivityPage/activities_page.dart';
+import 'package:tripto/presentation/pages/Login_pages/SignupOrLogin.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/home_page.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_page.dart';
+import '../pages/NavBar/Favorite_page.dart';
+import '../pages/NavBar/ActivityPage/activities_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key, this.initialIndex = 0});

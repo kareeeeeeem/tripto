@@ -34,7 +34,10 @@ dependencies:
       sdk: flutter
   #verification code
 
+  # Video players
+  youtube_player_flutter: ^9.1.1
   video_player: ^2.5.0
+  chewie: ^1.12.1
 
   #for international phone
   intl_phone_field: ^3.2.0

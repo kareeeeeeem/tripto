@@ -279,4 +279,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get failedToSend => 'فشل إرسال الطلب.';
+
+  @override
+  String get fly => 'طيران';
 }

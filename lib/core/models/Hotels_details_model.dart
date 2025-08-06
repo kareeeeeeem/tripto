@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/SlideBar/HotelsCard.dart';
+import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
 
 class HotelsDetailsModel extends StatefulWidget {
   const HotelsDetailsModel({super.key});
@@ -34,20 +34,3 @@ List<Bookinghotel> bookinghotels = [
     description: "",
   ),
 ];
-
-void openbottomsheetforhotel(BuildContext context) {
-  showDialog(
-    context: context,
-    builder:
-        (context) => Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.65,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: const Hotels(),
-          ),
-        ),
-  );
-}

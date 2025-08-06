@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pagess/CarDetials.dart';
+import 'package:tripto/presentation/pages/widget/CarDetials.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pagess/SlideBar/CarCard.dart';
-import 'package:tripto/presentation/pagess/SlideBar/CategoryCard.dart';
-import 'package:tripto/presentation/pagess/NavBar/profile_page.dart';
-import '../../presentation/pagess/NavBar/ActivityPage/activity_details_page.dart';
-import '../../presentation/pagess/NavBar/home_page.dart';
+import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
+import 'package:tripto/presentation/pages/SlideBar/CategoryCard.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_page.dart';
+import '../../presentation/pages/NavBar/ActivityPage/activity_details_page.dart';
+import '../../presentation/pages/NavBar/homePage/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
-import '../../presentation/app/vedio_player_page.dart';
+import '../../presentation/pages/NavBar/homePage/vedio_player_page.dart';
 import '../../presentation/before_start/welcome_page.dart';
-import '../../presentation/pagess/payment_option.dart';
-import '../../presentation/pagess/payment_destination.dart';
+import '../../presentation/pages/widget/payment_option.dart';
+import '../../presentation/pages/widget/payment_destination.dart';
 import '../models/activityPageModel.dart';
 
 class AppRoutes {
@@ -38,7 +38,7 @@ class AppRoutes {
     splash: (context) => SplashScreen(),
     welcome: (context) => const WelcomePage(),
     app: (context) => App(),
-    videoPlayer: (context) => const VideoPlayerPage(),
+    videoPlayer: (context) => const VideoPlayerScreen(),
     home: (context) => const HomePage(),
     profile: (context) => ProfilePage(),
     paymentOption: (context) => const PaymentOption(),

@@ -281,4 +281,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToSend => 'Failed to send request.';
+
+  @override
+  String get fly => 'Fly';
 }
