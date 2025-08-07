@@ -8,7 +8,7 @@ import 'package:tripto/presentation/pages/NavBar/profile_page.dart';
 import '../../presentation/pages/NavBar/ActivityPage/activity_details_page.dart';
 import '../../presentation/pages/NavBar/homePage/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
-import '../../presentation/pages/NavBar/homePage/vedio_player_page.dart';
+import '../../presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import '../../presentation/before_start/welcome_page.dart';
 import '../../presentation/pages/widget/payment_option.dart';
 import '../../presentation/pages/widget/payment_destination.dart';
@@ -54,6 +54,5 @@ class AppRoutes {
       final car = ModalRoute.of(context)!.settings.arguments as Carmodel;
       return CarCard(car: car);
     },
-    carSelectionPage: (context) => const CarSelectionPage(), // ✅ الإضافة هنا
   };
 }

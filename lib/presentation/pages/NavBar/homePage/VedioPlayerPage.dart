@@ -130,8 +130,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           if (_videoController!.value.hasError) {
             setState(() {
               _hasError = true;
-              _errorMessage =
-                  'Failed to play video: ${_videoController!.value.errorDescription}';
+              _errorMessage = 'Failed to play video';
             });
           }
         });
@@ -158,10 +157,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => _openInBrowser(_trips[index]['video_url']),
-                    child: const Text('Open in Browser'),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () => _openInBrowser(_trips[index]['video_url']),
+                  //   child: const Text('Open in Browser'),
+                  // ),
                 ],
               ),
             );
@@ -188,10 +187,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       debugPrint('Video initialization error: $e');
       setState(() {
         _hasError = true;
-        _errorMessage =
-            e.toString().contains('404')
-                ? 'Video not found on Drive'
-                : 'Failed to load video: ${e.toString()}';
+        _errorMessage = 'Failed to play video';
       });
       _startRetryTimer(index);
     } finally {
@@ -448,6 +444,27 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 ),
               ),
 
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 10,
+                left:
+                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                right:
+                    Directionality.of(context) == TextDirection.rtl ? null : 10,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.language,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      onPressed: _handleLanguageChange,
+                    ),
+                  ],
+                ),
+              ),
+
               // Overlay UI Elements
               Positioned(
                 top: MediaQuery.of(context).padding.top + 10,
@@ -466,38 +483,32 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       ),
                       onPressed: _toggleMute,
                     ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.language,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      onPressed: _handleLanguageChange,
-                    ),
                   ],
                 ),
               ),
 
               // Right Buttons
-              Align(
-                alignment:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right:
-                        Directionality.of(context) == TextDirection.ltr
-                            ? 10
-                            : 0,
-                    left:
-                        Directionality.of(context) == TextDirection.rtl
-                            ? 10
-                            : 0,
-                  ),
-                  child: RightButtons(
-                    selectedTripIndex: index,
-                    currentTripCategory: _trips[index]['category'] ?? 0,
+              Container(
+                child: Align(
+                  alignment:
+                      Directionality.of(context) == TextDirection.rtl
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      right:
+                          Directionality.of(context) == TextDirection.ltr
+                              ? 10
+                              : 0,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? 10
+                              : 0,
+                    ),
+                    child: RightButtons(
+                      selectedTripIndex: index,
+                      currentTripCategory: _trips[index]['category'] ?? 0,
+                    ),
                   ),
                 ),
               ),
@@ -601,15 +612,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => _openInBrowser(videoUrl),
-            child: const Text('Open in Browser'),
-          ),
+          // ElevatedButton(
+          //   onPressed: () => _openInBrowser(videoUrl),
+          //   child: const Text('Open in Browser'),
+          // ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => _initializeVideo(_currentIndex + 1),
-            child: const Text('Skip to next'),
-          ),
+          // ElevatedButton(
+          //   onPressed: () => _initializeVideo(_currentIndex + 1),
+          //   child: const Text('Skip to next'),
+          // ),
         ],
       ),
     );

@@ -6,7 +6,14 @@ import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
 import '../../../l10n/app_localizations.dart'; // مهم فيه ActivityCard و openActivitiesCard
 
 class CarSelectionPage extends StatefulWidget {
-  const CarSelectionPage({super.key});
+  final List<VoidCallback> nextSteps;
+  final bool hasActivity; // أضف هذه الخاصية
+
+  const CarSelectionPage({
+    super.key,
+    this.nextSteps = const [],
+    required this.hasActivity, // اجعلها مطلوبة
+  });
 
   @override
   State<CarSelectionPage> createState() => _CarSelectionPageState();
@@ -67,22 +74,28 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
               child: ElevatedButton(
                 onPressed:
                     selectedIndex != null
-                        ? () {
+                        ? () async {
                           Navigator.of(context).pop(carsList[selectedIndex!]);
 
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            showDialog(
+                          // افتح صفحة الأنشطة فقط إذا كانت متوفرة
+                          if (widget.hasActivity) {
+                            await showDialog(
                               context: context,
                               builder:
                                   (context) => const ActivitiesListDialog(),
                             );
-                          });
+                          }
 
-                          debugPrint('Selected car index: $selectedIndex');
+                          // تشغيل nextSteps سواء كانت هناك أنشطة أم لا
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            if (widget.nextSteps.isNotEmpty) {
+                              widget.nextSteps.first();
+                            }
+                          });
                         }
                         : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF002E70), // ✅ اللون الموحد
+                  backgroundColor: const Color(0xFF002E70),
                   foregroundColor: Colors.white,
                   minimumSize: Size(
                     MediaQuery.of(context).size.width * 0.7,
@@ -94,7 +107,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   elevation: 0,
                 ),
                 child: Text(
-                  AppLocalizations.of(context)!.selectactivity,
+                  'Continue',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

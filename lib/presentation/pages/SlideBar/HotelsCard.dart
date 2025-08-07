@@ -6,8 +6,9 @@ import 'CarCard.dart';
 
 class Hotels extends StatefulWidget {
   final List<GetTripModel> hotelTrips;
+  final List<VoidCallback> nextSteps;
 
-  const Hotels({super.key, required this.hotelTrips});
+  const Hotels({super.key, required this.hotelTrips, required this.nextSteps});
 
   @override
   State<Hotels> createState() => _HotelsState();
@@ -28,7 +29,6 @@ class _HotelsState extends State<Hotels> {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-
                 child: SingleChildScrollView(
                   child: Container(
                     decoration: const BoxDecoration(color: Colors.white),
@@ -70,8 +70,7 @@ class _HotelsState extends State<Hotels> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.network(
-                                          hotel
-                                              .videoUrl, // أو استخدم صورة حقيقية لو عندك
+                                          hotel.videoUrl,
                                           width: 100,
                                           height: 50,
                                           fit: BoxFit.cover,
@@ -87,7 +86,6 @@ class _HotelsState extends State<Hotels> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              //hotel.destinationNameEn ??
                                               'No Title',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -98,7 +96,6 @@ class _HotelsState extends State<Hotels> {
                                               "This is the description of the company. This is the description of the company This is the description of the company",
                                             ),
                                             const SizedBox(height: 8),
-
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Text(
@@ -135,8 +132,7 @@ class _HotelsState extends State<Hotels> {
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               padding: EdgeInsets.symmetric(
-                vertical:
-                    MediaQuery.of(context).size.height * 0.02, // 2% من الارتفاع
+                vertical: MediaQuery.of(context).size.height * 0.02,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -145,43 +141,35 @@ class _HotelsState extends State<Hotels> {
                   children: [
                     Expanded(
                       child: SizedBox(
-                        // width: MediaQuery.of(context).size.width * 0.20,   // 110 من عرض 390 تقريبًا
-                        height:
-                            MediaQuery.of(context).size.height *
-                            0.055, // 46 من ارتفاع 800 تقريبًا
-
+                        height: MediaQuery.of(context).size.height * 0.055,
                         child: ElevatedButton(
                           onPressed:
                               selectedHotelIndex != null
                                   ? () {
-                                    //  final selectedHotel = bookinghotels[selectedHotelIndex!];
                                     final selectedHotel =
                                         tripsWithHotel[selectedHotelIndex!];
-                                    Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder:
-                                          (BuildContext context) =>
-                                              const CarSelectionPage(),
-                                    );
+
+                                    Navigator.pop(
+                                      context,
+                                    ); // خروج من صفحة Hotels
+
+                                    // ✅ تشغيل أول خطوة في اللي جاي
+                                    if (widget.nextSteps.isNotEmpty) {
+                                      final nextStep = widget.nextSteps.first;
+                                      nextStep();
+                                    }
                                   }
                                   : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(
-                              0xFF002E70,
-                            ), // ✅ اللون الموحد
+                            backgroundColor: const Color(0xFF002E70),
                             foregroundColor: Colors.white,
-                            //   minimumSize: Size(
-                            //   MediaQuery.of(context).size.width * 0.7,
-                            //   45,
-                            // ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             elevation: 0,
                           ),
                           child: Text(
-                            AppLocalizations.of(context)!.selectacar,
+                            'Continue',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

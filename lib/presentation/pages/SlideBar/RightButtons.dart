@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tripto/bloc/GetTrip/DateSelection_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_model.dart';
@@ -45,7 +46,7 @@ class _ButtonData {
 class RightButtons extends StatefulWidget {
   final int selectedTripIndex;
 
-  const RightButtons({
+  RightButtons({
     super.key,
     this.selectedTripIndex = 0,
     required currentTripCategory,
@@ -175,7 +176,6 @@ class _RightButtonsState extends State<RightButtons> {
               final firstDate = DateTime.parse(trip.fromDate);
               final lastDate = DateTime.parse(trip.toDate);
 
-              // إضافة تحقق مبدئي
               if (firstDate.isAfter(lastDate)) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("تواريخ الرحلة غير صالحة")),
@@ -186,31 +186,23 @@ class _RightButtonsState extends State<RightButtons> {
               final result = await showDialog<Map<String, DateTime>>(
                 context: context,
                 builder:
-                    (context) => DateCard(
-                      firstDate: firstDate,
-                      lastDate: lastDate,
-                      initialRangeStart: _selectedFilterDate,
-                      initialRangeEnd:
-                          _selectedFilterDate != null
-                              ? _selectedFilterDate!.add(
-                                const Duration(days: 1),
-                              )
-                              : firstDate.add(
-                                const Duration(days: 1),
-                              ), // قيمة افتراضية أفضل
+                    (context) => BlocProvider(
+                      create: (context) => DateSelectionBloc(),
+                      child: DateCard(
+                        firstDate: firstDate,
+                        lastDate: lastDate,
+                        initialRangeStart: _selectedFilterDate,
+                        initialRangeEnd:
+                            _selectedFilterDate != null
+                                ? _selectedFilterDate!.add(
+                                  const Duration(days: 1),
+                                )
+                                : firstDate.add(const Duration(days: 1)),
+                      ),
                     ),
               );
 
               if (result != null) {
-                // إضافة تحقق نهائي
-                if (result['range_start']!.isBefore(firstDate) ||
-                    result['range_end']!.isAfter(lastDate)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("الفترة المحددة غير صالحة")),
-                  );
-                  return;
-                }
-
                 setState(() => _selectedFilterDate = result['range_start']);
                 context.read<GetTripBloc>().add(
                   FilterTripsByDateRangeEvent(
@@ -218,6 +210,26 @@ class _RightButtonsState extends State<RightButtons> {
                     endDate: result['range_end']!,
                   ),
                 );
+
+                // 👇 الكود الجديد اللي يفتح أول صفحة بعد زر التاريخ
+                Future.delayed(Duration(milliseconds: 300), () {
+                  final int dateButtonIndex = buttons.indexWhere(
+                    (b) =>
+                        b.label == AppLocalizations.of(context)!.date ||
+                        b.label == AppLocalizations.of(context)!.fly,
+                  );
+
+                  final List<_ButtonData> postDateButtons = buttons.sublist(
+                    dateButtonIndex + 1,
+                  );
+
+                  for (final button in postDateButtons) {
+                    if (button.onPressed != null) {
+                      button.onPressed!.call(); // شغل أول زر بعد التاريخ
+                      break;
+                    }
+                  }
+                });
               }
             } catch (e) {
               debugPrint('Date selection error: $e');
@@ -245,6 +257,27 @@ class _RightButtonsState extends State<RightButtons> {
           onPressed: () async {
             final state = context.read<GetTripBloc>().state;
             if (state is GetTripLoaded) {
+              // تحديد الزر التالي بعد فندق
+              final int hotelButtonIndex = buttons.indexWhere(
+                (b) => b.label == AppLocalizations.of(context)!.hotel,
+              );
+
+              final List<_ButtonData> postHotelButtons = buttons.sublist(
+                hotelButtonIndex + 1,
+              );
+
+              // ابحث عن أول زر بعد الفندق عنده onPressed
+              final nextButton = postHotelButtons.firstWhere(
+                (b) => b.onPressed != null,
+                orElse:
+                    () => _ButtonData(
+                      iconWidget: SizedBox(),
+                      label: '',
+                      onPressed: null,
+                    ),
+              );
+
+              // استدعاء Hotels مع الزر القادم
               await showDialog(
                 context: context,
                 builder:
@@ -252,7 +285,13 @@ class _RightButtonsState extends State<RightButtons> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Hotels(hotelTrips: [trip]),
+                      child: Hotels(
+                        hotelTrips: [trip],
+                        nextSteps:
+                            nextButton.onPressed != null
+                                ? [nextButton.onPressed!]
+                                : [],
+                      ),
                     ),
               );
             }
@@ -261,7 +300,6 @@ class _RightButtonsState extends State<RightButtons> {
       );
     }
 
-    // Car Button
     // Car Button
     if (showCar) {
       buttons.add(
@@ -275,36 +313,43 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.car,
           onPressed: () async {
-            final Carmodel? selectedCar = await showDialog<Carmodel>(
-              context: context,
-              builder:
-                  (context) => Dialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    insetPadding: const EdgeInsets.all(20),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.16,
-                      ),
-                      child: const CarSelectionPage(),
-                    ),
+            final int carButtonIndex = buttons.indexWhere(
+              (b) => b.label == AppLocalizations.of(context)!.car,
+            );
+
+            final List<_ButtonData> postCarButtons = buttons.sublist(
+              carButtonIndex + 1,
+            );
+
+            final nextButton = postCarButtons.firstWhere(
+              (b) => b.onPressed != null,
+              orElse:
+                  () => _ButtonData(
+                    iconWidget: SizedBox(),
+                    label: '',
+                    onPressed: null,
                   ),
             );
+
+            final Carmodel? selectedCar = await showDialog(
+              context: context,
+              builder:
+                  (context) => CarSelectionPage(
+                    nextSteps:
+                        nextButton.onPressed != null
+                            ? [nextButton.onPressed!]
+                            : [],
+                    hasActivity: trip.hasActivity, // تمرير حالة الأنشطة
+                  ),
+            );
+
             if (selectedCar != null) {
               debugPrint('Selected Car: ${selectedCar.title}');
-
-              // افتح صفحة الأنشطة بعد اختيار السيارة
-              await showDialog(
-                context: context,
-                builder: (context) => const ActivitiesListDialog(),
-              );
             }
           },
         ),
       );
     }
-
     // Activities Button
     if (trip.hasActivity) {
       buttons.add(

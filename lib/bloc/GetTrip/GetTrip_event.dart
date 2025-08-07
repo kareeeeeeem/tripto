@@ -39,3 +39,20 @@ class FilterTripsByDateRangeEvent extends GetTripEvent {
   @override
   List<Object> get props => [startDate, endDate];
 }
+
+abstract class DateSelectionState {}
+
+class DateSelectionInitial extends DateSelectionState {}
+
+class DateSelectionSuccess extends DateSelectionState {
+  final DateTime rangeStart;
+  final DateTime rangeEnd;
+
+  DateSelectionSuccess({required this.rangeStart, required this.rangeEnd});
+}
+
+class DateSelectionFailure extends DateSelectionState {
+  final String error;
+
+  DateSelectionFailure(this.error);
+}

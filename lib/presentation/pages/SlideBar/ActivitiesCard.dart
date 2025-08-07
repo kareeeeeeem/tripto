@@ -106,7 +106,7 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
         height: 600,
         child: Column(
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 AppLocalizations.of(context)!.activities,
@@ -139,7 +139,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
               ),
               child: SizedBox(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.055, // تقريبًا 45 من ارتفاع شاشة 800
+                height:
+                    MediaQuery.of(context).size.height *
+                    0.055, // تقريبًا 45 من ارتفاع شاشة 800
 
                 child: CustomButton(
                   text: AppLocalizations.of(context)!.finish,
@@ -151,9 +153,11 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                       Navigator.pop(context, selectedActivity);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                         SnackBar(
+                        SnackBar(
                           content: Text(
-                            AppLocalizations.of(context)!.pleaseselectanactivityfirsttoFinish,
+                            AppLocalizations.of(
+                              context,
+                            )!.pleaseselectanactivityfirsttoFinish,
                           ),
                         ),
                       );
