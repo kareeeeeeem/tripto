@@ -53,10 +53,17 @@ class GetTripBloc extends Bloc<GetTripEvent, GetTripState> {
           allTrips.where((trip) {
             final tripStart = DateTime.parse(trip.fromDate);
             final tripEnd = DateTime.parse(trip.toDate);
-            return (tripStart.isAtSameMomentAs(event.startDate) ||
-                    tripStart.isAfter(event.startDate)) &&
-                (tripEnd.isAtSameMomentAs(event.endDate) ||
-                    tripEnd.isBefore(event.endDate));
+
+            // الشرط ده بيضمن إن الرحلة بتتداخل مع المدى المحدد
+            final overlaps =
+                tripStart.isBefore(
+                  event.endDate.add(const Duration(days: 1)),
+                ) &&
+                tripEnd.isAfter(
+                  event.startDate.subtract(const Duration(days: 1)),
+                );
+
+            return overlaps;
           }).toList();
 
       emit(GetTripLoaded(filteredTrips));

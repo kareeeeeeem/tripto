@@ -321,6 +321,7 @@ class _RightButtonsState extends State<RightButtons> {
               carButtonIndex + 1,
             );
 
+            // احصل على الزر التالي بعد زر السيارة
             final nextButton = postCarButtons.firstWhere(
               (b) => b.onPressed != null,
               orElse:
@@ -331,15 +332,24 @@ class _RightButtonsState extends State<RightButtons> {
                   ),
             );
 
+            // ✅ لا تمرر زر الأنشطة كـ nextStep لو الأنشطة موجودة وسيتم فتحها داخل CarSelectionPage
+            List<VoidCallback> nextSteps = [];
+
+            if (trip.hasActivity &&
+                nextButton.label == AppLocalizations.of(context)!.activities) {
+              nextSteps = []; // ما تمررش الزر ده
+            } else {
+              nextSteps =
+                  nextButton.onPressed != null ? [nextButton.onPressed!] : [];
+            }
+
+            // افتح صفحة اختيار السيارة
             final Carmodel? selectedCar = await showDialog(
               context: context,
               builder:
                   (context) => CarSelectionPage(
-                    nextSteps:
-                        nextButton.onPressed != null
-                            ? [nextButton.onPressed!]
-                            : [],
-                    hasActivity: trip.hasActivity, // تمرير حالة الأنشطة
+                    nextSteps: nextSteps,
+                    hasActivity: trip.hasActivity,
                   ),
             );
 

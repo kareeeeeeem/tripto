@@ -45,7 +45,7 @@ class AuthRepository {
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'phone': phone, 'password': password}),
         )
-        .timeout(const Duration(seconds: 10)); // أضف هذا السطر
+        .timeout(const Duration(seconds: 100)); // أضف هذا السطر
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

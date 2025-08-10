@@ -1,157 +1,125 @@
 class GetTripModel {
   final int id;
-
-  final int destinationId;
-
-  final int subDestinationId;
-
+  final int? destinationId;
+  final int? subDestinationId;
   final int category;
-
   final bool hasHotel;
-
   final bool hasCar;
-
   final bool hasFly;
-
   final bool hasActivity;
-
   final double price;
-
   final double pricePerPerson;
-
   final String fromDate;
-
   final String toDate;
-
   final String? companyNameAr;
-
   final String? companyNameEn;
-
   final String? companyDesAr;
-
   final String? companyDesEn;
-
   final String videoUrl;
-
   final int maxPersons;
-
   final DateTime? createdAt;
-
   final DateTime? updatedAt;
-
-  final Map<String, dynamic> destination;
-
-  final Map<String, dynamic> subDestination;
+  final Map<String, dynamic>? destination;
+  final Map<String, dynamic>? subDestination;
 
   GetTripModel({
     required this.id,
-
-    required this.destinationId,
-
-    required this.subDestinationId,
-
+    this.destinationId,
+    this.subDestinationId,
     required this.category,
-
     required this.hasHotel,
-
     required this.hasCar,
-
     required this.hasFly,
-
     required this.hasActivity,
-
     required this.price,
-
     required this.pricePerPerson,
-
     required this.fromDate,
-
     required this.toDate,
-
     this.companyNameAr,
-
     this.companyNameEn,
-
     this.companyDesAr,
-
     this.companyDesEn,
-
     required this.videoUrl,
-
     required this.maxPersons,
-
     this.createdAt,
-
     this.updatedAt,
-
-    required this.destination,
-
-    required this.subDestination,
+    this.destination,
+    this.subDestination,
   });
 
   factory GetTripModel.fromJson(Map<String, dynamic> json) {
+    // معالجة category لتحويلها من String إلى int إذا لزم الأمر
+    final categoryValue = json['category']?.toString();
+    final parsedCategory =
+        categoryValue != null ? int.tryParse(categoryValue) ?? 0 : 0;
+
+    // معالجة التواريخ
+    DateTime? parseDateTime(dynamic date) {
+      if (date == null) return null;
+      if (date is DateTime) return date;
+      return DateTime.tryParse(date.toString());
+    }
+
+    // معالجة القيم المنطقية
+    bool parseBool(dynamic value) {
+      if (value == null) return false;
+      if (value is bool) return value;
+      if (value is num) return value != 0;
+      if (value is String) {
+        return value.toLowerCase() == 'true' || value == '1';
+      }
+      return false;
+    }
+
+    // معالجة القيم العشرية
+    double parseDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is double) return value;
+      if (value is int) return value.toDouble();
+      return double.tryParse(value.toString()) ?? 0.0;
+    }
+
+    // معالجة القيم الصحيحة
+    int parseInt(dynamic value) {
+      if (value == null) return 0;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      return int.tryParse(value.toString()) ?? 0;
+    }
+
     return GetTripModel(
-      id: json['id'] ?? 0,
-
-      destinationId: json['destination_id'] ?? 0,
-
-      subDestinationId: json['sub_destination_id'] ?? 0,
-
-      category: int.tryParse(json['category']?.toString() ?? '') ?? 0,
-
-      hasHotel: json['has_hotel'] == 1 || json['has_hotel'] == true,
-
-      hasCar: json['has_car'] == 1 || json['has_car'] == true,
-
-      hasFly: json['has_fly'] == 1 || json['has_fly'] == true,
-
-      hasActivity: json['has_activity'] == 1 || json['has_activity'] == true,
-
-      price: double.tryParse(json['price']?.toString() ?? '') ?? 0.0,
-
-      pricePerPerson:
-          double.tryParse(json['price_per_person']?.toString() ?? '') ?? 0.0,
-
-      fromDate: json['from_date'] ?? '',
-
-      toDate: json['to_date'] ?? '',
-
-      companyNameAr: json['company_name_ar'],
-
-      companyNameEn: json['company_name_en'],
-
-      companyDesAr: json['company_des_ar'],
-
-      companyDesEn: json['company_des_en'],
-
-      videoUrl: json['video_url'] ?? '',
-
-      maxPersons: json['max_persons'] ?? 0,
-
-      createdAt:
-          json['created_at'] != null
-              ? DateTime.tryParse(json['created_at'])
-              : null,
-
-      updatedAt:
-          json['updated_at'] != null
-              ? DateTime.tryParse(json['updated_at'])
-              : null,
-
+      id: parseInt(json['id']),
+      destinationId: parseInt(json['destination_id']),
+      subDestinationId: parseInt(json['sub_destination_id']),
+      category: parsedCategory,
+      hasHotel: parseBool(json['has_hotel']),
+      hasCar: parseBool(json['has_car']),
+      hasFly: parseBool(json['has_fly']),
+      hasActivity: parseBool(json['has_activity']),
+      price: parseDouble(json['price']),
+      pricePerPerson: parseDouble(json['price_per_person']),
+      fromDate: json['from_date']?.toString() ?? '',
+      toDate: json['to_date']?.toString() ?? '',
+      companyNameAr: json['company_name_ar']?.toString(),
+      companyNameEn: json['company_name_en']?.toString(),
+      companyDesAr: json['company_des_ar']?.toString(),
+      companyDesEn: json['company_des_en']?.toString(),
+      videoUrl: json['video_url']?.toString() ?? '',
+      maxPersons: parseInt(json['max_persons']),
+      createdAt: parseDateTime(json['created_at']),
+      updatedAt: parseDateTime(json['updated_at']),
       destination:
           json['destination'] is Map
               ? Map<String, dynamic>.from(json['destination'])
-              : {},
-
+              : null,
       subDestination:
           json['sub_destination'] is Map
               ? Map<String, dynamic>.from(json['sub_destination'])
-              : {},
+              : null,
     );
   }
 
-  // Getter آمن لتاريخ البداية
-
+  // Getters للتعامل مع القيم الفارغة
   DateTime get safeFromDate {
     try {
       return DateTime.parse(fromDate).toLocal();
@@ -159,8 +127,6 @@ class GetTripModel {
       return DateTime.now();
     }
   }
-
-  // Getter آمن لتاريخ النهاية
 
   DateTime get safeToDate {
     try {
@@ -170,49 +136,30 @@ class GetTripModel {
     }
   }
 
-  // هل التواريخ صالحة؟
+  bool get hasValidDates =>
+      safeFromDate.isBefore(safeToDate) ||
+      safeFromDate.isAtSameMomentAs(safeToDate);
 
-  bool get hasValidDates {
-    return safeFromDate.isBefore(safeToDate) ||
-        safeFromDate.isAtSameMomentAs(safeToDate);
-  }
-
-  // Getters للأسماء
-
-  String get destinationNameAr => destination['name_ar'] as String? ?? '';
-
-  String get destinationNameEn => destination['name_en'] as String? ?? '';
-
-  String get subDestinationNameAr => subDestination['name_ar'] as String? ?? '';
-
-  String get subDestinationNameEn => subDestination['name_en'] as String? ?? '';
-
-  // لتحويل البيانات لاستخدامها في صفحة الفيديو
+  String get destinationNameAr => destination?['name_ar']?.toString() ?? '';
+  String get destinationNameEn => destination?['name_en']?.toString() ?? '';
+  String get subDestinationNameAr =>
+      subDestination?['name_ar']?.toString() ?? '';
+  String get subDestinationNameEn =>
+      subDestination?['name_en']?.toString() ?? '';
 
   Map<String, dynamic> toVideoPlayerJson() {
     return {
       'id': id,
-
-      'destination': destination,
-
-      'sub_destination': subDestination,
-
+      'destination': destination ?? {},
+      'sub_destination': subDestination ?? {},
       'destination_name_ar': destinationNameAr,
-
       'destination_name_en': destinationNameEn,
-
       'sub_destination_name_ar': subDestinationNameAr,
-
       'sub_destination_name_en': subDestinationNameEn,
-
       'price': price,
-
       'price_per_person': pricePerPerson,
-
       'video_url': videoUrl,
-
       'from_date': fromDate,
-
       'to_date': toDate,
     };
   }
