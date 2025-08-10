@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepository}) : super(AuthInitial()) {
     on<RegisterRequested>(_onRegisterRequested);
     on<LoginRequested>(_onLoginRequested);
+    on<FetchAcvtivites>(_onFetchActivities);
   }
 
   Future<void> _onRegisterRequested(
@@ -53,6 +54,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           user: response['user'],
         ),
       );
+    } catch (e) {
+      emit(AuthFailure(error: e.toString()));
+    }
+  }
+
+  Future<void> _onFetchActivities(
+    FetchAcvtivites event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final Activities = await authRepository.getActivities();
+      emit(GetAllActivitiesSuccess(activities: Activities));
     } catch (e) {
       emit(AuthFailure(error: e.toString()));
     }

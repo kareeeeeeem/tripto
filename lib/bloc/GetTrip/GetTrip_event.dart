@@ -56,3 +56,10 @@ class DateSelectionFailure extends DateSelectionState {
 
   DateSelectionFailure(this.error);
 }
+
+class FetchActivities extends GetTripEvent {
+  const FetchActivities();
+
+  @override
+  List<Object> get props => [];
+}

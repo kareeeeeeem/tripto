@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/models/activityPageModel.dart';
+import '../../../l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/bloc/ِAuth/AuthState.dart';
+import 'package:tripto/bloc/ِAuth/AuthEvent.dart';
+import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import '../../../l10n/app_localizations.dart';
 
 class ActivityCard extends StatelessWidget {
-  final Activitymodel activity;
+  final GetActivityModel activity;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -12,8 +19,8 @@ class ActivityCard extends StatelessWidget {
     required this.activity,
     required this.isSelected,
     required this.onTap,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class ActivityCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            activity.title,
+                            activity.activitynameen ?? '',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -70,11 +77,11 @@ class ActivityCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [Text(' ⭐ ${activity.rate} ')],
-                    ),
+                    // Column(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    //   children: [Text(' ⭐ ${activity.rate ?? 0} ')],
+                    // ),
                   ],
                 ),
               ),
@@ -87,7 +94,7 @@ class ActivityCard extends StatelessWidget {
 }
 
 class ActivitiesListDialog extends StatefulWidget {
-  const ActivitiesListDialog({super.key});
+  const ActivitiesListDialog({Key? key}) : super(key: key);
 
   @override
   State<ActivitiesListDialog> createState() => _ActivitiesListDialogState();
@@ -95,6 +102,13 @@ class ActivitiesListDialog extends StatefulWidget {
 
 class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
   int? selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    // اطلب الداتا لما يفتح الدايالوج
+    context.read<AuthBloc>().add(FetchAcvtivites());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,26 +121,45 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 AppLocalizations.of(context)!.activities,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
+            // هنا نعرض الـ list عبر BlocBuilder
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(6),
-                itemCount: exmactivities.length,
-                itemBuilder: (context, index) {
-                  return ActivityCard(
-                    activity: exmactivities[index],
-                    isSelected: selectedIndex == index,
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                  );
+              child: BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is GetAllActivitiesSuccess) {
+                    final activities = state.activities;
+                    if (activities.isEmpty) {
+                      return Center(child: Text("empty"));
+                    }
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(6),
+                      itemCount: activities.length,
+                      itemBuilder: (context, index) {
+                        return ActivityCard(
+                          activity: activities[index],
+                          isSelected: selectedIndex == index,
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                          },
+                        );
+                      },
+                    );
+                  } else if (state is AuthFailure) {
+                    return Center(child: Text(state.error));
+                  }
+                  return const SizedBox();
                 },
               ),
             ),
@@ -139,17 +172,15 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
               ),
               child: SizedBox(
                 width: double.infinity,
-                height:
-                    MediaQuery.of(context).size.height *
-                    0.055, // تقريبًا 45 من ارتفاع شاشة 800
-
+                height: MediaQuery.of(context).size.height * 0.055,
                 child: CustomButton(
                   text: AppLocalizations.of(context)!.finish,
                   onPressed: () {
-                    if (selectedIndex != null) {
-                      final selectedActivity = exmactivities[selectedIndex!];
-
-                      /// ✅ أقفل الـ Dialog وارجع النشاط المحدد (اختياريًا)
+                    final currentState = context.read<AuthBloc>().state;
+                    if (selectedIndex != null &&
+                        currentState is GetAllActivitiesSuccess) {
+                      final selectedActivity =
+                          currentState.activities[selectedIndex!];
                       Navigator.pop(context, selectedActivity);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -163,7 +194,6 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                       );
                     }
                   },
-
                   width: screenWidth * 0.80,
                   height: 40,
                 ),

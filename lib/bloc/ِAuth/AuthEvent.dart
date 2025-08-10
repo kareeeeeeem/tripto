@@ -35,3 +35,11 @@ class LoginRequested extends AuthEvent {
   @override
   List<Object?> get props => [phoneNumber, password];
 }
+
+// get activities
+class FetchAcvtivites extends AuthEvent {
+  const FetchAcvtivites();
+
+  @override
+  List<Object?> get props => [];
+}

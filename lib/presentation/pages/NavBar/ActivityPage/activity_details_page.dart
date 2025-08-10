@@ -7,7 +7,7 @@ import '../../../../core/routes/app_routes.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ActivityDetailsPage extends StatefulWidget {
-  final Activitymodel activity;
+  final GetActivityModel activity;
 
   const ActivityDetailsPage({super.key, required this.activity});
 
@@ -26,7 +26,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          widget.activity.title,
+          widget.activity.activitynameen,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -59,12 +59,23 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Center(
-                      child: Image.asset(
-                        widget.activity.image,
-                        height: MediaQuery.of(context).size.height * 0.2342,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        fit: BoxFit.cover,
-                      ),
+                      child:
+                          widget.activity.images.isNotEmpty &&
+                                  widget.activity.images[0] != null
+                              ? Image.network(
+                                widget.activity.images[0],
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2342,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                fit: BoxFit.cover,
+                              )
+                              : Image.asset(
+                                "assets/images/Logo.png",
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2342,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                fit: BoxFit.cover,
+                              ),
                     ),
                   ),
                 ),
@@ -91,7 +102,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                     Text(
-                      widget.activity.title,
+                      widget.activity.activitydescriptionen,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -99,13 +110,13 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       ),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                    Text(
-                      '⭐ ${widget.activity.rate}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // Text(
+                    //   '⭐ ${widget.activity.rate}',
+                    //   style: const TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),

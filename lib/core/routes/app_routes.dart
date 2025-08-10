@@ -46,7 +46,7 @@ class AppRoutes {
     // favoritePage: (context) => const FavoritePage(),
     activityDetailsPageRoute: (context) {
       final activity =
-          ModalRoute.of(context)!.settings.arguments as Activitymodel;
+          ModalRoute.of(context)!.settings.arguments as GetActivityModel;
       return ActivityDetailsPage(activity: activity);
     },
     categoryCard: (context) => const CategoryCard(),
