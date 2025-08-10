@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tripto/bloc/GetTrip/DateSelection_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_model.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/core/models/CarModel.dart';
+import 'package:tripto/data/repositories/TripsRepository.dart';
 import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/CategoryCard.dart';
@@ -60,6 +60,7 @@ class _RightButtonsState extends State<RightButtons> {
   int selectedIndex = -1;
   late FocusScopeNode _focusScopeNode;
   DateTime? _selectedFilterDate;
+  Carmodel? selectedCar;
 
   @override
   void initState() {
@@ -342,19 +343,34 @@ class _RightButtonsState extends State<RightButtons> {
               nextSteps =
                   nextButton.onPressed != null ? [nextButton.onPressed!] : [];
             }
+            final int category =
+                int.tryParse(trip.category?.toString() ?? '') ?? 0;
 
             // افتح صفحة اختيار السيارة
             final Carmodel? selectedCar = await showDialog(
               context: context,
               builder:
-                  (context) => CarSelectionPage(
-                    nextSteps: nextSteps,
-                    hasActivity: trip.hasActivity,
+                  (context) => BlocProvider(
+                    create:
+                        (context) =>
+                            CarBloc(carRepository: CarRepository())..add(
+                              LoadCars(
+                                subDestinationId:
+                                    trip.subDestinationId!, // تأكيد إنه مش null
+
+                                category: trip.category,
+                              ),
+                            ),
+
+                    child: CarSelectionPage(
+                      nextSteps: nextSteps,
+                      hasActivity: trip.hasActivity,
+                    ),
                   ),
             );
 
             if (selectedCar != null) {
-              debugPrint('Selected Car: ${selectedCar.title}');
+              debugPrint('Selected Car: ${selectedCar.carNameEn}');
             }
           },
         ),

@@ -3,8 +3,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/GetTrip/DateSelection_bloc.dart';
-
 import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/data/repositories/AuthRepository.dart';
@@ -52,6 +50,9 @@ class _TripToAppState extends State<TripToApp> {
       providers: [
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
+        RepositoryProvider<CarRepository>(
+          create: (_) => CarRepository(),
+        ), // <-- هنا
         //  BlocProvider(create: (context) => DateSelectionBloc()),
       ],
       child: MultiBlocProvider(

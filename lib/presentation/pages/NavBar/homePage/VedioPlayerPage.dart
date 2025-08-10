@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 import 'package:tripto/data/repositories/TripsRepository.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/widget/CountryWithCity.dart';
@@ -47,6 +50,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     _checkInternetConnection();
     _fetchTrips();
+
+    _scrollController.addListener(() {
+      final newIndex = _scrollController.page?.round() ?? 0;
+      final bloc = context.read<GetTripBloc>();
+
+      if (bloc.currentIndex != newIndex && newIndex < _trips.length) {
+        bloc.add(ChangeCurrentTripEvent(newIndex));
+      }
+    });
   }
 
   Future<void> _checkInternetConnection() async {
@@ -108,13 +120,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   Future<void> _initializeVideo(int index) async {
-    if (index < 0 || index >= _trips.length) return;
+    context.read<GetTripBloc>().add(ChangeCurrentTripEvent(index));
 
     _disposeCurrentVideo();
     setState(() {
-      _currentIndex = index;
       _isVideoInitializing = true;
       _hasError = false;
+      _currentIndex = index;
     });
 
     try {
@@ -156,11 +168,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     style: const TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 16),
-                  // ElevatedButton(
-                  //   onPressed: () => _openInBrowser(_trips[index]['video_url']),
-                  //   child: const Text('Open in Browser'),
-                  // ),
                 ],
               ),
             );
@@ -210,25 +217,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return url.contains('drive.google.com');
   }
 
-  Future<String> _getDirectDriveLink(String driveUrl) async {
-    // طريقة 1: تحويل مباشر (للفيديوهات الصغيرة)
-    try {
-      final regex = RegExp(r'file/d/([a-zA-Z0-9_-]+)');
-      final match = regex.firstMatch(driveUrl);
+  String? _extractDriveId(String url) {
+    final regExp1 = RegExp(r'file/d/([a-zA-Z0-9_-]+)');
+    final regExp2 = RegExp(r'id=([a-zA-Z0-9_-]+)');
 
-      if (match != null && match.groupCount >= 1) {
-        final videoId = match.group(1);
-        return 'https://drive.google.com/uc?export=download&id=$videoId';
-      }
-    } catch (e) {
-      debugPrint('Error converting drive link: $e');
+    if (regExp1.hasMatch(url)) {
+      return regExp1.firstMatch(url)?.group(1);
+    } else if (regExp2.hasMatch(url)) {
+      return regExp2.firstMatch(url)?.group(1);
     }
+    return null;
+  }
 
-    // طريقة 2: استخدام Google Drive API (إذا كانت الفيديوهات كبيرة)
-    // تحتاج إلى تفعيل Drive API والحصول على API Key
-    // return 'https://www.googleapis.com/drive/v3/files/$videoId?alt=media&key=YOUR_API_KEY';
-
-    // إذا فشل التحويل نعيد الرابط الأصلي
+  Future<String> _getDirectDriveLink(String driveUrl) async {
+    final videoId = _extractDriveId(driveUrl);
+    if (videoId != null) {
+      return 'https://drive.google.com/uc?export=download&id=$videoId';
+    }
     return driveUrl;
   }
 

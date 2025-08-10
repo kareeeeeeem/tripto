@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/models/CarModel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
 import 'package:tripto/presentation/pages/widget/CarDetials.dart';
 import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
 
-import '../../../l10n/app_localizations.dart'; // مهم فيه ActivityCard و openActivitiesCard
-
 class CarSelectionPage extends StatefulWidget {
   final List<VoidCallback> nextSteps;
-  final bool hasActivity; // أضف هذه الخاصية
+  final bool hasActivity;
 
   const CarSelectionPage({
-    super.key,
+    Key? key,
     this.nextSteps = const [],
-    required this.hasActivity, // اجعلها مطلوبة
-  });
+    required this.hasActivity,
+  }) : super(key: key);
 
   @override
   State<CarSelectionPage> createState() => _CarSelectionPageState();
@@ -25,11 +25,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
   @override
   Widget build(BuildContext context) {
     const double itemHeight = 85;
-    final int maxVisibleItems = 4;
-    final double maxHeight =
-        (carsList.length > maxVisibleItems)
-            ? itemHeight * maxVisibleItems
-            : itemHeight * carsList.length;
+    const int maxVisibleItems = 4;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -41,79 +37,104 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
           borderRadius: BorderRadius.circular(16),
         ),
         width: MediaQuery.of(context).size.width * 0.9,
-        constraints: BoxConstraints(
-          maxHeight: maxHeight + 80,
-          minHeight: itemHeight * 2,
-        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                shrinkWrap: true,
-                itemCount: carsList.length,
-                itemBuilder: (context, index) {
-                  final car = carsList[index];
-                  final isSelected = selectedIndex == index;
+              child: BlocBuilder<CarBloc, CarState>(
+                builder: (context, state) {
+                  if (state is CarLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is CarLoaded) {
+                    final cars = state.cars;
+                    final double maxHeight =
+                        (cars.length > maxVisibleItems)
+                            ? itemHeight * maxVisibleItems
+                            : itemHeight * cars.length;
 
-                  return CarCard(
-                    car: car,
-                    isSelected: isSelected,
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                  );
+                    return SizedBox(
+                      height: maxHeight,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shrinkWrap: true,
+                        itemCount: cars.length,
+                        itemBuilder: (context, index) {
+                          final car = cars[index];
+                          final isSelected = selectedIndex == index;
+
+                          return CarCard(
+                            car: car,
+                            isSelected: isSelected,
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  } else if (state is CarError) {
+                    return Center(child: Text('Error: ${state.message}'));
+                  } else {
+                    return const SizedBox();
+                  }
                 },
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed:
-                    selectedIndex != null
-                        ? () async {
-                          Navigator.of(context).pop(carsList[selectedIndex!]);
+              child: BlocBuilder<CarBloc, CarState>(
+                builder: (context, state) {
+                  final cars = (state is CarLoaded) ? state.cars : [];
 
-                          // افتح صفحة الأنشطة فقط إذا كانت متوفرة
-                          if (widget.hasActivity) {
-                            await showDialog(
-                              context: context,
-                              builder:
-                                  (context) => const ActivitiesListDialog(),
-                            );
-                          }
+                  return ElevatedButton(
+                    onPressed:
+                        (selectedIndex != null && cars.isNotEmpty)
+                            ? () async {
+                              Navigator.of(context).pop(cars[selectedIndex!]);
 
-                          // تشغيل nextSteps سواء كانت هناك أنشطة أم لا
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            if (widget.nextSteps.isNotEmpty) {
-                              widget.nextSteps.first();
+                              if (widget.hasActivity) {
+                                await showDialog(
+                                  context: context,
+                                  builder:
+                                      (context) => const ActivitiesListDialog(),
+                                );
+                              }
+
+                              Future.delayed(
+                                const Duration(milliseconds: 100),
+                                () {
+                                  if (widget.nextSteps.isNotEmpty) {
+                                    widget.nextSteps.first();
+                                  }
+                                },
+                              );
                             }
-                          });
-                        }
-                        : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF002E70),
-                  foregroundColor: Colors.white,
-                  minimumSize: Size(
-                    MediaQuery.of(context).size.width * 0.7,
-                    45,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+                            : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF002E70),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(
+                        MediaQuery.of(context).size.width * 0.7,
+                        45,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: const Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
