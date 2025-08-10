@@ -1,90 +1,53 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/foundation.dart';
-
-class ActivityCardmodel {
-  final String title;
-  final String image;
+class Activitymodel {
+  final int id;
+  final String activityNameAr;
+  final String activityNameEn;
+  final String activityDuration;
+  final int category;
   final double price;
-  final int number;
-  final int duration;
-  final double rate;
+  final double pricePerPerson;
+  final bool hasTransportation;
+  final int subDestinationId;
 
-  ActivityCardmodel({
-    required this.title,
-    required this.image,
+  Activitymodel({
+    required this.id,
+    required this.activityNameAr,
+    required this.activityNameEn,
+    required this.activityDuration,
+    required this.category,
     required this.price,
-    required this.number,
-    required this.duration,
-    required this.rate,
+    required this.pricePerPerson,
+    required this.hasTransportation,
+    required this.subDestinationId,
   });
 
-  factory ActivityCardmodel.fromJson(Map<String, dynamic> json) {
-    return ActivityCardmodel(
-      title: json['title'] ?? '',
-      image: json['image'] ?? '',
-      price: (json['price'] as num).toDouble(),
-      number: json['number'] ?? 0,
-      duration: json['duration'] ?? 0,
-      rate: (json['rate'] as num).toDouble(),
+  factory Activitymodel.fromJson(Map<String, dynamic> json) {
+    return Activitymodel(
+      id: json['id'] ?? 0,
+      activityNameAr: json['activity_name_ar'] ?? '',
+      activityNameEn: json['activity_name_en'] ?? '',
+      activityDuration: json['activity_duration'] ?? '',
+      category: json['category'] ?? 0,
+      price: (json['price'] ?? 0).toDouble(),
+      pricePerPerson: (json['price_per_person'] ?? 0).toDouble(),
+      hasTransportation:
+          (json['has_transportation'] ?? false) == true ||
+          json['has_transportation'] == 1,
+      subDestinationId: json['sub_destination_id'] ?? 0,
     );
   }
-}
 
-List<ActivityCardmodel> exmactivities = [
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-  ActivityCardmodel(
-    title: "Egyptian Museum",
-    image: "assets/images/museum.png",
-    price: 55,
-    number: 1,
-    duration: 50,
-    rate: 1,
-  ),
-];
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'activity_name_ar': activityNameAr,
+      'activity_name_en': activityNameEn,
+      'activity_duration': activityDuration,
+      'category': category,
+      'price': price,
+      'price_per_person': pricePerPerson,
+      'has_transportation': hasTransportation ? 1 : 0,
+      'sub_destination_id': subDestinationId,
+    };
+  }
+}

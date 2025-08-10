@@ -40,6 +40,13 @@ class FilterTripsByDateRangeEvent extends GetTripEvent {
   List<Object> get props => [startDate, endDate];
 }
 
+class ChangeCurrentTripEvent extends GetTripEvent {
+  final int newIndex;
+  ChangeCurrentTripEvent(this.newIndex);
+  @override
+  List<Object> get props => [newIndex];
+}
+
 abstract class DateSelectionState {}
 
 class DateSelectionInitial extends DateSelectionState {}
@@ -55,4 +62,14 @@ class DateSelectionFailure extends DateSelectionState {
   final String error;
 
   DateSelectionFailure(this.error);
+}
+
+// bloc/car_event.dart
+abstract class CarEvent {}
+
+class LoadCars extends CarEvent {
+  final int category;
+  final int subDestinationId;
+
+  LoadCars({required this.subDestinationId, required this.category});
 }

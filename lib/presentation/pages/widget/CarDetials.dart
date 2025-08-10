@@ -3,13 +3,6 @@ import 'package:tripto/core/models/CarModel.dart';
 
 import '../../../l10n/app_localizations.dart';
 
-const Map<int, String> colorNames = {
-  0xFF2196F3: 'Blue',
-  0xFFD32F2F: 'Red',
-  0xFF424242: 'Black',
-  0xFF9E9E9E: 'Silver',
-};
-
 class CarCard extends StatelessWidget {
   final Carmodel car;
   final bool isSelected;
@@ -24,9 +17,15 @@ class CarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final carName = locale.languageCode == 'en' ? car.carNameEn : car.carNameAr;
+
     final textColor = isSelected ? Colors.white : Colors.black;
     final subtitleColor = isSelected ? Colors.white70 : Colors.grey[600];
-    final displayColor = colorNames[car.colorValue] ?? 'N/A';
+    final displayColor = car.color;
+
+    // Format price with 2 decimals and currency symbol (تقدر تعدل العملة لو حبيت)
+    final priceText = '${car.price.toStringAsFixed(2)}';
 
     return InkWell(
       onTap: onTap,
@@ -60,7 +59,7 @@ class CarCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    car.title,
+                    carName,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -68,8 +67,12 @@ class CarCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.year +
-                        ': ${car.year ?? "N/A"}',
+                    '${AppLocalizations.of(context)!.year}: ${car.year ?? "N/A"}',
+                    style: TextStyle(fontSize: 13, color: subtitleColor),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${AppLocalizations.of(context)!.price}: $priceText',
                     style: TextStyle(fontSize: 13, color: subtitleColor),
                   ),
                 ],
@@ -85,7 +88,7 @@ class CarCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${car.person}',
+                      '${car.numberOfSeats}',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -93,6 +96,16 @@ class CarCard extends StatelessWidget {
                       ),
                     ),
                     Icon(Icons.person, color: textColor, size: 16),
+                    SizedBox(width: 8),
+                    if (car.withGuide)
+                      Tooltip(
+                        message: 'مرشد سياحي متوفر',
+                        child: Icon(
+                          Icons.person_pin,
+                          color: Colors.greenAccent,
+                          size: 30,
+                        ),
+                      ),
                   ],
                 ),
               ],
