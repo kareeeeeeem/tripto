@@ -68,6 +68,7 @@ class AuthRepository {
 
   Future<List<GetActivityModel>> getActivities() async {
     final token = await storage.read(key: 'token');
+
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl}activities'),
       headers: {'Authorization': 'bearer $token', 'Accept': 'application/json'},

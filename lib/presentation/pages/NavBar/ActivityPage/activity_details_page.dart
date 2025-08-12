@@ -63,16 +63,25 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                           widget.activity.images.isNotEmpty &&
                                   widget.activity.images[0] != null
                               ? Image.network(
-                                widget.activity.images[0],
+                                widget.activity.images[0].replaceFirst(
+                                  "/storage/",
+                                  "/storage/app/public/",
+                                ),
                                 height:
-                                    MediaQuery.of(context).size.height * 0.2342,
+                                    MediaQuery.of(context).size.height * 0.242,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    "assets/images/Logo.png",
+                                    fit: BoxFit.cover,
+                                  );
+                                },
                               )
                               : Image.asset(
                                 "assets/images/Logo.png",
                                 height:
-                                    MediaQuery.of(context).size.height * 0.2342,
+                                    MediaQuery.of(context).size.height * 0.242,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 fit: BoxFit.cover,
                               ),
@@ -100,9 +109,11 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                    // SizedBox(width: MediaQuery.of(context).size.width * 0.002),
                     Text(
-                      widget.activity.activitydescriptionen,
+                      Localizations.localeOf(context).languageCode == 'ar'
+                          ? widget.activity.activitynamear
+                          : widget.activity.activitynameen,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -120,13 +131,17 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: ExpandedText(
                       text:
-                          "This is the description of the company.This is the description of the companyThis is the description of the company",
+                          Localizations.localeOf(context).languageCode == 'ar'
+                              ? widget.activity.activitydescriptionar
+                              : widget.activity.activitydescriptionen,
+
+                      // "This is the description of the company.This is the description of the companyThis is the description of the company",
                       maxLines: 2,
                     ),
                   ),
@@ -221,11 +236,21 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                       Text(
-                        AppLocalizations.of(context)!.gold,
+                        widget.activity.category == CategoryType.Platinum
+                            ? AppLocalizations.of(context)!.platinum
+                            : widget.activity.category == CategoryType.Diamond
+                            ? AppLocalizations.of(context)!.diamond
+                            : AppLocalizations.of(context)!.gold,
                         style: TextStyle(
-                          color: Color(0xFFF1B31C),
+                          color:
+                              widget.activity.category == CategoryType.Platinum
+                                  ? Color.fromARGB(255, 144, 143, 142)
+                                  : widget.activity.category ==
+                                      CategoryType.Diamond
+                                  ? Color.fromARGB(255, 132, 214, 241)
+                                  : Color(0xFFF1B31C),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -248,7 +273,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                       Text(
-                        "${widget.activity.price} \$",
+                        "${widget.activity.price * _numberOfPeople} \$",
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,

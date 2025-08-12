@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import '../../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -53,10 +54,28 @@ class ActivityCard extends StatelessWidget {
                       child: Container(
                         height: double.infinity,
                         width: 100,
-                        child: Image.asset(
-                          "assets/images/museum.png",
-                          fit: BoxFit.cover,
-                        ),
+                        child:
+                            (activity.images.isNotEmpty &&
+                                    activity.images[0] != null &&
+                                    activity.images[0].isNotEmpty)
+                                ? Image.network(
+                                  activity.images[0].replaceFirst(
+                                    "/storage/",
+                                    "/storage/app/public/",
+                                  ),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    // لو حصل خطأ في تحميل الصورة (مثلاً 404 أو 403)
+                                    return Image.asset(
+                                      "assets/images/Logo.png",
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                )
+                                : Image.asset(
+                                  "assets/images/Logo.png",
+                                  fit: BoxFit.cover,
+                                ),
                       ),
                     ),
                     const SizedBox(width: 25),
@@ -65,13 +84,28 @@ class ActivityCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            activity.activitynameen ?? '',
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? activity.activitynamear
+                                : activity.activitynameen,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.010,
+                          ),
+                          ExpandedText(
+                            text:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? activity.activitydescriptionar
+                                    : activity.activitydescriptionen,
+
+                            // "This is the description of the company.This is the description of the companyThis is the description of the company",
+                            maxLines: 2,
                           ),
                           const SizedBox(height: 6),
                         ],

@@ -1,4 +1,4 @@
-enum CategoryType { Platinum, Diamond, Gold }
+enum CategoryType { Gold, Platinum, Diamond }
 
 int _mapCategoryToInt(CategoryType category) {
   switch (category) {

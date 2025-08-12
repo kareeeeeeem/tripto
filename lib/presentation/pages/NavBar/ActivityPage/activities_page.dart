@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
+import 'package:tripto/core/constants/videoplayer_widget.dart';
 import 'package:tripto/core/models/ActivityCardModel.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
@@ -71,6 +72,55 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
+  Widget buildMediaWidget(String mediaUrl) {
+    if (mediaUrl.isEmpty) {
+      return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+    }
+
+    // إذا كان الرابط يحتوي على كلمة "video" أو "youtube"، اعرضه كفيديو
+    if (mediaUrl.toLowerCase().contains('video') ||
+        mediaUrl.toLowerCase().contains('youtube')) {
+      return SizedBox(
+        height: 100,
+        width: 100,
+        child: VideoplayerWidget(Url: mediaUrl),
+      );
+    }
+
+    // وإلا اعرضه كصورة
+    return Image.network(
+      mediaUrl,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+      },
+    );
+  }
+  // Widget buildMediaWidget(String mediaUrl) {
+  //   if (mediaUrl.isEmpty) {
+  //     return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+  //   }
+
+  //   final extension = mediaUrl.split('.').last.toLowerCase();
+  //   final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+
+  //   if (videoExtensions.contains(extension)) {
+  //     return SizedBox(
+  //       height: 100, // الحجم المناسب حسب تصميم الكارد
+  //       width: 100,
+  //       child: VideoplayerWidget(Url: mediaUrl),
+  //     );
+  //   } else {
+  //     return Image.network(
+  //       mediaUrl.replaceFirst("/storage/", "/storage/app/public/"),
+  //       fit: BoxFit.cover,
+  //       errorBuilder: (context, error, stackTrace) {
+  //         return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+  //       },
+  //     );
+  //   }
+  // }
+
   // دالة مساعدة لإنشاء بطاقة النشاط الفردي
   Widget _buildActivityCard(BuildContext context, GetActivityModel activity) {
     return Padding(
@@ -97,27 +147,59 @@ class _ActivityPageState extends State<ActivityPage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // الصورة
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
                       height: double.infinity,
                       width: 100,
-                      child:
-                          activity.images.isNotEmpty &&
-                                  activity.images[0] != null
-                              ? Image.network(
-                                activity.images[0],
-                                fit: BoxFit.cover,
-                              )
-                              : Image.asset(
-                                "assets/images/Logo.png",
-                                fit: BoxFit.cover,
-                              ),
+                      child: buildMediaWidget(
+                        activity.videoUrl, // تحط لينك فيديو من عندك
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 25), // زيادة المسافة لتناسب المحتوى
-                  // تفاصيل النشاط (العنوان والسعر)
+
+                  // الصورة
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(12),
+                  //   child: Container(
+                  //     height: double.infinity,
+                  //     width: 100,
+                  //     child:
+                  //         (activity.images.isNotEmpty &&
+                  //                 activity.images[0].isNotEmpty)
+                  //             ? buildMediaWidget(activity.images[0])
+                  //             : Image.asset(
+                  //               "assets/images/Logo.png",
+                  //               fit: BoxFit.cover,
+                  //             ),
+                  //   ),
+                  // ),
+
+                  //     child:
+
+                  //         (activity.images.isNotEmpty &&
+                  //                 activity.images[0] != null &&
+                  //                 activity.images[0].isNotEmpty)
+                  //             ? Image.network(
+                  //                       activity.images[0].replaceFirst("/storage/", "/storage/app/public/"),
+
+                  //               // activity.images[0],
+                  //               fit: BoxFit.cover,
+                  //               errorBuilder: (context, error, stackTrace) {
+                  //                 // لو حصل خطأ في تحميل الصورة (مثلاً 404 أو 403)
+                  //                 return Image.asset(
+                  //                   "assets/images/Logo.png",
+                  //                   fit: BoxFit.cover,
+                  //                 );
+                  //               },
+                  //             )
+                  //             : Image.asset(
+                  //               "assets/images/Logo.png",
+                  //               fit: BoxFit.cover,
+                  //             ),
+                  //   ),
+                  // ),
+                  const SizedBox(width: 25),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,10 +253,9 @@ class _ActivityPageState extends State<ActivityPage> {
                     ),
                   ),
 
-                  // التقييم، المدة، والأيقونة، وزر الحجز
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end, // محاذاة لليمين
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -205,10 +286,13 @@ class _ActivityPageState extends State<ActivityPage> {
                                     ],
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.001,
+                            height: MediaQuery.of(context).size.height * 0.006,
                           ),
-                          const Icon(
-                            Icons.directions_car_filled_sharp,
+                          Icon(
+                            activity.transportation == true
+                                ? Icons.directions_car_filled_sharp
+                                : Icons.directions_walk_sharp,
+                            color: Colors.grey[800],
                             size: 20,
                           ),
                         ],
