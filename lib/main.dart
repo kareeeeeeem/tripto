@@ -50,10 +50,7 @@ class _TripToAppState extends State<TripToApp> {
       providers: [
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
-        RepositoryProvider<CarRepository>(
-          create: (_) => CarRepository(),
-        ), // <-- هنا
-        //  BlocProvider(create: (context) => DateSelectionBloc()),
+        RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -71,6 +68,7 @@ class _TripToAppState extends State<TripToApp> {
                     GetTripBloc(RepositoryProvider.of<TripsRepository>(context))
                       ..add(FetchTrips()),
           ),
+          BlocProvider<TripBloc>(create: (context) => TripBloc()),
         ],
         child: MaterialApp(
           locale: _locale,

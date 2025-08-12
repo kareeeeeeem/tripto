@@ -146,3 +146,32 @@ class CarBloc extends Bloc<CarEvent, CarState> {
     });
   }
 }
+
+class TripBloc extends Bloc<TripEvent, TripState> {
+  TripBloc() : super(TripState()) {
+    on<UpdatePersonCount>((event, emit) {
+      final updatedPersonsCount = Map<String, int>.from(
+        state.personsCountPerTrip,
+      );
+      updatedPersonsCount[event.tripId] = event.newCount;
+
+      emit(state.copyWith(personsCountPerTrip: updatedPersonsCount));
+    });
+
+    on<UpdateCarPrice>((event, emit) {
+      final updatedCarPrices = Map<String, double>.from(state.carPricePerTrip);
+      updatedCarPrices[event.tripId] = event.newCarPrice;
+
+      emit(state.copyWith(carPricePerTrip: updatedCarPrices));
+    });
+
+    on<UpdateBasePricePerPerson>((event, emit) {
+      final updatedBasePrices = Map<String, double>.from(
+        state.basePricePerTrip,
+      );
+      updatedBasePrices[event.tripId] = event.newBasePrice;
+
+      emit(state.copyWith(basePricePerTrip: updatedBasePrices));
+    });
+  }
+}
