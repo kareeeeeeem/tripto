@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(
         RegisterSuccess(
-          message: response['message'],
+          message: response['message_en'],
           token: response['token'],
           user: response['user'],
         ),

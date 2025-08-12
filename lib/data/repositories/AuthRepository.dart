@@ -31,10 +31,10 @@ class AuthRepository {
     debugPrint('Register response: ${response.body}');
     final data = json.decode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return data;
     } else {
-      throw Exception(data['message'] ?? 'Registration failed');
+      throw Exception(data['message_en'] ?? 'Registration failed');
     }
   }
 
