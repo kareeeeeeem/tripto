@@ -11,54 +11,40 @@ class TripsRepository {
 
   Future<List<GetTripModel>> fetchTrips() async {
     try {
-      // 1. الحصول على التوكن
       final token = await storage.read(key: 'token');
-      debugPrint(
-        'Ttrip repository token: $token',
-      ); // طباعة التوكن للتأكد من صحته
+      debugPrint('Trips repository token: $token');
 
-      if (token == null || token.isEmpty) {
-        throw Exception('لم يتم العثور على رمز الدخول (Token)');
-      }
-
-      // 2. إرسال الطلب إلى السيرفر
       final url = Uri.parse('${ApiConstants.baseUrl}trips');
-      debugPrint('Request URL: $url'); // طباعة URL للتحقق
+      debugPrint('Request URL: $url');
+
+      // لو فيه توكن ضيفه، لو مفيش سيب الطلب عادي
+      final headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+      };
 
       final response = await http
-          .get(
-            url,
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-          )
+          .get(url, headers: headers)
           .timeout(const Duration(seconds: 15));
 
-      // 3. تسجيل تفاصيل الرد للسيرفر
       debugPrint('=== معلومات الرد من السيرفر ===');
       debugPrint('الحالة: ${response.statusCode}');
       debugPrint('الرأسيات: ${response.headers}');
       debugPrint('المحتوى: ${response.body}');
       debugPrint('============================');
 
-      // 4. التحقق من أن الرد ليس صفحة HTML
       if (response.body.trim().startsWith('<!DOCTYPE html>') ||
           response.body.trim().startsWith('<html>')) {
         throw Exception('الخادم أعاد صفحة HTML بدلاً من JSON');
       }
 
-      // 5. معالجة الرد
       if (response.statusCode == 200) {
         final decoded = json.decode(response.body);
 
-        // الحالة الأولى: الرد هو قائمة مباشرة
         if (decoded is List) {
           return decoded.map((json) => GetTripModel.fromJson(json)).toList();
-        }
-        // الحالة الثانية: الرد مغلف داخل كائن يحتوي على data
-        else if (decoded is Map && decoded.containsKey('data')) {
+        } else if (decoded is Map && decoded.containsKey('data')) {
           final data = decoded['data'];
           if (data is List) {
             return data.map((json) => GetTripModel.fromJson(json)).toList();
