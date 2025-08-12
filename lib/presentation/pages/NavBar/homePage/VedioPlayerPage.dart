@@ -135,9 +135,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
       if (_isDriveUrl(videoUrl)) {
         final directLink = await _getDirectDriveLink(videoUrl);
+        print("Google Drive direct link: $directLink");
+
         _videoController = VideoPlayerController.network(directLink);
 
-        // إضافة listener لاكتشاف الأخطاء أثناء التشغيل
         _videoController!.addListener(() {
           if (_videoController!.value.hasError) {
             setState(() {
@@ -147,9 +148,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           }
         });
 
-        await _videoController!.initialize().timeout(
-          const Duration(seconds: 10),
-        );
+        await _videoController!.initialize();
+        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
 
         _chewieController = ChewieController(
           videoPlayerController: _videoController!,
@@ -174,9 +174,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           },
         );
       } else {
-        // التعامل مع روابط الفيديو العادية
         _videoController = VideoPlayerController.network(videoUrl);
         await _videoController!.initialize();
+        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
         _chewieController = ChewieController(
           videoPlayerController: _videoController!,
           autoPlay: true,
@@ -184,12 +184,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           allowFullScreen: true,
         );
       }
-    } on TimeoutException {
-      setState(() {
-        _hasError = true;
-        _errorMessage = 'Video loading timed out';
-      });
-      _startRetryTimer(index);
     } catch (e) {
       debugPrint('Video initialization error: $e');
       setState(() {

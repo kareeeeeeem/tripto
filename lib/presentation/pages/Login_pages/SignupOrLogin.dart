@@ -70,7 +70,6 @@ class Signuporlogin extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
-
                 ),
               ),
             ),
@@ -94,7 +93,8 @@ class Signuporlogin extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: Colors.black, // أو أي لون يناسبك
                   ),
-                ),                Expanded(
+                ),
+                Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.04,

@@ -64,7 +64,7 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
 
   void _updateTotalPrice() {
     _totalPrice =
-        (_numberOfPeople * widget.basePricePerPerson) + widget.carPrice;
+        (_numberOfPeople * widget.basePricePerPerson) + _selectedCarPrice;
   }
 
   @override
