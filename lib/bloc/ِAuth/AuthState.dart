@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
+import 'package:tripto/core/models/activityPageModel.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -39,4 +41,13 @@ class LoginSuccess extends AuthState {
   });
   @override
   List<Object?> get props => [message, token, user];
+}
+
+// Get All Activites
+class GetAllActivitiesSuccess extends AuthState {
+  final List<GetActivityModel> activities;
+  const GetAllActivitiesSuccess({required this.activities});
+
+  @override
+  List<Object?> get props => [activities];
 }

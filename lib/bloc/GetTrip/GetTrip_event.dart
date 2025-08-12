@@ -65,6 +65,13 @@ class DateSelectionFailure extends DateSelectionState {
   DateSelectionFailure(this.error);
 }
 
+// <<<<<<< HEAD
+// class FetchActivities extends GetTripEvent {
+//   const FetchActivities();
+
+//   @override
+//   List<Object> get props => [];
+// =======
 // bloc/car_event.dart
 abstract class CarEvent {}
 
@@ -73,6 +80,7 @@ class LoadCars extends CarEvent {
   final int subDestinationId;
 
   LoadCars({required this.subDestinationId, required this.category});
+  // >>>>>>> 1eae211b14fc89bf7cd14d95a42497fdb24bae4c
 }
 
 abstract class TripEvent {}

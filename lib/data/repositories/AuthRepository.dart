@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as _storage;
+import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/services/api.dart';
 
 class AuthRepository {
@@ -62,5 +64,25 @@ class AuthRepository {
 
   Future<String?> getToken() async {
     return await storage.read(key: 'token');
+  }
+
+  Future<List<GetActivityModel>> getActivities() async {
+    final token = await storage.read(key: 'token');
+
+    final response = await http.get(
+      Uri.parse('${ApiConstants.baseUrl}activities'),
+      headers: {'Authorization': 'bearer $token', 'Accept': 'application/json'},
+    );
+    print("Response status: ${response.statusCode}");
+    print("Raw response body: ${response.body}");
+    if (response.statusCode == 200) {
+      final List<dynamic> activitesList = json.decode(response.body);
+
+      return activitesList
+          .map((json) => GetActivityModel.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load activites');
+    }
   }
 }
