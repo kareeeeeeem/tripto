@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
+import 'package:tripto/core/constants/videoplayer_widget.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 
 import '../../../../core/constants/Colors_Fonts_Icons.dart';
@@ -17,6 +18,93 @@ class ActivityDetailsPage extends StatefulWidget {
 
 class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
   int _numberOfPeople = 1;
+
+  Widget buildMediaWidget(String videoUrl, List<String> images) {
+    // 1. التحقق من وجود وعرض الفيديو أولاً
+    if (videoUrl.isNotEmpty) {
+      try {
+        final videoExtension = videoUrl.split('.').last.toLowerCase();
+        final supportedVideoFormats = ['mp4', 'mov', 'avi', 'webm'];
+
+        if (supportedVideoFormats.contains(videoExtension)) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.25,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: VideoplayerWidget(Url: videoUrl),
+            ),
+          );
+        }
+      } catch (e) {
+        print('Error processing video: $e');
+      }
+    }
+
+    // 2. إذا لم يكن هناك فيديو، التحقق من الصور
+    if (images.isNotEmpty) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * 0.25,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.02,
+          ),
+          itemCount: images.length,
+          separatorBuilder:
+              (context, index) =>
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+          itemBuilder: (context, index) {
+            final fixedUrl = images[index].replaceFirst(
+              "/storage/",
+              "/storage/app/public/", // استبدل بالمسار الصحيح
+            );
+
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                margin: EdgeInsets.symmetric(horizontal: 4),
+                child: Image.network(
+                  fixedUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF002E70),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    print('Error loading image: $error');
+                    return Image.asset(
+                      "assets/images/Logo.png",
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                    );
+                    ;
+                  },
+                ),
+              ),
+            );
+          },
+          //   catch (e) {
+          //     print('Error processing image: $e');
+          //   }
+          // }
+        ),
+      );
+    }
+    // 3. إذا لم يكن هناك فيديو ولا صور صالحة، عرض الصورة الافتراضية
+    return Image.asset(
+      "assets/images/Logo.png",
+      fit: BoxFit.cover,
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.height * 0.25,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,37 +143,13 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Center(
-                      child:
-                          widget.activity.images.isNotEmpty &&
-                                  widget.activity.images[0] != null
-                              ? Image.network(
-                                widget.activity.images[0].replaceFirst(
-                                  "/storage/",
-                                  "/storage/app/public/",
-                                ),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.242,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    "assets/images/Logo.png",
-                                    fit: BoxFit.cover,
-                                  );
-                                },
-                              )
-                              : Image.asset(
-                                "assets/images/Logo.png",
-                                height:
-                                    MediaQuery.of(context).size.height * 0.242,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                fit: BoxFit.cover,
-                              ),
-                    ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: buildMediaWidget(
+                    widget.activity.videoUrl,
+                    widget.activity.images,
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),

@@ -50,7 +50,9 @@ class _ActivityPageState extends State<ActivityPage> {
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: Color(0xFF002E70)),
+            );
           } else if (state is GetAllActivitiesSuccess) {
             final activities = state.activities;
             return ListView.builder(
@@ -72,30 +74,48 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
-  Widget buildMediaWidget(String mediaUrl) {
-    if (mediaUrl.isEmpty) {
-      return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+  Widget buildMediaWidget(String videoUrl, List<String> images) {
+    // حالة الفيديو
+    if (videoUrl.isNotEmpty) {
+      final videoExtension = videoUrl.split('.').last.toLowerCase();
+      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+      if (videoExtensions.contains(videoExtension)) {
+        return SizedBox(
+          height:
+              MediaQuery.of(context).size.height * 0.13, // 13% من ارتفاع الشاشة
+          width: MediaQuery.of(context).size.width * 0.25, // 25% من عرض الشاشة
+
+          child: VideoplayerWidget(Url: videoUrl),
+        );
+      }
     }
 
-    // إذا كان الرابط يحتوي على كلمة "video" أو "youtube"، اعرضه كفيديو
-    if (mediaUrl.toLowerCase().contains('video') ||
-        mediaUrl.toLowerCase().contains('youtube')) {
-      return SizedBox(
-        height: 100,
-        width: 100,
-        child: VideoplayerWidget(Url: mediaUrl),
-      );
+    // حالة الصورة (لو الفيديو مش متاح أو مش صحيح)
+    if (images.isNotEmpty) {
+      String firstImageUrl = images[0];
+      if (firstImageUrl.isNotEmpty) {
+        final imageExtension = firstImageUrl.split('.').last.toLowerCase();
+        final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (imageExtensions.contains(imageExtension)) {
+          final fixedUrl = firstImageUrl.replaceFirst(
+            "/storage/",
+            "/storage/app/public/",
+          );
+          return Image.network(
+            fixedUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+            },
+          );
+        }
+      }
     }
 
-    // وإلا اعرضه كصورة
-    return Image.network(
-      mediaUrl,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
-      },
-    );
+    // الحالة الافتراضية لو مفيش فيديو ولا صورة
+    return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
   }
+
   // Widget buildMediaWidget(String mediaUrl) {
   //   if (mediaUrl.isEmpty) {
   //     return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
@@ -139,7 +159,7 @@ class _ActivityPageState extends State<ActivityPage> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: SizedBox(
-            height: 136,
+            height: MediaQuery.of(context).size.height * 0.15,
             width:
                 double.infinity, // استخدام double.infinity ليأخذ العرض المتاح
             child: Padding(
@@ -153,10 +173,40 @@ class _ActivityPageState extends State<ActivityPage> {
                       height: double.infinity,
                       width: 100,
                       child: buildMediaWidget(
-                        activity.videoUrl, // تحط لينك فيديو من عندك
+                        activity.videoUrl ?? '', // الفيديو
+                        activity.images ?? [], // صور النشاط كلها
                       ),
                     ),
                   ),
+
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(12),
+                  //   child: Container(
+                  //     height: double.infinity,
+                  //     width: 100,
+                  //     child: buildMediaWidget(
+                  //       // print('Video URL: ${activity.videoUrl}');
+                  //       // print('Images list: ${activity.images}');
+                  //       (activity.videoUrl.isNotEmpty)
+                  //           ? activity.videoUrl
+                  //           : (activity.images.isNotEmpty &&
+                  //               activity.images[0].isNotEmpty)
+                  //           ? activity.images[0]
+                  //           : '',
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(12),
+                  //   child: Container(
+                  //     height: double.infinity,
+                  //     width: 100,
+                  //     child: buildMediaWidget(
+                  //       activity.videoUrl, // تحط لينك فيديو من عندك
+                  //     ),
+                  //   ),
+                  // ),
 
                   // الصورة
                   // ClipRRect(
@@ -199,7 +249,9 @@ class _ActivityPageState extends State<ActivityPage> {
                   //             ),
                   //   ),
                   // ),
-                  const SizedBox(width: 25),
+                  // const SizedBox(width: 25),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.03),
+
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +270,9 @@ class _ActivityPageState extends State<ActivityPage> {
                               TextOverflow
                                   .ellipsis, // لإضافة ... إذا كان النص طويلاً
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.015,
+                        ),
                         Text.rich(
                           TextSpan(
                             children: [
@@ -286,7 +340,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                     ],
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.006,
+                            height: MediaQuery.of(context).size.height * 0.015,
                           ),
                           Icon(
                             activity.transportation == true

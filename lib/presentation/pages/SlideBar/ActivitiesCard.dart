@@ -91,23 +91,90 @@ class ActivityCard extends StatelessWidget {
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.010,
+                          ),
+
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      AppLocalizations.of(context)!.price +
+                                      ' :',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: ' \$',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "${activity.price}",
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.010,
                           ),
-                          ExpandedText(
-                            text:
-                                Localizations.localeOf(context).languageCode ==
-                                        'ar'
-                                    ? activity.activitydescriptionar
-                                    : activity.activitydescriptionen,
-
-                            // "This is the description of the company.This is the description of the companyThis is the description of the company",
-                            maxLines: 2,
+                          Row(
+                            children: [
+                              ...(Localizations.localeOf(
+                                        context,
+                                      ).languageCode ==
+                                      'ar'
+                                  ? [
+                                    Text(
+                                      " ${AppLocalizations.of(context)!.duration}: ",
+                                    ),
+                                    Text("${activity.activityduration} "),
+                                  ]
+                                  : [
+                                    Text(
+                                      "${AppLocalizations.of(context)!.duration}: ",
+                                    ),
+                                  ]),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.001,
+                              ),
+                              Text("${activity.activityduration} "),
+                            ],
                           ),
-                          const SizedBox(height: 6),
+                          // ExpandedText(
+                          //   text:
+                          //       Localizations.localeOf(context).languageCode ==
+                          //               'ar'
+                          //           ? activity.activitydescriptionar
+                          //           : activity.activitydescriptionen,
+
+                          //   // "This is the description of the company.This is the description of the companyThis is the description of the company",
+                          //   maxLines: 2,
+                          // ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.010,
+                          ),
+                          Icon(
+                            activity.transportation == true
+                                ? Icons.directions_car_filled_sharp
+                                : Icons.directions_walk_sharp,
+                            color: Colors.grey[800],
+                            size: 20,
+                          ),
                         ],
                       ),
                     ),
@@ -169,7 +236,11 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
               child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is AuthLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF002E70),
+                      ),
+                    );
                   } else if (state is GetAllActivitiesSuccess) {
                     final activities = state.activities;
                     if (activities.isEmpty) {

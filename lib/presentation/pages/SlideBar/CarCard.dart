@@ -44,7 +44,16 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
               child: BlocBuilder<CarBloc, CarState>(
                 builder: (context, state) {
                   if (state is CarLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return SizedBox(
+                      height: 80,
+                      child: const Center(
+                        child: SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: CircularProgressIndicator(strokeWidth: 3),
+                        ),
+                      ),
+                    );
                   } else if (state is CarLoaded) {
                     final cars = state.cars;
                     final double maxHeight =

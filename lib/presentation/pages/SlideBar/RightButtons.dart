@@ -347,26 +347,32 @@ class _RightButtonsState extends State<RightButtons> {
                 int.tryParse(trip.category?.toString() ?? '') ?? 0;
 
             // افتح صفحة اختيار السيارة
-            final Carmodel? selectedCar = await showDialog(
+            final selectedCar = await showDialog<Carmodel>(
               context: context,
-              builder:
-                  (context) => BlocProvider(
-                    create:
-                        (context) =>
-                            CarBloc(carRepository: CarRepository())..add(
-                              LoadCars(
-                                subDestinationId:
-                                    trip.subDestinationId!, // تأكيد إنه مش null
-
-                                category: trip.category,
-                              ),
-                            ),
-
-                    child: CarSelectionPage(
-                      nextSteps: nextSteps,
-                      hasActivity: trip.hasActivity,
+              builder: (dialogContext) {
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: BlocProvider.of<TripBloc>(
+                        context,
+                      ), // تمرير نفس الـ TripBloc الموجود
                     ),
+                    BlocProvider(
+                      create:
+                          (_) => CarBloc(carRepository: CarRepository())..add(
+                            LoadCars(
+                              subDestinationId: trip.subDestinationId!,
+                              category: trip.category,
+                            ),
+                          ),
+                    ),
+                  ],
+                  child: CarSelectionPage(
+                    nextSteps: nextSteps,
+                    hasActivity: trip.hasActivity,
                   ),
+                );
+              },
             );
 
             if (selectedCar != null) {

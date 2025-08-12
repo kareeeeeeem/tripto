@@ -135,9 +135,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
       if (_isDriveUrl(videoUrl)) {
         final directLink = await _getDirectDriveLink(videoUrl);
+        print("Google Drive direct link: $directLink");
+
         _videoController = VideoPlayerController.network(directLink);
 
-        // إضافة listener لاكتشاف الأخطاء أثناء التشغيل
         _videoController!.addListener(() {
           if (_videoController!.value.hasError) {
             setState(() {
@@ -147,15 +148,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           }
         });
 
-        await _videoController!.initialize().timeout(
-          const Duration(seconds: 10),
-        );
+        await _videoController!.initialize();
+        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
 
         _chewieController = ChewieController(
           videoPlayerController: _videoController!,
           autoPlay: true,
           looping: true,
-          allowFullScreen: true,
+          allowFullScreen: false,
+          showControls: false, // لمنع ظهور شريط التحكم وأيقونة الصوت
+
           errorBuilder: (context, errorMessage) {
             return Center(
               child: Column(
@@ -174,22 +176,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           },
         );
       } else {
-        // التعامل مع روابط الفيديو العادية
         _videoController = VideoPlayerController.network(videoUrl);
         await _videoController!.initialize();
+        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
         _chewieController = ChewieController(
           videoPlayerController: _videoController!,
           autoPlay: true,
           looping: true,
-          allowFullScreen: true,
+          allowFullScreen: false,
         );
       }
-    } on TimeoutException {
-      setState(() {
-        _hasError = true;
-        _errorMessage = 'Video loading timed out';
-      });
-      _startRetryTimer(index);
     } catch (e) {
       debugPrint('Video initialization error: $e');
       setState(() {
@@ -597,11 +593,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   Widget _buildVideoPlayer() {
-    if (_chewieController != null) {
-      return Chewie(controller: _chewieController!);
-    } else {
-      return Container(color: Colors.black);
+    if (_chewieController == null) {
+      return const Center(child: CircularProgressIndicator());
     }
+
+    final videoSize = _chewieController!.videoPlayerController.value.size;
+
+    return SizedBox.expand(
+      // ياخد كل مساحة الشاشة
+      child: FittedBox(
+        fit: BoxFit.cover, // يخلي الفيديو يغطي الشاشة بالكامل
+        child: SizedBox(
+          width: videoSize.width,
+          height: videoSize.height,
+          child: Chewie(controller: _chewieController!),
+        ),
+      ),
+    );
   }
 
   Widget _buildVideoErrorWidget(String videoUrl) {

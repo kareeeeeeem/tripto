@@ -42,7 +42,9 @@ class _VideoplayerWidgetState extends State<VideoplayerWidget> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error loading video: ${snapshot.error}'));
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(color: Color(0xFF002E70)),
+          );
         }
       },
     );

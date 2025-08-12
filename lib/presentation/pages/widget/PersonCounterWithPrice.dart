@@ -8,13 +8,17 @@ class PersonCounterWithPrice extends StatefulWidget {
   final Color backgroundColor; // لون خلفية العداد (يمكن تحديده عند الاستخدام)
   final int maxPersons; // <-- أضف هذا
 
+  final double carPrice; // سعر السيارة
+
   const PersonCounterWithPrice({
     super.key,
     this.basePricePerPerson = 0.0, // قيمة افتراضية
     this.textColor = Colors.white,
     this.iconColor = Colors.black,
     this.backgroundColor = Colors.white,
-    this.maxPersons = 30, // <-- قيمة افتراضية
+    this.maxPersons = 30,
+
+    this.carPrice = 0, // <-- قيمة افتراضية
   });
 
   @override
@@ -25,11 +29,19 @@ class PersonCounterWithPrice extends StatefulWidget {
 class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   int _numberOfPeople = 1; // العدد الأولي للأشخاص
   double _totalPrice = 0.0; // السعر الإجمالي
+  double _selectedCarPrice = 0.0; // السعر الإضافي للسيارة
 
   @override
   void initState() {
     super.initState();
     _updateTotalPrice(); // حساب السعر الإجمالي الأولي بناءً على العدد الأولي
+  }
+
+  void setSelectedCarPrice(double price) {
+    setState(() {
+      _selectedCarPrice = price;
+      _updateTotalPrice();
+    });
   }
 
   void _incrementPeople() {
@@ -44,7 +56,6 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   void _decrementPeople() {
     setState(() {
       if (_numberOfPeople > 1) {
-        // منع النزول أقل من شخص واحد
         _numberOfPeople--;
         _updateTotalPrice();
       }
@@ -52,7 +63,17 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   }
 
   void _updateTotalPrice() {
-    _totalPrice = _numberOfPeople * widget.basePricePerPerson;
+    _totalPrice =
+        (_numberOfPeople * widget.basePricePerPerson) + _selectedCarPrice;
+  }
+
+  @override
+  void didUpdateWidget(covariant PersonCounterWithPrice oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.carPrice != widget.carPrice ||
+        oldWidget.basePricePerPerson != widget.basePricePerPerson) {
+      _updateTotalPrice();
+    }
   }
 
   @override
@@ -126,7 +147,6 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
           ),
 
           const SizedBox(width: 20), // مسافة ثابتة
-
           // 4. أيقونة الشخص
           Icon(
             Icons.person,

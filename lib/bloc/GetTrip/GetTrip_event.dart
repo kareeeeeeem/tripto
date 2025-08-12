@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tripto/core/models/CarModel.dart';
 
 abstract class GetTripEvent extends Equatable {
   const GetTripEvent();
@@ -80,4 +81,27 @@ class LoadCars extends CarEvent {
 
   LoadCars({required this.subDestinationId, required this.category});
   // >>>>>>> 1eae211b14fc89bf7cd14d95a42497fdb24bae4c
+}
+
+abstract class TripEvent {}
+
+class UpdatePersonCount extends TripEvent {
+  final String tripId;
+  final int newCount;
+
+  UpdatePersonCount(this.tripId, this.newCount);
+}
+
+class UpdateCarPrice extends TripEvent {
+  final String tripId;
+  final double newCarPrice;
+
+  UpdateCarPrice(this.tripId, this.newCarPrice);
+}
+
+class UpdateBasePricePerPerson extends TripEvent {
+  final String tripId;
+  final double newBasePrice;
+
+  UpdateBasePricePerPerson(this.tripId, this.newBasePrice);
 }
