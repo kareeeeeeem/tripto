@@ -29,20 +29,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.password,
         event.confirmPassword,
       );
-      await _storage.write(key: 'jwt_token', value: response['token']);
-      await _storage.write(
-        key: 'user_data',
-        value: jsonEncode(response['user']),
-      );
-      emit(
-        RegisterSuccess(
-          message: response['message_en'],
-          token: response['token'],
-          user: response['user'],
-        ),
-      );
+
+      if (response['error'] == true) {
+        // جهز رسالة مفهومة للمستخدم
+        String errorMessage = response['message'] ?? 'Registration failed';
+        if (response['errors'] != null) {
+          response['errors'].forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              errorMessage += "\n$key: ${value.join(', ')}";
+            }
+          });
+        }
+        emit(AuthFailure(error: errorMessage));
+      } else {
+        await _storage.write(key: 'jwt_token', value: response['token']);
+        await _storage.write(
+          key: 'user_data',
+          value: jsonEncode(response['user']),
+        );
+
+        emit(
+          RegisterSuccess(
+            message: response['message'] ?? 'Registration successful',
+            token: response['token'],
+            user: response['user'],
+          ),
+        );
+      }
     } catch (e) {
-      emit(AuthFailure(error: e.toString()));
+      emit(AuthFailure(error: 'Registration failed: $e'));
     }
   }
 
@@ -57,15 +72,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.password,
       );
 
-      emit(
-        LoginSuccess(
-          message: response['message_en'],
-          token: response['token'],
-          user: response['user'],
-        ),
-      );
+      if (response['error'] == true) {
+        String errorMessage = response['message'];
+        if (response['errors'] != null) {
+          response['errors'].forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              errorMessage += "\n$key: ${value.join(', ')}";
+            }
+          });
+        }
+        emit(AuthFailure(error: errorMessage));
+      } else {
+        emit(
+          LoginSuccess(
+            message: response['message_en'] ?? 'Login successful',
+            token: response['token'],
+            user: response['user'],
+          ),
+        );
+      }
     } catch (e) {
-      emit(AuthFailure(error: e.toString()));
+      emit(AuthFailure(error: 'Login failed: ${e.toString()}'));
     }
   }
 

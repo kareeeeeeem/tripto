@@ -6,6 +6,8 @@ import 'package:tripto/core/constants/videoplayer_widget.dart';
 import 'package:tripto/core/models/ActivityCardModel.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
+import 'package:http/http.dart' as http;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../bloc/ِAuth/AuthState.dart';
 import '../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
@@ -74,74 +76,81 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
-  Widget buildMediaWidget(String videoUrl, List<String> images) {
-    // حالة الفيديو
-    if (videoUrl.isNotEmpty) {
-      final videoExtension = videoUrl.split('.').last.toLowerCase();
-      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
-      if (videoExtensions.contains(videoExtension)) {
-        return SizedBox(
-          height:
-              MediaQuery.of(context).size.height * 0.13, // 13% من ارتفاع الشاشة
-          width: MediaQuery.of(context).size.width * 0.25, // 25% من عرض الشاشة
+  Widget _buildMediaWidget(String videoUrl, List<String> images) {
+    // 1. التحقق من فيديوهات يوتيوب
+    if (videoUrl.isNotEmpty &&
+        (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be'))) {
+      final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * 0.13,
+        width: MediaQuery.of(context).size.width * 0.25,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            YoutubePlayer(
+              controller: YoutubePlayerController(
+                initialVideoId: videoId,
+                flags: const YoutubePlayerFlags(
+                  autoPlay: true,
+                  mute: false,
+                  disableDragSeek: false,
+                  loop: false,
+                  isLive: false,
+                  forceHD: false,
+                  enableCaption: true,
+                ),
+              ),
 
+              // showVideoProgressIndicator: true,
+              // progressIndicatorColor: Colors.white,
+            ),
+          ],
+        ),
+      );
+    }
+
+    // 2. التحقق من الفيديوهات العادية
+    if (videoUrl.isNotEmpty) {
+      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+      final extension = videoUrl.split('.').last.toLowerCase();
+
+      if (videoExtensions.contains(extension)) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.13,
+          width: MediaQuery.of(context).size.width * 0.25,
           child: VideoplayerWidget(Url: videoUrl),
         );
       }
     }
 
-    // حالة الصورة (لو الفيديو مش متاح أو مش صحيح)
-    if (images.isNotEmpty) {
-      String firstImageUrl = images[0];
-      if (firstImageUrl.isNotEmpty) {
-        final imageExtension = firstImageUrl.split('.').last.toLowerCase();
-        final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if (imageExtensions.contains(imageExtension)) {
-          final fixedUrl = firstImageUrl.replaceFirst(
-            "/storage/",
-            "/storage/app/public/",
-          );
-          return Image.network(
-            fixedUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
-            },
-          );
-        }
+    // 3. التحقق من الصور
+    if (images.isNotEmpty && images[0].isNotEmpty) {
+      final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+      final extension = images[0].split('.').last.toLowerCase();
+
+      if (imageExtensions.contains(extension)) {
+        final fixedUrl = images[0].replaceFirst(
+          "/storage/",
+          "/storage/app/public/",
+        );
+        return Image.network(
+          fixedUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+          },
+        );
       }
     }
 
-    // الحالة الافتراضية لو مفيش فيديو ولا صورة
+    // 4. الصورة الافتراضية
     return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+
+    Widget _buildDefaultPlaceholder() {
+      return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+    }
   }
 
-  // Widget buildMediaWidget(String mediaUrl) {
-  //   if (mediaUrl.isEmpty) {
-  //     return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
-  //   }
-
-  //   final extension = mediaUrl.split('.').last.toLowerCase();
-  //   final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
-
-  //   if (videoExtensions.contains(extension)) {
-  //     return SizedBox(
-  //       height: 100, // الحجم المناسب حسب تصميم الكارد
-  //       width: 100,
-  //       child: VideoplayerWidget(Url: mediaUrl),
-  //     );
-  //   } else {
-  //     return Image.network(
-  //       mediaUrl.replaceFirst("/storage/", "/storage/app/public/"),
-  //       fit: BoxFit.cover,
-  //       errorBuilder: (context, error, stackTrace) {
-  //         return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
-  //       },
-  //     );
-  //   }
-  // }
-
-  // دالة مساعدة لإنشاء بطاقة النشاط الفردي
   Widget _buildActivityCard(BuildContext context, GetActivityModel activity) {
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -160,8 +169,7 @@ class _ActivityPageState extends State<ActivityPage> {
           ),
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
-            width:
-                double.infinity, // استخدام double.infinity ليأخذ العرض المتاح
+            width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
@@ -172,9 +180,9 @@ class _ActivityPageState extends State<ActivityPage> {
                     child: Container(
                       height: double.infinity,
                       width: 100,
-                      child: buildMediaWidget(
-                        activity.videoUrl ?? '', // الفيديو
-                        activity.images ?? [], // صور النشاط كلها
+                      child: _buildMediaWidget(
+                        activity.videoUrl ?? '',
+                        activity.images ?? [],
                       ),
                     ),
                   ),

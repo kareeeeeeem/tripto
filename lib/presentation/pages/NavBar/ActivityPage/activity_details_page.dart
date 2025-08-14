@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/constants/videoplayer_widget.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../core/constants/Colors_Fonts_Icons.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -19,29 +20,55 @@ class ActivityDetailsPage extends StatefulWidget {
 class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
   int _numberOfPeople = 1;
 
-  Widget buildMediaWidget(String videoUrl, List<String> images) {
-    // 1. التحقق من وجود وعرض الفيديو أولاً
-    if (videoUrl.isNotEmpty) {
-      try {
-        final videoExtension = videoUrl.split('.').last.toLowerCase();
-        final supportedVideoFormats = ['mp4', 'mov', 'avi', 'webm'];
-
-        if (supportedVideoFormats.contains(videoExtension)) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: VideoplayerWidget(Url: videoUrl),
+  Widget _buildMediaWidget(String videoUrl, List<String> images) {
+    // اول حاجه هيتاكد في لإيديوهات يوتيوب ولا لا
+    if (videoUrl.isNotEmpty &&
+        (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be'))) {
+      final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * 0.25,
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: YoutubePlayer(
+            controller: YoutubePlayerController(
+              initialVideoId: videoId,
+              flags: const YoutubePlayerFlags(
+                autoPlay: false,
+                mute: false,
+                disableDragSeek: false,
+                loop: false,
+                isLive: false,
+                forceHD: false,
+                enableCaption: true,
+              ),
             ),
-          );
-        }
-      } catch (e) {
-        print('Error processing video: $e');
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Color(0xFF002E70),
+          ),
+        ),
+      );
+    }
+
+    // لو مفيش لإيديوهات يويتوب هيتأكد فيه لإيديوهات عاديه فيها الامتدادات دي ولا لا
+    if (videoUrl.isNotEmpty) {
+      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+      final extension = videoUrl.split('.').last.toLowerCase();
+
+      if (videoExtensions.contains(extension)) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.25,
+          width: MediaQuery.of(context).size.width * 0.9,
+
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: VideoplayerWidget(Url: videoUrl),
+          ),
+        );
       }
     }
 
-    // 2. إذا لم يكن هناك فيديو، التحقق من الصور
+    // لو برده ملقاش فيديو هيبص علي الصور
     if (images.isNotEmpty) {
       return SizedBox(
         height: MediaQuery.of(context).size.height * 0.25,
@@ -97,7 +124,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
         ),
       );
     }
-    // 3. إذا لم يكن هناك فيديو ولا صور صالحة، عرض الصورة الافتراضية
+    // لو مفيش صورة هيعرض الصورة اللي انا مختارها
     return Image.asset(
       "assets/images/Logo.png",
       fit: BoxFit.cover,
@@ -147,7 +174,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     horizontal: 20,
                     vertical: 10,
                   ),
-                  child: buildMediaWidget(
+                  child: _buildMediaWidget(
                     widget.activity.videoUrl,
                     widget.activity.images,
                   ),

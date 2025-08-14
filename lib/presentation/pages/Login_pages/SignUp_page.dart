@@ -472,7 +472,7 @@ class SignupPageState extends State<SignupPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Error! 😔'),
+          title: Text('Error!'),
           content: Text(cleanedErrorMessage), // نعرض الرسالة النظيفة مباشرة
           actions: <Widget>[
             TextButton(

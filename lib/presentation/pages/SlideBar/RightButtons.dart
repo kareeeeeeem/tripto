@@ -381,6 +381,8 @@ class _RightButtonsState extends State<RightButtons> {
               widget.personCounterKey?.currentState?.setSelectedCarPrice(
                 selectedCarPrice,
               );
+            } else {
+              widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
             }
           },
         ),

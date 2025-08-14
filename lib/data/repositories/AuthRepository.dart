@@ -16,27 +16,30 @@ class AuthRepository {
     String password,
     String confirmPassword,
   ) async {
-    final response = await http
-        .post(
-          Uri.parse('${ApiConstants.baseUrl}register'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'password': password,
-            'password_confirmation': confirmPassword,
-          }),
-        )
-        .timeout(const Duration(seconds: 10)); // أضف هذا
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'password_confirmation': confirmPassword,
+      }),
+    );
 
-    debugPrint('Register response: ${response.body}');
     final data = json.decode(response.body);
+    debugPrint('Register response: ${response.body}');
 
     if (response.statusCode == 201) {
       return data;
     } else {
-      throw Exception(data['message_en'] ?? 'Registration failed');
+      // ارجع بيانات الخطأ مباشرة
+      return {
+        'error': true,
+        'message': data['message'],
+        'errors': data['errors'] ?? {},
+      };
     }
   }
 
@@ -54,26 +57,22 @@ class AuthRepository {
 
     final data = json.decode(response.body);
 
+    // بدل Exception، نرجع JSON فيه حقل error لو فيه مشكلة
     if (response.statusCode == 200) {
       if (data['token'] != null) {
-        await storage.write(
-          key: 'jwt_token',
-          value: data['token'],
-        ); //統一 المفتاح
-      } else {
-        debugPrint('Warning: token not found in API response');
+        await storage.write(key: 'jwt_token', value: data['token']);
       }
-
       if (data['user'] != null) {
-        await storage.write(
-          key: 'user_data',
-          value: jsonEncode(data['user']),
-        ); // تخزين بيانات المستخدم
+        await storage.write(key: 'user_data', value: jsonEncode(data['user']));
       }
-
       return data;
     } else {
-      throw Exception(data['message_en'] ?? data['message'] ?? 'Login failed');
+      // رجع رسالة الخطأ بشكل منسق
+      return {
+        'error': true,
+        'message': data['message_en'] ?? data['message'] ?? 'Login failed',
+        'errors': data['errors'] ?? {},
+      };
     }
   }
 

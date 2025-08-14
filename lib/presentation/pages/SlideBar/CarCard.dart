@@ -98,54 +98,91 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                 builder: (context, state) {
                   final cars = (state is CarLoaded) ? state.cars : [];
 
-                  return ElevatedButton(
-                    onPressed:
-                        (selectedIndex != null && cars.isNotEmpty)
-                            ? () {
-                              final selectedCar = cars[selectedIndex!];
-                              Navigator.of(
-                                context,
-                              ).pop(selectedCar.price); // رجع السعر
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        onPressed:
+                            (selectedIndex != null && cars.isNotEmpty)
+                                ? () {
+                                  final selectedCar = cars[selectedIndex!];
+                                  Navigator.of(context).pop(selectedCar.price);
 
-                              if (widget.hasActivity) {
-                                showDialog(
-                                  context: context,
-                                  builder:
-                                      (context) => const ActivitiesListDialog(),
-                                );
-                              }
-
-                              Future.delayed(
-                                const Duration(milliseconds: 100),
-                                () {
-                                  if (widget.nextSteps.isNotEmpty) {
-                                    widget.nextSteps.first();
+                                  if (widget.hasActivity) {
+                                    showDialog(
+                                      context: context,
+                                      builder:
+                                          (context) =>
+                                              const ActivitiesListDialog(),
+                                    );
                                   }
-                                },
-                              );
-                            }
-                            : null,
 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF002E70),
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(
-                        MediaQuery.of(context).size.width * 0.7,
-                        45,
+                                  Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () {
+                                      if (widget.nextSteps.isNotEmpty) {
+                                        widget.nextSteps.first();
+                                      }
+                                    },
+                                  );
+                                }
+                                : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF002E70),
+                          foregroundColor: Colors.white,
+                          minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.7,
+                            45,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: const Text(
+                          'Continue',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+
+                      const SizedBox(height: 8),
+
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            233,
+                            121,
+                            113,
+                          ),
+                          foregroundColor: Colors.white,
+                          minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.7,
+                            45,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).pop(null); // بيرجع null عشان نمسح السعر
+                        },
+                        child: const Text(
+                          'Cancel Car',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      elevation: 0,
-                    ),
-                    child: const Text(
-                      'Continue',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                    ],
                   );
                 },
               ),

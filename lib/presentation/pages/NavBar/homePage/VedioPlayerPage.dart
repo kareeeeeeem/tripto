@@ -41,6 +41,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   String _errorMessage = '';
   bool _isMuted = false;
   bool _isInternetAvailable = true;
+  Timer? _pageChangeTimer; // ضيفها فوق في الكلاس
 
   // Video controllers
   VideoPlayerController? _videoController;
@@ -128,6 +129,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   Future<void> _initializeVideo(int index) async {
     context.read<GetTripBloc>().add(ChangeCurrentTripEvent(index));
+    if (_videoController != null && index != _currentIndex) {
+      _videoController!.pause();
+    }
 
     _disposeCurrentVideo();
     setState(() {
@@ -173,9 +177,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   const Icon(Icons.cloud_off, size: 50, color: Colors.white),
                   const SizedBox(height: 16),
                   Text(
-                    errorMessage,
+                    _errorMessage,
                     style: const TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => _initializeVideo(_currentIndex),
+                    child: const Text('Retry'),
                   ),
                 ],
               ),
@@ -401,7 +410,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         controller: _scrollController,
         scrollDirection: Axis.vertical,
         itemCount: _trips.length,
-        onPageChanged: (index) => _initializeVideo(index),
+        onPageChanged: (index) {
+          _pageChangeTimer?.cancel();
+          _pageChangeTimer = Timer(const Duration(milliseconds: 300), () {
+            _initializeVideo(index);
+          });
+        },
         itemBuilder: (context, index) {
           final currentTrip = _trips[index];
           final destinationName = _getLocalizedDestinationName(
