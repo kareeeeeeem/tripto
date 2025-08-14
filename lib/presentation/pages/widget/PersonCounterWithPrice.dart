@@ -8,7 +8,8 @@ class PersonCounterWithPrice extends StatefulWidget {
   final Color backgroundColor; // لون خلفية العداد (يمكن تحديده عند الاستخدام)
   final int maxPersons; // <-- أضف هذا
 
-  final double carPrice; // سعر السيارة
+  final double carPrice;
+  final double? initialCarPrice;
 
   const PersonCounterWithPrice({
     super.key,
@@ -19,14 +20,15 @@ class PersonCounterWithPrice extends StatefulWidget {
     this.maxPersons = 30,
 
     this.carPrice = 0, // <-- قيمة افتراضية
+    this.initialCarPrice, // الجديد
   });
 
   @override
   // ignore: library_private_types_in_public_api
-  _PersonCounterWithPriceState createState() => _PersonCounterWithPriceState();
+  PersonCounterWithPriceState createState() => PersonCounterWithPriceState();
 }
 
-class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
+class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   int _numberOfPeople = 1; // العدد الأولي للأشخاص
   double _totalPrice = 0.0; // السعر الإجمالي
   double _selectedCarPrice = 0.0; // السعر الإضافي للسيارة
@@ -34,7 +36,10 @@ class _PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   @override
   void initState() {
     super.initState();
-    _updateTotalPrice(); // حساب السعر الإجمالي الأولي بناءً على العدد الأولي
+    if (widget.initialCarPrice != null) {
+      _selectedCarPrice = widget.initialCarPrice!;
+    }
+    _updateTotalPrice();
   }
 
   void setSelectedCarPrice(double price) {

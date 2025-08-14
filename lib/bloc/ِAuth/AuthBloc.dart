@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/bloc/ِAuth/AuthEvent.dart';
 import 'package:tripto/bloc/ِAuth/AuthState.dart';
 import 'package:tripto/data/repositories/AuthRepository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   AuthBloc({required this.authRepository}) : super(AuthInitial()) {
     on<RegisterRequested>(_onRegisterRequested);
@@ -24,6 +28,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.phoneNumber,
         event.password,
         event.confirmPassword,
+      );
+      await _storage.write(key: 'jwt_token', value: response['token']);
+      await _storage.write(
+        key: 'user_data',
+        value: jsonEncode(response['user']),
       );
       emit(
         RegisterSuccess(
@@ -47,9 +56,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.phoneNumber,
         event.password,
       );
+
       emit(
         LoginSuccess(
-          message: response['message'],
+          message: response['message_en'],
           token: response['token'],
           user: response['user'],
         ),

@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('فشل: ${state.error}'),
+                content: Text('${state.error}'),
                 backgroundColor: Colors.red,
               ),
             );

@@ -101,11 +101,14 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   return ElevatedButton(
                     onPressed:
                         (selectedIndex != null && cars.isNotEmpty)
-                            ? () async {
-                              Navigator.of(context).pop(cars[selectedIndex!]);
+                            ? () {
+                              final selectedCar = cars[selectedIndex!];
+                              Navigator.of(
+                                context,
+                              ).pop(selectedCar.price); // رجع السعر
 
                               if (widget.hasActivity) {
-                                await showDialog(
+                                showDialog(
                                   context: context,
                                   builder:
                                       (context) => const ActivitiesListDialog(),
@@ -122,6 +125,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                               );
                             }
                             : null,
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF002E70),
                       foregroundColor: Colors.white,

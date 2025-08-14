@@ -30,6 +30,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   final _storage = const FlutterSecureStorage();
   final _scrollController = PageController();
   final double _bookingPricePerPerson = 250.0;
+  double selectedCarPrice = 0.0;
+  List<GlobalKey<PersonCounterWithPriceState>> _personCounterKeys = [];
 
   List<Map<String, dynamic>> _trips = [];
   int _currentIndex = 0;
@@ -103,18 +105,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       setState(() {
         _trips = trips.map((trip) => trip.toVideoPlayerJson()).toList();
         _isLoading = false;
+
+        _personCounterKeys = List.generate(
+          _trips.length,
+          (index) => GlobalKey<PersonCounterWithPriceState>(),
+        );
       });
 
       await _initializeVideo(0);
     } catch (e) {
-      debugPrint('Error fetching trips: $e');
+      debugPrint('Error fetching trips');
       setState(() {
         _isLoading = false;
         _hasError = true;
         _errorMessage =
             e.toString().contains('HTML')
                 ? 'Server error: Please try again later'
-                : 'Failed to load trips: ${e.toString()}';
+                : 'Failed to load trips:';
       });
     }
   }
@@ -187,7 +194,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         );
       }
     } catch (e) {
-      debugPrint('Video initialization error: $e');
+      debugPrint('Video initialization error:');
       setState(() {
         _hasError = true;
         _errorMessage = 'Failed to play video';
@@ -509,6 +516,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     child: RightButtons(
                       selectedTripIndex: index,
                       currentTripCategory: _trips[index]['category'] ?? 0,
+                      personCounterKey: _personCounterKeys[index],
                     ),
                   ),
                 ),
@@ -548,6 +556,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     SizedBox(height: screenHeight * 0.001),
 
                     PersonCounterWithPrice(
+                      key: _personCounterKeys[index],
+
                       basePricePerPerson:
                           double.tryParse(
                             _trips[_currentIndex]['price_per_person']
@@ -559,6 +569,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       textColor: Colors.white,
                       iconColor: Colors.black,
                       backgroundColor: Colors.white,
+                      carPrice: selectedCarPrice,
                     ),
                   ],
                 ),

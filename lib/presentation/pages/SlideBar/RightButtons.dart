@@ -15,6 +15,7 @@ import 'package:tripto/presentation/pages/SlideBar/DateCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/InfoCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
 
 enum CategoryType { none, gold, diamond, platinum }
 
@@ -45,11 +46,13 @@ class _ButtonData {
 
 class RightButtons extends StatefulWidget {
   final int selectedTripIndex;
+  final GlobalKey<PersonCounterWithPriceState>? personCounterKey;
 
   RightButtons({
     super.key,
     this.selectedTripIndex = 0,
     required currentTripCategory,
+    this.personCounterKey, // ← أضف هذا
   });
 
   @override
@@ -347,7 +350,7 @@ class _RightButtonsState extends State<RightButtons> {
                 int.tryParse(trip.category?.toString() ?? '') ?? 0;
 
             // افتح صفحة اختيار السيارة
-            final selectedCar = await showDialog<Carmodel>(
+            final selectedCarPrice = await showDialog<double>(
               context: context,
               builder: (dialogContext) {
                 return MultiBlocProvider(
@@ -374,9 +377,10 @@ class _RightButtonsState extends State<RightButtons> {
                 );
               },
             );
-
-            if (selectedCar != null) {
-              debugPrint('Selected Car: ${selectedCar.carNameEn}');
+            if (selectedCarPrice != null) {
+              widget.personCounterKey?.currentState?.setSelectedCarPrice(
+                selectedCarPrice,
+              );
             }
           },
         ),

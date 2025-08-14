@@ -47,14 +47,33 @@ class AuthRepository {
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'phone': phone, 'password': password}),
         )
-        .timeout(const Duration(seconds: 100)); // أضف هذا السطر
+        .timeout(const Duration(seconds: 100));
+
+    debugPrint('Login status: ${response.statusCode}');
+    debugPrint('Login body: ${response.body}');
+
+    final data = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      await storage.write(key: 'token', value: data['token']);
+      if (data['token'] != null) {
+        await storage.write(
+          key: 'jwt_token',
+          value: data['token'],
+        ); //統一 المفتاح
+      } else {
+        debugPrint('Warning: token not found in API response');
+      }
+
+      if (data['user'] != null) {
+        await storage.write(
+          key: 'user_data',
+          value: jsonEncode(data['user']),
+        ); // تخزين بيانات المستخدم
+      }
+
       return data;
     } else {
-      throw Exception('Login failed: ${response.statusCode}');
+      throw Exception(data['message_en'] ?? data['message'] ?? 'Login failed');
     }
   }
 
@@ -73,6 +92,9 @@ class AuthRepository {
       Uri.parse('${ApiConstants.baseUrl}activities'),
       headers: {'Authorization': 'bearer $token', 'Accept': 'application/json'},
     );
+    debugPrint('Login status: ${response.statusCode}');
+    debugPrint('Login body: ${response.body}');
+
     print("Response status: ${response.statusCode}");
     print("Raw response body: ${response.body}");
     if (response.statusCode == 200) {

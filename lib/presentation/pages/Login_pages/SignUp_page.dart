@@ -432,7 +432,7 @@ class SignupPageState extends State<SignupPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Successful'),
+          title: Text('Successful ✅ '),
           content: Text(message),
           actions: <Widget>[
             TextButton(
