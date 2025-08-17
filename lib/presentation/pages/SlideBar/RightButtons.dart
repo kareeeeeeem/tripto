@@ -247,8 +247,8 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
+
     // Hotel Button
-    // داخل الـ RightButtons، جزء زر الهوتيل فقط بعد التعديل
     if (showHotel) {
       buttons.add(
         _ButtonData(
@@ -263,7 +263,7 @@ class _RightButtonsState extends State<RightButtons> {
           onPressed: () async {
             final state = context.read<GetTripBloc>().state;
             if (state is GetTripLoaded) {
-              // الحصول على أول زر بعد الهوتيل لتنفيذ الخطوة التالية
+              // حساب الزر التالي بعد الهوتيل
               final int hotelButtonIndex = buttons.indexWhere(
                 (b) => b.label == AppLocalizations.of(context)!.hotel,
               );
@@ -282,7 +282,7 @@ class _RightButtonsState extends State<RightButtons> {
                     ),
               );
 
-              // عرض الـ Dialog مع قائمة الهوتيل
+              // فتح الـ Dialog مع قائمة الهوتيل
               final selectedHotel = await showDialog<GetTripModel>(
                 context: context,
                 builder:
@@ -300,7 +300,7 @@ class _RightButtonsState extends State<RightButtons> {
                     ),
               );
 
-              // تمرير السعر المختار للـ PersonCounterWithPrice
+              // تحديث السعر للـ PersonCounterWithPrice
               if (selectedHotel != null) {
                 widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                   selectedHotel.price,
