@@ -242,7 +242,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pleaseEnterYourPassword => 'Please enter your password';
 
   @override
-  String get passwordTooShort => 'Password is too short (min 8 characters)';
+  String get passwordTooShort => 'Password is too short (min 6 characters)';
 
   @override
   String get pleaseConfirmYourPassword => 'Please confirm your password';
@@ -277,11 +277,79 @@ class AppLocalizationsEn extends AppLocalizations {
       'An unexpected error occurred. Please try again later.';
 
   @override
-  String get loading => 'Loading!';
+  String get loading => 'Loading...';
 
   @override
   String get failedToSend => 'Failed to send request.';
 
   @override
   String get fly => 'Fly';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get pleaseEnterName => 'Please enter your name';
+
+  @override
+  String get pleaseEnterPhone => 'Please enter your phone number';
+
+  @override
+  String get phoneTooShort => 'Phone number is too short';
+
+  @override
+  String get pleaseEnterEmail => 'Please enter your email';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email';
+
+  @override
+  String get pleaseEnterPassword => 'Please enter your password';
+
+  @override
+  String get pleaseConfirmPassword => 'Please confirm your password';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get success => 'Successful ✅';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get error => 'Error!';
+
+  @override
+  String get passwordNotStrong => 'Password is not strong enough';
+
+  @override
+  String get atLeast6Chars => 'At least 6 characters';
+
+  @override
+  String get atLeastOneLowercaseLetter => 'At least one lowercase letter';
+
+  @override
+  String get atLeastOneUppercaseLetter => 'At least one uppercase letter';
+
+  @override
+  String get atLeastOneSpecialCharacter => 'At least one special character';
+
+  @override
+  String get pleaseEnterPhoneAndPassword =>
+      'Please enter phone number and password';
+
+  @override
+  String choose_from_to(Object from, Object to) {
+    return 'Choose from $from to $to';
+  }
+
+  @override
+  String the_period_is(Object end, Object start) {
+    return 'The period is: $start to $end';
+  }
+
+  @override
+  String get cancel => 'Cancel';
 }

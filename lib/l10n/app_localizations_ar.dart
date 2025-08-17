@@ -57,7 +57,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get resendcode => 'إعاده إرسال الرمز';
 
   @override
-  String get name => 'الإسم';
+  String get name => 'الاسم';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -198,7 +198,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الملف الشخصي';
 
   @override
-  String get phone => 'الجوال';
+  String get phone => 'رقم الهاتف';
 
   @override
   String get edit => 'تعديل';
@@ -241,7 +241,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pleaseEnterYourPassword => 'الرجاء إدخال كلمة المرور الخاصة بك';
 
   @override
-  String get passwordTooShort => 'كلمة المرور قصيرة جداً (8 أحرف على الأقل)';
+  String get passwordTooShort => 'كلمة المرور قصيرة جدًا (الحد الأدنى 6 أحرف)';
 
   @override
   String get pleaseConfirmYourPassword => 'الرجاء تأكيد كلمة المرور';
@@ -275,11 +275,79 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unexpectedError => 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.';
 
   @override
-  String get loading => 'جاري التحميل!';
+  String get loading => 'جارٍ التحميل...';
 
   @override
   String get failedToSend => 'فشل إرسال الطلب.';
 
   @override
   String get fly => 'طيران';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get pleaseEnterName => 'من فضلك أدخل اسمك';
+
+  @override
+  String get pleaseEnterPhone => 'من فضلك أدخل رقم هاتفك';
+
+  @override
+  String get phoneTooShort => 'رقم الهاتف قصير جدًا';
+
+  @override
+  String get pleaseEnterEmail => 'من فضلك أدخل بريدك الإلكتروني';
+
+  @override
+  String get invalidEmail => 'البريد الإلكتروني غير صحيح';
+
+  @override
+  String get pleaseEnterPassword => 'من فضلك أدخل كلمة المرور';
+
+  @override
+  String get pleaseConfirmPassword => 'من فضلك أكد كلمة المرور';
+
+  @override
+  String get signUp => 'تسجيل';
+
+  @override
+  String get success => 'تم بنجاح ✅';
+
+  @override
+  String get ok => 'موافق';
+
+  @override
+  String get error => 'خطأ!';
+
+  @override
+  String get passwordNotStrong => 'كلمة المرور غير قوية بما يكفي';
+
+  @override
+  String get atLeast6Chars => '6 أحرف على الأقل';
+
+  @override
+  String get atLeastOneLowercaseLetter => 'حرف صغير واحد على الأقل';
+
+  @override
+  String get atLeastOneUppercaseLetter => 'حرف كبير واحد على الأقل';
+
+  @override
+  String get atLeastOneSpecialCharacter => 'حرف خاص واحد على الأقل';
+
+  @override
+  String get pleaseEnterPhoneAndPassword =>
+      'من فضلك أدخل رقم الهاتف وكلمة المرور';
+
+  @override
+  String choose_from_to(Object from, Object to) {
+    return 'اختر من $from إلى $to';
+  }
+
+  @override
+  String the_period_is(Object end, Object start) {
+    return 'الفترة: من $start إلى $end';
+  }
+
+  @override
+  String get cancel => 'إلغاء';
 }

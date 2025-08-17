@@ -557,7 +557,7 @@ abstract class AppLocalizations {
   /// No description provided for @passwordTooShort.
   ///
   /// In en, this message translates to:
-  /// **'Password is too short (min 8 characters)'**
+  /// **'Password is too short (min 6 characters)'**
   String get passwordTooShort;
 
   /// No description provided for @pleaseConfirmYourPassword.
@@ -623,7 +623,7 @@ abstract class AppLocalizations {
   /// No description provided for @loading.
   ///
   /// In en, this message translates to:
-  /// **'Loading!'**
+  /// **'Loading...'**
   String get loading;
 
   /// No description provided for @failedToSend.
@@ -637,6 +637,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fly'**
   String get fly;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @pleaseEnterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterName;
+
+  /// No description provided for @pleaseEnterPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number'**
+  String get pleaseEnterPhone;
+
+  /// No description provided for @phoneTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is too short'**
+  String get phoneTooShort;
+
+  /// No description provided for @pleaseEnterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get pleaseEnterEmail;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmail;
+
+  /// No description provided for @pleaseEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get pleaseEnterPassword;
+
+  /// No description provided for @pleaseConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmPassword;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful ✅'**
+  String get success;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error!'**
+  String get error;
+
+  /// No description provided for @passwordNotStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is not strong enough'**
+  String get passwordNotStrong;
+
+  /// No description provided for @atLeast6Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get atLeast6Chars;
+
+  /// No description provided for @atLeastOneLowercaseLetter.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one lowercase letter'**
+  String get atLeastOneLowercaseLetter;
+
+  /// No description provided for @atLeastOneUppercaseLetter.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get atLeastOneUppercaseLetter;
+
+  /// No description provided for @atLeastOneSpecialCharacter.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one special character'**
+  String get atLeastOneSpecialCharacter;
+
+  /// No description provided for @pleaseEnterPhoneAndPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter phone number and password'**
+  String get pleaseEnterPhoneAndPassword;
+
+  /// No description provided for @choose_from_to.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from {from} to {to}'**
+  String choose_from_to(Object from, Object to);
+
+  /// No description provided for @the_period_is.
+  ///
+  /// In en, this message translates to:
+  /// **'The period is: {start} to {end}'**
+  String the_period_is(Object end, Object start);
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

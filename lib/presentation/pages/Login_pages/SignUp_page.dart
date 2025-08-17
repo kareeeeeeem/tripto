@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart'; // 🚀 ضفنا الـ import 
 import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthState.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -97,9 +98,9 @@ class SignupPageState extends State<SignupPage> {
         // 🚀 BlocListener عشان نستقبل الـ States
         listener: (context, state) {
           if (state is AuthLoading) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('loading...')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(AppLocalizations.of(context)!.loading)),
+            );
           } else if (state is RegisterSuccess) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             _showSuccessDialog(context, state.message);
@@ -115,23 +116,23 @@ class SignupPageState extends State<SignupPage> {
             child: Column(
               children: [
                 Image.asset("assets/images/Logo.png", height: 120),
-                buildLabel("Name"),
+                buildLabel(AppLocalizations.of(context)!.name),
                 buildTextFormField(
                   controller: nameController,
                   icon: Icons.person,
-                  labelText: "Name",
+                  labelText: AppLocalizations.of(context)!.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your name";
+                      return AppLocalizations.of(context)!.pleaseEnterName;
                     }
                     return null;
                   },
                 ),
-                buildLabel("Phone"),
+                buildLabel(AppLocalizations.of(context)!.phone),
                 IntlPhoneField(
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    labelText: "Phone",
+                    labelText: AppLocalizations.of(context)!.phone,
                     suffixIcon: const Icon(Icons.phone),
                     filled: true,
                     fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
@@ -158,77 +159,82 @@ class SignupPageState extends State<SignupPage> {
                   },
                   validator: (phone) {
                     if (phone == null || phone.number.isEmpty) {
-                      return "Please enter your phone number";
+                      return AppLocalizations.of(context)!.pleaseEnterPhone;
                     }
                     if (phone.number.length < 9) {
-                      return "Phone number is too short";
+                      return AppLocalizations.of(context)!.phoneTooShort;
                     }
                     return null;
                   },
                 ),
-                buildLabel("Email"),
+                buildLabel(AppLocalizations.of(context)!.email),
                 buildTextFormField(
                   controller: emailController,
                   icon: Icons.email_outlined,
-                  labelText: "Email",
+                  labelText: AppLocalizations.of(context)!.email,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your email";
+                      return AppLocalizations.of(context)!.pleaseEnterEmail;
                     }
                     if (!EmailValidator.validate(value)) {
-                      return "Please enter a valid email";
+                      return AppLocalizations.of(context)!.invalidEmail;
                     }
                     return null;
                   },
                 ),
-                buildLabel("Password"),
+                buildLabel(AppLocalizations.of(context)!.password),
                 buildPasswordField(
                   controller: passController,
                   obscure: obsecureText1,
                   toggle: () => setState(() => obsecureText1 = !obsecureText1),
-                  labelText: "Password",
+                  labelText: AppLocalizations.of(context)!.password,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your password";
+                      return AppLocalizations.of(context)!.pleaseEnterPassword;
                     }
                     if (value.length < 6) {
-                      return "Password is too short (min 6 characters)";
+                      return AppLocalizations.of(context)!.passwordTooShort;
                     }
                     return null;
                   },
                 ),
-                buildLabel("Confirm Password"),
+                buildLabel(AppLocalizations.of(context)!.password),
                 buildPasswordField(
                   controller: confirmPassController,
                   obscure: obsecureText2,
                   toggle: () => setState(() => obsecureText2 = !obsecureText2),
-                  labelText: "Confirm Password",
+                  labelText: AppLocalizations.of(context)!.confirmPassword,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please confirm your password";
+                      return AppLocalizations.of(
+                        context,
+                      )!.pleaseConfirmPassword;
                     }
                     if (value != passController.text) {
-                      return "Passwords do not match";
+                      return AppLocalizations.of(context)!.passwordsDoNotMatch;
                     }
                     return null;
                   },
                 ),
                 _buildPasswordStrengthIndicator(
-                  "At least 6 characters",
+                  AppLocalizations.of(context)!.atLeast6Chars,
                   hasMinLength,
                 ),
                 _buildPasswordStrengthIndicator(
-                  "At least one lowercase letter",
+                  AppLocalizations.of(context)!.atLeastOneLowercaseLetter,
                   hasLowercase,
                 ),
                 _buildPasswordStrengthIndicator(
-                  "At least one uppercase letter",
+                  AppLocalizations.of(context)!.atLeastOneUppercaseLetter,
                   hasUppercase,
                 ),
-                _buildPasswordStrengthIndicator("At least one digit", hasDigit),
                 _buildPasswordStrengthIndicator(
-                  "At least one special character",
+                  AppLocalizations.of(context)!.atLeastOneDigit,
+                  hasDigit,
+                ),
+                _buildPasswordStrengthIndicator(
+                  AppLocalizations.of(context)!.atLeastOneSpecialCharacter,
                   hasSpecialChar,
                 ),
 
@@ -252,7 +258,9 @@ class SignupPageState extends State<SignupPage> {
                             !hasMinLength) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Password is not strong enough"),
+                              content: Text(
+                                AppLocalizations.of(context)!.passwordNotStrong,
+                              ),
                               backgroundColor: Colors.red,
                             ),
                           );
@@ -265,7 +273,7 @@ class SignupPageState extends State<SignupPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                "Please enter a valid phone number",
+                                AppLocalizations.of(context)!.pleaseEnterPhone,
                               ),
                               backgroundColor: Colors.red,
                             ),
@@ -287,7 +295,7 @@ class SignupPageState extends State<SignupPage> {
                       }
                     },
                     child: Text(
-                      "Sign Up",
+                      AppLocalizations.of(context)!.signUp,
                       style: GoogleFonts.markaziText(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
@@ -432,11 +440,15 @@ class SignupPageState extends State<SignupPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Successful ✅ '),
+          title: Text(AppLocalizations.of(context)!.success),
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Text('ok', style: TextStyle(color: Colors.blue)),
+              child: Text(
+                AppLocalizations.of(context)!.ok,
+                style: TextStyle(color: Colors.blue),
+              ),
+
               onPressed: () {
                 // Navigator.of(context).pop(); // لإغلاق الـ dialog
                 // 🚀 هنا ممكن تنتقل لصفحة تسجيل الدخول أو صفحة رئيسية بعد إغلاق الـ dialog
@@ -472,11 +484,14 @@ class SignupPageState extends State<SignupPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Error!'),
+          title: Text(AppLocalizations.of(context)!.error),
           content: Text(cleanedErrorMessage), // نعرض الرسالة النظيفة مباشرة
           actions: <Widget>[
             TextButton(
-              child: Text('ok', style: TextStyle(color: Colors.blue)),
+              child: Text(
+                AppLocalizations.of(context)!.ok,
+                style: TextStyle(color: Colors.blue),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

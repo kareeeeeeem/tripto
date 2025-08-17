@@ -3,11 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_event.dart'
-    hide DateSelectionState, DateSelectionSuccess, DateSelectionFailure;
-import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
 class DateCard extends StatefulWidget {
   final DateTime firstDate;
@@ -68,6 +64,7 @@ class _DateCardState extends State<DateCard> {
   @override
   Widget build(BuildContext context) {
     final bool isSelectionValid = _rangeStart != null && _rangeEnd != null;
+    final loc = AppLocalizations.of(context)!;
 
     return BlocListener<DateSelectionBloc, DateSelectionState>(
       listener: (context, state) {
@@ -89,7 +86,10 @@ class _DateCardState extends State<DateCard> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Choose From ${_formatDate(widget.firstDate)} To ${_formatDate(widget.lastDate)}",
+                loc.choose_from_to(
+                  _formatDate(widget.firstDate),
+                  _formatDate(widget.lastDate),
+                ),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -148,7 +148,10 @@ class _DateCardState extends State<DateCard> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    "the period is: ${_formatDate(_rangeStart!)}      To ${_formatDate(_rangeEnd!)}",
+                    loc.the_period_is(
+                      _formatDate(_rangeStart!),
+                      _formatDate(_rangeEnd!),
+                    ),
                     style: const TextStyle(fontSize: 14, color: Colors.black87),
                   ),
                 ),
@@ -157,7 +160,7 @@ class _DateCardState extends State<DateCard> {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("cancel"),
+                    child: Text(loc.cancel),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
@@ -171,7 +174,7 @@ class _DateCardState extends State<DateCard> {
                               }
                             }
                             : null,
-                    child: const Text("OK"),
+                    child: Text(loc.ok),
                   ),
                 ],
               ),

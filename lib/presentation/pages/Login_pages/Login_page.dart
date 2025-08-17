@@ -58,9 +58,9 @@ class _LoginState extends State<Login> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) async {
           if (state is AuthLoading) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('loading...')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(AppLocalizations.of(context)!.loading)),
+            );
           } else if (state is LoginSuccess) {
             //  await _storage.write(key: 'token', value: state.token);
             //  print('🔐 Token: ${state.token}');
@@ -130,8 +130,7 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        labelText:
-                            locale == 'ar' ? 'رقم الهاتف' : 'Phone Number',
+                        labelText: AppLocalizations.of(context)!.phone,
                         filled: true,
                         fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
@@ -168,7 +167,7 @@ class _LoginState extends State<Login> {
                       controller: passwordController,
                       obscureText: obscurePassword,
                       decoration: InputDecoration(
-                        labelText: locale == 'ar' ? 'كلمة المرور' : 'Password',
+                        labelText: AppLocalizations.of(context)!.password,
                         suffixIcon: IconButton(
                           icon: Icon(
                             obscurePassword
@@ -231,11 +230,12 @@ class _LoginState extends State<Login> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  locale == 'ar'
-                                      ? 'من فضلك أدخل رقم الهاتف وكلمة المرور'
-                                      : 'Please enter phone number and password.',
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.pleaseEnterPhoneAndPassword,
                                   textAlign: TextAlign.center,
                                 ),
+
                                 backgroundColor: Colors.red,
                               ),
                             );
