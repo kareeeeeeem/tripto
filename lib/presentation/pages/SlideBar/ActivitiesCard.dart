@@ -155,16 +155,7 @@ class ActivityCard extends StatelessWidget {
                               Text("${activity.activityduration} "),
                             ],
                           ),
-                          // ExpandedText(
-                          //   text:
-                          //       Localizations.localeOf(context).languageCode ==
-                          //               'ar'
-                          //           ? activity.activitydescriptionar
-                          //           : activity.activitydescriptionen,
 
-                          //   // "This is the description of the company.This is the description of the companyThis is the description of the company",
-                          //   maxLines: 2,
-                          // ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.010,
                           ),
@@ -178,11 +169,6 @@ class ActivityCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   crossAxisAlignment: CrossAxisAlignment.end,
-                    //   children: [Text(' ⭐ ${activity.rate ?? 0} ')],
-                    // ),
                   ],
                 ),
               ),
@@ -270,38 +256,55 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                bottom: 8.0,
+                bottom: 12.0,
                 left: 20.0,
                 right: 20.0,
-                top: 8.0,
               ),
-              child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.055,
-                child: CustomButton(
-                  text: AppLocalizations.of(context)!.finish,
-                  onPressed: () {
-                    final currentState = context.read<AuthBloc>().state;
-                    if (selectedIndex != null &&
-                        currentState is GetAllActivitiesSuccess) {
-                      final selectedActivity =
-                          currentState.activities[selectedIndex!];
-                      Navigator.pop(context, selectedActivity);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.pleaseselectanactivityfirsttoFinish,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomButton(
+                    text: AppLocalizations.of(context)!.finish,
+                    onPressed: () {
+                      final currentState = context.read<AuthBloc>().state;
+                      if (selectedIndex != null &&
+                          currentState is GetAllActivitiesSuccess) {
+                        final selectedActivity =
+                            currentState.activities[selectedIndex!];
+                        Navigator.pop(context, selectedActivity);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(
+                                context,
+                              )!.pleaseselectanactivityfirsttoFinish,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                  },
-                  width: screenWidth * 0.80,
-                  height: 40,
-                ),
+                        );
+                      }
+                    },
+                    width: screenWidth * 0.80,
+                    height: 40,
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 233, 121, 113),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      minimumSize: Size(screenWidth * 0.80, 40),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context, null); // ✅ Cancel Activity
+                    },
+                    child: const Text(
+                      "Cancel Activity",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -136,46 +136,67 @@ class _HotelsState extends State<Hotels> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.055,
-                        child: ElevatedButton(
-                          onPressed:
-                              selectedHotelIndex != null
-                                  ? () {
-                                    final selectedHotel =
-                                        tripsWithHotel[selectedHotelIndex!];
+                    SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      child: ElevatedButton(
+                        onPressed:
+                            selectedHotelIndex != null
+                                ? () {
+                                  final selectedHotel =
+                                      tripsWithHotel[selectedHotelIndex!];
 
-                                    Navigator.pop(
-                                      context,
-                                    ); // خروج من صفحة Hotels
+                                  Navigator.pop(context); // خروج من صفحة Hotels
 
-                                    // ✅ تشغيل أول خطوة في اللي جاي
-                                    if (widget.nextSteps.isNotEmpty) {
-                                      final nextStep = widget.nextSteps.first;
-                                      nextStep();
-                                    }
+                                  if (widget.nextSteps.isNotEmpty) {
+                                    final nextStep = widget.nextSteps.first;
+                                    nextStep();
                                   }
-                                  : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF002E70),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
+                                }
+                                : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF002E70),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(
-                            'Continue',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                          elevation: 0,
+                        ),
+                        child: const Text(
+                          'Continue',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.80,
+                      height: 40,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context, null); // Cancel Hotel
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            233,
+                            121,
+                            113,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: const Text(
+                          "Cancel Hotel",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
                     ),

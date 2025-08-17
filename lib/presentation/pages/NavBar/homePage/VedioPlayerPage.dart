@@ -122,7 +122,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         _errorMessage =
             e.toString().contains('HTML')
                 ? 'Server error: Please try again later'
-                : 'Failed to load trips:';
+                : 'Loading:';
       });
     }
   }
@@ -154,7 +154,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           if (_videoController!.value.hasError) {
             setState(() {
               _hasError = true;
-              _errorMessage = 'Failed to play video';
+              _errorMessage = 'Loading';
             });
           }
         });
@@ -206,7 +206,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       debugPrint('Video initialization error:');
       setState(() {
         _hasError = true;
-        _errorMessage = 'Failed to play video';
+        _errorMessage = 'Loading';
       });
       _startRetryTimer(index);
     } finally {

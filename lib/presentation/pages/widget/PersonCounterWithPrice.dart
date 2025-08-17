@@ -11,6 +11,12 @@ class PersonCounterWithPrice extends StatefulWidget {
   final double carPrice;
   final double? initialCarPrice;
 
+  final double activityPrice;
+  final double? initialActivityPrice;
+
+  final double hotelPrice;
+  final double? initialHotelPrice;
+
   const PersonCounterWithPrice({
     super.key,
     this.basePricePerPerson = 0.0, // قيمة افتراضية
@@ -21,6 +27,12 @@ class PersonCounterWithPrice extends StatefulWidget {
 
     this.carPrice = 0, // <-- قيمة افتراضية
     this.initialCarPrice, // الجديد
+
+    this.activityPrice = 0,
+    this.initialActivityPrice,
+
+    this.hotelPrice = 0,
+    this.initialHotelPrice,
   });
 
   @override
@@ -31,7 +43,12 @@ class PersonCounterWithPrice extends StatefulWidget {
 class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   int _numberOfPeople = 1; // العدد الأولي للأشخاص
   double _totalPrice = 0.0; // السعر الإجمالي
+
   double _selectedCarPrice = 0.0; // السعر الإضافي للسيارة
+
+  double _selectedActivityPrice = 0.0;
+
+  double _selectedHotelPrice = 0.0;
 
   @override
   void initState() {
@@ -39,12 +56,33 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
     if (widget.initialCarPrice != null) {
       _selectedCarPrice = widget.initialCarPrice!;
     }
+    if (widget.initialActivityPrice != null) {
+      _selectedActivityPrice = widget.initialActivityPrice!;
+    }
+    if (widget.initialHotelPrice != null) {
+      _selectedHotelPrice = widget.initialHotelPrice!;
+    }
     _updateTotalPrice();
   }
 
   void setSelectedCarPrice(double price) {
     setState(() {
       _selectedCarPrice = price;
+      _updateTotalPrice();
+    });
+  }
+  // ✅ جديد
+
+  void setSelectedActivityPrice(double price) {
+    setState(() {
+      _selectedActivityPrice = price;
+      _updateTotalPrice();
+    });
+  }
+
+  void setSelectedHotelPrice(double price) {
+    setState(() {
+      _selectedHotelPrice = price;
       _updateTotalPrice();
     });
   }
@@ -69,14 +107,19 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
 
   void _updateTotalPrice() {
     _totalPrice =
-        (_numberOfPeople * widget.basePricePerPerson) + _selectedCarPrice;
+        (_numberOfPeople * widget.basePricePerPerson) +
+        _selectedCarPrice +
+        _selectedActivityPrice +
+        _selectedHotelPrice; // ✅ أضفنا الهوتيل
   }
 
   @override
   void didUpdateWidget(covariant PersonCounterWithPrice oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.carPrice != widget.carPrice ||
-        oldWidget.basePricePerPerson != widget.basePricePerPerson) {
+        oldWidget.basePricePerPerson != widget.basePricePerPerson ||
+        oldWidget.activityPrice != widget.activityPrice ||
+        oldWidget.hotelPrice != widget.hotelPrice) {
       _updateTotalPrice();
     }
   }

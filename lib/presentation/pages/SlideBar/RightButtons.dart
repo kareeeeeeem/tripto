@@ -17,6 +17,8 @@ import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
 
+import 'package:tripto/core/models/activityPageModel.dart';
+
 enum CategoryType { none, gold, diamond, platinum }
 
 Color _getColorForCategory(int categoryValue) {
@@ -245,8 +247,8 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
-
     // Hotel Button
+    // داخل الـ RightButtons، جزء زر الهوتيل فقط بعد التعديل
     if (showHotel) {
       buttons.add(
         _ButtonData(
@@ -261,7 +263,7 @@ class _RightButtonsState extends State<RightButtons> {
           onPressed: () async {
             final state = context.read<GetTripBloc>().state;
             if (state is GetTripLoaded) {
-              // تحديد الزر التالي بعد فندق
+              // الحصول على أول زر بعد الهوتيل لتنفيذ الخطوة التالية
               final int hotelButtonIndex = buttons.indexWhere(
                 (b) => b.label == AppLocalizations.of(context)!.hotel,
               );
@@ -270,7 +272,6 @@ class _RightButtonsState extends State<RightButtons> {
                 hotelButtonIndex + 1,
               );
 
-              // ابحث عن أول زر بعد الفندق عنده onPressed
               final nextButton = postHotelButtons.firstWhere(
                 (b) => b.onPressed != null,
                 orElse:
@@ -281,8 +282,8 @@ class _RightButtonsState extends State<RightButtons> {
                     ),
               );
 
-              // استدعاء Hotels مع الزر القادم
-              await showDialog(
+              // عرض الـ Dialog مع قائمة الهوتيل
+              final selectedHotel = await showDialog<GetTripModel>(
                 context: context,
                 builder:
                     (context) => Dialog(
@@ -298,6 +299,15 @@ class _RightButtonsState extends State<RightButtons> {
                       ),
                     ),
               );
+
+              // تمرير السعر المختار للـ PersonCounterWithPrice
+              if (selectedHotel != null) {
+                widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+                  selectedHotel.price,
+                );
+              } else {
+                widget.personCounterKey?.currentState?.setSelectedHotelPrice(0);
+              }
             }
           },
         ),
@@ -401,10 +411,21 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.activities,
           onPressed: () async {
-            await showDialog(
+            final selectedActivity = await showDialog(
               context: context,
               builder: (context) => const ActivitiesListDialog(),
             );
+            if (selectedActivity != null) {
+              final price =
+                  double.tryParse(selectedActivity.price.toString()) ?? 0.0;
+              widget.personCounterKey?.currentState?.setSelectedActivityPrice(
+                price,
+              );
+            } else {
+              widget.personCounterKey?.currentState?.setSelectedActivityPrice(
+                0,
+              );
+            }
           },
         ),
       );
