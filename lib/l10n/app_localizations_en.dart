@@ -352,4 +352,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get totalPriceForStay => 'Total price for stay';
 }

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_model.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
+import 'package:tripto/bloc/Hotel/hotelEvents.dart';
+import 'package:tripto/bloc/Hotel/hotelRep.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/bloc/Hotel/hotelBloc.dart';
 import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/CategoryCard.dart';
@@ -16,8 +18,6 @@ import 'package:tripto/presentation/pages/SlideBar/InfoCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
-
-import 'package:tripto/core/models/activityPageModel.dart';
 
 enum CategoryType { none, gold, diamond, platinum }
 
@@ -49,12 +49,17 @@ class _ButtonData {
 class RightButtons extends StatefulWidget {
   final int selectedTripIndex;
   final GlobalKey<PersonCounterWithPriceState>? personCounterKey;
+  final DateTime? startDate; // ← جديد
+  final DateTime? endDate;
 
   RightButtons({
     super.key,
     this.selectedTripIndex = 0,
     required currentTripCategory,
     this.personCounterKey, // ← أضف هذا
+
+    this.startDate,
+    this.endDate,
   });
 
   @override
@@ -248,7 +253,6 @@ class _RightButtonsState extends State<RightButtons> {
       );
     }
 
-    // Hotel Button
     if (showHotel) {
       buttons.add(
         _ButtonData(
@@ -261,53 +265,33 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.hotel,
           onPressed: () async {
-            final state = context.read<GetTripBloc>().state;
-            if (state is GetTripLoaded) {
-              // حساب الزر التالي بعد الهوتيل
-              final int hotelButtonIndex = buttons.indexWhere(
-                (b) => b.label == AppLocalizations.of(context)!.hotel,
-              );
-
-              final List<_ButtonData> postHotelButtons = buttons.sublist(
-                hotelButtonIndex + 1,
-              );
-
-              final nextButton = postHotelButtons.firstWhere(
-                (b) => b.onPressed != null,
-                orElse:
-                    () => _ButtonData(
-                      iconWidget: SizedBox(),
-                      label: '',
-                      onPressed: null,
+            final selectedHotel = await showDialog(
+              context: context,
+              builder:
+                  (context) => BlocProvider(
+                    create:
+                        (_) => HotelsBloc(
+                          hotelsRepository:
+                              HotelsRepository(), // ← instance صحيحة
+                        )..add(
+                          FetchHotels(subDestinationId: trip.subDestinationId!),
+                        ),
+                    child: HotelsDialog(
+                      subDestinationId: trip.subDestinationId!,
+                      nextSteps: [],
+                      personCounterKey: widget.personCounterKey,
+                      startDate: widget.startDate,
+                      endDate: widget.endDate,
                     ),
-              );
+                  ),
+            );
 
-              // فتح الـ Dialog مع قائمة الهوتيل
-              final selectedHotel = await showDialog<GetTripModel>(
-                context: context,
-                builder:
-                    (context) => Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Hotels(
-                        hotelTrips: [trip],
-                        nextSteps:
-                            nextButton.onPressed != null
-                                ? [nextButton.onPressed!]
-                                : [],
-                      ),
-                    ),
+            if (selectedHotel != null) {
+              widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+                selectedHotel.pricePerNight,
               );
-
-              // تحديث السعر للـ PersonCounterWithPrice
-              if (selectedHotel != null) {
-                widget.personCounterKey?.currentState?.setSelectedHotelPrice(
-                  selectedHotel.price,
-                );
-              } else {
-                widget.personCounterKey?.currentState?.setSelectedHotelPrice(0);
-              }
+            } else {
+              widget.personCounterKey?.currentState?.setSelectedHotelPrice(0);
             }
           },
         ),

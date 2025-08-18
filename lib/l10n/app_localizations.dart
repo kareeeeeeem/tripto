@@ -763,6 +763,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @totalPriceForStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Total price for stay'**
+  String get totalPriceForStay;
 }
 
 class _AppLocalizationsDelegate

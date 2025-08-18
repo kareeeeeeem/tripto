@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class PersonCounterWithPrice extends StatefulWidget {
   final double
   basePricePerPerson; // السعر الأساسي للشخص الواحد (يمكن تحديده عند الاستخدام)
-  final Color textColor; // لون النص (يمكن تحديده عند الاستخدام)
-  final Color iconColor; // لون الأيقونات (يمكن تحديده عند الاستخدام)
+  final Color textColor;
+  final Color iconColor;
   final Color backgroundColor; // لون خلفية العداد (يمكن تحديده عند الاستخدام)
-  final int maxPersons; // <-- أضف هذا
+  final int maxPersons;
 
   final double carPrice;
   final double? initialCarPrice;
@@ -19,14 +19,14 @@ class PersonCounterWithPrice extends StatefulWidget {
 
   const PersonCounterWithPrice({
     super.key,
-    this.basePricePerPerson = 0.0, // قيمة افتراضية
+    this.basePricePerPerson = 0.0,
     this.textColor = Colors.white,
     this.iconColor = Colors.black,
     this.backgroundColor = Colors.white,
     this.maxPersons = 30,
 
-    this.carPrice = 0, // <-- قيمة افتراضية
-    this.initialCarPrice, // الجديد
+    this.carPrice = 0,
+    this.initialCarPrice,
 
     this.activityPrice = 0,
     this.initialActivityPrice,
@@ -42,9 +42,10 @@ class PersonCounterWithPrice extends StatefulWidget {
 
 class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   int _numberOfPeople = 1; // العدد الأولي للأشخاص
+
   double _totalPrice = 0.0; // السعر الإجمالي
 
-  double _selectedCarPrice = 0.0; // السعر الإضافي للسيارة
+  double _selectedCarPrice = 0.0;
 
   double _selectedActivityPrice = 0.0;
 
@@ -53,6 +54,7 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   @override
   void initState() {
     super.initState();
+
     if (widget.initialCarPrice != null) {
       _selectedCarPrice = widget.initialCarPrice!;
     }
@@ -110,7 +112,7 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
         (_numberOfPeople * widget.basePricePerPerson) +
         _selectedCarPrice +
         _selectedActivityPrice +
-        _selectedHotelPrice; // ✅ أضفنا الهوتيل
+        _selectedHotelPrice;
   }
 
   @override

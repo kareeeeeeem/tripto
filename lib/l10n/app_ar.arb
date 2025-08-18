@@ -119,7 +119,9 @@
   "choose_from_to": "اختر من {from} إلى {to}",
   "the_period_is": "الفترة: من {start} إلى {end}",
   "cancel": "إلغاء",
-  "ok": "موافق"
+  "ok": "موافق",
+  "totalPriceForStay": "إجمالي سعر الإقامة"
+
 
 
 }

@@ -119,7 +119,9 @@
   "choose_from_to": "Choose from {from} to {to}",
   "the_period_is": "The period is: {start} to {end}",
   "cancel": "Cancel",
-  "ok": "OK"
+  "ok": "OK",
+  "totalPriceForStay": "Total price for stay"
+
 
 
 }
