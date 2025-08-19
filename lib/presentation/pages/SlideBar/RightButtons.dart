@@ -71,6 +71,8 @@ class _RightButtonsState extends State<RightButtons> {
   late FocusScopeNode _focusScopeNode;
   DateTime? _selectedFilterDate;
   Carmodel? selectedCar;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
 
   @override
   void initState() {
@@ -145,6 +147,7 @@ class _RightButtonsState extends State<RightButtons> {
     );
 
     // Date Button
+    // Date Button
     if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
@@ -152,7 +155,7 @@ class _RightButtonsState extends State<RightButtons> {
             alignment: Alignment.center,
             children: [
               Icon(
-                trip.hasFly == true || trip.hasFly == 1
+                (trip.hasFly == true || trip.hasFly == 1)
                     ? Icons.flight
                     : Icons.calendar_today,
                 size: 30,
@@ -179,7 +182,7 @@ class _RightButtonsState extends State<RightButtons> {
             ],
           ),
           label:
-              trip.hasFly == true || trip.hasFly == 1
+              (trip.hasFly == true || trip.hasFly == 1)
                   ? AppLocalizations.of(context)!.fly
                   : AppLocalizations.of(context)!.date,
           onPressed: () async {
@@ -188,6 +191,7 @@ class _RightButtonsState extends State<RightButtons> {
               final lastDate = DateTime.parse(trip.toDate);
 
               if (firstDate.isAfter(lastDate)) {
+                if (!mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("تواريخ الرحلة غير صالحة")),
                 );
@@ -214,29 +218,33 @@ class _RightButtonsState extends State<RightButtons> {
               );
 
               if (result != null) {
-                setState(() => _selectedFilterDate = result['range_start']);
+                setState(() {
+                  _selectedFilterDate = result['range_start'];
+                  _rangeStart = result['range_start'];
+                  _rangeEnd = result['range_end'];
+                });
+
                 context.read<GetTripBloc>().add(
                   FilterTripsByDateRangeEvent(
-                    startDate: result['range_start']!,
-                    endDate: result['range_end']!,
+                    startDate: _rangeStart!,
+                    endDate: _rangeEnd!,
                   ),
                 );
 
-                // 👇 الكود الجديد اللي يفتح أول صفحة بعد زر التاريخ
-                Future.delayed(Duration(milliseconds: 300), () {
+                // افتح أول زر بعد التاريخ
+                Future.delayed(const Duration(milliseconds: 300), () {
                   final int dateButtonIndex = buttons.indexWhere(
                     (b) =>
                         b.label == AppLocalizations.of(context)!.date ||
                         b.label == AppLocalizations.of(context)!.fly,
                   );
-
                   final List<_ButtonData> postDateButtons = buttons.sublist(
                     dateButtonIndex + 1,
                   );
 
                   for (final button in postDateButtons) {
                     if (button.onPressed != null) {
-                      button.onPressed!.call(); // شغل أول زر بعد التاريخ
+                      button.onPressed!.call();
                       break;
                     }
                   }
@@ -244,6 +252,7 @@ class _RightButtonsState extends State<RightButtons> {
               }
             } catch (e) {
               debugPrint('Date selection error: $e');
+              if (!mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('حدث خطأ في اختيار التاريخ')),
               );
@@ -271,8 +280,7 @@ class _RightButtonsState extends State<RightButtons> {
                   (context) => BlocProvider(
                     create:
                         (_) => HotelsBloc(
-                          hotelsRepository:
-                              HotelsRepository(), // ← instance صحيحة
+                          hotelsRepository: HotelsRepository(),
                         )..add(
                           FetchHotels(subDestinationId: trip.subDestinationId!),
                         ),
@@ -280,18 +288,27 @@ class _RightButtonsState extends State<RightButtons> {
                       subDestinationId: trip.subDestinationId!,
                       nextSteps: [],
                       personCounterKey: widget.personCounterKey,
-                      startDate: widget.startDate,
-                      endDate: widget.endDate,
+                      startDate: _rangeStart,
+                      endDate: _rangeEnd,
                     ),
                   ),
             );
 
+            final int nights =
+                _rangeStart != null && _rangeEnd != null
+                    ? _rangeEnd!.difference(_rangeStart!).inDays
+                    : 1;
+
             if (selectedHotel != null) {
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 selectedHotel.pricePerNight,
+                nights,
               );
             } else {
-              widget.personCounterKey?.currentState?.setSelectedHotelPrice(0);
+              widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+                0,
+                nights,
+              );
             }
           },
         ),

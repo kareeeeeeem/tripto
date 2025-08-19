@@ -49,9 +49,22 @@ class HotelsDialog extends StatefulWidget {
 class _HotelsDialogState extends State<HotelsDialog> {
   int? selectedIndex;
 
-  int getNumberOfDays() {
+  int getNumberOfNights() {
     if (widget.startDate != null && widget.endDate != null) {
-      return widget.endDate!.difference(widget.startDate!).inDays + 1;
+      final start = DateTime(
+        widget.startDate!.year,
+        widget.startDate!.month,
+        widget.startDate!.day,
+      );
+      final end = DateTime(
+        widget.endDate!.year,
+        widget.endDate!.month,
+        widget.endDate!.day,
+      );
+      final diff = end.difference(start).inDays; // ليالي = فرق الأيام
+      return diff > 0
+          ? diff
+          : 1; // لو حصل اختيار يوم واحد اعتبرها ليلة واحدة كـ fallback
     }
     return 1;
   }
@@ -66,9 +79,10 @@ class _HotelsDialogState extends State<HotelsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final numberOfDays = getNumberOfDays();
+    final numberOfNights = getNumberOfNights();
 
     return Dialog(
+      //backgroundColor: Colors.white10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.7,
@@ -102,7 +116,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                       itemBuilder: (context, index) {
                         final hotel = hotels[index];
                         final isSelected = selectedIndex == index;
-                        final totalPrice = hotel.pricePerNight * numberOfDays;
+                        final totalPrice = hotel.pricePerNight * numberOfNights;
 
                         return GestureDetector(
                           onTap: () => setState(() => selectedIndex = index),
@@ -126,35 +140,36 @@ class _HotelsDialogState extends State<HotelsDialog> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: SizedBox(
+                                  child: Container(
                                     height: 100,
                                     width: 100,
                                     child:
                                         (hotel.images.isNotEmpty &&
                                                 hotel.images[0].isNotEmpty)
-                                            ? FutureBuilder<Uint8List>(
-                                              future: fetchHotelImage(
-                                                hotel.images[0],
-                                              ),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return const Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  );
-                                                } else if (snapshot.hasError ||
-                                                    !snapshot.hasData) {
-                                                  return Image.asset(
-                                                    "assets/images/Logo.png",
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                } else {
-                                                  return Image.memory(
-                                                    snapshot.data!,
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                }
+                                            ? Image.network(
+                                              hotel.images[0],
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (
+                                                context,
+                                                error,
+                                                stackTrace,
+                                              ) {
+                                                return Image.asset(
+                                                  "assets/images/Logo.png",
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                              loadingBuilder: (
+                                                context,
+                                                child,
+                                                loadingProgress,
+                                              ) {
+                                                if (loadingProgress == null)
+                                                  return child;
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
                                               },
                                             )
                                             : Image.asset(
@@ -163,6 +178,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                             ),
                                   ),
                                 ),
+
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Column(
@@ -174,7 +190,12 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            hotel.nameEn,
+                                            Localizations.localeOf(
+                                                      context,
+                                                    ).languageCode ==
+                                                    'ar'
+                                                ? hotel.nameAr
+                                                : hotel.nameEn,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
@@ -201,18 +222,39 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                         ],
                                       ),
                                       const SizedBox(height: 4),
-                                      Text(
-                                        hotel.descriptionEn,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 8),
+                                          Text(
+                                            Localizations.localeOf(
+                                                      context,
+                                                    ).languageCode ==
+                                                    'ar'
+                                                ? hotel.descriptionAr
+                                                : hotel.descriptionEn,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
                                       ),
+
                                       const SizedBox(height: 4),
-                                      Text("⭐ ${hotel.rate}"),
-                                      Text(
-                                        "Price per day: \$${hotel.pricePerNight.toStringAsFixed(2)}",
+                                      Row(
+                                        children: List.generate(7, (index) {
+                                          return Icon(
+                                            index < hotel.rate
+                                                ? Icons.star
+                                                : Icons.star_border,
+                                            color: Colors.amber,
+                                          );
+                                        }),
                                       ),
                                       Text(
-                                        "Total: \$${totalPrice.toStringAsFixed(2)}",
+                                        "For Night: \$${hotel.pricePerNight.toStringAsFixed(2)}",
+                                      ),
+
+                                      Text(
+                                        "Total Trip (${numberOfNights} nights): \$${totalPrice.toStringAsFixed(2)}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.green[700],
@@ -245,10 +287,16 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                       widget.personCounterKey?.currentState
                                           ?.setSelectedHotelPrice(
                                             hotel.pricePerNight,
+                                            numberOfNights, // عدد الليالي
                                           );
+
                                       Navigator.pop(context, hotel);
-                                      if (widget.nextSteps.isNotEmpty)
-                                        widget.nextSteps.first();
+
+                                      Future.delayed(Duration.zero, () {
+                                        if (widget.nextSteps.isNotEmpty) {
+                                          widget.nextSteps.first();
+                                        }
+                                      });
                                     }
                                     : null,
                             child: Text(AppLocalizations.of(context)!.finish),
@@ -261,7 +309,12 @@ class _HotelsDialogState extends State<HotelsDialog> {
                           child: ElevatedButton(
                             onPressed: () => Navigator.pop(context, null),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                233,
+                                121,
+                                113,
+                              ),
                             ),
                             child: const Text("Cancel Hotel"),
                           ),

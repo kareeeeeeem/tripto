@@ -82,9 +82,9 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
     });
   }
 
-  void setSelectedHotelPrice(double price) {
+  void setSelectedHotelPrice(double pricePerNight, int numberOfNights) {
     setState(() {
-      _selectedHotelPrice = price;
+      _selectedHotelPrice = pricePerNight * numberOfNights;
       _updateTotalPrice();
     });
   }
