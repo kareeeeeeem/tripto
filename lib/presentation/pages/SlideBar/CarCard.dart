@@ -153,12 +153,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
 
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(
-                            255,
-                            233,
-                            121,
-                            113,
-                          ),
+                          backgroundColor: Colors.lightBlue, // 🔵 أزرق فاتح
                           foregroundColor: Colors.white,
                           minimumSize: Size(
                             MediaQuery.of(context).size.width * 0.7,

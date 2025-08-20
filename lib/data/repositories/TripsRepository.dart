@@ -70,9 +70,9 @@ class CarRepository {
     int? category,
   }) async {
     final token = await storage.read(key: 'token');
-    if (token == null || token.isEmpty) {
-      throw Exception('لم يتم العثور على رمز الدخول (Token)');
-    }
+    // if (token == null || token.isEmpty) {
+    //   throw Exception('لم يتم العثور على رمز الدخول (Token)');
+    // }
 
     final uri = Uri.parse('${ApiConstants.baseUrl}cars').replace(
       queryParameters: {

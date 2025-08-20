@@ -53,7 +53,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: available ? Colors.green : Colors.grey, size: 28),
+        Icon(icon, color: available ? Colors.blue : Colors.grey, size: 28),
         const SizedBox(height: 4),
         Text(
           label,
@@ -251,7 +251,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  color: Colors.green,
+                                  color: Colors.blue,
                                 ),
                               ),
                             ],
@@ -318,7 +318,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       // Services
                       const Text(
                         "Services",
@@ -327,7 +327,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: 1),
                       GridView.count(
                         crossAxisCount: 4,
                         shrinkWrap: true,

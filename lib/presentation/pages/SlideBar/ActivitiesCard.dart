@@ -290,7 +290,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 233, 121, 113),
+                      backgroundColor: Colors.lightBlue, // 🔵 أزرق فاتح
+                      foregroundColor: Colors.white,
+
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),

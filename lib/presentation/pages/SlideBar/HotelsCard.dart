@@ -82,7 +82,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
     final numberOfNights = getNumberOfNights();
 
     return Dialog(
-      //backgroundColor: Colors.white10,
+      // backgroundColor: Colors.white10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.7,
@@ -95,7 +95,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
             } else if (state is HotelsLoaded) {
               final hotels = state.hotels;
               if (hotels.isEmpty)
-                return Center(child: Text("No hotels available"));
+                return Center(child: Text("No hotels available now"));
 
               return Column(
                 children: [
@@ -299,6 +299,12 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                       });
                                     }
                                     : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(
+                                0xFF002E70,
+                              ), // 🔵 أزرق غامق
+                              foregroundColor: Colors.white,
+                            ),
                             child: Text(AppLocalizations.of(context)!.finish),
                           ),
                         ),
@@ -309,12 +315,8 @@ class _HotelsDialogState extends State<HotelsDialog> {
                           child: ElevatedButton(
                             onPressed: () => Navigator.pop(context, null),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(
-                                255,
-                                233,
-                                121,
-                                113,
-                              ),
+                              backgroundColor: Colors.lightBlue, // 🔵 أزرق فاتح
+                              foregroundColor: Colors.white,
                             ),
                             child: const Text("Cancel Hotel"),
                           ),

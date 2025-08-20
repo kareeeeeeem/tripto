@@ -85,17 +85,28 @@ class _DateCardState extends State<DateCard> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                loc.choose_from_to(
-                  _formatDate(widget.firstDate),
-                  _formatDate(widget.lastDate),
-                ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center,
+              Column(
+                children: [
+                  Text(
+                    "Trip available from ${_formatDate(widget.firstDate)}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "To ${_formatDate(widget.lastDate)}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
+
               const SizedBox(height: 12),
               TableCalendar(
                 key: ValueKey(
@@ -144,17 +155,18 @@ class _DateCardState extends State<DateCard> {
                 rowHeight: 40,
               ),
               const SizedBox(height: 16),
-              if (isSelectionValid)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    loc.the_period_is(
-                      _formatDate(_rangeStart!),
-                      _formatDate(_rangeEnd!),
-                    ),
-                    style: const TextStyle(fontSize: 14, color: Colors.black87),
-                  ),
+              if (isSelectionValid) ...[
+                Text(
+                  "You Chossed From: ${_formatDate(_rangeStart!)}",
+                  style: const TextStyle(fontSize: 14, color: Colors.black87),
                 ),
+                const SizedBox(height: 4),
+                Text(
+                  "To: ${_formatDate(_rangeEnd!)}",
+                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                ),
+              ],
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
