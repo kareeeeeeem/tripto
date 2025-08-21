@@ -38,6 +38,13 @@ class ActivityCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Card(
+            color: const Color.fromARGB(
+              183,
+              255,
+              255,
+              255,
+            ), // ✅ هنا تغيّر لون الخلفية
+
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -202,6 +209,7 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Dialog(
+      backgroundColor: Colors.white.withOpacity(0.95),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
         height: 600,
@@ -301,8 +309,9 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                     onPressed: () {
                       Navigator.pop(context, null); // ✅ Cancel Activity
                     },
-                    child: const Text(
-                      "Cancel Activity",
+                    child: Text(
+                      AppLocalizations.of(context)!.cancelActivity,
+
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),

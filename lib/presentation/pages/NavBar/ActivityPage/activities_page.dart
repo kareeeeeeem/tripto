@@ -39,6 +39,8 @@ class _ActivityPageState extends State<ActivityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.activities,
@@ -163,7 +165,7 @@ class _ActivityPageState extends State<ActivityPage> {
           );
         },
         child: Card(
-          color: Colors.white,
+          color: const Color.fromARGB(183, 255, 255, 255),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

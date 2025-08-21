@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/Hotelsـmodel.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 import 'package:video_player/video_player.dart';
 
 class HotelAdelPage extends StatefulWidget {
@@ -310,7 +311,8 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            "Room Type: ${getRoomType(hotel.roomType)}",
+                            AppLocalizations.of(context)!.roomType +
+                                ": ${getRoomType(hotel.roomType)}",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -320,8 +322,8 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                       ),
                       const SizedBox(height: 30),
                       // Services
-                      const Text(
-                        "Services",
+                      Text(
+                        AppLocalizations.of(context)!.services,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -336,42 +338,42 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           _buildServiceIcon(
                             hotel.wifiAvailable,
                             Icons.wifi,
-                            "WiFi",
+                            AppLocalizations.of(context)!.wifi,
                           ),
                           _buildServiceIcon(
                             hotel.parkingAvailable,
                             Icons.local_parking,
-                            "Parking",
+                            AppLocalizations.of(context)!.parking,
                           ),
                           _buildServiceIcon(
                             hotel.poolAvailable,
                             Icons.pool,
-                            "Pool",
+                            AppLocalizations.of(context)!.pool,
                           ),
                           _buildServiceIcon(
                             hotel.gymAvailable,
                             Icons.fitness_center,
-                            "Gym",
+                            AppLocalizations.of(context)!.gym,
                           ),
                           _buildServiceIcon(
                             hotel.spaAvailable,
                             Icons.spa,
-                            "Spa",
+                            AppLocalizations.of(context)!.spa,
                           ),
                           _buildServiceIcon(
                             hotel.restaurantAvailable,
                             Icons.restaurant,
-                            "Restaurant",
+                            AppLocalizations.of(context)!.restaurant,
                           ),
                           _buildServiceIcon(
                             hotel.roomServiceAvailable,
                             Icons.room_service,
-                            "Room Service",
+                            AppLocalizations.of(context)!.roomService,
                           ),
                           _buildServiceIcon(
                             hotel.petFriendly,
                             Icons.pets,
-                            "Pet Friendly",
+                            AppLocalizations.of(context)!.petFriendly,
                           ),
                         ],
                       ),

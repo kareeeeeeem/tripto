@@ -104,8 +104,6 @@ dependencies:
 
   email_validator: ^3.0.0
 
-  cached_network_image: ^3.4.1
-
   flutter_cache_manager: ^3.4.1
   #chat to whatsapp
 

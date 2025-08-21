@@ -88,7 +88,9 @@ class _DateCardState extends State<DateCard> {
               Column(
                 children: [
                   Text(
-                    "Trip available from ${_formatDate(widget.firstDate)}",
+                    AppLocalizations.of(
+                      context,
+                    )!.tripAvailableFrom(_formatDate(widget.firstDate)),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -97,7 +99,9 @@ class _DateCardState extends State<DateCard> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "To ${_formatDate(widget.lastDate)}",
+                    AppLocalizations.of(
+                      context,
+                    )!.tripAvailableTo(_formatDate(widget.lastDate)),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -153,16 +157,24 @@ class _DateCardState extends State<DateCard> {
                 ),
                 sixWeekMonthsEnforced: true,
                 rowHeight: 40,
+
+                locale: Localizations.localeOf(context).languageCode,
               ),
               const SizedBox(height: 16),
+
+              // بعد ما يختار
               if (isSelectionValid) ...[
                 Text(
-                  "You Chossed From: ${_formatDate(_rangeStart!)}",
+                  AppLocalizations.of(
+                    context,
+                  )!.youChoseFrom(_formatDate(_rangeStart!)),
                   style: const TextStyle(fontSize: 14, color: Colors.black87),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "To: ${_formatDate(_rangeEnd!)}",
+                  AppLocalizations.of(
+                    context,
+                  )!.youChoseTo(_formatDate(_rangeEnd!)),
                   style: const TextStyle(fontSize: 14, color: Colors.black87),
                 ),
               ],

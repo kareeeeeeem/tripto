@@ -147,7 +147,6 @@ class _RightButtonsState extends State<RightButtons> {
     );
 
     // Date Button
-    // Date Button
     if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
@@ -261,7 +260,6 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
-
     if (showHotel) {
       buttons.add(
         _ButtonData(
@@ -286,10 +284,10 @@ class _RightButtonsState extends State<RightButtons> {
                         ),
                     child: HotelsDialog(
                       subDestinationId: trip.subDestinationId!,
-                      nextSteps: [],
                       personCounterKey: widget.personCounterKey,
                       startDate: _rangeStart,
                       endDate: _rangeEnd,
+                      nextSteps: [], // ممكن تسيبها فاضية
                     ),
                   ),
             );
@@ -300,11 +298,28 @@ class _RightButtonsState extends State<RightButtons> {
                     : 1;
 
             if (selectedHotel != null) {
+              // ضبط السعر في PersonCounterWithPrice
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 selectedHotel.pricePerNight,
                 nights,
               );
+
+              // 🔹 تحديد الزر الحالي للـ Hotel
+              final currentIndex = buttons.indexWhere(
+                (b) => b.label == AppLocalizations.of(context)!.hotel,
+              );
+
+              final nextButtonIndex = currentIndex + 1;
+
+              if (nextButtonIndex < buttons.length) {
+                // فتح الزر التالي مباشرة
+                setState(() {
+                  selectedIndex = nextButtonIndex;
+                });
+                buttons[nextButtonIndex].onPressed?.call();
+              }
             } else {
+              // لو المستخدم لغى الاختيار
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 0,
                 nights,
@@ -416,6 +431,7 @@ class _RightButtonsState extends State<RightButtons> {
               context: context,
               builder: (context) => const ActivitiesListDialog(),
             );
+
             if (selectedActivity != null) {
               final price =
                   double.tryParse(selectedActivity.price.toString()) ?? 0.0;

@@ -120,8 +120,28 @@
   "the_period_is": "The period is: {start} to {end}",
   "cancel": "Cancel",
   "ok": "OK",
-  "totalPriceForStay": "Total price for stay"
-
-
-
+  "totalPriceForStay": "Total price for stay",
+   "continueButton": "Continue",
+  "cancelHotel": "Cancel Hotel",
+  "cancelActivity": "Cancel Activity",
+  "cancelCar": "Cancel car",
+   "noDescription": "No description available",
+  "wifi": "WiFi",
+  "parking": "Parking",
+  "pool": "Pool",
+  "gym": "Gym",
+  "spa": "Spa",
+  "restaurant": "Restaurant",
+  "roomService": "Room Service",
+  "petFriendly": "Pet Friendly",
+  "roomType": "Room Type",
+  "services": "Services",
+  "forNight": "For Night:",
+  "totalTrip": "Total Trip ({numberOfNights} nights):",
+  "tripAvailableFrom": "Trip available from {date}",
+  "tripAvailableTo": "To {date}",
+  "youChoseFrom": "You chose from: {date}",
+  "youChoseTo": "To: {date}",
+  "cancel": "Cancel",
+  "ok": "OK"
 }

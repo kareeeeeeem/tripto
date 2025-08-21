@@ -120,8 +120,30 @@
   "the_period_is": "الفترة: من {start} إلى {end}",
   "cancel": "إلغاء",
   "ok": "موافق",
-  "totalPriceForStay": "إجمالي سعر الإقامة"
-
+  "totalPriceForStay": "إجمالي سعر الإقامة",
+  "continueButton": "استمر",
+  "cancelHotel": "إلغاء الفندق",
+  "cancelActivity": "إلغاء النشاط",
+  "cancelCar": "إلغاء السيارة",
+    "noDescription": "لا يوجد وصف متاح",
+  "wifi": "واي فاي",
+  "parking": "موقف سيارات",
+  "pool": "مسبح",
+  "gym": "صالة ألعاب رياضية",
+  "spa": "منتجع صحي",
+  "restaurant": "مطعم",
+  "roomService": "خدمة الغرف",
+  "petFriendly": "صديق للحيوانات",
+  "roomType": "نوع الغرفة",
+  "services": "الخدمات",
+  "forNight": "الليله:",
+  "totalTrip": "إجمالي الرحلة ({numberOfNights} ليالي):",
+  "tripAvailableFrom": "الرحلة متاحة من {date}",
+  "tripAvailableTo": "إلى {date}",
+  "youChoseFrom": "لقد اخترت من: {date}",
+  "youChoseTo": "إلى: {date}",
+  "cancel": "إلغاء",
+  "ok": "موافق"
 
 
 }

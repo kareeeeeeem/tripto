@@ -355,4 +355,77 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalPriceForStay => 'Total price for stay';
+
+  @override
+  String get continueButton => 'Continue';
+
+  @override
+  String get cancelHotel => 'Cancel Hotel';
+
+  @override
+  String get cancelActivity => 'Cancel Activity';
+
+  @override
+  String get cancelCar => 'Cancel car';
+
+  @override
+  String get noDescription => 'No description available';
+
+  @override
+  String get wifi => 'WiFi';
+
+  @override
+  String get parking => 'Parking';
+
+  @override
+  String get pool => 'Pool';
+
+  @override
+  String get gym => 'Gym';
+
+  @override
+  String get spa => 'Spa';
+
+  @override
+  String get restaurant => 'Restaurant';
+
+  @override
+  String get roomService => 'Room Service';
+
+  @override
+  String get petFriendly => 'Pet Friendly';
+
+  @override
+  String get roomType => 'Room Type';
+
+  @override
+  String get services => 'Services';
+
+  @override
+  String get forNight => 'For Night:';
+
+  @override
+  String totalTrip(Object numberOfNights) {
+    return 'Total Trip ($numberOfNights nights):';
+  }
+
+  @override
+  String tripAvailableFrom(Object date) {
+    return 'Trip available from $date';
+  }
+
+  @override
+  String tripAvailableTo(Object date) {
+    return 'To $date';
+  }
+
+  @override
+  String youChoseFrom(Object date) {
+    return 'You chose from: $date';
+  }
+
+  @override
+  String youChoseTo(Object date) {
+    return 'To: $date';
+  }
 }

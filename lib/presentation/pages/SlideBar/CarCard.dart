@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/widget/CarDetials.dart';
 import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
 
@@ -139,8 +140,9 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          'Continue',
+                        child: Text(
+                          AppLocalizations.of(context)!.continueButton,
+
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -169,8 +171,9 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                             context,
                           ).pop(null); // بيرجع null عشان نمسح السعر
                         },
-                        child: const Text(
-                          'Cancel Car',
+                        child: Text(
+                          AppLocalizations.of(context)!.cancelCar,
+
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

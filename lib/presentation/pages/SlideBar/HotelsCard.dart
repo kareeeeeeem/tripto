@@ -82,10 +82,11 @@ class _HotelsDialogState extends State<HotelsDialog> {
     final numberOfNights = getNumberOfNights();
 
     return Dialog(
-      // backgroundColor: Colors.white10,
+      backgroundColor: Colors.white.withOpacity(0.95),
+
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.6,
         child: BlocBuilder<HotelsBloc, HotelsState>(
           builder: (context, state) {
             if (state is HotelsLoading) {
@@ -111,7 +112,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(11),
                       itemCount: hotels.length,
                       itemBuilder: (context, index) {
                         final hotel = hotels[index];
@@ -246,11 +247,12 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                                 ? Icons.star
                                                 : Icons.star_border,
                                             color: Colors.amber,
+                                            size: 20, // هنا حجم النجمة بالبيكسل
                                           );
                                         }),
                                       ),
                                       Text(
-                                        "For Night: \$${hotel.pricePerNight.toStringAsFixed(2)}",
+                                        "${AppLocalizations.of(context)!.forNight} \$${hotel.pricePerNight.toStringAsFixed(2)}",
                                       ),
 
                                       Text(
@@ -305,7 +307,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
                               ), // 🔵 أزرق غامق
                               foregroundColor: Colors.white,
                             ),
-                            child: Text(AppLocalizations.of(context)!.finish),
+                            child: Text(
+                              AppLocalizations.of(context)!.continueButton,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -318,7 +322,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
                               backgroundColor: Colors.lightBlue, // 🔵 أزرق فاتح
                               foregroundColor: Colors.white,
                             ),
-                            child: const Text("Cancel Hotel"),
+                            child: Text(
+                              AppLocalizations.of(context)!.cancelHotel,
+                            ),
                           ),
                         ),
                       ],

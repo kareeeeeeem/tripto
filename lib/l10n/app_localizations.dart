@@ -769,6 +769,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total price for stay'**
   String get totalPriceForStay;
+
+  /// No description provided for @continueButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueButton;
+
+  /// No description provided for @cancelHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Hotel'**
+  String get cancelHotel;
+
+  /// No description provided for @cancelActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Activity'**
+  String get cancelActivity;
+
+  /// No description provided for @cancelCar.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel car'**
+  String get cancelCar;
+
+  /// No description provided for @noDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available'**
+  String get noDescription;
+
+  /// No description provided for @wifi.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get wifi;
+
+  /// No description provided for @parking.
+  ///
+  /// In en, this message translates to:
+  /// **'Parking'**
+  String get parking;
+
+  /// No description provided for @pool.
+  ///
+  /// In en, this message translates to:
+  /// **'Pool'**
+  String get pool;
+
+  /// No description provided for @gym.
+  ///
+  /// In en, this message translates to:
+  /// **'Gym'**
+  String get gym;
+
+  /// No description provided for @spa.
+  ///
+  /// In en, this message translates to:
+  /// **'Spa'**
+  String get spa;
+
+  /// No description provided for @restaurant.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant'**
+  String get restaurant;
+
+  /// No description provided for @roomService.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Service'**
+  String get roomService;
+
+  /// No description provided for @petFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Friendly'**
+  String get petFriendly;
+
+  /// No description provided for @roomType.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Type'**
+  String get roomType;
+
+  /// No description provided for @services.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get services;
+
+  /// No description provided for @forNight.
+  ///
+  /// In en, this message translates to:
+  /// **'For Night:'**
+  String get forNight;
+
+  /// No description provided for @totalTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Trip ({numberOfNights} nights):'**
+  String totalTrip(Object numberOfNights);
+
+  /// No description provided for @tripAvailableFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip available from {date}'**
+  String tripAvailableFrom(Object date);
+
+  /// No description provided for @tripAvailableTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To {date}'**
+  String tripAvailableTo(Object date);
+
+  /// No description provided for @youChoseFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'You chose from: {date}'**
+  String youChoseFrom(Object date);
+
+  /// No description provided for @youChoseTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To: {date}'**
+  String youChoseTo(Object date);
 }
 
 class _AppLocalizationsDelegate

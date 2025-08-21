@@ -353,4 +353,77 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get totalPriceForStay => 'إجمالي سعر الإقامة';
+
+  @override
+  String get continueButton => 'استمر';
+
+  @override
+  String get cancelHotel => 'إلغاء الفندق';
+
+  @override
+  String get cancelActivity => 'إلغاء النشاط';
+
+  @override
+  String get cancelCar => 'إلغاء السيارة';
+
+  @override
+  String get noDescription => 'لا يوجد وصف متاح';
+
+  @override
+  String get wifi => 'واي فاي';
+
+  @override
+  String get parking => 'موقف سيارات';
+
+  @override
+  String get pool => 'مسبح';
+
+  @override
+  String get gym => 'صالة ألعاب رياضية';
+
+  @override
+  String get spa => 'منتجع صحي';
+
+  @override
+  String get restaurant => 'مطعم';
+
+  @override
+  String get roomService => 'خدمة الغرف';
+
+  @override
+  String get petFriendly => 'صديق للحيوانات';
+
+  @override
+  String get roomType => 'نوع الغرفة';
+
+  @override
+  String get services => 'الخدمات';
+
+  @override
+  String get forNight => 'الليله:';
+
+  @override
+  String totalTrip(Object numberOfNights) {
+    return 'إجمالي الرحلة ($numberOfNights ليالي):';
+  }
+
+  @override
+  String tripAvailableFrom(Object date) {
+    return 'الرحلة متاحة من $date';
+  }
+
+  @override
+  String tripAvailableTo(Object date) {
+    return 'إلى $date';
+  }
+
+  @override
+  String youChoseFrom(Object date) {
+    return 'لقد اخترت من: $date';
+  }
+
+  @override
+  String youChoseTo(Object date) {
+    return 'إلى: $date';
+  }
 }

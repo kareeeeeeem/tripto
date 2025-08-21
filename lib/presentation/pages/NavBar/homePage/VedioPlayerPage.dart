@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
 import 'package:tripto/presentation/pages/widget/payment_option.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/l10n/app_localizations.dart';
@@ -27,234 +25,537 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  // --- الثوابت والمتغيرات الأصلية الخاصة بك ---
+  // ignore: unused_field
   final _storage = const FlutterSecureStorage();
   final _scrollController = PageController();
-  final double _bookingPricePerPerson = 250.0;
+  // ignore: unused_field
+  final double _bookingPricePerPerson = 0.0;
   double selectedCarPrice = 0.0;
   List<GlobalKey<PersonCounterWithPriceState>> _personCounterKeys = [];
-
-  List<Map<String, dynamic>> _trips = [];
+  List<Map<String, dynamic>> _allTrips = []; // كل الرحلات
+  List<Map<String, dynamic>> _trips = []; // الرحلات المعروضة حالياً
   int _currentIndex = 0;
-  bool _isLoading = true;
-  bool _isVideoInitializing = false;
-  bool _hasError = false;
-  String _errorMessage = '';
   bool _isMuted = false;
-  bool _isInternetAvailable = true;
-  Timer? _pageChangeTimer; // ضيفها فوق في الكلاس
 
-  // Video controllers
-  VideoPlayerController? _videoController;
-  ChewieController? _chewieController;
-  Timer? _retryTimer;
+  // --- متغيرات الحالة لإدارة الفيديو والتحميل ---
+  final Map<int, VideoPlayerController> _videoControllers = {};
+  final Map<int, ChewieController> _chewieControllers = {};
+  final Map<int, bool> _videoErrorState = {};
+
+  // --- متغيرات للتحميل الكسول (Lazy Loading) ---
+  bool _isLoadingFirstPage = true;
+  String _initialErrorMessage = '';
+  int _currentPage = 0; // الصفحة الحالية
+  bool _isLoadingMore = false;
+  bool _hasMoreData = true;
+  final int _perPage = 5; // عدد الفيديوهات التي يتم تحميلها في كل مرة
 
   @override
   void initState() {
     super.initState();
-    _checkInternetConnection();
-    _fetchTrips();
+    _fetchAllTrips(); // نبدأ بتحميل كل الرحلات أولاً
+  }
 
-    _scrollController.addListener(() {
-      final newIndex = _scrollController.page?.round() ?? 0;
-      final bloc = context.read<GetTripBloc>();
-
-      if (bloc.currentIndex != newIndex && newIndex < _trips.length) {
-        bloc.add(ChangeCurrentTripEvent(newIndex));
-      }
+  // --- جلب كل الرحلات مرة واحدة ---
+  Future<void> _fetchAllTrips() async {
+    setState(() {
+      _isLoadingFirstPage = true;
+      _initialErrorMessage = '';
     });
-  }
-
-  Future<void> _checkInternetConnection() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      setState(() {
-        _isInternetAvailable =
-            result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-      });
-    } on SocketException catch (_) {
-      setState(() => _isInternetAvailable = false);
-    }
-  }
-
-  Future<void> _fetchTrips() async {
-    if (!_isInternetAvailable) {
-      setState(() {
-        _isLoading = false;
-        _hasError = true;
-        _errorMessage = 'No internet connection';
-      });
-      return;
-    }
 
     try {
-      setState(() {
-        _isLoading = true;
-        _hasError = false;
-      });
+      final allTripsData = await TripsRepository().fetchTrips();
+      if (!mounted) return;
 
-      final trips = await TripsRepository().fetchTrips();
-
-      if (trips.isEmpty) {
+      if (allTripsData.isEmpty) {
         setState(() {
-          _isLoading = false;
-          _hasError = true;
-          _errorMessage = 'No trips available';
+          _initialErrorMessage = 'No trips available';
+          _isLoadingFirstPage = false;
         });
         return;
       }
 
-      setState(() {
-        _trips = trips.map((trip) => trip.toVideoPlayerJson()).toList();
-        _isLoading = false;
+      // تحويل إلى التنسيق المطلوب
+      final allTrips =
+          allTripsData.map((trip) => trip.toVideoPlayerJson()).toList();
 
+      setState(() {
+        _allTrips = allTrips;
+        _trips = allTrips.take(_perPage).toList(); // أخذ أول دفعة
         _personCounterKeys = List.generate(
           _trips.length,
           (index) => GlobalKey<PersonCounterWithPriceState>(),
         );
+        _isLoadingFirstPage = false;
+        _hasMoreData = _allTrips.length > _perPage;
       });
 
-      await _initializeVideo(0);
+      // تحميل الفيديو الحالي (وتشغيله) والفيديو التالي
+      _initializeAndPreloadVideo(0, autoPlay: true);
+      if (_trips.length > 1) {
+        _initializeAndPreloadVideo(1);
+      }
     } catch (e) {
-      debugPrint('Error fetching trips');
+      if (!mounted) return;
+      debugPrint('Error fetching all trips: $e');
       setState(() {
-        _isLoading = false;
-        _hasError = true;
-        _errorMessage =
-            e.toString().contains('HTML')
-                ? 'Server error: Please try again later'
-                : 'Loading:';
+        _isLoadingFirstPage = false;
+        _initialErrorMessage = 'Failed to load trips. Please try again.';
       });
     }
   }
 
-  Future<void> _initializeVideo(int index) async {
-    context.read<GetTripBloc>().add(ChangeCurrentTripEvent(index));
-    if (_videoController != null && index != _currentIndex) {
-      _videoController!.pause();
+  // --- جلب المزيد من البيانات عند التمرير (Lazy Loading) ---
+  Future<void> _fetchMoreTrips() async {
+    if (_isLoadingMore || !_hasMoreData) return;
+
+    setState(() => _isLoadingMore = true);
+    _currentPage++;
+
+    final startIndex = _currentPage * _perPage;
+    if (startIndex >= _allTrips.length) {
+      setState(() {
+        _hasMoreData = false;
+        _isLoadingMore = false;
+      });
+      return;
     }
 
-    _disposeCurrentVideo();
+    final newTrips = _allTrips.skip(startIndex).take(_perPage).toList();
+
     setState(() {
-      _isVideoInitializing = true;
-      _hasError = false;
-      _currentIndex = index;
+      _trips.addAll(newTrips);
+      // توسيع قائمة المفاتيح لتشمل الرحلات الجديدة
+      _personCounterKeys.addAll(
+        List.generate(
+          newTrips.length,
+          (index) => GlobalKey<PersonCounterWithPriceState>(),
+        ),
+      );
+      _isLoadingMore = false;
+      _hasMoreData = startIndex + _perPage < _allTrips.length;
     });
+  }
+
+  // --- دالة موحدة للتهيئة والتحميل المسبق ---
+  Future<void> _initializeAndPreloadVideo(
+    int index, {
+    bool autoPlay = false,
+  }) async {
+    if (_videoControllers.containsKey(index) || index >= _trips.length) return;
+
+    final videoUrl = _trips[index]['video_url']?.toString() ?? '';
+    if (videoUrl.isEmpty) {
+      if (mounted) setState(() => _videoErrorState[index] = true);
+      return;
+    }
 
     try {
-      final videoUrl = _trips[index]['video_url']?.toString() ?? '';
-      if (videoUrl.isEmpty) throw Exception('No video URL available');
+      final directLink =
+          _isDriveUrl(videoUrl)
+              ? await _getDirectDriveLink(videoUrl)
+              : videoUrl;
+      final controller = VideoPlayerController.network(directLink);
+      _videoControllers[index] = controller;
+      await controller.initialize();
 
-      if (_isDriveUrl(videoUrl)) {
-        final directLink = await _getDirectDriveLink(videoUrl);
-        print("Google Drive direct link: $directLink");
+      final chewieController = ChewieController(
+        videoPlayerController: controller,
+        autoPlay: autoPlay,
+        looping: true,
+        showControls: false,
+        allowFullScreen: false,
+        // _isMuted: _isMuted ? 0.0 : 1.0,
+      );
 
-        _videoController = VideoPlayerController.network(directLink);
-
-        _videoController!.addListener(() {
-          if (_videoController!.value.hasError) {
-            setState(() {
-              _hasError = true;
-              _errorMessage = 'Loading';
-            });
-          }
+      if (mounted) {
+        setState(() {
+          _chewieControllers[index] = chewieController;
+          _videoErrorState[index] = false;
         });
-
-        await _videoController!.initialize();
-        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
-
-        _chewieController = ChewieController(
-          videoPlayerController: _videoController!,
-          autoPlay: true,
-          looping: true,
-          allowFullScreen: false,
-          showControls: false, // لمنع ظهور شريط التحكم وأيقونة الصوت
-
-          errorBuilder: (context, errorMessage) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.cloud_off, size: 50, color: Colors.white),
-                  const SizedBox(height: 16),
-                  Text(
-                    _errorMessage,
-                    style: const TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => _initializeVideo(_currentIndex),
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      } else {
-        _videoController = VideoPlayerController.network(videoUrl);
-        await _videoController!.initialize();
-        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
-        _chewieController = ChewieController(
-          videoPlayerController: _videoController!,
-          autoPlay: true,
-          looping: true,
-          allowFullScreen: false,
-        );
       }
     } catch (e) {
-      debugPrint('Video initialization error:');
-      setState(() {
-        _hasError = true;
-        _errorMessage = 'Loading';
-      });
-      _startRetryTimer(index);
-    } finally {
-      if (mounted) {
-        setState(() => _isVideoInitializing = false);
-      }
+      debugPrint("Error initializing video at index $index: $e");
+      if (mounted) setState(() => _videoErrorState[index] = true);
     }
   }
 
-  void _startRetryTimer(int index) {
-    _retryTimer?.cancel();
-    _retryTimer = Timer(const Duration(seconds: 3), () {
-      if (mounted && _currentIndex == index) {
-        _initializeVideo(index);
-      }
-    });
+  // --- دالة تغيير الصفحة هي التي تدير كل شيء ---
+  void _onPageChanged(int index) {
+    // إيقاف الفيديو السابق
+    if (_chewieControllers.containsKey(_currentIndex)) {
+      _chewieControllers[_currentIndex]?.pause();
+    }
+
+    // تشغيل الفيديو الحالي
+    final currentChewieController = _chewieControllers[index];
+    if (currentChewieController != null) {
+      currentChewieController.play();
+      currentChewieController.setVolume(_isMuted ? 0.0 : 1.0);
+    } else {
+      // إذا لم يكن الفيديو جاهزًا، قم بتهيئته وتشغيله
+      _initializeAndPreloadVideo(index, autoPlay: true);
+    }
+
+    setState(() => _currentIndex = index);
+
+    context.read<GetTripBloc>().add(ChangeCurrentTripEvent(index));
+
+    // التخلص من الفيديوهات البعيدة
+    _disposeDistantVideos(index);
+
+    // تحميل الفيديو التالي والسابق
+    if (index + 1 < _trips.length) {
+      _initializeAndPreloadVideo(index + 1);
+    }
+    if (index - 1 >= 0) {
+      _initializeAndPreloadVideo(index - 1);
+    }
+
+    // جلب المزيد من البيانات عند الاقتراب من النهاية
+    if (index >= _trips.length - 2 && !_isLoadingMore && _hasMoreData) {
+      _fetchMoreTrips();
+    }
   }
 
-  bool _isDriveUrl(String url) {
-    return url.contains('drive.google.com');
+  // --- التخلص من المتحكمات البعيدة لتحرير الذاكرة ---
+  void _disposeDistantVideos(int currentIndex) {
+    final indexesToKeep = [currentIndex, currentIndex - 1, currentIndex + 1];
+    _videoControllers.keys
+        .where((key) => !indexesToKeep.contains(key))
+        .toList()
+        .forEach((key) {
+          _videoControllers[key]?.dispose();
+          _chewieControllers[key]?.dispose();
+          _videoControllers.remove(key);
+          _chewieControllers.remove(key);
+          _videoErrorState.remove(key);
+          debugPrint("Disposed video at index $key");
+        });
   }
+
+  // --- الدوال المساعدة الأصلية ---
+  bool _isDriveUrl(String url) => url.contains('drive.google.com');
 
   String? _extractDriveId(String url) {
     final regExp1 = RegExp(r'file/d/([a-zA-Z0-9_-]+)');
     final regExp2 = RegExp(r'id=([a-zA-Z0-9_-]+)');
-
-    if (regExp1.hasMatch(url)) {
-      return regExp1.firstMatch(url)?.group(1);
-    } else if (regExp2.hasMatch(url)) {
-      return regExp2.firstMatch(url)?.group(1);
-    }
+    if (regExp1.hasMatch(url)) return regExp1.firstMatch(url)?.group(1);
+    if (regExp2.hasMatch(url)) return regExp2.firstMatch(url)?.group(1);
     return null;
   }
 
   Future<String> _getDirectDriveLink(String driveUrl) async {
     final videoId = _extractDriveId(driveUrl);
-    if (videoId != null) {
-      return 'https://drive.google.com/uc?export=download&id=$videoId';
-    }
-    return driveUrl;
+    return videoId != null
+        ? 'https://drive.google.com/uc?export=download&id=$videoId'
+        : driveUrl;
   }
 
-  Future<void> _openInBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      debugPrint('Could not launch $url');
+  void _toggleMute() {
+    setState(() => _isMuted = !_isMuted);
+    _chewieControllers.forEach((_, controller) {
+      controller.setVolume(_isMuted ? 0.0 : 1.0);
+    });
+  }
+
+  void _handleLanguageChange() {
+    final currentLocale = Localizations.localeOf(context).languageCode;
+    final newLocale =
+        currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+    TripToApp.setLocale(context, newLocale);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _videoControllers.forEach((_, controller) => controller.dispose());
+    _chewieControllers.forEach((_, controller) => controller.dispose());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    if (_isLoadingFirstPage) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(color: Colors.white),
+              const SizedBox(height: 20),
+              Text(
+                'Loading trips...',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      );
     }
+
+    if (_trips.isEmpty && _initialErrorMessage.isNotEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, color: Colors.white, size: 50),
+              const SizedBox(height: 20),
+              Text(
+                _initialErrorMessage,
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _fetchAllTrips,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: PageView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        itemCount: _trips.length + (_hasMoreData ? 1 : 0), // +1 لشعار التحميل
+        onPageChanged: _onPageChanged,
+        itemBuilder: (context, index) {
+          // إذا كان هذا هو العنصر الأخير وهناك المزيد من البيانات
+          if (index >= _trips.length) {
+            return _buildLoadingIndicator();
+          }
+
+          final currentTrip = _trips[index];
+          final destinationName = _getLocalizedDestinationName(
+            currentTrip,
+            context,
+          );
+          final subDestination = _getLocalizedSubDestinationName(
+            currentTrip,
+            context,
+          );
+          final chewieController = _chewieControllers[index];
+          final hasError = _videoErrorState[index] ?? false;
+
+          Widget videoWidget;
+          if (hasError) {
+            videoWidget = _buildVideoErrorWidget();
+          } else if (chewieController != null) {
+            videoWidget = Chewie(controller: chewieController);
+          } else {
+            videoWidget = const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            );
+          }
+
+          return Stack(
+            children: [
+              // عرض الفيديو
+              Positioned.fill(
+                child: SizedBox.expand(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width:
+                          _videoControllers[index]?.value.size.width ??
+                          screenWidth,
+                      height:
+                          _videoControllers[index]?.value.size.height ??
+                          screenHeight,
+                      child: videoWidget,
+                    ),
+                  ),
+                ),
+              ),
+
+              // باقي واجهتك الأصلية
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 30,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      destinationName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 10,
+                left:
+                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                right:
+                    Directionality.of(context) == TextDirection.rtl ? null : 10,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.language,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                  onPressed: _handleLanguageChange,
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 10,
+                left:
+                    Directionality.of(context) == TextDirection.rtl ? null : 10,
+                right:
+                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                child: IconButton(
+                  icon: Icon(
+                    _isMuted ? Icons.volume_off : Icons.volume_up,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: _toggleMute,
+                ),
+              ),
+              Align(
+                alignment:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? Alignment.centerLeft
+                        : Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right:
+                        Directionality.of(context) == TextDirection.ltr
+                            ? 10
+                            : 0,
+                    left:
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 10
+                            : 0,
+                  ),
+                  child: RightButtons(
+                    selectedTripIndex: index,
+                    currentTripCategory: currentTrip['category'] ?? 0,
+                    personCounterKey: _personCounterKeys[index],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: screenHeight * 0.18,
+                left:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? null
+                        : screenWidth * 0.060,
+                right:
+                    Directionality.of(context) == TextDirection.rtl
+                        ? screenWidth * 0.060
+                        : null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left:
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? 0
+                                : screenWidth * 0.025,
+                        right:
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? screenWidth * 0.025
+                                : 0,
+                      ),
+                      child: Countrywithcity(
+                        countryName: destinationName,
+                        cityName: subDestination,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.001),
+                    PersonCounterWithPrice(
+                      key: _personCounterKeys[index],
+                      basePricePerPerson:
+                          double.tryParse(
+                            currentTrip['price_per_person']?.toString() ?? '0',
+                          ) ??
+                          0,
+                      maxPersons: currentTrip['max_person'] ?? 30,
+                      textColor: Colors.white,
+                      iconColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      carPrice: selectedCarPrice,
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: screenHeight * 0.12,
+                left: 20,
+                right: 20,
+                child: Center(
+                  child: CustomButton(
+                    text: AppLocalizations.of(context)!.booknow,
+                    onPressed:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PaymentOption(),
+                          ),
+                        ),
+                    width: screenWidth * 0.80,
+                    height: 40,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  // دالة لبناء مؤشر التحميل للصفحات الإضافية
+  Widget _buildLoadingIndicator() {
+    return const Center(child: CircularProgressIndicator(color: Colors.white));
+  }
+
+  // دوال مساعدة إضافية
+  Widget _buildVideoErrorWidget() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.cloud_off, size: 50, color: Colors.white),
+          SizedBox(height: 16),
+          Text(
+            "Video could not be loaded",
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 
   String _getLocalizedDestinationName(
@@ -311,356 +612,5 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       debugPrint('Error getting sub-destination name: $e');
       return '';
     }
-  }
-
-  void _disposeCurrentVideo() {
-    _retryTimer?.cancel();
-    _videoController?.dispose();
-    _videoController = null;
-    _chewieController?.dispose();
-    _chewieController = null;
-  }
-
-  void _toggleMute() {
-    setState(() {
-      _isMuted = !_isMuted;
-      if (_videoController != null) {
-        _videoController!.setVolume(_isMuted ? 0.0 : 1.0);
-      }
-    });
-  }
-
-  void _handleLanguageChange() {
-    final currentLocale = Localizations.localeOf(context).languageCode;
-    final newLocale =
-        currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
-    TripToApp.setLocale(context, newLocale);
-  }
-
-  @override
-  void dispose() {
-    _disposeCurrentVideo();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    if (_isLoading) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 20),
-              Text(
-                'Loading trips...',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (_hasError && _trips.isEmpty) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                _isInternetAvailable ? Icons.error : Icons.wifi_off,
-                color: Colors.white,
-                size: 50,
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  _errorMessage,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleMedium?.copyWith(color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _fetchTrips,
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: PageView.builder(
-        controller: _scrollController,
-        scrollDirection: Axis.vertical,
-        itemCount: _trips.length,
-        onPageChanged: (index) {
-          _pageChangeTimer?.cancel();
-          _pageChangeTimer = Timer(const Duration(milliseconds: 300), () {
-            _initializeVideo(index);
-          });
-        },
-        itemBuilder: (context, index) {
-          final currentTrip = _trips[index];
-          final destinationName = _getLocalizedDestinationName(
-            currentTrip,
-            context,
-          );
-          final subDestination = _getLocalizedSubDestinationName(
-            currentTrip,
-            context,
-          );
-
-          return Stack(
-            children: [
-              // Video Background
-              if (_isVideoInitializing && index == _currentIndex)
-                const Center(child: CircularProgressIndicator())
-              else if (_hasError && index == _currentIndex)
-                _buildVideoErrorWidget(currentTrip['video_url'])
-              else
-                Positioned.fill(child: _buildVideoPlayer()),
-
-              // Destination في الأعلى بالمنتصف
-              Positioned(
-                top:
-                    MediaQuery.of(context).padding.top +
-                    30, // تحت الـ status bar
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      destinationName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 10,
-                left:
-                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                right:
-                    Directionality.of(context) == TextDirection.rtl ? null : 10,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.language,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      onPressed: _handleLanguageChange,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Overlay UI Elements
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 10,
-                left:
-                    Directionality.of(context) == TextDirection.rtl ? null : 10,
-                right:
-                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        _isMuted ? Icons.volume_off : Icons.volume_up,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      onPressed: _toggleMute,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Right Buttons
-              Container(
-                child: Align(
-                  alignment:
-                      Directionality.of(context) == TextDirection.rtl
-                          ? Alignment.centerLeft
-                          : Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right:
-                          Directionality.of(context) == TextDirection.ltr
-                              ? 10
-                              : 0,
-                      left:
-                          Directionality.of(context) == TextDirection.rtl
-                              ? 10
-                              : 0,
-                    ),
-                    child: RightButtons(
-                      selectedTripIndex: index,
-                      currentTripCategory: _trips[index]['category'] ?? 0,
-                      personCounterKey: _personCounterKeys[index],
-                    ),
-                  ),
-                ),
-              ),
-
-              // Destination Info
-              Positioned(
-                bottom: screenHeight * 0.18,
-                left:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? null
-                        : screenWidth * 0.060,
-                right:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? screenWidth * 0.060
-                        : null,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left:
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? 0
-                                : screenWidth * 0.025,
-                        right:
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? screenWidth * 0.025
-                                : 0,
-                      ),
-                      child: Countrywithcity(
-                        countryName: destinationName,
-                        cityName: subDestination,
-                      ),
-                    ),
-
-                    SizedBox(height: screenHeight * 0.001),
-
-                    PersonCounterWithPrice(
-                      key: _personCounterKeys[index],
-
-                      basePricePerPerson:
-                          double.tryParse(
-                            _trips[_currentIndex]['price_per_person']
-                                    ?.toString() ??
-                                '0',
-                          ) ??
-                          0,
-                      maxPersons: _trips[_currentIndex]['max_person'] ?? 30,
-                      textColor: Colors.white,
-                      iconColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      carPrice: selectedCarPrice,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Book Now Button
-              Positioned(
-                bottom: screenHeight * 0.12,
-                left: 20,
-                right: 20,
-                child: Center(
-                  child: CustomButton(
-                    text: AppLocalizations.of(context)!.booknow,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PaymentOption(),
-                        ),
-                      );
-                    },
-                    width: screenWidth * 0.80,
-                    height: 40,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildVideoPlayer() {
-    if (_chewieController == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    final videoSize = _chewieController!.videoPlayerController.value.size;
-
-    return SizedBox.expand(
-      // ياخد كل مساحة الشاشة
-      child: FittedBox(
-        fit: BoxFit.cover, // يخلي الفيديو يغطي الشاشة بالكامل
-        child: SizedBox(
-          width: videoSize.width,
-          height: videoSize.height,
-          child: Chewie(controller: _chewieController!),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildVideoErrorWidget(String videoUrl) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.cloud_off, size: 50, color: Colors.white),
-          const SizedBox(height: 16),
-          Text(
-            _errorMessage,
-            style: const TextStyle(color: Colors.white),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          // ElevatedButton(
-          //   onPressed: () => _openInBrowser(videoUrl),
-          //   child: const Text('Open in Browser'),
-          // ),
-          const SizedBox(height: 16),
-          // ElevatedButton(
-          //   onPressed: () => _initializeVideo(_currentIndex + 1),
-          //   child: const Text('Skip to next'),
-          // ),
-        ],
-      ),
-    );
   }
 }
