@@ -382,7 +382,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gym => 'صالة ألعاب رياضية';
 
   @override
-  String get spa => 'منتجع صحي';
+  String get spa => 'سباي';
 
   @override
   String get restaurant => 'مطعم';
@@ -391,7 +391,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get roomService => 'خدمة الغرف';
 
   @override
-  String get petFriendly => 'صديق للحيوانات';
+  String get petFriendly => 'مسموح باصطحاب الحيوانات';
 
   @override
   String get roomType => 'نوع الغرفة';
@@ -403,8 +403,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get forNight => 'الليله:';
 
   @override
-  String totalTrip(Object numberOfNights) {
-    return 'إجمالي الرحلة ($numberOfNights ليالي):';
+  String pricePerNight(Object price) {
+    return '\$$price/لليلة';
+  }
+
+  @override
+  String totalTrip(Object nights, Object totalPrice) {
+    return 'إجمالي الرحلة ($nights ليالي): \$$totalPrice';
   }
 
   @override

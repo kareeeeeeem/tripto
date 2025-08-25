@@ -86,7 +86,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
 
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.6,
+        width:
+            MediaQuery.of(context).size.width * 0.9, // ياخد 90% من عرض الشاشة
+        height: MediaQuery.of(context).size.height * 0.75, // ياخد 75% من الطول
         child: BlocBuilder<HotelsBloc, HotelsState>(
           builder: (context, state) {
             if (state is HotelsLoading) {
@@ -256,8 +258,16 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                       ),
 
                                       Text(
-                                        "Total Trip (${numberOfNights} nights): \$${totalPrice.toStringAsFixed(2)}",
+                                        AppLocalizations.of(context)!.totalTrip(
+                                          numberOfNights.toString(),
+                                          totalPrice.toStringAsFixed(2),
+                                        ),
                                         style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.035,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.green[700],
                                         ),

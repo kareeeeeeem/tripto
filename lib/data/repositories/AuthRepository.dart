@@ -57,6 +57,8 @@ class AuthRepository {
 
     debugPrint('Login status: ${response.statusCode}');
     debugPrint('Login body: ${response.body}');
+    debugPrint('Request phone: $phone');
+    debugPrint('Request password: $password');
 
     final data = json.decode(response.body);
 

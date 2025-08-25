@@ -59,7 +59,8 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
         Text(
           label,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: MediaQuery.of(context).size.width * 0.03, // 5% من العرض
+
             color: available ? Colors.black : Colors.grey,
           ),
         ),
@@ -100,7 +101,9 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   children: [
                     // Image/Video slider
                     SizedBox(
-                      height: 280,
+                      height:
+                          MediaQuery.of(context).size.height *
+                          0.35, // 35% من ارتفاع الشاشة
                       child: PageView.builder(
                         controller: _pageController,
                         itemCount: mediaItems.length,
@@ -248,7 +251,9 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                 }),
                               ),
                               Text(
-                                "\$${hotel.pricePerNight.toStringAsFixed(2)}/night",
+                                AppLocalizations.of(context)!.pricePerNight(
+                                  hotel.pricePerNight.toStringAsFixed(2),
+                                ),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -386,8 +391,9 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
           ),
           // Back button
           Positioned(
-            top: 40,
-            left: 16,
+            top: MediaQuery.of(context).size.height * 0.05, // 5% من الارتفاع
+            left: MediaQuery.of(context).size.width * 0.04, // 4% من العرض
+
             child: CircleAvatar(
               backgroundColor: Colors.black45,
               child: IconButton(

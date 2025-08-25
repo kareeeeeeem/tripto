@@ -866,11 +866,17 @@ abstract class AppLocalizations {
   /// **'For Night:'**
   String get forNight;
 
+  /// No description provided for @pricePerNight.
+  ///
+  /// In en, this message translates to:
+  /// **'\${price}/night'**
+  String pricePerNight(Object price);
+
   /// No description provided for @totalTrip.
   ///
   /// In en, this message translates to:
-  /// **'Total Trip ({numberOfNights} nights):'**
-  String totalTrip(Object numberOfNights);
+  /// **'Total Trip ({nights} nights): \${totalPrice}'**
+  String totalTrip(Object nights, Object totalPrice);
 
   /// No description provided for @tripAvailableFrom.
   ///

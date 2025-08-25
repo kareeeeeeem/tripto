@@ -21,193 +21,48 @@ class InfoCard extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.80,
       height: MediaQuery.of(context).size.height * 0.20,
-      child: Column(
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: SingleChildScrollView(
-                child: Container(
-                  decoration: const BoxDecoration(color: Colors.white),
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // شركة الرحلات
-                      Text(
-                        AppLocalizations.of(context)!.tourismcompany,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/tourism.png",
-                              width: 100,
-                              height: 50,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  isArabic
-                                      ? trip.companyNameAr ?? ''
-                                      : trip.companyNameEn ?? '',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                ExpandedText(
-                                  text:
-                                      isArabic
-                                          ? trip.companyDesAr ?? ''
-                                          : trip.companyDesEn ?? '',
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // const SizedBox(height: 16),
-
-                      /*
-                      // باقي الأقسام معلقين مؤقتًا
-
-                      Text(
-                        AppLocalizations.of(context)!.flyingcompany,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/images/egyptair.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "EgyptAir",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                ExpandedText(
-                                  text: "Flight provided by EgyptAir.",
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const Divider(thickness: 1, color: Colors.grey),
-                      const SizedBox(height: 16),
-
-                      Text(
-                        AppLocalizations.of(context)!.reserveacar,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/images/kia.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Kia Rental",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                ExpandedText(
-                                  text: "Car reservation service available.",
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const Divider(thickness: 1, color: Colors.grey),
-                      const SizedBox(height: 16),
-
-                      Text(
-                        AppLocalizations.of(context)!.bookinghotel,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/images/hilton.png",
-                            width: 100,
-                            height: 50,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Hilton Hotel",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                ExpandedText(
-                                  text: "Hotel booking service available.",
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      */
-                    ],
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        child: Container(
+          decoration: const BoxDecoration(color: Colors.white),
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // عنوان الشركة
+                Text(
+                  AppLocalizations.of(context)!.tourismcompany,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
+                const SizedBox(height: 10),
+
+                // بيانات الشركة
+                Text(
+                  isArabic
+                      ? trip.companyNameAr ?? ''
+                      : trip.companyNameEn ?? '',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 6),
+
+                ExpandedText(
+                  text:
+                      isArabic
+                          ? trip.companyDesAr ?? ''
+                          : trip.companyDesEn ?? '',
+                  maxLines: 5, // زوّد عدد السطور عشان النص يظهر كامل
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

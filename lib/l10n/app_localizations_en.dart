@@ -405,8 +405,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forNight => 'For Night:';
 
   @override
-  String totalTrip(Object numberOfNights) {
-    return 'Total Trip ($numberOfNights nights):';
+  String pricePerNight(Object price) {
+    return '\$$price/night';
+  }
+
+  @override
+  String totalTrip(Object nights, Object totalPrice) {
+    return 'Total Trip ($nights nights): \$$totalPrice';
   }
 
   @override
