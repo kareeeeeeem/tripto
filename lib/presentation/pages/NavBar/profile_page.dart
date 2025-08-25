@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
             if (state is LogoutSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const Signuporlogin()),
+                MaterialPageRoute(builder: (_) => const Signuporlogin()),
                 (route) => false,
               );
             } else if (state is LogoutFailure) {
@@ -242,6 +242,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 SizedBox(height: height * 0.025),
+                // Logout Button (Bloc)
                 SizedBox(
                   width: width,
                   height: height * 0.06,
@@ -266,6 +267,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 SizedBox(height: height * 0.015),
+                // Delete Account Button
+                SizedBox(
+                  width: width,
+                  height: height * 0.06,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black54,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      // TODO: Delete account logic
+                    },
+                    child: Text(
+                      'Delete my account',
+                      style: GoogleFonts.markaziText(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: height * 0.05),
               ],
             ),
           ),
