@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/presentation/app/app.dart';
+import 'package:tripto/presentation/pages/SideMenu.dart';
 import '../../../core/models/Saved_model.dart';
 import '../widget/payment_option.dart';
 import 'package:tripto/l10n/app_localizations.dart';
@@ -94,7 +95,7 @@ class _FavoritePageState extends State<FavoritePage>
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const App()),
+              MaterialPageRoute(builder: (context) => const SideMenu()),
               (route) => false,
             );
           },

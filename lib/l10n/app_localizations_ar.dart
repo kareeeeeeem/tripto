@@ -431,4 +431,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String youChoseTo(Object date) {
     return 'إلى: $date';
   }
+
+  @override
+  String get aboutus => 'عنَّا ';
+
+  @override
+  String get aboutus1 =>
+      'نحن وكالة لتطوير تطبيقات الهواتف المحمولة، شغوفون بالسياحة. بفضل ';
+
+  @override
+  String get aboutus2 => ' 20 عامًا من الخبرة ';
+
+  @override
+  String get aboutus3 => 'في فرنسا ومصر، تُدار شركتنا';
+
+  @override
+  String get aboutus4 => ' من بلجيكا. ';
+
+  @override
+  String get aboutus5 =>
+      'قمنا بتصميم تطبيق فريد لتحويل تخطيط وتنفيذ رحلاتكم. نحن نعمل مع شركاء موثوق بهم في مصر ودول الخليج لضمان تقديم خدمة عالية الجودة لكم.';
+
+  @override
+  String get abutus6 =>
+      'تم تصميم تطبيقنا لتقديم تجربة سفر سلسة لا تُنسى. فهو يقدّم لكم  ';
+
+  @override
+  String get aboutus7 =>
+      'مجموعة مختارة بعناية من أفضل الفنادق والشقق والسيارات وشركات الطيران';
+
+  @override
+  String get aboutus8 => 'نقدم لكم:';
+
+  @override
+  String get aboutus9 => ' • رحلات طيران وإقامات.';
+
+  @override
+  String get aboutus10 => '• تأجير سيارات وأنشطة ميدانية.';
+
+  @override
+  String get aboutus11 => '• مرافقة ودعم على أعلى مستوى ';
+
+  @override
+  String get aboutus12 =>
+      '، مع فريق عمل مؤهل، لضمان سير كل مرحلة من مراحل إقامتكم بسلاسة';
+
+  @override
+  String get aboutus13 =>
+      'نحن ملتزمون بأن نقدم لكم أفضل ما في مصر. بفضل خبرتنا وشركائنا المحليين، أنتم على يقين بأنكم ستعيشون مغامرة لا تُنسى، بكل راحة بال وطمأنينة.';
+
+  @override
+  String get aboutus14 =>
+      'رحلاتك وتضمن لك المساعدة على مدار الساعة طوال أيام الأسبوع باللغتين العربية والإنجليزية';
+
+  @override
+  String get favourite => 'المفضلة';
+
+  @override
+  String get sidemenu => 'قائمة الصفحات';
 }

@@ -8,6 +8,8 @@ import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/data/repositories/AuthRepository.dart';
 import 'package:tripto/data/repositories/TripsRepository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
+import 'package:tripto/presentation/About-us.dart';
+import 'package:tripto/presentation/pages/SideMenu.dart';
 import 'l10n/app_localizations.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 
@@ -91,6 +93,7 @@ class _TripToAppState extends State<TripToApp> {
           debugShowCheckedModeBanner: false,
           initialRoute: '/',
           routes: AppRoutes.routes,
+          // home: SideMenu(),
         ),
       ),
     );
