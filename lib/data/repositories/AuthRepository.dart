@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as _storage;
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/services/api.dart';
 
@@ -82,11 +81,12 @@ class AuthRepository {
   }
 
   Future<void> logout() async {
-    await storage.delete(key: 'token');
+    await storage.delete(key: 'jwt_token');
+    await storage.delete(key: 'user_data');
   }
 
   Future<String?> getToken() async {
-    return await storage.read(key: 'token');
+    return await storage.read(key: 'jwt_token');
   }
 
   Future<List<GetActivityModel>> getActivities() async {

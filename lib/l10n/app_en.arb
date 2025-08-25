@@ -144,5 +144,7 @@
   "youChoseFrom": "You chose from: {date}",
   "youChoseTo": "To: {date}",
   "cancel": "Cancel",
-  "ok": "OK"
+  "ok": "OK",
+  "userUpdated": "User updated successfully"
+
 }

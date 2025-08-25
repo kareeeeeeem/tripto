@@ -431,4 +431,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String youChoseTo(Object date) {
     return 'إلى: $date';
   }
+
+  @override
+  String get userUpdated => 'تم تحديث المستخدم بنجاح';
 }

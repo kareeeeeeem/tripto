@@ -73,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response['error'] == true) {
-        String errorMessage = response['message'];
+        String errorMessage = response['message'] ?? 'Login failed';
         if (response['errors'] != null) {
           response['errors'].forEach((key, value) {
             if (value is List && value.isNotEmpty) {
@@ -83,6 +83,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
         emit(AuthFailure(error: errorMessage));
       } else {
+        // تخزين التوكن وبيانات المستخدم بعد تسجيل الدخول
+        await _storage.write(key: 'jwt_token', value: response['token']);
+        await _storage.write(
+          key: 'user_data',
+          value: jsonEncode(response['user']),
+        );
+
         emit(
           LoginSuccess(
             message: response['message_en'] ?? 'Login successful',

@@ -433,4 +433,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String youChoseTo(Object date) {
     return 'To: $date';
   }
+
+  @override
+  String get userUpdated => 'User updated successfully';
 }

@@ -901,6 +901,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To: {date}'**
   String youChoseTo(Object date);
+
+  /// No description provided for @userUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'User updated successfully'**
+  String get userUpdated;
 }
 
 class _AppLocalizationsDelegate

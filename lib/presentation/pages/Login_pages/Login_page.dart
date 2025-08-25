@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
@@ -58,29 +59,15 @@ class _LoginState extends State<Login> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) async {
           if (state is AuthLoading) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(AppLocalizations.of(context)!.loading)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Loading...')));
           } else if (state is LoginSuccess) {
-            //  await _storage.write(key: 'token', value: state.token);
-            //  print('🔐 Token: ${state.token}');
-            //print('👤 User: ${state.user['name']} (${state.user['email']})');
-
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.green,
-              ),
-            );
             Navigator.of(context).pushReplacementNamed('/app');
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${state.error}'),
-                backgroundColor: Colors.red,
-              ),
+              SnackBar(content: Text(state.error), backgroundColor: Colors.red),
             );
           }
         },
@@ -120,28 +107,25 @@ class _LoginState extends State<Login> {
 
                   SizedBox(height: screenHeight * 0.08),
 
-                  /// Phone Field (رقم الهاتف فقط أرقام)
+                  /// Phone Field (رقم الهاتف  مع اختيار كود الدولة)
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.04,
                     ),
-                    child: TextFormField(
-                      controller: phoneController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    child: IntlPhoneField(
+                      keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.phone,
+                        suffixIcon: const Icon(Icons.phone),
                         filled: true,
                         fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.black45),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(
-                            color: Colors.black45,
-                            width: 1,
-                          ),
+                          borderSide: const BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
@@ -150,9 +134,33 @@ class _LoginState extends State<Login> {
                             width: 2,
                           ),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 2,
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(
+                            color: Colors.red,
+                            width: 2,
+                          ),
+                        ),
                       ),
-                      onChanged: (value) {
-                        completePhoneNumber = value;
+                      initialCountryCode: 'EG', // ممكن تغيرها لأي دولة افتراضية
+                      onChanged: (phone) {
+                        completePhoneNumber = phone.completeNumber;
+                      },
+                      validator: (phone) {
+                        if (phone == null || phone.number.isEmpty) {
+                          return AppLocalizations.of(context)!.pleaseEnterPhone;
+                        }
+                        if (phone.number.length < 6) {
+                          return AppLocalizations.of(context)!.phoneTooShort;
+                        }
+                        return null;
                       },
                     ),
                   ),
@@ -222,7 +230,7 @@ class _LoginState extends State<Login> {
                               passwordController.text.isNotEmpty)) {
                             context.read<AuthBloc>().add(
                               LoginRequested(
-                                phoneNumber: completePhoneNumber!,
+                                phoneNumber: completePhoneNumber!, // كامل }
                                 password: passwordController.text,
                               ),
                             );

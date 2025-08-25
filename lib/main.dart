@@ -3,9 +3,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripto/bloc/ProfileUserDate/Edit/EditBloc.dart';
+import 'package:tripto/bloc/ProfileUserDate/logout/LogoutBloc.dart';
+import 'package:tripto/bloc/ProfileUserDate/logout/LogoutRepository.dart';
 import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/data/repositories/AuthRepository.dart';
+import 'package:tripto/data/repositories/ProfileRepository.dart';
 import 'package:tripto/data/repositories/TripsRepository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'l10n/app_localizations.dart';
@@ -51,6 +55,10 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
+        RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
+        RepositoryProvider<AccountRepository>(
+          create: (_) => AccountRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -69,6 +77,20 @@ class _TripToAppState extends State<TripToApp> {
                       ..add(FetchTrips()),
           ),
           BlocProvider<TripBloc>(create: (context) => TripBloc()),
+          BlocProvider(
+            create:
+                (context) => UpdateUserBloc(
+                  userRepository: RepositoryProvider.of<UserRepository>(
+                    context,
+                  ),
+                ),
+          ),
+          BlocProvider<LogoutBloc>(
+            create:
+                (context) => LogoutBloc(
+                  repository: RepositoryProvider.of<AccountRepository>(context),
+                ),
+          ),
         ],
         child: MaterialApp(
           locale: _locale,

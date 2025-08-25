@@ -144,7 +144,9 @@
   "youChoseFrom": "لقد اخترت من: {date}",
   "youChoseTo": "إلى: {date}",
   "cancel": "إلغاء",
-  "ok": "موافق"
+  "ok": "موافق",
+  "userUpdated": "تم تحديث المستخدم بنجاح"
+
 
 
 }

@@ -28,9 +28,13 @@ class RegisterRequested extends AuthEvent {
 }
 
 class LoginRequested extends AuthEvent {
-  final String phoneNumber, password;
+  final String phoneNumber;
+  final String password;
 
   const LoginRequested({required this.phoneNumber, required this.password});
+
+  @override
+  List<Object> get props => [phoneNumber, password];
 }
 
 // get activities
