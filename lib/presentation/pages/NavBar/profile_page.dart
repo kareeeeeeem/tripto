@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,10 +37,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   int? userId;
 
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  @override
+  void dispose() {
+    _nameFocus.dispose();
+    _emailFocus.dispose();
+    _phoneFocus.dispose();
+    super.dispose();
   }
 
   Future<void> _loadUserData() async {
@@ -70,14 +83,47 @@ class _ProfilePageState extends State<ProfilePage> {
     final storage = SecureStorageService();
     await storage.saveUser(
       jsonEncode({
-        "id": int.tryParse(user.id.toString()),
+        "id": user.id,
         "name": user.name,
         "email": user.email,
         "phone": user.phone,
       }),
     );
     setState(() {
-      userId = int.tryParse(user.id.toString());
+      userId = user.id;
+    });
+  }
+
+  void _handleEditSave() {
+    // أولًا نفصل أي TextField نشط
+    FocusScope.of(context).unfocus();
+
+    // تأخير بسيط عشان الـ TextField يكون جاهز قبل التحديث
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (userId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("User ID not loaded yet.")),
+        );
+        return;
+      }
+
+      setState(() {
+        isEditing = !isEditing;
+        isNameReadOnly = !isNameReadOnly;
+        isEmailReadOnly = !isEmailReadOnly;
+        isPhoneReadOnly = !isPhoneReadOnly;
+      });
+
+      if (!isEditing) {
+        context.read<UpdateUserBloc>().add(
+          UpdateUserRequested(
+            id: userId!,
+            name: nameController.text,
+            email: emailController.text,
+            phone: phoneController.text,
+          ),
+        );
+      }
     });
   }
 
@@ -132,167 +178,156 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
       ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context)!.profile,
-            style: GoogleFonts.markaziText(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
+      child: GestureDetector(
+        onTap: () {
+          // Dismiss keyboard when tapping outside
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              AppLocalizations.of(context)!.profile,
+              style: GoogleFonts.markaziText(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            scrolledUnderElevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Localizations.localeOf(context).languageCode == 'ar'
+                    ? Icons.keyboard_arrow_right_outlined
+                    : Icons.keyboard_arrow_left_outlined,
+                size: 35,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Navigator.pop(context);
+              },
             ),
           ),
-          centerTitle: true,
           backgroundColor: Colors.white,
-          scrolledUnderElevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Localizations.localeOf(context).languageCode == 'ar'
-                  ? Icons.keyboard_arrow_right_outlined
-                  : Icons.keyboard_arrow_left_outlined,
-              size: 35,
-              color: Colors.black,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: height * 0.05),
-          child: Padding(
-            padding: EdgeInsets.all(width * 0.04),
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage("assets/images/shika.png"),
-                ),
-                SizedBox(height: height * 0.07),
-                Profiletextfield(
-                  label: AppLocalizations.of(context)!.name,
-                  isReadOnly: isNameReadOnly,
-                  controller: nameController,
-                ),
-                SizedBox(height: height * 0.05),
-                Profiletextfield(
-                  label: AppLocalizations.of(context)!.email,
-                  isReadOnly: isEmailReadOnly,
-                  controller: emailController,
-                ),
-                SizedBox(height: height * 0.05),
-                Profiletextfield(
-                  label: AppLocalizations.of(context)!.phone,
-                  isReadOnly: isPhoneReadOnly,
-                  controller: phoneController,
-                ),
-                SizedBox(height: height * 0.05),
-                Profiletextfield(
-                  label: AppLocalizations.of(context)!.password,
-                  isReadOnly: true,
-                  controller: passwordController,
-                ),
-                SizedBox(height: height * 0.05),
-                SizedBox(
-                  width: width,
-                  height: height * 0.06,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: btn_background_color_gradiant,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onPressed: () {
-                      if (userId == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("User ID not loaded yet."),
-                          ),
-                        );
-                        return;
-                      }
+          body: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: height * 0.05),
+            child: Padding(
+              padding: EdgeInsets.all(width * 0.04),
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    radius: 35,
+                    backgroundImage: AssetImage("assets/images/shika.png"),
+                  ),
+                  SizedBox(height: height * 0.07),
+                  Profiletextfield(
+                    label: AppLocalizations.of(context)!.name,
+                    isReadOnly: isNameReadOnly,
+                    controller: nameController,
+                    focusNode: _nameFocus,
+                    fieldType: FieldType.name,
+                  ),
+                  SizedBox(height: height * 0.05),
+                  Profiletextfield(
+                    label: AppLocalizations.of(context)!.email,
+                    isReadOnly: isEmailReadOnly,
+                    controller: emailController,
+                    focusNode: _emailFocus,
+                    fieldType: FieldType.email,
+                  ),
+                  SizedBox(height: height * 0.05),
+                  // Profiletextfield(
+                  //   label: AppLocalizations.of(context)!.phone,
+                  //   isReadOnly: isPhoneReadOnly,
+                  //   controller: phoneController,
+                  //   focusNode: _phoneFocus,
+                  //   fieldType: FieldType.phone,
+                  // ),
 
-                      setState(() {
-                        isEditing = !isEditing;
-                        isNameReadOnly = !isNameReadOnly;
-                        isEmailReadOnly = !isEmailReadOnly;
-                        isPhoneReadOnly = !isPhoneReadOnly;
-                      });
-
-                      if (!isEditing) {
-                        context.read<UpdateUserBloc>().add(
-                          UpdateUserRequested(
-                            id: userId!,
-                            name: nameController.text,
-                            email: emailController.text,
-                            phone: phoneController.text,
-                          ),
-                        );
-                      }
-                    },
-                    child: Text(
-                      isEditing
-                          ? AppLocalizations.of(context)!.save
-                          : AppLocalizations.of(context)!.edit,
-                      style: GoogleFonts.markaziText(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                  // SizedBox(height: height * 0.05),
+                  // Profiletextfield(
+                  //   label: AppLocalizations.of(context)!.password,
+                  //   isReadOnly: true,
+                  //   controller: passwordController,
+                  //   fieldType: FieldType.password,
+                  // ),
+                  SizedBox(height: height * 0.15),
+                  SizedBox(
+                    width: width,
+                    height: height * 0.06,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: btn_background_color_gradiant,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: _handleEditSave,
+                      child: Text(
+                        isEditing
+                            ? AppLocalizations.of(context)!.save
+                            : AppLocalizations.of(context)!.edit,
+                        style: GoogleFonts.markaziText(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: height * 0.025),
-                // Logout Button (Bloc)
-                SizedBox(
-                  width: width,
-                  height: height * 0.06,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  SizedBox(height: height * 0.025),
+                  SizedBox(
+                    width: width,
+                    height: height * 0.06,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      context.read<LogoutBloc>().add(LogoutRequested());
-                    },
-                    child: Text(
-                      'Logout',
-                      style: GoogleFonts.markaziText(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height * 0.015),
-                // Delete Account Button
-                SizedBox(
-                  width: width,
-                  height: height * 0.06,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black54,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onPressed: () {
-                      // TODO: Delete account logic
-                    },
-                    child: Text(
-                      'Delete my account',
-                      style: GoogleFonts.markaziText(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        context.read<LogoutBloc>().add(LogoutRequested());
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: GoogleFonts.markaziText(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: height * 0.05),
-              ],
+                  // SizedBox(height: height * 0.015),
+                  // SizedBox(
+                  //   width: width,
+                  //   height: height * 0.06,
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.black54,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {
+                  //       // TODO: Delete account logic
+                  //     },
+                  //     child: Text(
+                  //       AppLocalizations.of(context)!.deletmyaccount,
+                  //       style: GoogleFonts.markaziText(
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: height * 0.05),
+                ],
+              ),
             ),
           ),
         ),

@@ -163,6 +163,7 @@
   "aboutus14": "TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English",
   "favourite": "Favourite",
   "sidemenu": "Side Menu",
+<<<<<<< HEAD
   "cancellation1": "Cancellation and Refund Policy",
   "cancellation2": "1. Introduction and Scope of Policy",
   "cancellation3": "Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy 'the Policy' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities 'the Services'.",
@@ -194,3 +195,10 @@
   "cancellation29": "o  Cancellation less than 15 days prior: 100% deduction from the package price.",
   "cancellation30": "o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed."
 }
+=======
+  "logout": "Logout",
+  "deletmyaccount": "Delete my account"
+
+
+}
+>>>>>>> 60441b9d1175b2010126e336315b74ac46840349

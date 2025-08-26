@@ -494,6 +494,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sidemenu => 'قائمة الصفحات';
 
   @override
+<<<<<<< HEAD
   String get cancellation1 => ' سياسة الإلغاء واسترداد الأموال ';
 
   @override
@@ -599,4 +600,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get cancellation30 =>
       'o  سيتم توضيح جدول رسوم الإلغاء الخاص بكل باقة قبل تأكيد الحجز.';
+=======
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get deletmyaccount => 'حذف حسابي';
+>>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 }

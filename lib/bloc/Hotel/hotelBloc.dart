@@ -21,7 +21,7 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
 
         emit(HotelsLoaded(hotels: hotels));
       } catch (e) {
-        emit(HotelsError(message: e.toString()));
+        emit(HotelsError(message: 'No Internet connection'));
       }
     });
   }

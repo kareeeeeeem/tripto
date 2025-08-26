@@ -496,6 +496,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sidemenu => 'Side Menu';
 
   @override
+<<<<<<< HEAD
   String get cancellation1 => 'Cancellation and Refund Policy';
 
   @override
@@ -601,4 +602,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cancellation30 =>
       'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.';
+=======
+  String get logout => 'Logout';
+
+  @override
+  String get deletmyaccount => 'Delete my account';
+>>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 }

@@ -1010,6 +1010,7 @@ abstract class AppLocalizations {
   /// **'Side Menu'**
   String get sidemenu;
 
+<<<<<<< HEAD
   /// No description provided for @cancellation1.
   ///
   /// In en, this message translates to:
@@ -1189,6 +1190,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.'**
   String get cancellation30;
+=======
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @deletmyaccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deletmyaccount;
+>>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 }
 
 class _AppLocalizationsDelegate
