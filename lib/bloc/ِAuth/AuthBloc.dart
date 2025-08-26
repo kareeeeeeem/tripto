@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tripto/bloc/%D9%90Auth/AuthRepository.dart';
 import 'package:tripto/bloc/ِAuth/AuthEvent.dart';
 import 'package:tripto/bloc/ِAuth/AuthState.dart';
-import 'package:tripto/data/repositories/AuthRepository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;

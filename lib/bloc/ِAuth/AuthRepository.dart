@@ -6,8 +6,9 @@ import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/services/api.dart';
 
 class AuthRepository {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
+  // تسجيل مستخدم جديد
   Future<Map<String, dynamic>> register(
     String name,
     String email,
@@ -31,9 +32,14 @@ class AuthRepository {
     debugPrint('Register response: ${response.body}');
 
     if (response.statusCode == 201) {
+      if (data['token'] != null) {
+        await storage.write(key: 'token', value: data['token']);
+      }
+      if (data['user'] != null) {
+        await storage.write(key: 'user_data', value: jsonEncode(data['user']));
+      }
       return data;
     } else {
-      // ارجع بيانات الخطأ مباشرة
       return {
         'error': true,
         'message': data['message'],
@@ -42,6 +48,7 @@ class AuthRepository {
     }
   }
 
+  // تسجيل الدخول
   Future<Map<String, dynamic>> login(String phone, String password) async {
     final response = await http
         .post(
@@ -52,26 +59,22 @@ class AuthRepository {
           },
           body: jsonEncode({'phone': phone, 'password': password}),
         )
-        .timeout(const Duration(seconds: 100));
+        .timeout(const Duration(seconds: 30));
 
     debugPrint('Login status: ${response.statusCode}');
     debugPrint('Login body: ${response.body}');
-    debugPrint('Request phone: $phone');
-    debugPrint('Request password: $password');
 
     final data = json.decode(response.body);
 
-    // بدل Exception، نرجع JSON فيه حقل error لو فيه مشكلة
     if (response.statusCode == 200) {
       if (data['token'] != null) {
-        await storage.write(key: 'jwt_token', value: data['token']);
+        await storage.write(key: 'token', value: data['token']);
       }
       if (data['user'] != null) {
         await storage.write(key: 'user_data', value: jsonEncode(data['user']));
       }
       return data;
     } else {
-      // رجع رسالة الخطأ بشكل منسق
       return {
         'error': true,
         'message': data['message_en'] ?? data['message'] ?? 'Login failed',
@@ -80,35 +83,69 @@ class AuthRepository {
     }
   }
 
+  // تسجيل الخروج
   Future<void> logout() async {
-    await storage.delete(key: 'jwt_token');
+    final token = await storage.read(key: 'token');
+
+    if (token != null) {
+      try {
+        final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}logout'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({}),
+        );
+        debugPrint('Logout status: ${response.statusCode}');
+      } catch (e) {
+        debugPrint('Logout request failed: $e');
+      }
+    }
+
+    // امسح البيانات في كل الحالات
+    await clearUserData();
+  }
+
+  // مسح بيانات المستخدم
+  Future<void> clearUserData() async {
+    await storage.delete(key: 'token');
     await storage.delete(key: 'user_data');
   }
 
+  // جلب التوكن
   Future<String?> getToken() async {
-    return await storage.read(key: 'jwt_token');
+    return await storage.read(key: 'token');
   }
 
+  // جلب بيانات المستخدم
+  Future<Map<String, dynamic>?> getUserData() async {
+    final jsonStr = await storage.read(key: 'user_data');
+    if (jsonStr != null) {
+      return jsonDecode(jsonStr);
+    }
+    return null;
+  }
+
+  // مثال: جلب الأنشطة
   Future<List<GetActivityModel>> getActivities() async {
-    final token = await storage.read(key: 'token');
+    final token = await getToken();
 
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl}activities'),
-      headers: {'Authorization': 'bearer $token', 'Accept': 'application/json'},
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
     );
-    debugPrint('Login status: ${response.statusCode}');
-    debugPrint('Login body: ${response.body}');
 
-    print("Response status: ${response.statusCode}");
-    print("Raw response body: ${response.body}");
+    debugPrint('Activities status: ${response.statusCode}');
+    debugPrint('Activities body: ${response.body}');
+
     if (response.statusCode == 200) {
       final List<dynamic> activitesList = json.decode(response.body);
-
       return activitesList
           .map((json) => GetActivityModel.fromJson(json))
           .toList();
     } else {
-      throw Exception('Failed to load activites');
+      throw Exception('Failed to load activities');
     }
   }
 }

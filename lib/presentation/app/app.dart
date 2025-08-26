@@ -30,7 +30,7 @@ class _AppState extends State<App> {
   }
 
   Future<void> _checkToken() async {
-    final token = await _storage.read(key: 'jwt_token');
+    final token = await _storage.read(key: 'token');
     setState(() {
       hasToken = token != null && token.isNotEmpty;
     });
