@@ -237,22 +237,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     fieldType: FieldType.email,
                   ),
                   SizedBox(height: height * 0.05),
-                  Profiletextfield(
-                    label: AppLocalizations.of(context)!.phone,
-                    isReadOnly: isPhoneReadOnly,
-                    controller: phoneController,
-                    focusNode: _phoneFocus,
-                    fieldType: FieldType.phone,
-                  ),
+                  // Profiletextfield(
+                  //   label: AppLocalizations.of(context)!.phone,
+                  //   isReadOnly: isPhoneReadOnly,
+                  //   controller: phoneController,
+                  //   focusNode: _phoneFocus,
+                  //   fieldType: FieldType.phone,
+                  // ),
 
-                  SizedBox(height: height * 0.05),
-                  Profiletextfield(
-                    label: AppLocalizations.of(context)!.password,
-                    isReadOnly: true,
-                    controller: passwordController,
-                    fieldType: FieldType.password,
-                  ),
-                  SizedBox(height: height * 0.05),
+                  // SizedBox(height: height * 0.05),
+                  // Profiletextfield(
+                  //   label: AppLocalizations.of(context)!.password,
+                  //   isReadOnly: true,
+                  //   controller: passwordController,
+                  //   fieldType: FieldType.password,
+                  // ),
+                  SizedBox(height: height * 0.15),
                   SizedBox(
                     width: width,
                     height: height * 0.06,
@@ -292,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         context.read<LogoutBloc>().add(LogoutRequested());
                       },
                       child: Text(
-                        'Logout',
+                        AppLocalizations.of(context)!.logout,
                         style: GoogleFonts.markaziText(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -301,30 +301,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: height * 0.015),
-                  SizedBox(
-                    width: width,
-                    height: height * 0.06,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black54,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () {
-                        // TODO: Delete account logic
-                      },
-                      child: Text(
-                        'Delete my account',
-                        style: GoogleFonts.markaziText(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(height: height * 0.015),
+                  // SizedBox(
+                  //   width: width,
+                  //   height: height * 0.06,
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.black54,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {
+                  //       // TODO: Delete account logic
+                  //     },
+                  //     child: Text(
+                  //       AppLocalizations.of(context)!.deletmyaccount,
+                  //       style: GoogleFonts.markaziText(
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: height * 0.05),
                 ],
               ),

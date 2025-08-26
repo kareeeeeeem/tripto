@@ -112,7 +112,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final Activities = await authRepository.getActivities();
       emit(GetAllActivitiesSuccess(activities: Activities));
     } catch (e) {
-      emit(AuthFailure(error: e.toString()));
+      emit(AuthFailure(error: 'No Internet connection'));
     }
   }
 }

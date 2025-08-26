@@ -17,7 +17,7 @@ class GetTripBloc extends Bloc<GetTripEvent, GetTripState> {
         currentIndex = 0;
         emit(GetTripLoaded(allTrips, currentIndex));
       } catch (e) {
-        emit(GetTripError(message: e.toString()));
+        emit(GetTripError(message: 'No Internet connection'));
       }
     });
 
@@ -141,7 +141,7 @@ class CarBloc extends Bloc<CarEvent, CarState> {
 
         emit(CarLoaded(cars));
       } catch (e) {
-        emit(CarError(e.toString()));
+        emit(CarError('No Internet connection'));
       }
     });
   }

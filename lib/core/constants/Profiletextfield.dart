@@ -45,7 +45,7 @@ class _textfieldState extends State<Profiletextfield> {
         keyboardType = TextInputType.phone;
         inputFormatters = [
           FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(11),
+          LengthLimitingTextInputFormatter(12),
         ]; // أرقام فقط بحد أقصى 11 رقم
         break;
       case FieldType.password:

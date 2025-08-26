@@ -492,4 +492,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sidemenu => 'قائمة الصفحات';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get deletmyaccount => 'حذف حسابي';
 }

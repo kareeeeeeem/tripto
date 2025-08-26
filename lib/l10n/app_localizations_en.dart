@@ -494,4 +494,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sidemenu => 'Side Menu';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get deletmyaccount => 'Delete my account';
 }

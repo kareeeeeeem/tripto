@@ -1009,6 +1009,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Side Menu'**
   String get sidemenu;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @deletmyaccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deletmyaccount;
 }
 
 class _AppLocalizationsDelegate
