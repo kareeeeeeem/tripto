@@ -494,4 +494,111 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sidemenu => 'Side Menu';
+
+  @override
+  String get cancellation1 => 'Cancellation and Refund Policy';
+
+  @override
+  String get cancellation2 => '1. Introduction and Scope of Policy';
+
+  @override
+  String get cancellation3 =>
+      'Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy \'the Policy\' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities \'the Services\'.';
+
+  @override
+  String get cancellation4 =>
+      'Completing a booking through [Tripto] signifies your agreement to this Policy and to the terms and conditions of the end-service provider (e.g., the airline, hotel, or tour operator).';
+
+  @override
+  String get cancellation5 => '2. Cancellation and Refund Policy';
+
+  @override
+  String get cancellation6 =>
+      'The cancellation and refund policy is primarily subject to the terms set by the end-service provider. [TripTo] acts as an intermediary, and we will clearly display the specific cancellation terms for each booking during the reservation process and before you complete the payment.';
+
+  @override
+  String get cancellation7 => '2.1. Flight Bookings';
+
+  @override
+  String get cancellation8 => '•  Non-refundable Tickets: ';
+
+  @override
+  String get cancellation9 =>
+      'Most airline tickets, especially promotional and economy fares, are non-refundable. If the traveler cancels the booking, no part of the payment may be refunded.';
+
+  @override
+  String get cancellation10 => '•  Refundable Tickets: ';
+
+  @override
+  String get cancellation11 =>
+      'Some ticket categories may allow for refunds, but a \'cancellation fee\' set by the airline will often be applied. The refunded amount will be the total amount paid minus this fee.';
+
+  @override
+  String get cancellation12 => '•  Cancellation by the Airline: ';
+
+  @override
+  String get cancellation13 =>
+      'If a flight is canceled by the airline, the customer is entitled to a full refund or an alternative booking, in accordance with the airline\'s policy and the governing Egyptian law.';
+
+  @override
+  String get cancellation14 => '•  Modifications: ';
+
+  @override
+  String get cancellation15 =>
+      'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
+
+  @override
+  String get cancellation16 => '2.2. Hotel and Accommodation Bookings';
+
+  @override
+  String get cancellation17 =>
+      '•  Each hotel has its own cancellation policy, which will be clearly displayed during the booking process.';
+
+  @override
+  String get cancellation18 => '•  Free Cancellation:';
+
+  @override
+  String get cancellation19 =>
+      'Many hotels offer a free cancellation period (for example, up to 48 hours before the check-in date). If the cancellation is made within this period, the customer is entitled to a full refund';
+
+  @override
+  String get cancellation20 => '•  Cancellation Fees: ';
+
+  @override
+  String get cancellation21 =>
+      'After the free cancellation period expires, the hotel may impose a cancellation fee, which could be equivalent to the cost of the first night or the entire booking value';
+
+  @override
+  String get cancellation22 => '•  No-Show: ';
+
+  @override
+  String get cancellation23 =>
+      'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
+
+  @override
+  String get cancellation24 => '2.3. Holiday Packages, Tours, and Activities';
+
+  @override
+  String get cancellation25 =>
+      '•  Packages and tours are subject to the specific cancellation policy of the tour operator.';
+
+  @override
+  String get cancellation26 =>
+      '•  Cancellation fees are often tiered; the closer the cancellation date is to the start date of the trip, the higher the fee. For example:';
+
+  @override
+  String get cancellation27 =>
+      'o  Cancellation more than 30 days prior: 25% deduction from the package price.';
+
+  @override
+  String get cancellation28 =>
+      'o  Cancellation between 15 and 29 days prior: 50% deduction from the package price.';
+
+  @override
+  String get cancellation29 =>
+      'o  Cancellation less than 15 days prior: 100% deduction from the package price.';
+
+  @override
+  String get cancellation30 =>
+      'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.';
 }

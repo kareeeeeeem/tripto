@@ -1009,6 +1009,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Side Menu'**
   String get sidemenu;
+
+  /// No description provided for @cancellation1.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation and Refund Policy'**
+  String get cancellation1;
+
+  /// No description provided for @cancellation2.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Introduction and Scope of Policy'**
+  String get cancellation2;
+
+  /// No description provided for @cancellation3.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy \'the Policy\' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities \'the Services\'.'**
+  String get cancellation3;
+
+  /// No description provided for @cancellation4.
+  ///
+  /// In en, this message translates to:
+  /// **'Completing a booking through [Tripto] signifies your agreement to this Policy and to the terms and conditions of the end-service provider (e.g., the airline, hotel, or tour operator).'**
+  String get cancellation4;
+
+  /// No description provided for @cancellation5.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Cancellation and Refund Policy'**
+  String get cancellation5;
+
+  /// No description provided for @cancellation6.
+  ///
+  /// In en, this message translates to:
+  /// **'The cancellation and refund policy is primarily subject to the terms set by the end-service provider. [TripTo] acts as an intermediary, and we will clearly display the specific cancellation terms for each booking during the reservation process and before you complete the payment.'**
+  String get cancellation6;
+
+  /// No description provided for @cancellation7.
+  ///
+  /// In en, this message translates to:
+  /// **'2.1. Flight Bookings'**
+  String get cancellation7;
+
+  /// No description provided for @cancellation8.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Non-refundable Tickets: '**
+  String get cancellation8;
+
+  /// No description provided for @cancellation9.
+  ///
+  /// In en, this message translates to:
+  /// **'Most airline tickets, especially promotional and economy fares, are non-refundable. If the traveler cancels the booking, no part of the payment may be refunded.'**
+  String get cancellation9;
+
+  /// No description provided for @cancellation10.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Refundable Tickets: '**
+  String get cancellation10;
+
+  /// No description provided for @cancellation11.
+  ///
+  /// In en, this message translates to:
+  /// **'Some ticket categories may allow for refunds, but a \'cancellation fee\' set by the airline will often be applied. The refunded amount will be the total amount paid minus this fee.'**
+  String get cancellation11;
+
+  /// No description provided for @cancellation12.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Cancellation by the Airline: '**
+  String get cancellation12;
+
+  /// No description provided for @cancellation13.
+  ///
+  /// In en, this message translates to:
+  /// **'If a flight is canceled by the airline, the customer is entitled to a full refund or an alternative booking, in accordance with the airline\'s policy and the governing Egyptian law.'**
+  String get cancellation13;
+
+  /// No description provided for @cancellation14.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Modifications: '**
+  String get cancellation14;
+
+  /// No description provided for @cancellation15.
+  ///
+  /// In en, this message translates to:
+  /// **'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.'**
+  String get cancellation15;
+
+  /// No description provided for @cancellation16.
+  ///
+  /// In en, this message translates to:
+  /// **'2.2. Hotel and Accommodation Bookings'**
+  String get cancellation16;
+
+  /// No description provided for @cancellation17.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Each hotel has its own cancellation policy, which will be clearly displayed during the booking process.'**
+  String get cancellation17;
+
+  /// No description provided for @cancellation18.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Free Cancellation:'**
+  String get cancellation18;
+
+  /// No description provided for @cancellation19.
+  ///
+  /// In en, this message translates to:
+  /// **'Many hotels offer a free cancellation period (for example, up to 48 hours before the check-in date). If the cancellation is made within this period, the customer is entitled to a full refund'**
+  String get cancellation19;
+
+  /// No description provided for @cancellation20.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Cancellation Fees: '**
+  String get cancellation20;
+
+  /// No description provided for @cancellation21.
+  ///
+  /// In en, this message translates to:
+  /// **'After the free cancellation period expires, the hotel may impose a cancellation fee, which could be equivalent to the cost of the first night or the entire booking value'**
+  String get cancellation21;
+
+  /// No description provided for @cancellation22.
+  ///
+  /// In en, this message translates to:
+  /// **'•  No-Show: '**
+  String get cancellation22;
+
+  /// No description provided for @cancellation23.
+  ///
+  /// In en, this message translates to:
+  /// **'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.'**
+  String get cancellation23;
+
+  /// No description provided for @cancellation24.
+  ///
+  /// In en, this message translates to:
+  /// **'2.3. Holiday Packages, Tours, and Activities'**
+  String get cancellation24;
+
+  /// No description provided for @cancellation25.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Packages and tours are subject to the specific cancellation policy of the tour operator.'**
+  String get cancellation25;
+
+  /// No description provided for @cancellation26.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Cancellation fees are often tiered; the closer the cancellation date is to the start date of the trip, the higher the fee. For example:'**
+  String get cancellation26;
+
+  /// No description provided for @cancellation27.
+  ///
+  /// In en, this message translates to:
+  /// **'o  Cancellation more than 30 days prior: 25% deduction from the package price.'**
+  String get cancellation27;
+
+  /// No description provided for @cancellation28.
+  ///
+  /// In en, this message translates to:
+  /// **'o  Cancellation between 15 and 29 days prior: 50% deduction from the package price.'**
+  String get cancellation28;
+
+  /// No description provided for @cancellation29.
+  ///
+  /// In en, this message translates to:
+  /// **'o  Cancellation less than 15 days prior: 100% deduction from the package price.'**
+  String get cancellation29;
+
+  /// No description provided for @cancellation30.
+  ///
+  /// In en, this message translates to:
+  /// **'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.'**
+  String get cancellation30;
 }
 
 class _AppLocalizationsDelegate
