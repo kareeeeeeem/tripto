@@ -436,4 +436,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get userUpdated => 'User updated successfully';
+
+  @override
+  String get aboutus => 'About-Us';
+
+  @override
+  String get aboutus1 =>
+      'We are a passionate mobile application development agency, specializing in tourism. With';
+
+  @override
+  String get aboutus2 => '20 years of experience ';
+
+  @override
+  String get aboutus3 => 'in France and Egypt, our company is ';
+
+  @override
+  String get aboutus4 => 'managed from Belgium. ';
+
+  @override
+  String get aboutus5 =>
+      'We have designed a unique application to transform the planning and execution of your travels. We work with trusted partners in Egypt and the Gulf countries to guarantee a high-quality service.';
+
+  @override
+  String get abutus6 =>
+      'Our app was created to offer a seamless and memorable travel experience. It provides you with a ';
+
+  @override
+  String get aboutus7 =>
+      'carefully selected range of the best hotels, apartments, cars, and airlines.';
+
+  @override
+  String get aboutus8 => 'We offer:';
+
+  @override
+  String get aboutus9 => '• Flights and accommodations';
+
+  @override
+  String get aboutus10 => '• Car rentals and on-site activities';
+
+  @override
+  String get aboutus11 => '• High-level support, ';
+
+  @override
+  String get aboutus12 =>
+      'staff, to ensure a smooth journey at every step of your trip.';
+
+  @override
+  String get aboutus13 =>
+      'We are committed to providing you with the best of Egypt. With our expertise and local partners, you are guaranteed an unforgettable adventure, with complete peace of mind.';
+
+  @override
+  String get aboutus14 =>
+      'TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English';
+
+  @override
+  String get favourite => 'Favourite';
+
+  @override
+  String get sidemenu => 'Side Menu';
 }

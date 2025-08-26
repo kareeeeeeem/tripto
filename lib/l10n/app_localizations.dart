@@ -907,6 +907,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User updated successfully'**
   String get userUpdated;
+
+  /// No description provided for @aboutus.
+  ///
+  /// In en, this message translates to:
+  /// **'About-Us'**
+  String get aboutus;
+
+  /// No description provided for @aboutus1.
+  ///
+  /// In en, this message translates to:
+  /// **'We are a passionate mobile application development agency, specializing in tourism. With'**
+  String get aboutus1;
+
+  /// No description provided for @aboutus2.
+  ///
+  /// In en, this message translates to:
+  /// **'20 years of experience '**
+  String get aboutus2;
+
+  /// No description provided for @aboutus3.
+  ///
+  /// In en, this message translates to:
+  /// **'in France and Egypt, our company is '**
+  String get aboutus3;
+
+  /// No description provided for @aboutus4.
+  ///
+  /// In en, this message translates to:
+  /// **'managed from Belgium. '**
+  String get aboutus4;
+
+  /// No description provided for @aboutus5.
+  ///
+  /// In en, this message translates to:
+  /// **'We have designed a unique application to transform the planning and execution of your travels. We work with trusted partners in Egypt and the Gulf countries to guarantee a high-quality service.'**
+  String get aboutus5;
+
+  /// No description provided for @abutus6.
+  ///
+  /// In en, this message translates to:
+  /// **'Our app was created to offer a seamless and memorable travel experience. It provides you with a '**
+  String get abutus6;
+
+  /// No description provided for @aboutus7.
+  ///
+  /// In en, this message translates to:
+  /// **'carefully selected range of the best hotels, apartments, cars, and airlines.'**
+  String get aboutus7;
+
+  /// No description provided for @aboutus8.
+  ///
+  /// In en, this message translates to:
+  /// **'We offer:'**
+  String get aboutus8;
+
+  /// No description provided for @aboutus9.
+  ///
+  /// In en, this message translates to:
+  /// **'• Flights and accommodations'**
+  String get aboutus9;
+
+  /// No description provided for @aboutus10.
+  ///
+  /// In en, this message translates to:
+  /// **'• Car rentals and on-site activities'**
+  String get aboutus10;
+
+  /// No description provided for @aboutus11.
+  ///
+  /// In en, this message translates to:
+  /// **'• High-level support, '**
+  String get aboutus11;
+
+  /// No description provided for @aboutus12.
+  ///
+  /// In en, this message translates to:
+  /// **'staff, to ensure a smooth journey at every step of your trip.'**
+  String get aboutus12;
+
+  /// No description provided for @aboutus13.
+  ///
+  /// In en, this message translates to:
+  /// **'We are committed to providing you with the best of Egypt. With our expertise and local partners, you are guaranteed an unforgettable adventure, with complete peace of mind.'**
+  String get aboutus13;
+
+  /// No description provided for @aboutus14.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English'**
+  String get aboutus14;
+
+  /// No description provided for @favourite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite'**
+  String get favourite;
+
+  /// No description provided for @sidemenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Side Menu'**
+  String get sidemenu;
 }
 
 class _AppLocalizationsDelegate

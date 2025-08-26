@@ -5,6 +5,7 @@ import 'package:tripto/core/constants/NavBar.dart';
 import 'package:tripto/presentation/pages/Login_pages/SignupOrLogin.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/home_page.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_page.dart';
+import 'package:tripto/presentation/pages/SideMenu.dart';
 import '../pages/NavBar/Favorite_page.dart';
 import '../pages/NavBar/ActivityPage/activities_page.dart';
 
@@ -50,7 +51,8 @@ class _AppState extends State<App> {
       const HomePage(), // index 0
       const ActivityPage(), // index 1
       hasToken ? const ProfilePage() : const Signuporlogin(), // index 2
-      const FavoritePage(), // index 3
+      // const FavoritePage(), // index 3
+      const SideMenu(),
     ];
 
     return Scaffold(
