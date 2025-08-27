@@ -496,7 +496,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sidemenu => 'Side Menu';
 
   @override
-<<<<<<< HEAD
   String get cancellation1 => 'Cancellation and Refund Policy';
 
   @override
@@ -602,10 +601,73 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cancellation30 =>
       'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.';
-=======
+
+  @override
+  String get cancellation31 => '3. Cancellation Request Procedure';
+
+  @override
+  String get cancellation32 =>
+      '•  All cancellation requests must be submitted through your personal account in the [Trip To] application.';
+
+  @override
+  String get cancellation33 =>
+      '•  You can find the cancellation option within the booking details under the \'My Bookings\' section.';
+
+  @override
+  String get cancellation34 =>
+      '•  The date and time we receive the cancellation request will be the basis for applying the cancellation terms.';
+
+  @override
+  String get cancellation35 =>
+      '•  For assistance, you can contact our customer service team via [Support Email] or [Support Phone Number].';
+
+  @override
+  String get cancellation36 => '4. Refund Processing';
+
+  @override
+  String get cancellation37 =>
+      '•  Once the refund request is approved by the service provider, we will process the amount.';
+
+  @override
+  String get cancellation38 => '•  Refunds will be issued to the ';
+
+  @override
+  String get cancellation39 => 'original payment method ';
+
+  @override
+  String get cancellation40 => 'used for the booking. ';
+
+  @override
+  String get cancellation41 => '•  The refund process may take from  ';
+
+  @override
+  String get cancellation42 => '7 to 21 business days ';
+
+  @override
+  String get cancellation43 =>
+      'to appear in your bank account or on your credit card statement, depending on the policies of the respective bank';
+
+  @override
+  String get cancellation44 =>
+      '•  The service/booking fees for the [Trip] application (if any) are administrative fees and are non-refundable, except in cases of cancellation by the service provider.';
+
+  @override
+  String get cancellation45 => '5. Force Majeure';
+
+  @override
+  String get cancellation46 =>
+      'In cases of force majeure events beyond the control of any party (such as natural disasters, pandemics, wars, sudden government decisions) that prevent the service from being rendered, we will adhere to the policies set by the end-service providers and Egyptian law. We will do our utmost to assist our customers in finding the best possible solutions, which may include refunds or vouchers for future use.';
+
+  @override
+  String get cancellation47 => '6. Governing Law';
+
+  @override
+  String get cancellation48 =>
+      'This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.';
+
+  @override
   String get logout => 'Logout';
 
   @override
   String get deletmyaccount => 'Delete my account';
->>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 }

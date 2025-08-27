@@ -15,11 +15,12 @@ class _CancellattionState extends State<Cancellattion> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         // elevation: 0,
-        // scrolledUnderElevation: 0,
+        scrolledUnderElevation: 0,
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.cancellation1,
@@ -329,6 +330,165 @@ class _CancellattionState extends State<Cancellattion> {
                 style: const TextStyle(
                   // fontWeight: FontWeight.bold,
                   fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.cancellation31,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation32,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation33,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation34,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation35,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.cancellation36,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation37,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ), // ستايل أساسي
+                    children: [
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.cancellation38,
+                      ),
+                      TextSpan(
+                        text:
+                            AppLocalizations.of(
+                              context,
+                            )!.cancellation39, // الجزء اللي عايزه Bold
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text:
+                            AppLocalizations.of(
+                              context,
+                            )!.cancellation40, // الجزء اللي عايزه Bold
+                        // style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ), // ستايل أساسي
+                    children: [
+                      TextSpan(
+                        text: AppLocalizations.of(context)!.cancellation41,
+                      ),
+                      TextSpan(
+                        text:
+                            AppLocalizations.of(
+                              context,
+                            )!.cancellation42, // الجزء اللي عايزه Bold
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text:
+                            AppLocalizations.of(
+                              context,
+                            )!.cancellation43, // الجزء اللي عايزه Bold
+                        // style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation44,
+                style: const TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.cancellation45,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation46,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.cancellation47,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              Text(
+                AppLocalizations.of(context)!.cancellation48,
+                style: const TextStyle(fontSize: 16),
+              ),
+              Container(
+                width: 400,
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/Logo.png"),
+                  ),
                 ),
               ),
             ],

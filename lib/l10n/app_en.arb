@@ -163,7 +163,6 @@
   "aboutus14": "TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English",
   "favourite": "Favourite",
   "sidemenu": "Side Menu",
-<<<<<<< HEAD
   "cancellation1": "Cancellation and Refund Policy",
   "cancellation2": "1. Introduction and Scope of Policy",
   "cancellation3": "Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy 'the Policy' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities 'the Services'.",
@@ -193,12 +192,25 @@
   "cancellation27": "o  Cancellation more than 30 days prior: 25% deduction from the package price.",
   "cancellation28": "o  Cancellation between 15 and 29 days prior: 50% deduction from the package price.",
   "cancellation29": "o  Cancellation less than 15 days prior: 100% deduction from the package price.",
-  "cancellation30": "o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed."
-}
-=======
+  "cancellation30": "o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.",
+  "cancellation31": "3. Cancellation Request Procedure",
+  "cancellation32": "•  All cancellation requests must be submitted through your personal account in the [Trip To] application.",
+  "cancellation33": "•  You can find the cancellation option within the booking details under the 'My Bookings' section.",
+  "cancellation34": "•  The date and time we receive the cancellation request will be the basis for applying the cancellation terms.",
+  "cancellation35": "•  For assistance, you can contact our customer service team via [Support Email] or [Support Phone Number].",
+  "cancellation36": "4. Refund Processing",
+  "cancellation37": "•  Once the refund request is approved by the service provider, we will process the amount.",
+  "cancellation38": "•  Refunds will be issued to the ",
+  "cancellation39": "original payment method ",
+  "cancellation40": "used for the booking. ",
+  "cancellation41": "•  The refund process may take from  ",
+  "cancellation42": "7 to 21 business days ",
+  "cancellation43": "to appear in your bank account or on your credit card statement, depending on the policies of the respective bank",
+  "cancellation44": "•  The service/booking fees for the [Trip] application (if any) are administrative fees and are non-refundable, except in cases of cancellation by the service provider.",
+  "cancellation45": "5. Force Majeure",
+  "cancellation46": "In cases of force majeure events beyond the control of any party (such as natural disasters, pandemics, wars, sudden government decisions) that prevent the service from being rendered, we will adhere to the policies set by the end-service providers and Egyptian law. We will do our utmost to assist our customers in finding the best possible solutions, which may include refunds or vouchers for future use.",
+  "cancellation47": "6. Governing Law",
+  "cancellation48": "This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.",
   "logout": "Logout",
   "deletmyaccount": "Delete my account"
-
-
 }
->>>>>>> 60441b9d1175b2010126e336315b74ac46840349

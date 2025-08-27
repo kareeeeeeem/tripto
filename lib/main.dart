@@ -11,12 +11,9 @@ import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/data/repositories/ProfileRepository.dart';
 import 'package:tripto/data/repositories/TripsRepository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-<<<<<<< HEAD
 import 'package:tripto/presentation/About-us.dart';
 import 'package:tripto/presentation/Cancellattion.dart';
 import 'package:tripto/presentation/pages/SideMenu.dart';
-=======
->>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 import 'l10n/app_localizations.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 
@@ -113,9 +110,9 @@ class _TripToAppState extends State<TripToApp> {
           ),
           title: 'TripTo',
           debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          routes: AppRoutes.routes,
-          // home: Cancellattion(),
+          // initialRoute: '/',
+          // routes: AppRoutes.routes,
+          home: Cancellattion(),
         ),
       ),
     );

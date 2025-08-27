@@ -1010,7 +1010,6 @@ abstract class AppLocalizations {
   /// **'Side Menu'**
   String get sidemenu;
 
-<<<<<<< HEAD
   /// No description provided for @cancellation1.
   ///
   /// In en, this message translates to:
@@ -1190,7 +1189,115 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.'**
   String get cancellation30;
-=======
+
+  /// No description provided for @cancellation31.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Cancellation Request Procedure'**
+  String get cancellation31;
+
+  /// No description provided for @cancellation32.
+  ///
+  /// In en, this message translates to:
+  /// **'•  All cancellation requests must be submitted through your personal account in the [Trip To] application.'**
+  String get cancellation32;
+
+  /// No description provided for @cancellation33.
+  ///
+  /// In en, this message translates to:
+  /// **'•  You can find the cancellation option within the booking details under the \'My Bookings\' section.'**
+  String get cancellation33;
+
+  /// No description provided for @cancellation34.
+  ///
+  /// In en, this message translates to:
+  /// **'•  The date and time we receive the cancellation request will be the basis for applying the cancellation terms.'**
+  String get cancellation34;
+
+  /// No description provided for @cancellation35.
+  ///
+  /// In en, this message translates to:
+  /// **'•  For assistance, you can contact our customer service team via [Support Email] or [Support Phone Number].'**
+  String get cancellation35;
+
+  /// No description provided for @cancellation36.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Refund Processing'**
+  String get cancellation36;
+
+  /// No description provided for @cancellation37.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Once the refund request is approved by the service provider, we will process the amount.'**
+  String get cancellation37;
+
+  /// No description provided for @cancellation38.
+  ///
+  /// In en, this message translates to:
+  /// **'•  Refunds will be issued to the '**
+  String get cancellation38;
+
+  /// No description provided for @cancellation39.
+  ///
+  /// In en, this message translates to:
+  /// **'original payment method '**
+  String get cancellation39;
+
+  /// No description provided for @cancellation40.
+  ///
+  /// In en, this message translates to:
+  /// **'used for the booking. '**
+  String get cancellation40;
+
+  /// No description provided for @cancellation41.
+  ///
+  /// In en, this message translates to:
+  /// **'•  The refund process may take from  '**
+  String get cancellation41;
+
+  /// No description provided for @cancellation42.
+  ///
+  /// In en, this message translates to:
+  /// **'7 to 21 business days '**
+  String get cancellation42;
+
+  /// No description provided for @cancellation43.
+  ///
+  /// In en, this message translates to:
+  /// **'to appear in your bank account or on your credit card statement, depending on the policies of the respective bank'**
+  String get cancellation43;
+
+  /// No description provided for @cancellation44.
+  ///
+  /// In en, this message translates to:
+  /// **'•  The service/booking fees for the [Trip] application (if any) are administrative fees and are non-refundable, except in cases of cancellation by the service provider.'**
+  String get cancellation44;
+
+  /// No description provided for @cancellation45.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Force Majeure'**
+  String get cancellation45;
+
+  /// No description provided for @cancellation46.
+  ///
+  /// In en, this message translates to:
+  /// **'In cases of force majeure events beyond the control of any party (such as natural disasters, pandemics, wars, sudden government decisions) that prevent the service from being rendered, we will adhere to the policies set by the end-service providers and Egyptian law. We will do our utmost to assist our customers in finding the best possible solutions, which may include refunds or vouchers for future use.'**
+  String get cancellation46;
+
+  /// No description provided for @cancellation47.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Governing Law'**
+  String get cancellation47;
+
+  /// No description provided for @cancellation48.
+  ///
+  /// In en, this message translates to:
+  /// **'This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.'**
+  String get cancellation48;
+
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:
@@ -1202,7 +1309,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete my account'**
   String get deletmyaccount;
->>>>>>> 60441b9d1175b2010126e336315b74ac46840349
 }
 
 class _AppLocalizationsDelegate
