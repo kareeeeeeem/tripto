@@ -92,14 +92,18 @@ class _SideMenuState extends State<SideMenu> {
               // ),
               // اول اختيار في ال drawer + icon
               ListTile(
-                leading: const Icon(Icons.favorite, color: Color(0xFF002E70)),
+                leading: const Icon(
+                  Icons.favorite,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.favourite,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -139,14 +143,18 @@ class _SideMenuState extends State<SideMenu> {
                 color: Colors.grey,
               ),
               ListTile(
-                leading: const Icon(Icons.group, color: Color(0xFF002E70)),
+                leading: const Icon(
+                  Icons.info,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.aboutus,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -188,14 +196,18 @@ class _SideMenuState extends State<SideMenu> {
               ),
               // الجديد
               ListTile(
-                leading: const Icon(Icons.autorenew, color: Color(0xFF002E70)),
+                leading: const Icon(
+                  Icons.autorenew,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.cancellation1,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -234,106 +246,116 @@ class _SideMenuState extends State<SideMenu> {
                 thickness: 0.5, // سُمك الخط
                 color: Colors.grey,
               ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      final currentLocale =
-                          Localizations.localeOf(context).languageCode;
-                      final newLocale =
-                          currentLocale == 'ar'
-                              ? const Locale('en')
-                              : const Locale('ar');
-                      TripToApp.setLocale(context, newLocale);
-                      setState(() {});
-                    },
-                    icon: const Icon(
-                      Icons.language,
-                      size: 30,
-                      color: Color(0xFF002E70),
-                    ),
-                  ),
-                  SizedBox(width: MediaQuery.of(context)!.size.width * 0.03),
-                  GestureDetector(
-                    onTap: () {
-                      final currentLocale =
-                          Localizations.localeOf(context).languageCode;
-                      final newLocale =
-                          currentLocale == 'ar'
-                              ? const Locale('en')
-                              : const Locale('ar');
-                      TripToApp.setLocale(context, newLocale);
-                      setState(() {});
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ? " تغيير اللغة "
-                              : "Change Language",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        SizedBox(
-                          width:
+              ListTile(
+                leading: const Icon(
+                  Icons.language,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              final currentLocale =
+                                  Localizations.localeOf(context).languageCode;
+                              final newLocale =
+                                  currentLocale == 'ar'
+                                      ? const Locale('en')
+                                      : const Locale('ar');
+                              TripToApp.setLocale(context, newLocale);
+                              setState(() {});
+                            },
+                            child: Text(
                               Localizations.localeOf(context).languageCode ==
                                       "en"
-                                  ? MediaQuery.of(context).size.width * 0.40
-                                  : MediaQuery.of(context).size.width * 0.25,
-                        ),
-
-                        Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ? "اللغة العربيه"
-                              : "English",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                                  ? " تغيير اللغة "
+                                  : "Change Language",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right:
+                                  Localizations.localeOf(
+                                            context,
+                                          ).languageCode ==
+                                          'ar'
+                                      ? 30.0
+                                      : 0.0,
+                              left:
+                                  Localizations.localeOf(
+                                            context,
+                                          ).languageCode ==
+                                          'en'
+                                      ? 80.0
+                                      : 0.0,
+                            ),
+
+                            child: TextButton(
+                              onPressed: () {
+                                final currentLocale =
+                                    Localizations.localeOf(
+                                      context,
+                                    ).languageCode;
+                                final newLocale =
+                                    currentLocale == 'ar'
+                                        ? const Locale('en')
+                                        : const Locale('ar');
+                                TripToApp.setLocale(context, newLocale);
+                                setState(() {});
+                              },
+                              child: Text(
+                                Localizations.localeOf(context).languageCode ==
+                                        "en"
+                                    ? "اللغة العربيه"
+                                    : "English",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {
+                        final currentLocale =
+                            Localizations.localeOf(context).languageCode;
+                        final newLocale =
+                            currentLocale == 'ar'
+                                ? const Locale('en')
+                                : const Locale('ar');
+                        TripToApp.setLocale(context, newLocale);
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-
-          // الجديد
-
-          // Column(
-          //   // crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     GestureDetector(
-          //       onTap: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => const AboutUs()),
-          //         );
-          //       },
-          //       child: Row(
-          //         children: [
-          //           IconButton(onPressed: () {}, icon: Icon(Icons.group, size: 30)),
-
-          //           Text(
-          //             AppLocalizations.of(context)!.aboutus,
-          //             style: TextStyle(
-          //               fontSize: 24,
-          //               fontWeight: FontWeight.bold,
-          //               color: Colors.black,
-          //               // decoration: TextDecoration.underline,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ),
       ),
     );
