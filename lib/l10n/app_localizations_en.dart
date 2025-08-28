@@ -670,4 +670,208 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deletmyaccount => 'Delete my account';
+
+  @override
+  String get privacypolicy => 'Privacy policy';
+
+  @override
+  String get privacypolicy1 => 'Privacy policy for [Trip To]';
+
+  @override
+  String get introduction => '1. Introduction';
+
+  @override
+  String get privacypolicy2 =>
+      'At [TripTo], we are committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, share, and safeguard your personal information when you use our application and related services.';
+
+  @override
+  String get privacypolicy3 =>
+      'By accessing or using the TripTo application, you consent to the practices described in this Privacy Policy.';
+
+  @override
+  String get privacypolicy4 => '2. Information We Collect';
+
+  @override
+  String get privacypolicy5 => 'Information You Provide Directly:';
+
+  @override
+  String get privacypolicy6 =>
+      'Payment details (credit/debit cards, e-wallets)';
+
+  @override
+  String get privacypolicy7 => ' Phone number';
+
+  @override
+  String get privacypolicy8 =>
+      ' Passport or ID information when required for travel bookings';
+
+  @override
+  String get privacypolicy9 => ' Information Collected Automatically:';
+
+  @override
+  String get privacypolicy10 =>
+      'Device information (model, operating system, unique identifiers) ';
+
+  @override
+  String get privacypolicy11 => 'IP address';
+
+  @override
+  String get privacypolicy12 => 'Location data (if permitted by the user)';
+
+  @override
+  String get privacypolicy13 =>
+      'Usage data (search history, booking history, interactions within the App)';
+
+  @override
+  String get privacypolicy14 => '3. How We Use Your Information ';
+
+  @override
+  String get privacypolicy15 =>
+      'We use the information we collect for purposes including, but not limited to: ';
+
+  @override
+  String get privacypolicy16 => 'Processing bookings and payments. ';
+
+  @override
+  String get privacypolicy17 =>
+      'Sending booking confirmations and important notifications.';
+
+  @override
+  String get privacypolicy18 =>
+      'Providing customer support and technical assistance.';
+
+  @override
+  String get privacypolicy19 =>
+      'Improving and personalizing the user experience.';
+
+  @override
+  String get privacypolicy20 =>
+      'Sending promotional offers or marketing communications (with your consent). ';
+
+  @override
+  String get privacypolicy21 =>
+      'Complying with applicable legal and regulatory requirements.';
+
+  @override
+  String get privacypolicy22 => '4. Sharing of Information';
+
+  @override
+  String get privacypolicy23 =>
+      'We may share your data in the following circumstances:';
+
+  @override
+  String get privacypolicy24 =>
+      'With service providers (e.g., airlines, hotels, tour operators) to complete your booking. ';
+
+  @override
+  String get privacypolicy25 =>
+      'With payment processors to facilitate secure transactions.';
+
+  @override
+  String get privacypolicy26 =>
+      'With legal or regulatory authorities if required by law.';
+
+  @override
+  String get privacypolicy27 =>
+      'With business partners in joint marketing campaigns (only with your prior consent).';
+
+  @override
+  String get privacypolicy28 =>
+      'We do not sell or rent your personal information to third parties.';
+
+  @override
+  String get privacypolicy29 => '5. Data Security';
+
+  @override
+  String get privacypolicy30 =>
+      'We implement industry-standard security measures, including encryption, to protect your data.';
+
+  @override
+  String get privacypolicy31 =>
+      'Access to personal information is restricted to authorized employees only.';
+
+  @override
+  String get privacypolicy32 =>
+      'However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute protection.';
+
+  @override
+  String get privacypolicy33 => '6. Cookies and Tracking Technologies';
+
+  @override
+  String get privacypolicy34 =>
+      'Our application may use cookies or similar technologies to:';
+
+  @override
+  String get privacypolicy35 => 'Remember user preferences and settings.';
+
+  @override
+  String get privacypolicy36 =>
+      'Analyze usage patterns and improve service quality.';
+
+  @override
+  String get privacypolicy37 => 'Provide relevant offers and promotions.';
+
+  @override
+  String get privacypolicy38 =>
+      'You may adjust your device settings to refuse or limit cookies.';
+
+  @override
+  String get privacypolicy39 => '7. User Rights';
+
+  @override
+  String get privacypolicy40 =>
+      'In line with the Egyptian Consumer Protection Law and applicable regulations, you have the right to:';
+
+  @override
+  String get privacypolicy41 => 'Request access to your personal data.';
+
+  @override
+  String get privacypolicy42 =>
+      'Request corrections of inaccurate or incomplete data.';
+
+  @override
+  String get privacypolicy43 =>
+      'Request deletion of your data, except where retention is required by law.';
+
+  @override
+  String get privacypolicy44 =>
+      'Opt-out of marketing communications at any time.';
+
+  @override
+  String get privacypolicy45 => '8. Data Retention';
+
+  @override
+  String get privacypolicy46 =>
+      'We retain your personal information as long as your account is active or as necessary to provide services.';
+
+  @override
+  String get privacypolicy47 =>
+      'Some data may be retained longer to comply with legal obligations, resolve disputes, or enforce agreements.';
+
+  @override
+  String get privacypolicy48 => '9. Third-Party Links';
+
+  @override
+  String get privacypolicy49 =>
+      'The App may contain links to third-party websites or applications. TripTo is not responsible for the privacy practices or content of those external services.';
+
+  @override
+  String get privacypolicy50 => '10. Changes to this Privacy Policy';
+
+  @override
+  String get privacypolicy51 =>
+      'We may update this Privacy Policy periodically. If significant changes are made, we will notify you via email or within the application.';
+
+  @override
+  String get privacypolicy52 => '11. Contact Us';
+
+  @override
+  String get privacypolicy53 =>
+      'For questions, complaints, or to exercise your rights, please contact us at:';
+
+  @override
+  String get privacypolicy54 => 'Email: [Support Email]';
+
+  @override
+  String get privacypolicy55 => ' Phone: [Support Phone Number]';
 }

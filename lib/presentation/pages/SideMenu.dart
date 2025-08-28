@@ -3,6 +3,7 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/About-us.dart';
 import 'package:tripto/presentation/Cancellattion.dart';
+import 'package:tripto/presentation/Privacypolicy.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/Favorite_page.dart';
 // import 'package:tripto/presentation/pages/SideMenu';
@@ -353,6 +354,60 @@ class _SideMenuState extends State<SideMenu> {
                     ),
                   ],
                 ),
+              ),
+
+              // 28/88888888888888888888888888888888888888888888888888888
+              const Divider(
+                thickness: 0.5, // سُمك الخط
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.lock,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.privacypolicy,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Privacypolicy(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Privacypolicy()),
+                  );
+                },
               ),
             ],
           ),

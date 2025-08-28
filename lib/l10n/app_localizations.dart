@@ -1309,6 +1309,348 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete my account'**
   String get deletmyaccount;
+
+  /// No description provided for @privacypolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacypolicy;
+
+  /// No description provided for @privacypolicy1.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy for [Trip To]'**
+  String get privacypolicy1;
+
+  /// No description provided for @introduction.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Introduction'**
+  String get introduction;
+
+  /// No description provided for @privacypolicy2.
+  ///
+  /// In en, this message translates to:
+  /// **'At [TripTo], we are committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, share, and safeguard your personal information when you use our application and related services.'**
+  String get privacypolicy2;
+
+  /// No description provided for @privacypolicy3.
+  ///
+  /// In en, this message translates to:
+  /// **'By accessing or using the TripTo application, you consent to the practices described in this Privacy Policy.'**
+  String get privacypolicy3;
+
+  /// No description provided for @privacypolicy4.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Information We Collect'**
+  String get privacypolicy4;
+
+  /// No description provided for @privacypolicy5.
+  ///
+  /// In en, this message translates to:
+  /// **'Information You Provide Directly:'**
+  String get privacypolicy5;
+
+  /// No description provided for @privacypolicy6.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment details (credit/debit cards, e-wallets)'**
+  String get privacypolicy6;
+
+  /// No description provided for @privacypolicy7.
+  ///
+  /// In en, this message translates to:
+  /// **' Phone number'**
+  String get privacypolicy7;
+
+  /// No description provided for @privacypolicy8.
+  ///
+  /// In en, this message translates to:
+  /// **' Passport or ID information when required for travel bookings'**
+  String get privacypolicy8;
+
+  /// No description provided for @privacypolicy9.
+  ///
+  /// In en, this message translates to:
+  /// **' Information Collected Automatically:'**
+  String get privacypolicy9;
+
+  /// No description provided for @privacypolicy10.
+  ///
+  /// In en, this message translates to:
+  /// **'Device information (model, operating system, unique identifiers) '**
+  String get privacypolicy10;
+
+  /// No description provided for @privacypolicy11.
+  ///
+  /// In en, this message translates to:
+  /// **'IP address'**
+  String get privacypolicy11;
+
+  /// No description provided for @privacypolicy12.
+  ///
+  /// In en, this message translates to:
+  /// **'Location data (if permitted by the user)'**
+  String get privacypolicy12;
+
+  /// No description provided for @privacypolicy13.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage data (search history, booking history, interactions within the App)'**
+  String get privacypolicy13;
+
+  /// No description provided for @privacypolicy14.
+  ///
+  /// In en, this message translates to:
+  /// **'3. How We Use Your Information '**
+  String get privacypolicy14;
+
+  /// No description provided for @privacypolicy15.
+  ///
+  /// In en, this message translates to:
+  /// **'We use the information we collect for purposes including, but not limited to: '**
+  String get privacypolicy15;
+
+  /// No description provided for @privacypolicy16.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing bookings and payments. '**
+  String get privacypolicy16;
+
+  /// No description provided for @privacypolicy17.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending booking confirmations and important notifications.'**
+  String get privacypolicy17;
+
+  /// No description provided for @privacypolicy18.
+  ///
+  /// In en, this message translates to:
+  /// **'Providing customer support and technical assistance.'**
+  String get privacypolicy18;
+
+  /// No description provided for @privacypolicy19.
+  ///
+  /// In en, this message translates to:
+  /// **'Improving and personalizing the user experience.'**
+  String get privacypolicy19;
+
+  /// No description provided for @privacypolicy20.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending promotional offers or marketing communications (with your consent). '**
+  String get privacypolicy20;
+
+  /// No description provided for @privacypolicy21.
+  ///
+  /// In en, this message translates to:
+  /// **'Complying with applicable legal and regulatory requirements.'**
+  String get privacypolicy21;
+
+  /// No description provided for @privacypolicy22.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Sharing of Information'**
+  String get privacypolicy22;
+
+  /// No description provided for @privacypolicy23.
+  ///
+  /// In en, this message translates to:
+  /// **'We may share your data in the following circumstances:'**
+  String get privacypolicy23;
+
+  /// No description provided for @privacypolicy24.
+  ///
+  /// In en, this message translates to:
+  /// **'With service providers (e.g., airlines, hotels, tour operators) to complete your booking. '**
+  String get privacypolicy24;
+
+  /// No description provided for @privacypolicy25.
+  ///
+  /// In en, this message translates to:
+  /// **'With payment processors to facilitate secure transactions.'**
+  String get privacypolicy25;
+
+  /// No description provided for @privacypolicy26.
+  ///
+  /// In en, this message translates to:
+  /// **'With legal or regulatory authorities if required by law.'**
+  String get privacypolicy26;
+
+  /// No description provided for @privacypolicy27.
+  ///
+  /// In en, this message translates to:
+  /// **'With business partners in joint marketing campaigns (only with your prior consent).'**
+  String get privacypolicy27;
+
+  /// No description provided for @privacypolicy28.
+  ///
+  /// In en, this message translates to:
+  /// **'We do not sell or rent your personal information to third parties.'**
+  String get privacypolicy28;
+
+  /// No description provided for @privacypolicy29.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Data Security'**
+  String get privacypolicy29;
+
+  /// No description provided for @privacypolicy30.
+  ///
+  /// In en, this message translates to:
+  /// **'We implement industry-standard security measures, including encryption, to protect your data.'**
+  String get privacypolicy30;
+
+  /// No description provided for @privacypolicy31.
+  ///
+  /// In en, this message translates to:
+  /// **'Access to personal information is restricted to authorized employees only.'**
+  String get privacypolicy31;
+
+  /// No description provided for @privacypolicy32.
+  ///
+  /// In en, this message translates to:
+  /// **'However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute protection.'**
+  String get privacypolicy32;
+
+  /// No description provided for @privacypolicy33.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Cookies and Tracking Technologies'**
+  String get privacypolicy33;
+
+  /// No description provided for @privacypolicy34.
+  ///
+  /// In en, this message translates to:
+  /// **'Our application may use cookies or similar technologies to:'**
+  String get privacypolicy34;
+
+  /// No description provided for @privacypolicy35.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember user preferences and settings.'**
+  String get privacypolicy35;
+
+  /// No description provided for @privacypolicy36.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze usage patterns and improve service quality.'**
+  String get privacypolicy36;
+
+  /// No description provided for @privacypolicy37.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide relevant offers and promotions.'**
+  String get privacypolicy37;
+
+  /// No description provided for @privacypolicy38.
+  ///
+  /// In en, this message translates to:
+  /// **'You may adjust your device settings to refuse or limit cookies.'**
+  String get privacypolicy38;
+
+  /// No description provided for @privacypolicy39.
+  ///
+  /// In en, this message translates to:
+  /// **'7. User Rights'**
+  String get privacypolicy39;
+
+  /// No description provided for @privacypolicy40.
+  ///
+  /// In en, this message translates to:
+  /// **'In line with the Egyptian Consumer Protection Law and applicable regulations, you have the right to:'**
+  String get privacypolicy40;
+
+  /// No description provided for @privacypolicy41.
+  ///
+  /// In en, this message translates to:
+  /// **'Request access to your personal data.'**
+  String get privacypolicy41;
+
+  /// No description provided for @privacypolicy42.
+  ///
+  /// In en, this message translates to:
+  /// **'Request corrections of inaccurate or incomplete data.'**
+  String get privacypolicy42;
+
+  /// No description provided for @privacypolicy43.
+  ///
+  /// In en, this message translates to:
+  /// **'Request deletion of your data, except where retention is required by law.'**
+  String get privacypolicy43;
+
+  /// No description provided for @privacypolicy44.
+  ///
+  /// In en, this message translates to:
+  /// **'Opt-out of marketing communications at any time.'**
+  String get privacypolicy44;
+
+  /// No description provided for @privacypolicy45.
+  ///
+  /// In en, this message translates to:
+  /// **'8. Data Retention'**
+  String get privacypolicy45;
+
+  /// No description provided for @privacypolicy46.
+  ///
+  /// In en, this message translates to:
+  /// **'We retain your personal information as long as your account is active or as necessary to provide services.'**
+  String get privacypolicy46;
+
+  /// No description provided for @privacypolicy47.
+  ///
+  /// In en, this message translates to:
+  /// **'Some data may be retained longer to comply with legal obligations, resolve disputes, or enforce agreements.'**
+  String get privacypolicy47;
+
+  /// No description provided for @privacypolicy48.
+  ///
+  /// In en, this message translates to:
+  /// **'9. Third-Party Links'**
+  String get privacypolicy48;
+
+  /// No description provided for @privacypolicy49.
+  ///
+  /// In en, this message translates to:
+  /// **'The App may contain links to third-party websites or applications. TripTo is not responsible for the privacy practices or content of those external services.'**
+  String get privacypolicy49;
+
+  /// No description provided for @privacypolicy50.
+  ///
+  /// In en, this message translates to:
+  /// **'10. Changes to this Privacy Policy'**
+  String get privacypolicy50;
+
+  /// No description provided for @privacypolicy51.
+  ///
+  /// In en, this message translates to:
+  /// **'We may update this Privacy Policy periodically. If significant changes are made, we will notify you via email or within the application.'**
+  String get privacypolicy51;
+
+  /// No description provided for @privacypolicy52.
+  ///
+  /// In en, this message translates to:
+  /// **'11. Contact Us'**
+  String get privacypolicy52;
+
+  /// No description provided for @privacypolicy53.
+  ///
+  /// In en, this message translates to:
+  /// **'For questions, complaints, or to exercise your rights, please contact us at:'**
+  String get privacypolicy53;
+
+  /// No description provided for @privacypolicy54.
+  ///
+  /// In en, this message translates to:
+  /// **'Email: [Support Email]'**
+  String get privacypolicy54;
+
+  /// No description provided for @privacypolicy55.
+  ///
+  /// In en, this message translates to:
+  /// **' Phone: [Support Phone Number]'**
+  String get privacypolicy55;
 }
 
 class _AppLocalizationsDelegate
