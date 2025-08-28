@@ -118,6 +118,8 @@ class _TripToAppState extends State<TripToApp> {
           // initialRoute: '/',
           // routes: AppRoutes.routes,
           home: App(),
+
+          //home: Privacypolicy(),
         ),
       ),
     );

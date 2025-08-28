@@ -683,4 +683,203 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unknown => 'غير معروف';
+
+  @override
+  String get privacypolicy => 'سياسة الخصوصية';
+
+  @override
+  String get privacypolicy1 => 'سياسة الخصوصية [ترب تو]';
+
+  @override
+  String get introduction => '1. المقدمة';
+
+  @override
+  String get privacypolicy2 =>
+      'نحن في [ترب تو ] نولي أهمية قصوى لحماية خصوصية مستخدمينا. تهدف هذه السياسة إلى توضيح كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتكم الشخصية عند استخدامكم للتطبيق وخدماته.';
+
+  @override
+  String get privacypolicy3 =>
+      'باستخدامكم للتطبيق، فإنكم توافقون على أحكام هذه السياسة.';
+
+  @override
+  String get privacypolicy4 => '2. المعلومات التي نقوم بجمعها';
+
+  @override
+  String get privacypolicy5 => 'المعلومات الشخصية التي تقدمونها بأنفسكم:';
+
+  @override
+  String get privacypolicy6 =>
+      'بيانات الدفع (بطاقات الائتمان، المحافظ الإلكترونية)';
+
+  @override
+  String get privacypolicy7 => ' رقم الهاتف';
+
+  @override
+  String get privacypolicy8 =>
+      ' بيانات جواز السفر أو الهوية عند الحاجة لحجوزات السفر';
+
+  @override
+  String get privacypolicy9 => 'المعلومات التي يتم جمعها تلقائيًا:';
+
+  @override
+  String get privacypolicy10 =>
+      'بيانات الجهاز (نوع الهاتف، نظام التشغيل، معرفات فريدة)';
+
+  @override
+  String get privacypolicy11 => 'عنوان بروتوكول الإنترنت (IP Address)';
+
+  @override
+  String get privacypolicy12 => 'بيانات الموقع الجغرافي (في حال السماح بذلك) ';
+
+  @override
+  String get privacypolicy13 =>
+      'سجل الاستخدام (التصفّح داخل التطبيق، عمليات البحث، الحجوزات السابقة)';
+
+  @override
+  String get privacypolicy14 => '3. كيفية استخدام المعلومات ';
+
+  @override
+  String get privacypolicy15 => 'نستخدم البيانات التي نجمعها للأغراض التالية:';
+
+  @override
+  String get privacypolicy16 => 'معالجة الحجوزات والدفع.';
+
+  @override
+  String get privacypolicy17 => 'إرسال تأكيدات الحجز والإشعارات المهمة.';
+
+  @override
+  String get privacypolicy18 => 'تقديم خدمة عملاء ودعم فني أفضل.';
+
+  @override
+  String get privacypolicy19 => 'تحسين تجربة الاستخدام وتطوير خدماتنا.';
+
+  @override
+  String get privacypolicy20 =>
+      'إرسال العروض الترويجية أو الإشعارات التسويقية (في حال منحتم الموافقة). ';
+
+  @override
+  String get privacypolicy21 =>
+      'الامتثال للقوانين واللوائح المصرية والدولية ذات الصلة.';
+
+  @override
+  String get privacypolicy22 => '4. مشاركة المعلومات';
+
+  @override
+  String get privacypolicy23 =>
+      'قد تتم مشاركة بياناتكم في الحالات التالية فقط:';
+
+  @override
+  String get privacypolicy24 =>
+      'مع مزودي الخدمة (مثل شركات الطيران، الفنادق، منظمي الرحلات) لتنفيذ الحجز.';
+
+  @override
+  String get privacypolicy25 =>
+      'مع مزودي خدمات الدفع لمعالجة المعاملات المالية.';
+
+  @override
+  String get privacypolicy26 =>
+      'مع الجهات القانونية أو الحكومية إذا طُلب منا ذلك بموجب القانون.';
+
+  @override
+  String get privacypolicy27 =>
+      'مع شركائنا التجاريين في حال الحملات التسويقية (بعد موافقتكم).';
+
+  @override
+  String get privacypolicy28 =>
+      'ترب تو لا يبيع أو يؤجر بياناتكم الشخصية لأي طرف ثالث.';
+
+  @override
+  String get privacypolicy29 => '5. أمن وحماية البيانات';
+
+  @override
+  String get privacypolicy30 =>
+      'نستخدم بروتوكولات أمان وتشفير متقدمة لحماية بياناتكم.';
+
+  @override
+  String get privacypolicy31 =>
+      'نحد من الوصول إلى المعلومات الشخصية بحيث يقتصر على الموظفين المصرح لهم فقط.';
+
+  @override
+  String get privacypolicy32 =>
+      'رغم ذلك، لا يمكن ضمان أمان تام بنسبة 100% عبر الإنترنت، وعليه فإن استخدامكم للتطبيق يقع على مسؤوليتكم.';
+
+  @override
+  String get privacypolicy33 => '6. ملفات تعريف الارتباط (Cookies)';
+
+  @override
+  String get privacypolicy34 =>
+      'قد يستخدم التطبيق تقنيات الكوكيز وملفات مشابهة لتحسين تجربة الاستخدام، مثل:';
+
+  @override
+  String get privacypolicy35 => 'تذكر تفضيلاتكم السابقة.';
+
+  @override
+  String get privacypolicy36 => 'تحليل أنماط الاستخدام والإحصائيات.';
+
+  @override
+  String get privacypolicy37 => 'تقديم عروضًا وترويجات ذات صلة.';
+
+  @override
+  String get privacypolicy38 =>
+      'يمكنكم التحكم في إعدادات الكوكيز من خلال إعدادات جهازكم.';
+
+  @override
+  String get privacypolicy39 => '7. حقوق المستخدمين';
+
+  @override
+  String get privacypolicy40 =>
+      'بموجب القوانين المصرية (وخاصة قانون حماية المستهلك):';
+
+  @override
+  String get privacypolicy41 =>
+      'لكم الحق في الوصول إلى بياناتكم الشخصية وطلب نسخة منها.';
+
+  @override
+  String get privacypolicy42 => 'لكم الحق في طلب تصحيح أي بيانات غير دقيقة.';
+
+  @override
+  String get privacypolicy43 =>
+      'لكم الحق في طلب حذف بياناتكم، إلا في الحالات التي يتطلب فيها القانون الاحتفاظ بها.';
+
+  @override
+  String get privacypolicy44 =>
+      'يمكنكم إلغاء الاشتراك في الرسائل التسويقية في أي وقت.';
+
+  @override
+  String get privacypolicy45 => '8. الاحتفاظ بالبيانات';
+
+  @override
+  String get privacypolicy46 =>
+      'نحتفظ بمعلوماتكم الشخصية طالما أن حسابكم نشط أو طالما كان ذلك ضروريًا لتقديم الخدمة.';
+
+  @override
+  String get privacypolicy47 =>
+      'قد نحتفظ ببعض البيانات لفترة أطول للامتثال للالتزامات القانونية أو لحل النزاعات.';
+
+  @override
+  String get privacypolicy48 => '9. الروابط الخارجية';
+
+  @override
+  String get privacypolicy49 =>
+      'قد يحتوي التطبيق على روابط لمواقع أو تطبيقات أخرى لا نتحكم بها. نحن غير مسؤولين عن سياسات الخصوصية أو محتوى هذه المواقع.';
+
+  @override
+  String get privacypolicy50 => '10. تغييرات سياسة الخصوصية';
+
+  @override
+  String get privacypolicy51 =>
+      'قد نقوم بتحديث هذه السياسة من وقت لآخر. سيتم إشعاركم عبر التطبيق أو البريد الإلكتروني بأي تغييرات جوهرية.';
+
+  @override
+  String get privacypolicy52 => '11. التواصل معنا';
+
+  @override
+  String get privacypolicy53 =>
+      'للاستفسارات أو ممارسة حقوقكم المتعلقة بالبيانات، يمكنكم التواصل عبر:';
+
+  @override
+  String get privacypolicy54 => 'البريد الإلكتروني: [Support Email]';
+
+  @override
+  String get privacypolicy55 => ' الهاتف: [Support Phone Number]';
 }
