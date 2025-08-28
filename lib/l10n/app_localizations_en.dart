@@ -672,6 +672,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deletmyaccount => 'Delete my account';
 
   @override
+  String get single => 'Single';
+
+  @override
+  String get double => 'Double';
+
+  @override
+  String get triple => 'Triple';
+
+  @override
+  String get quad => 'Quad';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
   String get privacypolicy => 'Privacy policy';
 
   @override

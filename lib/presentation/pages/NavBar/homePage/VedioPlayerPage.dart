@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
-import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/bloc/Repositories/TripsRepository.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
-import 'package:tripto/presentation/pages/widget/CountryWithCity.dart';
-import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
-import 'package:tripto/presentation/pages/widget/payment_option.dart';
+import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
+import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
+import 'package:tripto/presentation/pages/screens/payment/payment_option.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -21,10 +21,11 @@ class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<VideoPlayerScreen> createState() => VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class VideoPlayerScreenState extends State<VideoPlayerScreen>
+    with WidgetsBindingObserver, RouteAware {
   // --- الثوابت والمتغيرات الأصلية الخاصة بك ---
   // ignore: unused_field
   final _storage = const FlutterSecureStorage();
@@ -54,7 +55,33 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this); // <-- أضف هذا السطر
+
     _fetchAllTrips(); // نبدأ بتحميل كل الرحلات أولاً
+  }
+
+  // ✅ الخطوة 2: أضف didChangeDependencies للاشتراك
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // اشترك في مراقب التنقل
+    routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    final chewieController = _chewieControllers[_currentIndex];
+    if (chewieController == null ||
+        !chewieController.videoPlayerController.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      chewieController.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      chewieController.play();
+    }
   }
 
   // --- جلب كل الرحلات مرة واحدة ---
@@ -269,10 +296,37 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // <-- أضف هذا السطر
+    routeObserver.unsubscribe(this); // ✅ ألغِ الاشتراك
+
     _scrollController.dispose();
     _videoControllers.forEach((_, controller) => controller.dispose());
     _chewieControllers.forEach((_, controller) => controller.dispose());
     super.dispose();
+  }
+
+  @override
+  void didPushNext() {
+    // أوقف الفيديو الحالي
+    _chewieControllers[_currentIndex]?.pause();
+    debugPrint("Navigated away from VideoPlayerScreen, pausing video.");
+  }
+
+  /// يتم استدعاؤها عند العودة إلى هذه الصفحة من صفحة أخرى
+  @override
+  void didPopNext() {
+    // أعد تشغيل الفيديو الحالي
+    _chewieControllers[_currentIndex]?.play();
+    debugPrint("Returned to VideoPlayerScreen, playing video.");
+  }
+
+  //////////////////////////////
+  void pauseCurrentVideo() {
+    _chewieControllers[_currentIndex]?.pause();
+  }
+
+  void playCurrentVideo() {
+    _chewieControllers[_currentIndex]?.play();
   }
 
   @override

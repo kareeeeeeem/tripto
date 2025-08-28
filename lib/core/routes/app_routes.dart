@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pages/widget/CarDetials.dart';
+import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/CategoryCard.dart';
-import 'package:tripto/presentation/pages/NavBar/profile_page.dart';
+import 'package:tripto/presentation/pages/SlideBar/car/CarDialog.dart';
+import 'package:tripto/presentation/pages/SlideBar/category/CategoryCard.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import '../../presentation/pages/NavBar/ActivityPage/activity_details_page.dart';
 import '../../presentation/pages/NavBar/homePage/home_page.dart';
 import '../../presentation/before_start/splash_page.dart';
 import '../../presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import '../../presentation/before_start/welcome_page.dart';
-import '../../presentation/pages/widget/payment_option.dart';
-import '../../presentation/pages/widget/payment_destination.dart';
+import '../../presentation/pages/screens/payment/payment_option.dart';
+import '../../presentation/pages/screens/payment/payment_destination.dart';
 import '../models/activityPageModel.dart';
 
 class AppRoutes {

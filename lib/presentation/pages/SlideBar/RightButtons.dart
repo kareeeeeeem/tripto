@@ -8,16 +8,17 @@ import 'package:tripto/bloc/Hotel/hotelEvents.dart';
 import 'package:tripto/bloc/Hotel/hotelRep.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/core/models/CarModel.dart';
-import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/bloc/Repositories/TripsRepository.dart';
 import 'package:tripto/bloc/Hotel/hotelBloc.dart';
-import 'package:tripto/presentation/pages/SlideBar/ActivitiesCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/CarCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/CategoryCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/DateCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/InfoCard.dart';
-import 'package:tripto/presentation/pages/SlideBar/HotelsCard.dart';
+import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/presentation/pages/SlideBar/activity/ActivityListDialog.dart';
+import 'package:tripto/presentation/pages/SlideBar/car/CarDialog.dart';
+import 'package:tripto/presentation/pages/SlideBar/category/CategoryCard.dart';
+import 'package:tripto/presentation/pages/SlideBar/date/DateCard.dart';
+import 'package:tripto/presentation/pages/SlideBar/info/InfoCard.dart';
+import 'package:tripto/presentation/pages/SlideBar/hotel/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
-import 'package:tripto/presentation/pages/widget/PersonCounterWithPrice.dart';
+import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 
 enum CategoryType { none, gold, diamond, platinum }
 
@@ -73,6 +74,9 @@ class _RightButtonsState extends State<RightButtons> {
   Carmodel? selectedCar;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  int? selectedHotelId;
+  int? selectedCarId;
+  int? selectedActivityId; // ✅ جديد
 
   @override
   void initState() {
@@ -169,7 +173,7 @@ class _RightButtonsState extends State<RightButtons> {
                   child: Text(
                     _selectedFilterDate != null
                         ? DateFormat('d').format(_selectedFilterDate!)
-                        : DateFormat('d').format(DateTime.now()),
+                        : '', // لو فاضي ما يظهرش أي رقم
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -287,7 +291,8 @@ class _RightButtonsState extends State<RightButtons> {
                       personCounterKey: widget.personCounterKey,
                       startDate: _rangeStart,
                       endDate: _rangeEnd,
-                      nextSteps: [], // ممكن تسيبها فاضية
+                      nextSteps: [],
+                      selectedHotelId: selectedHotelId,
                     ),
                   ),
             );
@@ -298,7 +303,11 @@ class _RightButtonsState extends State<RightButtons> {
                     : 1;
 
             if (selectedHotel != null) {
-              // ضبط السعر في PersonCounterWithPrice
+              // ✅ Continue → خزّن الفندق واضبط السعر
+              setState(() {
+                selectedHotelId = selectedHotel.id;
+              });
+
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 selectedHotel.pricePerNight,
                 nights,
@@ -308,7 +317,6 @@ class _RightButtonsState extends State<RightButtons> {
               final currentIndex = buttons.indexWhere(
                 (b) => b.label == AppLocalizations.of(context)!.hotel,
               );
-
               final nextButtonIndex = currentIndex + 1;
 
               if (nextButtonIndex < buttons.length) {
@@ -319,7 +327,11 @@ class _RightButtonsState extends State<RightButtons> {
                 buttons[nextButtonIndex].onPressed?.call();
               }
             } else {
-              // لو المستخدم لغى الاختيار
+              // ❌ Cancel → مسح الفندق واضبط السعر بـ 0
+              setState(() {
+                selectedHotelId = null;
+              });
+
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 0,
                 nights,
@@ -329,8 +341,6 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
-
-    // Car Button
     if (showCar) {
       buttons.add(
         _ButtonData(
@@ -343,48 +353,13 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.car,
           onPressed: () async {
-            final int carButtonIndex = buttons.indexWhere(
-              (b) => b.label == AppLocalizations.of(context)!.car,
-            );
-
-            final List<_ButtonData> postCarButtons = buttons.sublist(
-              carButtonIndex + 1,
-            );
-
-            // احصل على الزر التالي بعد زر السيارة
-            final nextButton = postCarButtons.firstWhere(
-              (b) => b.onPressed != null,
-              orElse:
-                  () => _ButtonData(
-                    iconWidget: SizedBox(),
-                    label: '',
-                    onPressed: null,
-                  ),
-            );
-
-            // ✅ لا تمرر زر الأنشطة كـ nextStep لو الأنشطة موجودة وسيتم فتحها داخل CarSelectionPage
-            List<VoidCallback> nextSteps = [];
-
-            if (trip.hasActivity &&
-                nextButton.label == AppLocalizations.of(context)!.activities) {
-              nextSteps = []; // ما تمررش الزر ده
-            } else {
-              nextSteps =
-                  nextButton.onPressed != null ? [nextButton.onPressed!] : [];
-            }
-            final int category =
-                int.tryParse(trip.category?.toString() ?? '') ?? 0;
-
-            // افتح صفحة اختيار السيارة
-            final selectedCarPrice = await showDialog<double>(
+            final Carmodel? selectedCarFromDialog = await showDialog<Carmodel>(
               context: context,
               builder: (dialogContext) {
                 return MultiBlocProvider(
                   providers: [
                     BlocProvider.value(
-                      value: BlocProvider.of<TripBloc>(
-                        context,
-                      ), // تمرير نفس الـ TripBloc الموجود
+                      value: BlocProvider.of<TripBloc>(context),
                     ),
                     BlocProvider(
                       create:
@@ -396,24 +371,61 @@ class _RightButtonsState extends State<RightButtons> {
                           ),
                     ),
                   ],
-                  child: CarSelectionPage(
-                    nextSteps: nextSteps,
-                    hasActivity: trip.hasActivity,
-                  ),
+                  child: CarSelectionPage(selectedCarId: selectedCarId),
                 );
               },
             );
-            if (selectedCarPrice != null) {
+
+            if (selectedCarFromDialog != null) {
+              setState(() {
+                selectedCarId = selectedCarFromDialog.id;
+                selectedCar = selectedCarFromDialog;
+              });
               widget.personCounterKey?.currentState?.setSelectedCarPrice(
-                selectedCarPrice,
+                selectedCarFromDialog.price,
               );
+              if (trip.hasActivity) {
+                final selectedActivityFromDialog =
+                    await showDialog<GetActivityModel>(
+                      context: context,
+                      builder:
+                          (context) => ActivitiesListDialog(
+                            initialSelectedActivityId:
+                                selectedActivityId, // ✅ تم إضافة هذا السطر
+                          ),
+                    );
+                if (selectedActivityFromDialog != null) {
+                  final price =
+                      double.tryParse(
+                        selectedActivityFromDialog.price.toString(),
+                      ) ??
+                      0.0;
+                  setState(() {
+                    selectedActivityId =
+                        selectedActivityFromDialog.id; // ✅ تم حفظ المعرف هنا
+                  });
+                  widget.personCounterKey?.currentState
+                      ?.setSelectedActivityPrice(price);
+                } else {
+                  setState(() {
+                    selectedActivityId = null;
+                  });
+                  widget.personCounterKey?.currentState
+                      ?.setSelectedActivityPrice(0);
+                }
+              }
             } else {
+              setState(() {
+                selectedCarId = null;
+                selectedCar = null;
+              });
               widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
             }
           },
         ),
       );
     }
+
     // Activities Button
     if (trip.hasActivity) {
       buttons.add(
@@ -427,18 +439,33 @@ class _RightButtonsState extends State<RightButtons> {
           ),
           label: AppLocalizations.of(context)!.activities,
           onPressed: () async {
-            final selectedActivity = await showDialog(
-              context: context,
-              builder: (context) => const ActivitiesListDialog(),
-            );
+            final selectedActivityFromDialog =
+                await showDialog<GetActivityModel>(
+                  context: context,
+                  builder:
+                      (context) => ActivitiesListDialog(
+                        initialSelectedActivityId:
+                            selectedActivityId, // ✅ تم إضافة هذا السطر
+                      ),
+                );
 
-            if (selectedActivity != null) {
+            if (selectedActivityFromDialog != null) {
               final price =
-                  double.tryParse(selectedActivity.price.toString()) ?? 0.0;
+                  double.tryParse(
+                    selectedActivityFromDialog.price.toString(),
+                  ) ??
+                  0.0;
+              setState(() {
+                selectedActivityId =
+                    selectedActivityFromDialog.id; // ✅ تم حفظ المعرف هنا
+              });
               widget.personCounterKey?.currentState?.setSelectedActivityPrice(
                 price,
               );
             } else {
+              setState(() {
+                selectedActivityId = null;
+              });
               widget.personCounterKey?.currentState?.setSelectedActivityPrice(
                 0,
               );

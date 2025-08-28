@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/ProfileUserDate/Edit/EditEvent.dart';
 import 'package:tripto/bloc/ProfileUserDate/Edit/EditState.dart';
-import 'package:tripto/data/repositories/ProfileRepository.dart';
+import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
 
 class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
   final UserRepository userRepository;

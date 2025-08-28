@@ -8,15 +8,16 @@ import 'package:tripto/bloc/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/data/repositories/ProfileRepository.dart';
-import 'package:tripto/data/repositories/TripsRepository.dart';
-import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/About-us.dart';
-import 'package:tripto/presentation/Cancellattion.dart';
-import 'package:tripto/presentation/Privacypolicy.dart';
-import 'package:tripto/presentation/pages/SideMenu.dart';
+import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
+import 'package:tripto/bloc/Repositories/TripsRepository.dart';
+import 'package:tripto/presentation/app/app.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
+    GlobalKey<VideoPlayerScreenState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const TripToApp());
 }
@@ -93,6 +95,8 @@ class _TripToAppState extends State<TripToApp> {
           ),
         ],
         child: MaterialApp(
+          navigatorObservers: [routeObserver],
+
           locale: _locale,
           supportedLocales: const [Locale('en'), Locale('ar')],
           localizationsDelegates: const [
@@ -113,7 +117,9 @@ class _TripToAppState extends State<TripToApp> {
           debugShowCheckedModeBanner: false,
           // initialRoute: '/',
           // routes: AppRoutes.routes,
-          home: Privacypolicy(),
+          home: App(),
+
+          //home: Privacypolicy(),
         ),
       ),
     );
