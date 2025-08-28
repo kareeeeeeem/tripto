@@ -676,7 +676,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get privacypolicy1 => 'سياسة الخصوصية [ترب تو]';
 
   @override
-  String get introduction => '1. المقدمة';
+  String get introduction => '1. المقدمة.';
 
   @override
   String get privacypolicy2 =>
@@ -867,4 +867,154 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get privacypolicy55 => ' الهاتف: [Support Phone Number]';
+
+  @override
+  String get termsandcondations => 'الشروط و الاحكام';
+
+  @override
+  String get termsandcondations1 => ' الشروط و الاحكام[ترب تو]';
+
+  @override
+  String get termsandcondations2 =>
+      'مرحبًا بكم في [ترب تو]، التطبيق الذي يتيح لكم حجز الرحلات الجوية، الفنادق، الباقات السياحية، الجولات، والأنشطة الترفيهية (ويُشار إليها مجتمعةً بـ الخدمات).باستخدامكم للتطبيق أو تحميله أو الدخول إليه، فإنكم توافقون على الالتزام بهذه الشروط والأحكام (الشروط). في حال عدم موافقتكم، يجب التوقف فورًا عن استخدام التطبيق.';
+
+  @override
+  String get termsandcondations3 => '2. التعريفات.';
+
+  @override
+  String get termsandcondations4 =>
+      'التطبيق (App): يقصد به تطبيق  ترب تو بنسختيه (الموبايل والويب).';
+
+  @override
+  String get termsandcondations5 =>
+      'المستخدم (\'أنتم\'): أي شخص يستخدم التطبيق لإجراء حجوزات.';
+
+  @override
+  String get termsandcondations6 =>
+      'مزودو الخدمة: شركات الطيران، الفنادق، منظمو الرحلات، أو أي طرف ثالث يتم عرض خدماته عبر التطبيق.';
+
+  @override
+  String get termsandcondations7 =>
+      'نحن/الشركة: TripTo وموظفوها والشركات التابعة لها.';
+
+  @override
+  String get termsandcondations8 => '3. نطاق الخدمات.';
+
+  @override
+  String get termsandcondations9 =>
+      'ترب تو يعمل كـ وسيط فقط بينكم وبين مزودي الخدمة.';
+
+  @override
+  String get termsandcondations10 =>
+      'جميع الحجوزات تخضع لشروط وأحكام مزود الخدمة النهائي.';
+
+  @override
+  String get termsandcondations11 =>
+      'نحن لا نملك أو ندير أو نتحكم في الرحلات الجوية أو الفنادق أو الأنشطة.';
+
+  @override
+  String get termsandcondations12 => '4. مسؤوليات المستخدم.';
+
+  @override
+  String get termsandcondations13 => 'باستخدام التطبيق، فإنكم توافقون على:';
+
+  @override
+  String get termsandcondations14 => 'تقديم بيانات صحيحة وكاملة عند الحجز.';
+
+  @override
+  String get termsandcondations15 =>
+      'التأكد من استيفاء متطلبات السفر (مثل صلاحية جواز السفر، الحصول على التأشيرات، الشهادات الصحية).';
+
+  @override
+  String get termsandcondations16 =>
+      'عدم استخدام التطبيق لأغراض احتيالية أو مضاربة أو غير قانونية.';
+
+  @override
+  String get termsandcondations17 => '5. الحجوزات والدفع.';
+
+  @override
+  String get termsandcondations18 =>
+      'يتم اعتبار الحجز مؤكدًا بعد إتمام الدفع بنجاح.';
+
+  @override
+  String get termsandcondations19 =>
+      'الأسعار المعروضة تشمل الضرائب والرسوم وأي تكاليف إدارية، ما لم يُذكر خلاف ذلك.';
+
+  @override
+  String get termsandcondations20 =>
+      'تحتفظ ترب تو بحق تعديل الأسعار في أي وقت قبل تأكيد الحجز.';
+
+  @override
+  String get termsandcondations21 => '6. سياسة الإلغاء والاسترداد.';
+
+  @override
+  String get termsandcondations22 =>
+      'تخضع جميع عمليات الإلغاء والاسترداد إلى سياسة الإلغاء والاسترداد الخاصة بنا، والتي تُعتبر جزءًا لا يتجزأ من هذه الشروط. باستخدامكم للتطبيق، فإنكم تؤكدون اطلاعكم وموافقتكم على هذه السياسة.';
+
+  @override
+  String get termsandcondations23 => '7. التعديلات والتغييرات.';
+
+  @override
+  String get termsandcondations24 =>
+      'قد يقوم مزودو الخدمة بتعديل المواعيد أو أماكن الإقامة أو طبيعة الخدمات لأسباب تشغيلية.';
+
+  @override
+  String get termsandcondations25 =>
+      'ترب تو ليست مسؤولة عن هذه التغييرات، لكنها ستبذل جهدها لإعلامكم ومساعدتكم في إيجاد بدائل مناسبة.';
+
+  @override
+  String get termsandcondations26 => '8. حقوق الملكية الفكرية.';
+
+  @override
+  String get termsandcondations27 =>
+      'جميع محتويات التطبيق (التصاميم، الشعارات، النصوص، الرسومات، والبرمجيات) مملوكة لـ ترب تو ومحميّة بموجب قوانين حقوق الطبع والنشر.';
+
+  @override
+  String get termsandcondations28 =>
+      'لا يجوز نسخ أو إعادة إنتاج أو توزيع أو استغلال أي جزء من التطبيق دون إذن خطي مسبق من ترب تو.';
+
+  @override
+  String get termsandcondations29 => '9. حدود المسؤولية.';
+
+  @override
+  String get termsandcondations30 =>
+      'لا تتحمل TripTo أي مسؤولية عن التأخير أو الإلغاء أو الحوادث أو الخسائر الناتجة عن الخدمات المقدمة من قبل أطراف ثالثة.';
+
+  @override
+  String get termsandcondations31 =>
+      'في جميع الأحوال، لا تتجاوز مسؤوليتنا – إن وجدت – إجمالي المبلغ المدفوع عن طريق التطبيق.';
+
+  @override
+  String get termsandcondations32 => '10. سياسة الخصوصية.';
+
+  @override
+  String get termsandcondations33 =>
+      'يخضع استخدامكم للتطبيق أيضًا إلى سياسة الخصوصية الخاصة بنا، والتي توضّح كيفية جمع وحماية واستخدام بياناتكم الشخصية.';
+
+  @override
+  String get termsandcondations34 => '11. الظروف القاهرة (Force Majeure).';
+
+  @override
+  String get termsandcondations35 =>
+      'لا تتحمل TripTo أي مسؤولية عن عدم تنفيذ أي التزام بسبب ظروف خارجة عن إرادتنا، مثل الكوارث الطبيعية، الأوبئة، القرارات الحكومية المفاجئة، الإضرابات، أو الحروب.';
+
+  @override
+  String get termsandcondations36 => '12. القانون الحاكم والاختصاص القضائي.';
+
+  @override
+  String get termsandcondations37 =>
+      'تخضع هذه الشروط لقوانين جمهورية مصر العربية، وتكون المحاكم المصرية المختصة صاحبة الولاية الحصرية للنظر في أي نزاع.';
+
+  @override
+  String get termsandcondations38 => '13. معلومات الاتصال.';
+
+  @override
+  String get termsandcondations39 =>
+      'للاستفسارات أو الشكاوى أو الدعم الفني، يمكنكم التواصل معنا عبر:';
+
+  @override
+  String get termsandcondations40 => 'البريد الإلكتروني: [Support Email]';
+
+  @override
+  String get termsandcondations41 => 'الهاتف: [Support Phone Number]';
 }

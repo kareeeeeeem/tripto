@@ -874,4 +874,155 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacypolicy55 => ' Phone: [Support Phone Number]';
+
+  @override
+  String get termsandcondations => 'Terms and Condations';
+
+  @override
+  String get termsandcondations1 => 'Terms and Condations for [Trip To]';
+
+  @override
+  String get termsandcondations2 =>
+      'Welcome to [TripTo], an application that provides online booking services for flights, hotels, holiday packages, tours, and recreational activities (collectively referred to as the Services). By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions (the Terms). If you do not agree with these Terms, you must discontinue use of the application immediately.';
+
+  @override
+  String get termsandcondations3 => '2. Definitions';
+
+  @override
+  String get termsandcondations4 =>
+      'Application (\'App\'): Refers to the TripTo mobile and web-based application.';
+
+  @override
+  String get termsandcondations5 =>
+      'User (\'You\', \'Customer\'): Any person using the application to book services.';
+
+  @override
+  String get termsandcondations6 =>
+      'Service Providers: Third-party entities such as airlines, hotels, tour operators, and others whose services are offered via the App.';
+
+  @override
+  String get termsandcondations7 =>
+      'We/Us/Our: TripTo, its owners, employees, and affiliates.';
+
+  @override
+  String get termsandcondations8 => '3. Scope of Services';
+
+  @override
+  String get termsandcondations9 =>
+      'TripTo acts solely as an intermediary between you and the service providers.';
+
+  @override
+  String get termsandcondations10 =>
+      'All bookings are subject to the availability and conditions of the end-service provider.';
+
+  @override
+  String get termsandcondations11 =>
+      'We do not own, operate, or control flights, hotels, or activities.';
+
+  @override
+  String get termsandcondations12 => '4. User Responsibilities';
+
+  @override
+  String get termsandcondations13 => 'By using the App, you agree to:';
+
+  @override
+  String get termsandcondations14 =>
+      'Provide accurate and complete personal details when making a booking.';
+
+  @override
+  String get termsandcondations15 =>
+      'Ensure that you meet the requirements (e.g., passport validity, visas, vaccination certificates) for travel.';
+
+  @override
+  String get termsandcondations16 =>
+      'Refrain from using the application for fraudulent, speculative, or unlawful purposes.';
+
+  @override
+  String get termsandcondations17 => '5. Bookings and Payments';
+
+  @override
+  String get termsandcondations18 =>
+      'All bookings are considered confirmed once payment is successfully processed.';
+
+  @override
+  String get termsandcondations19 =>
+      'Prices displayed include applicable taxes, fees, and service charges unless otherwise indicated.';
+
+  @override
+  String get termsandcondations20 =>
+      'TripTo reserves the right to modify prices at any time prior to booking confirmation.';
+
+  @override
+  String get termsandcondations21 => '6. Cancellation and Refund Policy';
+
+  @override
+  String get termsandcondations22 =>
+      'Cancellations and refunds are subject to our Cancellation and Refund Policy, which forms an integral part of these Terms. By accepting these Terms, you confirm that you have read and agreed to the Cancellation and Refund Policy.';
+
+  @override
+  String get termsandcondations23 => '7. Modifications and Changes';
+
+  @override
+  String get termsandcondations24 =>
+      'Service providers may modify schedules, accommodations, or services due to operational needs.';
+
+  @override
+  String get termsandcondations25 =>
+      'TripTo is not liable for such changes but will make reasonable efforts to notify you and assist in finding alternatives.';
+
+  @override
+  String get termsandcondations26 => '8. Intellectual Property';
+
+  @override
+  String get termsandcondations27 =>
+      'All content in the App (designs, logos, texts, graphics, and software) is the property of TripTo and protected by copyright laws.';
+
+  @override
+  String get termsandcondations28 =>
+      'You may not copy, reproduce, distribute, or exploit any part of the App without prior written consent.';
+
+  @override
+  String get termsandcondations29 => '9. Limitation of Liability';
+
+  @override
+  String get termsandcondations30 =>
+      'TripTo shall not be held responsible for delays, cancellations, accidents, losses, or damages arising from services provided by third parties.';
+
+  @override
+  String get termsandcondations31 =>
+      'Our liability, if any, shall not exceed the total amount paid for the booking made through the App.';
+
+  @override
+  String get termsandcondations32 => '10. Privacy Policy';
+
+  @override
+  String get termsandcondations33 =>
+      'Your use of the App is also governed by our Privacy Policy, which explains how we collect, store, and protect your personal data.';
+
+  @override
+  String get termsandcondations34 => '11. Force Majeure';
+
+  @override
+  String get termsandcondations35 =>
+      'TripTo shall not be liable for failure to perform any obligation under these Terms due to events beyond our reasonable control, including but not limited to natural disasters, pandemics, government restrictions, strikes, or wars.';
+
+  @override
+  String get termsandcondations36 => '12. Governing Law and Jurisdiction';
+
+  @override
+  String get termsandcondations37 =>
+      'These Terms are governed by the laws of the Arab Republic of Egypt. Any disputes shall be subject to the exclusive jurisdiction of the competent Egyptian courts.';
+
+  @override
+  String get termsandcondations38 => '13. Contact Information';
+
+  @override
+  String get termsandcondations39 =>
+      'For inquiries, complaints, or customer support, you may reach us at:';
+
+  @override
+  String get termsandcondations40 => 'Email: [Support Email]';
+
+  @override
+  String get termsandcondations41 => 'Phone: [Support Phone Number]';
 }

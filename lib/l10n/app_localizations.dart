@@ -1651,6 +1651,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **' Phone: [Support Phone Number]'**
   String get privacypolicy55;
+
+  /// No description provided for @termsandcondations.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Condations'**
+  String get termsandcondations;
+
+  /// No description provided for @termsandcondations1.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Condations for [Trip To]'**
+  String get termsandcondations1;
+
+  /// No description provided for @termsandcondations2.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to [TripTo], an application that provides online booking services for flights, hotels, holiday packages, tours, and recreational activities (collectively referred to as the Services). By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions (the Terms). If you do not agree with these Terms, you must discontinue use of the application immediately.'**
+  String get termsandcondations2;
+
+  /// No description provided for @termsandcondations3.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Definitions'**
+  String get termsandcondations3;
+
+  /// No description provided for @termsandcondations4.
+  ///
+  /// In en, this message translates to:
+  /// **'Application (\'App\'): Refers to the TripTo mobile and web-based application.'**
+  String get termsandcondations4;
+
+  /// No description provided for @termsandcondations5.
+  ///
+  /// In en, this message translates to:
+  /// **'User (\'You\', \'Customer\'): Any person using the application to book services.'**
+  String get termsandcondations5;
+
+  /// No description provided for @termsandcondations6.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Providers: Third-party entities such as airlines, hotels, tour operators, and others whose services are offered via the App.'**
+  String get termsandcondations6;
+
+  /// No description provided for @termsandcondations7.
+  ///
+  /// In en, this message translates to:
+  /// **'We/Us/Our: TripTo, its owners, employees, and affiliates.'**
+  String get termsandcondations7;
+
+  /// No description provided for @termsandcondations8.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Scope of Services'**
+  String get termsandcondations8;
+
+  /// No description provided for @termsandcondations9.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo acts solely as an intermediary between you and the service providers.'**
+  String get termsandcondations9;
+
+  /// No description provided for @termsandcondations10.
+  ///
+  /// In en, this message translates to:
+  /// **'All bookings are subject to the availability and conditions of the end-service provider.'**
+  String get termsandcondations10;
+
+  /// No description provided for @termsandcondations11.
+  ///
+  /// In en, this message translates to:
+  /// **'We do not own, operate, or control flights, hotels, or activities.'**
+  String get termsandcondations11;
+
+  /// No description provided for @termsandcondations12.
+  ///
+  /// In en, this message translates to:
+  /// **'4. User Responsibilities'**
+  String get termsandcondations12;
+
+  /// No description provided for @termsandcondations13.
+  ///
+  /// In en, this message translates to:
+  /// **'By using the App, you agree to:'**
+  String get termsandcondations13;
+
+  /// No description provided for @termsandcondations14.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide accurate and complete personal details when making a booking.'**
+  String get termsandcondations14;
+
+  /// No description provided for @termsandcondations15.
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure that you meet the requirements (e.g., passport validity, visas, vaccination certificates) for travel.'**
+  String get termsandcondations15;
+
+  /// No description provided for @termsandcondations16.
+  ///
+  /// In en, this message translates to:
+  /// **'Refrain from using the application for fraudulent, speculative, or unlawful purposes.'**
+  String get termsandcondations16;
+
+  /// No description provided for @termsandcondations17.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Bookings and Payments'**
+  String get termsandcondations17;
+
+  /// No description provided for @termsandcondations18.
+  ///
+  /// In en, this message translates to:
+  /// **'All bookings are considered confirmed once payment is successfully processed.'**
+  String get termsandcondations18;
+
+  /// No description provided for @termsandcondations19.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices displayed include applicable taxes, fees, and service charges unless otherwise indicated.'**
+  String get termsandcondations19;
+
+  /// No description provided for @termsandcondations20.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo reserves the right to modify prices at any time prior to booking confirmation.'**
+  String get termsandcondations20;
+
+  /// No description provided for @termsandcondations21.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Cancellation and Refund Policy'**
+  String get termsandcondations21;
+
+  /// No description provided for @termsandcondations22.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellations and refunds are subject to our Cancellation and Refund Policy, which forms an integral part of these Terms. By accepting these Terms, you confirm that you have read and agreed to the Cancellation and Refund Policy.'**
+  String get termsandcondations22;
+
+  /// No description provided for @termsandcondations23.
+  ///
+  /// In en, this message translates to:
+  /// **'7. Modifications and Changes'**
+  String get termsandcondations23;
+
+  /// No description provided for @termsandcondations24.
+  ///
+  /// In en, this message translates to:
+  /// **'Service providers may modify schedules, accommodations, or services due to operational needs.'**
+  String get termsandcondations24;
+
+  /// No description provided for @termsandcondations25.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo is not liable for such changes but will make reasonable efforts to notify you and assist in finding alternatives.'**
+  String get termsandcondations25;
+
+  /// No description provided for @termsandcondations26.
+  ///
+  /// In en, this message translates to:
+  /// **'8. Intellectual Property'**
+  String get termsandcondations26;
+
+  /// No description provided for @termsandcondations27.
+  ///
+  /// In en, this message translates to:
+  /// **'All content in the App (designs, logos, texts, graphics, and software) is the property of TripTo and protected by copyright laws.'**
+  String get termsandcondations27;
+
+  /// No description provided for @termsandcondations28.
+  ///
+  /// In en, this message translates to:
+  /// **'You may not copy, reproduce, distribute, or exploit any part of the App without prior written consent.'**
+  String get termsandcondations28;
+
+  /// No description provided for @termsandcondations29.
+  ///
+  /// In en, this message translates to:
+  /// **'9. Limitation of Liability'**
+  String get termsandcondations29;
+
+  /// No description provided for @termsandcondations30.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo shall not be held responsible for delays, cancellations, accidents, losses, or damages arising from services provided by third parties.'**
+  String get termsandcondations30;
+
+  /// No description provided for @termsandcondations31.
+  ///
+  /// In en, this message translates to:
+  /// **'Our liability, if any, shall not exceed the total amount paid for the booking made through the App.'**
+  String get termsandcondations31;
+
+  /// No description provided for @termsandcondations32.
+  ///
+  /// In en, this message translates to:
+  /// **'10. Privacy Policy'**
+  String get termsandcondations32;
+
+  /// No description provided for @termsandcondations33.
+  ///
+  /// In en, this message translates to:
+  /// **'Your use of the App is also governed by our Privacy Policy, which explains how we collect, store, and protect your personal data.'**
+  String get termsandcondations33;
+
+  /// No description provided for @termsandcondations34.
+  ///
+  /// In en, this message translates to:
+  /// **'11. Force Majeure'**
+  String get termsandcondations34;
+
+  /// No description provided for @termsandcondations35.
+  ///
+  /// In en, this message translates to:
+  /// **'TripTo shall not be liable for failure to perform any obligation under these Terms due to events beyond our reasonable control, including but not limited to natural disasters, pandemics, government restrictions, strikes, or wars.'**
+  String get termsandcondations35;
+
+  /// No description provided for @termsandcondations36.
+  ///
+  /// In en, this message translates to:
+  /// **'12. Governing Law and Jurisdiction'**
+  String get termsandcondations36;
+
+  /// No description provided for @termsandcondations37.
+  ///
+  /// In en, this message translates to:
+  /// **'These Terms are governed by the laws of the Arab Republic of Egypt. Any disputes shall be subject to the exclusive jurisdiction of the competent Egyptian courts.'**
+  String get termsandcondations37;
+
+  /// No description provided for @termsandcondations38.
+  ///
+  /// In en, this message translates to:
+  /// **'13. Contact Information'**
+  String get termsandcondations38;
+
+  /// No description provided for @termsandcondations39.
+  ///
+  /// In en, this message translates to:
+  /// **'For inquiries, complaints, or customer support, you may reach us at:'**
+  String get termsandcondations39;
+
+  /// No description provided for @termsandcondations40.
+  ///
+  /// In en, this message translates to:
+  /// **'Email: [Support Email]'**
+  String get termsandcondations40;
+
+  /// No description provided for @termsandcondations41.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone: [Support Phone Number]'**
+  String get termsandcondations41;
 }
 
 class _AppLocalizationsDelegate

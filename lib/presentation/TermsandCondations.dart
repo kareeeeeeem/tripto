@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/SideMenu.dart';
 
-class Privacypolicy extends StatefulWidget {
-  const Privacypolicy({super.key});
+class Termsandcondations extends StatefulWidget {
+  const Termsandcondations({super.key});
 
   @override
-  State<Privacypolicy> createState() => _PrivacypolicyState();
+  State<Termsandcondations> createState() => _TermsandcondationsState();
 }
 
-class _PrivacypolicyState extends State<Privacypolicy> {
+class _TermsandcondationsState extends State<Termsandcondations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +23,8 @@ class _PrivacypolicyState extends State<Privacypolicy> {
 
         centerTitle: true,
         title: Text(
-          AppLocalizations.of(context)!.privacypolicy1,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          AppLocalizations.of(context)!.termsandcondations1,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           onPressed: () {
@@ -61,313 +61,265 @@ class _PrivacypolicyState extends State<Privacypolicy> {
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
 
               Text(
-                AppLocalizations.of(context)!.privacypolicy2,
+                AppLocalizations.of(context)!.termsandcondations2,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations3,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations4,
                 style: const TextStyle(fontSize: 16),
               ),
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
 
               Text(
-                AppLocalizations.of(context)!.privacypolicy3,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy4,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy5,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy6,
+                AppLocalizations.of(context)!.termsandcondations5,
                 style: const TextStyle(fontSize: 16),
               ),
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy7,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy8,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy9,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy10,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy11,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy12,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy13,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy14,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy15,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy16,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy17,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy18,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy19,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy20,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy21,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy22,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy23,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy24,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy25,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy26,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy27,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy28,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy29,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy30,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy31,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy32,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy33,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy34,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy35,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy36,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy37,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy38,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy39,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy40,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy41,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy42,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy43,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy44,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy45,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy46,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy47,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
 
               Text(
-                AppLocalizations.of(context)!.privacypolicy48,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+                AppLocalizations.of(context)!.termsandcondations6,
+                style: const TextStyle(fontSize: 16),
               ),
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
               Text(
-                AppLocalizations.of(context)!.privacypolicy49,
+                AppLocalizations.of(context)!.termsandcondations7,
                 style: const TextStyle(fontSize: 16),
               ),
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
               Text(
-                AppLocalizations.of(context)!.privacypolicy50,
+                AppLocalizations.of(context)!.termsandcondations8,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy51,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy52,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy53,
-                style: const TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              Text(
-                AppLocalizations.of(context)!.privacypolicy54,
-                style: const TextStyle(
-                  // fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
               SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
               Text(
-                AppLocalizations.of(context)!.privacypolicy55,
+                AppLocalizations.of(context)!.termsandcondations9,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations10,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations11,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations12,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations13,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations14,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations15,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations16,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations17,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations18,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations19,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations20,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations21,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations22,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations23,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations24,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations25,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations26,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations27,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations28,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations29,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations30,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations31,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations32,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations33,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations34,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations35,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations36,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations37,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              Text(
+                AppLocalizations.of(context)!.termsandcondations38,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations39,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations40,
+                style: const TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+
+              Text(
+                AppLocalizations.of(context)!.termsandcondations41,
                 style: const TextStyle(fontSize: 16),
               ),
               Container(
@@ -379,16 +331,6 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   ),
                 ),
               ),
-              // SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              // Text(
-              //   AppLocalizations.of(context)!.privacypolicy54,
-              //   style: const TextStyle(fontSize: 16),
-              // ),
-              // SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
-              // Text(
-              //   AppLocalizations.of(context)!.privacypolicy55,
-              //   style: const TextStyle(fontSize: 16),
-              // ),
             ],
           ),
         ),
