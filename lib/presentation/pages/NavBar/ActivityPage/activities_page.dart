@@ -15,10 +15,6 @@ import '../../../../core/routes/app_routes.dart';
 import '../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
 
 class ActivityPage extends StatefulWidget {
-  // تم تغيير الاسم هنا إلى ActivityPage
-  // قائمة الأنشطة
-  // final GetActivityModel activities;
-
   const ActivityPage({
     super.key,
     // required this.activities
@@ -189,76 +185,6 @@ class _ActivityPageState extends State<ActivityPage> {
                     ),
                   ),
 
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(12),
-                  //   child: Container(
-                  //     height: double.infinity,
-                  //     width: 100,
-                  //     child: buildMediaWidget(
-                  //       // print('Video URL: ${activity.videoUrl}');
-                  //       // print('Images list: ${activity.images}');
-                  //       (activity.videoUrl.isNotEmpty)
-                  //           ? activity.videoUrl
-                  //           : (activity.images.isNotEmpty &&
-                  //               activity.images[0].isNotEmpty)
-                  //           ? activity.images[0]
-                  //           : '',
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(12),
-                  //   child: Container(
-                  //     height: double.infinity,
-                  //     width: 100,
-                  //     child: buildMediaWidget(
-                  //       activity.videoUrl, // تحط لينك فيديو من عندك
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // الصورة
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(12),
-                  //   child: Container(
-                  //     height: double.infinity,
-                  //     width: 100,
-                  //     child:
-                  //         (activity.images.isNotEmpty &&
-                  //                 activity.images[0].isNotEmpty)
-                  //             ? buildMediaWidget(activity.images[0])
-                  //             : Image.asset(
-                  //               "assets/images/Logo.png",
-                  //               fit: BoxFit.cover,
-                  //             ),
-                  //   ),
-                  // ),
-
-                  //     child:
-
-                  //         (activity.images.isNotEmpty &&
-                  //                 activity.images[0] != null &&
-                  //                 activity.images[0].isNotEmpty)
-                  //             ? Image.network(
-                  //                       activity.images[0].replaceFirst("/storage/", "/storage/app/public/"),
-
-                  //               // activity.images[0],
-                  //               fit: BoxFit.cover,
-                  //               errorBuilder: (context, error, stackTrace) {
-                  //                 // لو حصل خطأ في تحميل الصورة (مثلاً 404 أو 403)
-                  //                 return Image.asset(
-                  //                   "assets/images/Logo.png",
-                  //                   fit: BoxFit.cover,
-                  //                 );
-                  //               },
-                  //             )
-                  //             : Image.asset(
-                  //               "assets/images/Logo.png",
-                  //               fit: BoxFit.cover,
-                  //             ),
-                  //   ),
-                  // ),
                   // const SizedBox(width: 25),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.03),
 

@@ -1309,6 +1309,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete my account'**
   String get deletmyaccount;
+
+  /// No description provided for @single.
+  ///
+  /// In en, this message translates to:
+  /// **'Single'**
+  String get single;
+
+  /// No description provided for @double.
+  ///
+  /// In en, this message translates to:
+  /// **'Double'**
+  String get double;
+
+  /// No description provided for @triple.
+  ///
+  /// In en, this message translates to:
+  /// **'Triple'**
+  String get triple;
+
+  /// No description provided for @quad.
+  ///
+  /// In en, this message translates to:
+  /// **'Quad'**
+  String get quad;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
 }
 
 class _AppLocalizationsDelegate

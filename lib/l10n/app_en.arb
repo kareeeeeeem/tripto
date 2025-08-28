@@ -212,5 +212,11 @@
   "cancellation47": "6. Governing Law",
   "cancellation48": "This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.",
   "logout": "Logout",
-  "deletmyaccount": "Delete my account"
+  "deletmyaccount": "Delete my account",
+  "single": "Single",
+  "double": "Double",
+  "triple": "Triple",
+  "quad": "Quad",
+  "unknown": "Unknown"
+
 }

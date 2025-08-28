@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
+import 'package:tripto/main.dart'; // ⚠️ هذا السطر مهم جداً لاستيراد المفتاح
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
-      body: VideoPlayerScreen(),
+      body: VideoPlayerScreen(key: videoPlayerScreenKey),
     );
   }
 }

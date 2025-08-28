@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_model.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
-import 'package:tripto/data/repositories/TripsRepository.dart';
+import 'package:tripto/bloc/Repositories/TripsRepository.dart';
 
 class GetTripBloc extends Bloc<GetTripEvent, GetTripState> {
   final TripsRepository tripRepository;
