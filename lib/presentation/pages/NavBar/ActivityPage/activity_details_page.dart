@@ -104,7 +104,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     );
                   },
                   errorBuilder: (context, error, stackTrace) {
-                    print('Error loading image: $error');
+                    // print('Error loading image: $error');
                     return Image.asset(
                       "assets/images/Logo.png",
                       fit: BoxFit.cover,

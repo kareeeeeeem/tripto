@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
-import 'package:tripto/presentation/pages/SideMenu.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 
 class Termsandcondations extends StatefulWidget {
   const Termsandcondations({super.key});

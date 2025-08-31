@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
-import 'package:tripto/main.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/SideMenu.dart';
+// import 'package:tripto/main.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 
 class Cancellattion extends StatefulWidget {
   const Cancellattion({super.key});
