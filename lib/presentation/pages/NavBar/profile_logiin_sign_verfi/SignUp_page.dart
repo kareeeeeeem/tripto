@@ -154,7 +154,7 @@ class SignupPageState extends State<SignupPage> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(
-                        color: Colors.grey, // 👈 اللون وقت الـ focus
+                        color: Color(0xFF002E70),
                         width: 2,
                       ),
                     ),
@@ -352,7 +352,7 @@ class SignupPageState extends State<SignupPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.grey, width: 2),
+          borderSide: const BorderSide(color: Color(0xFF002E70), width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -396,7 +396,7 @@ class SignupPageState extends State<SignupPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.grey, width: 2),
+          borderSide: const BorderSide(color: Color(0xFF002E70), width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

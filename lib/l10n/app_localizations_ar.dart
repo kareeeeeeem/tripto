@@ -1037,5 +1037,5 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactus => 'تواصل معنا';
 
   @override
-  String get messagebody => 'موضوع الرساله';
+  String get messagebody => ' الرساله';
 }

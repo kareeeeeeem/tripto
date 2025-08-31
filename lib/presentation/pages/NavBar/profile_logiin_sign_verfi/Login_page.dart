@@ -122,7 +122,7 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.phone,
                         labelStyle: TextStyle(color: Color(0xFF002E70)),
-                        prefixIcon: const Icon(Icons.phone),
+                        suffixIcon: const Icon(Icons.phone),
                         // filled: true,
                         // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(

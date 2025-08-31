@@ -52,162 +52,134 @@ class _ContactUsState extends State<ContactUs> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal:
-                MediaQuery.of(context).size.width * 0.003, // 3% من العرض
-          ),
-          child: Column(
-            children: [
-              buildLabel(AppLocalizations.of(context)!.name),
-              Padding(
-                padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width * 0.02,
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.05, // 5% يمين/شمال
+          // vertical: MediaQuery.of(context).size.height * 0.2, // 2% فوق/تحت
+        ),
+
+        child: Column(
+          children: [
+            buildLabel(AppLocalizations.of(context)!.name),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.name,
+                labelStyle: TextStyle(color: Color(0xFF002E70)),
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.name,
-                    labelStyle: TextStyle(color: Color(0xFF002E70)),
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.black45, width: 1),
+                ),
 
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.black45,
-                        width: 1,
-                      ),
-                    ),
-
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.grey, // 👈 اللون وقت الـ focus
-                        width: 2,
-                      ),
-                    ),
-                    prefixIcon: Icon(Icons.person),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF002E70),
+                    width: 2,
                   ),
                 ),
+                suffixIcon: Icon(Icons.person),
               ),
-              // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-              buildLabel(AppLocalizations.of(context)!.phone),
-              Padding(
-                padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width * 0.02,
+            ),
+            // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            buildLabel(AppLocalizations.of(context)!.phone),
+            TextFormField(
+              keyboardType: TextInputType.phone,
+              controller: phoneController,
+
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.phone,
+                labelStyle: TextStyle(color: Color(0xFF002E70)),
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: TextFormField(
-                  keyboardType: TextInputType.phone,
-                  controller: phoneController,
 
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.phone,
-                    labelStyle: TextStyle(color: Color(0xFF002E70)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.black45, width: 1),
+                ),
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.black45,
-                        width: 1,
-                      ),
-                    ),
-
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.grey, // 👈 اللون وقت الـ focus
-                        width: 2,
-                      ),
-                    ),
-                    prefixIcon: Icon(Icons.phone),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF002E70), // 👈 اللون وقت الـ focus
+                    width: 2,
                   ),
                 ),
+                suffixIcon: Icon(Icons.phone),
               ),
-              // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-              buildLabel(AppLocalizations.of(context)!.email),
-              Padding(
-                padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width * 0.02,
+            ),
+            // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            buildLabel(AppLocalizations.of(context)!.email),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              controller: emailController,
+
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.email,
+                labelStyle: TextStyle(color: Color(0xFF002E70)),
+
+                fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  controller: emailController,
 
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.email,
-                    labelStyle: TextStyle(color: Color(0xFF002E70)),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.black45, width: 1),
+                ),
 
-                    fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.black45,
-                        width: 1,
-                      ),
-                    ),
-
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.grey, // 👈 اللون وقت الـ focus
-                        width: 2,
-                      ),
-                    ),
-                    prefixIcon: Icon(Icons.email),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF002E70),
+                    width: 2,
                   ),
                 ),
+                suffixIcon: Icon(Icons.email),
               ),
-              // //////////////////////////////////////////////////////////////////////////////////////////////////////////
-              // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              buildLabel(AppLocalizations.of(context)!.messagebody),
+            ),
+            // //////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            buildLabel(AppLocalizations.of(context)!.messagebody),
 
-              Padding(
-                padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width * 0.02,
+            TextFormField(
+              controller: messagebodyController,
+              keyboardType: TextInputType.multiline,
+              maxLines: 100, // هنا حددت 6 أسطر
+              minLines: 6, // أقل حاجة 3 أسطر
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.messagebody,
+                labelStyle: TextStyle(color: Color(0xFF002E70)),
+                // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: TextFormField(
-                  controller: messagebodyController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 100, // هنا حددت 6 أسطر
-                  minLines: 6, // أقل حاجة 3 أسطر
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.messagebody,
-                    labelStyle: TextStyle(color: Color(0xFF002E70)),
-                    // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.black45,
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.grey, // 👈 اللون وقت الـ focus
-                        width: 2,
-                      ),
-                    ),
-                    // prefixIcon: Icon(Icons.message),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.black45, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF002E70),
+                    width: 2,
                   ),
                 ),
+                // prefixIcon: Icon(Icons.message),
               ),
-              Container(
+            ),
+            Padding(
+              padding: EdgeInsets.all(
+                MediaQuery.of(context).size.width * 0.2, // 10% من عرض الشاشة
+              ),
+              child: Container(
                 width: 400,
                 height: 100,
                 decoration: BoxDecoration(
@@ -216,8 +188,8 @@ class _ContactUsState extends State<ContactUs> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
