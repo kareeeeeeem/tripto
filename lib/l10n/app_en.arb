@@ -318,5 +318,11 @@
   "termsandcondations38": "13. Contact Information",
   "termsandcondations39": "For inquiries, complaints, or customer support, you may reach us at:",
   "termsandcondations40": "Email: [Support Email]",
-  "termsandcondations41": "Phone: [Support Phone Number]"
+  "termsandcondations41": "Phone: [Support Phone Number]",
+  "searchOnTrips": "Search on trips",
+  "enterSearchText": "Enter search text",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "ok": "OK",
+  "cancel": "Cancel"
 }

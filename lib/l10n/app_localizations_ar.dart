@@ -1032,4 +1032,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get termsandcondations41 => 'الهاتف: [Support Phone Number]';
+
+  @override
+  String get searchOnTrips => 'ابحث في الرحلات';
+
+  @override
+  String get enterSearchText => 'ادخل نص البحث';
+
+  @override
+  String get startDate => 'تاريخ البداية';
+
+  @override
+  String get endDate => 'تاريخ النهاية';
 }

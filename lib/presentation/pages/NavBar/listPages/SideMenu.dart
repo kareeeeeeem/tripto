@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
-import 'package:tripto/presentation/Privacypolicy.dart';
-import 'package:tripto/presentation/TermsandCondations.dart';
+import 'package:tripto/presentation/pages/NavBar/listPages/Privacypolicy.dart';
+import 'package:tripto/presentation/pages/NavBar/listPages/TermsandCondations.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/listPages/About-us.dart';
 import 'package:tripto/presentation/pages/NavBar/listPages/Cancellattion.dart';
 import 'package:tripto/presentation/pages/NavBar/listPages/Favorite_page.dart';
-// import 'package:tripto/presentation/pages/SideMenu';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});

@@ -1933,6 +1933,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone: [Support Phone Number]'**
   String get termsandcondations41;
+
+  /// No description provided for @searchOnTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Search on trips'**
+  String get searchOnTrips;
+
+  /// No description provided for @enterSearchText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter search text'**
+  String get enterSearchText;
+
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDate;
+
+  /// No description provided for @endDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get endDate;
 }
 
 class _AppLocalizationsDelegate

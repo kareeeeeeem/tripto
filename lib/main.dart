@@ -115,10 +115,11 @@ class _TripToAppState extends State<TripToApp> {
           ),
           title: 'TripTo',
           debugShowCheckedModeBanner: false,
-          // initialRoute: '/',
-          // routes: AppRoutes.routes,
+
+          initialRoute: '/',
           home: App(),
 
+          // routes: AppRoutes.routes,
           //home: Privacypolicy(),
         ),
       ),

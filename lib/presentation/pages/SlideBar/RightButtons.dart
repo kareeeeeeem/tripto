@@ -326,16 +326,16 @@ class _RightButtonsState extends State<RightButtons> {
                 });
                 buttons[nextButtonIndex].onPressed?.call();
               }
-            } else {
-              // ❌ Cancel → مسح الفندق واضبط السعر بـ 0
-              setState(() {
-                selectedHotelId = null;
-              });
+              // } else {
+              //   // ❌ Cancel → مسح الفندق واضبط السعر بـ 0
+              //   setState(() {
+              //     selectedHotelId = null;
+              //   });
 
-              widget.personCounterKey?.currentState?.setSelectedHotelPrice(
-                0,
-                nights,
-              );
+              //   widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+              //     0,
+              //     nights,
+              //   );
             }
           },
         ),

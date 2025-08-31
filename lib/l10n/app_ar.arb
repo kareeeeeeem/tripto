@@ -318,5 +318,11 @@
   "termsandcondations38": "13. معلومات الاتصال.",
   "termsandcondations39": "للاستفسارات أو الشكاوى أو الدعم الفني، يمكنكم التواصل معنا عبر:",
   "termsandcondations40": "البريد الإلكتروني: [Support Email]",
-  "termsandcondations41": "الهاتف: [Support Phone Number]"
+  "termsandcondations41": "الهاتف: [Support Phone Number]",
+  "searchOnTrips": "ابحث في الرحلات",
+  "enterSearchText": "ادخل نص البحث",
+  "startDate": "تاريخ البداية",
+  "endDate": "تاريخ النهاية",
+  "ok": "موافق",
+  "cancel": "إلغاء"
 }

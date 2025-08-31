@@ -1040,4 +1040,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsandcondations41 => 'Phone: [Support Phone Number]';
+
+  @override
+  String get searchOnTrips => 'Search on trips';
+
+  @override
+  String get enterSearchText => 'Enter search text';
+
+  @override
+  String get startDate => 'Start Date';
+
+  @override
+  String get endDate => 'End Date';
 }

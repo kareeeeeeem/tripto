@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc/Repositories/TripsRepository.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/searchDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
@@ -472,13 +473,30 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     Directionality.of(context) == TextDirection.rtl ? null : 10,
                 child: IconButton(
                   icon: const Icon(
-                    Icons.language,
+                    Icons.search_rounded,
                     size: 30,
                     color: Colors.white,
                   ),
-                  onPressed: _handleLanguageChange,
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder:
+                          (context) => Dialog(
+                            backgroundColor: Colors.white, // 🔹 الخلفية بيضاء
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: SearchDialog(),
+                            ),
+                          ),
+                    );
+                  },
                 ),
               ),
+
               Positioned(
                 top: MediaQuery.of(context).padding.top + 10,
                 left:

@@ -348,7 +348,14 @@ class _HotelsDialogState extends State<HotelsDialog> {
                           width: double.infinity,
                           height: 40,
                           child: ElevatedButton(
-                            onPressed: () => Navigator.pop(context, null),
+                            onPressed: () {
+                              // مسح الفندق المختار والسعر
+                              if (widget.personCounterKey != null) {
+                                widget.personCounterKey!.currentState
+                                    ?.setSelectedHotelPrice(0, 1);
+                              }
+                              Navigator.pop(context, null);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.lightBlue, // 🔵 أزرق فاتح
                               foregroundColor: Colors.white,

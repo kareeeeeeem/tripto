@@ -223,41 +223,67 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   const CircleAvatar(
                     radius: 55,
-                    backgroundImage: AssetImage("assets/images/profile.png"),
+                    backgroundImage: AssetImage("assets/images/pro.png"),
                   ),
                   SizedBox(height: height * 0.07),
-                  Profiletextfield(
-                    label: AppLocalizations.of(context)!.name,
-                    isReadOnly: isNameReadOnly,
+
+                  TextFormField(
+                    keyboardType: TextInputType.name,
+                    inputFormatters: [
+                      FilteringTextInputFormatter
+                          .singleLineFormatter, // ✅ لو عايز الرقم بس، لكن غالبًا الاسم مش أرقام
+                    ],
                     controller: nameController,
                     focusNode: _nameFocus,
-                    fieldType: FieldType.name,
+                    readOnly: isNameReadOnly,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.name,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.person,
+                      ), // استخدم Icons.person بدل Icons.name
+                    ),
                   ),
+
+                  // Profiletextfield(
+                  //   label: AppLocalizations.of(context)!.name,
+                  //   isReadOnly: isNameReadOnly,
+                  //   controller: nameController,
+                  //   focusNode: _nameFocus,
+                  //   fieldType: FieldType.name,
+                  // ),
                   SizedBox(height: height * 0.05),
-                  Profiletextfield(
-                    label: AppLocalizations.of(context)!.email,
-                    isReadOnly: isEmailReadOnly,
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: [
+                      FilteringTextInputFormatter
+                          .singleLineFormatter, // ✅ لو عايز الرقم بس، لكن غالبًا الاسم مش أرقام
+                    ],
                     controller: emailController,
                     focusNode: _emailFocus,
-                    fieldType: FieldType.email,
+                    readOnly: isEmailReadOnly,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.email,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email,
+                      ), // استخدم Icons.person بدل Icons.name
+                    ),
                   ),
-                  SizedBox(height: height * 0.05),
-                  // Profiletextfield(
-                  //   label: AppLocalizations.of(context)!.phone,
-                  //   isReadOnly: isPhoneReadOnly,
-                  //   controller: phoneController,
-                  //   focusNode: _phoneFocus,
-                  //   fieldType: FieldType.phone,
-                  // ),
 
-                  // SizedBox(height: height * 0.05),
                   // Profiletextfield(
-                  //   label: AppLocalizations.of(context)!.password,
-                  //   isReadOnly: true,
-                  //   controller: passwordController,
-                  //   fieldType: FieldType.password,
+                  //   label: AppLocalizations.of(context)!.email,
+                  //   isReadOnly: isEmailReadOnly,
+                  //   controller: emailController,
+                  //   focusNode: _emailFocus,
+                  //   fieldType: FieldType.email,
                   // ),
                   SizedBox(height: height * 0.15),
+
                   SizedBox(
                     width: width,
                     height: height * 0.06,
@@ -282,6 +308,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   SizedBox(height: height * 0.025),
+
                   SizedBox(
                     width: width,
                     height: height * 0.06,
@@ -306,30 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  // SizedBox(height: height * 0.015),
-                  // SizedBox(
-                  //   width: width,
-                  //   height: height * 0.06,
-                  //   child: ElevatedButton(
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: Colors.black54,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(8),
-                  //       ),
-                  //     ),
-                  //     onPressed: () {
-                  //       // TODO: Delete account logic
-                  //     },
-                  //     child: Text(
-                  //       AppLocalizations.of(context)!.deletmyaccount,
-                  //       style: GoogleFonts.markaziText(
-                  //         fontSize: 20,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+
                   SizedBox(height: height * 0.05),
                 ],
               ),
