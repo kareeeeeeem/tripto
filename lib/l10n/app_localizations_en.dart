@@ -1045,5 +1045,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactus => 'Contact-Us';
 
   @override
-  String get messagebody => 'Message-body';
+  String get messagebody => 'Message-Body';
 }

@@ -121,9 +121,10 @@ class _LoginState extends State<Login> {
                       ],
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.phone,
+                        labelStyle: TextStyle(color: Color(0xFF002E70)),
                         prefixIcon: const Icon(Icons.phone),
-                        filled: true,
-                        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                        // filled: true,
+                        // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(color: Colors.black45),
@@ -171,6 +172,8 @@ class _LoginState extends State<Login> {
                       obscureText: obscurePassword,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.password,
+                        labelStyle: TextStyle(color: Color(0xFF002E70)),
+
                         suffixIcon: IconButton(
                           icon: Icon(
                             obscurePassword
@@ -183,8 +186,8 @@ class _LoginState extends State<Login> {
                             });
                           },
                         ),
-                        filled: true,
-                        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                        // filled: true,
+                        // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                         ),

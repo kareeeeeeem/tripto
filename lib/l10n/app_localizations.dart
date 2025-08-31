@@ -1943,7 +1943,7 @@ abstract class AppLocalizations {
   /// No description provided for @messagebody.
   ///
   /// In en, this message translates to:
-  /// **'Message-body'**
+  /// **'Message-Body'**
   String get messagebody;
 }
 
