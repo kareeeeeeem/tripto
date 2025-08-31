@@ -1040,4 +1040,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsandcondations41 => 'Phone: [Support Phone Number]';
+
+  @override
+  String get contactus => 'Contact-Us';
+
+  @override
+  String get messagebody => 'Message-body';
 }

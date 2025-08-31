@@ -1032,4 +1032,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get termsandcondations41 => 'الهاتف: [Support Phone Number]';
+
+  @override
+  String get contactus => 'تواصل معنا';
+
+  @override
+  String get messagebody => 'موضوع الرساله';
 }

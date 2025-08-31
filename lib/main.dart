@@ -10,6 +10,7 @@ import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
 import 'package:tripto/bloc/Repositories/TripsRepository.dart';
+import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
@@ -115,10 +116,9 @@ class _TripToAppState extends State<TripToApp> {
           ),
           title: 'TripTo',
           debugShowCheckedModeBanner: false,
-          // initialRoute: '/',
-          // routes: AppRoutes.routes,
-          home: App(),
-
+          initialRoute: '/',
+          routes: AppRoutes.routes,
+          // home: App(),
           //home: Privacypolicy(),
         ),
       ),

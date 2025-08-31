@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
 import 'package:tripto/presentation/app/app.dart';
@@ -457,6 +458,59 @@ class _SideMenuState extends State<SideMenu> {
                     MaterialPageRoute(
                       builder: (context) => Termsandcondations(),
                     ),
+                  );
+                },
+              ),
+              //31/8888888888888888888888888888888888888888888888888888888888888888888888888888
+              const Divider(
+                thickness: 0.3, // سُمك الخط
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.call,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.contactus,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ContactUs(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactUs()),
                   );
                 },
               ),

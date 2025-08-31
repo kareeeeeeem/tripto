@@ -1933,6 +1933,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone: [Support Phone Number]'**
   String get termsandcondations41;
+
+  /// No description provided for @contactus.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact-Us'**
+  String get contactus;
+
+  /// No description provided for @messagebody.
+  ///
+  /// In en, this message translates to:
+  /// **'Message-body'**
+  String get messagebody;
 }
 
 class _AppLocalizationsDelegate
