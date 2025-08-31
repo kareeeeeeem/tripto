@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/bloc/ProfileUserDate/Edit/EditModel.dart';
-import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 
 class UserRepository {
   final String baseUrl = "https://tripto.blueboxpet.com/api";

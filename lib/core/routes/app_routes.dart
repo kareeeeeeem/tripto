@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pages/SlideBar/car/CarDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryCard.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import '../../presentation/pages/NavBar/ActivityPage/activity_details_page.dart';

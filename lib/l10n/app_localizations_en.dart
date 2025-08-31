@@ -1052,4 +1052,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get endDate => 'End Date';
+
+  @override
+  String get contactus => 'Contact-Us';
+
+  @override
+  String get messagebody => 'Message';
 }

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 
 abstract class AuthState extends Equatable {

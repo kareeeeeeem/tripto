@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/Privacypolicy.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/TermsandCondations.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/About-us.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/Cancellattion.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/Favorite_page.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/About-us.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Cancellattion.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
+// import 'package:tripto/presentation/pages/SideMenu';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -69,7 +71,12 @@ class _SideMenuState extends State<SideMenu> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 60, 10, 0),
+        padding: EdgeInsets.fromLTRB(
+          MediaQuery.of(context).size.width * 0.02, // left 2% من العرض
+          MediaQuery.of(context).size.height * 0.1, // top 10% من الارتفاع
+          MediaQuery.of(context).size.width * 0.02, // right 2% من العرض
+          0, // bottom
+        ),
         child: Container(
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 243, 241, 241),
@@ -81,17 +88,6 @@ class _SideMenuState extends State<SideMenu> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.15,
-              //   child: DrawerHeader(
-              //     decoration: BoxDecoration(color: Color(0xFF002E70)),
-              //     // child: Text(
-              //     //   AppLocalizations.of(context)!.aboutus,
-              //     //   style: TextStyle(color: Colors.white, fontSize: 30),
-              //     // ),
-              //   ),
-              // ),
-              // اول اختيار في ال drawer + icon
               ListTile(
                 leading: const Icon(
                   Icons.favorite,
@@ -140,7 +136,7 @@ class _SideMenuState extends State<SideMenu> {
                 },
               ),
               const Divider(
-                thickness: 0.5, // سُمك الخط
+                thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
               ),
               ListTile(
@@ -192,7 +188,7 @@ class _SideMenuState extends State<SideMenu> {
                 },
               ),
               const Divider(
-                thickness: 0.5, // سُمك الخط
+                thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
               ),
               // الجديد
@@ -244,7 +240,7 @@ class _SideMenuState extends State<SideMenu> {
                 },
               ),
               const Divider(
-                thickness: 0.5, // سُمك الخط
+                thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
               ),
               ListTile(
@@ -358,7 +354,7 @@ class _SideMenuState extends State<SideMenu> {
 
               // 28/88888888888888888888888888888888888888888888888888888
               const Divider(
-                thickness: 0.5, // سُمك الخط
+                thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
               ),
               ListTile(
@@ -412,7 +408,7 @@ class _SideMenuState extends State<SideMenu> {
 
               // 8888888888888888888888888888888888888888888888888888888888888888888888888888888
               const Divider(
-                thickness: 0.5, // سُمك الخط
+                thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
               ),
               ListTile(
@@ -462,6 +458,59 @@ class _SideMenuState extends State<SideMenu> {
                     MaterialPageRoute(
                       builder: (context) => Termsandcondations(),
                     ),
+                  );
+                },
+              ),
+              //31/8888888888888888888888888888888888888888888888888888888888888888888888888888
+              const Divider(
+                thickness: 0.3, // سُمك الخط
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.call,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.contactus,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ContactUs(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactUs()),
                   );
                 },
               ),

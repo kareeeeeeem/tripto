@@ -1957,6 +1957,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'End Date'**
   String get endDate;
+
+  /// No description provided for @contactus.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact-Us'**
+  String get contactus;
+
+  /// No description provided for @messagebody.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get messagebody;
 }
 
 class _AppLocalizationsDelegate

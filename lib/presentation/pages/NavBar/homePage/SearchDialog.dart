@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/DateCardStandalone.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/CategoryGold.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/DiamondCategory.dart';
-import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/PlatinumCategory.dart'; // لتنسيق التواريخ
+import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/PlatinumCategory.dart';
+import 'package:tripto/presentation/pages/SlideBar/date/DateCard.dart';
 
 class SearchDialog extends StatefulWidget {
   const SearchDialog({super.key});
@@ -17,32 +19,24 @@ class _SearchDialogState extends State<SearchDialog> {
   DateTime? _endDate;
   int selectedCategoryIndex = -1; // 🔹 عشان نحدد الكاتيجوري
 
-  // دالة لاختيار تاريخ البداية
-  Future<void> _pickStartDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  // دالة تفتح الـ DateCard Dialog
+  Future<void> _pickDateRange(BuildContext context) async {
+    final result = await showDialog<Map<String, DateTime?>>(
       context: context,
-      initialDate: _startDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      builder: (ctx) {
+        return DateCardStandalone(
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2100),
+          initialRangeStart: _startDate,
+          initialRangeEnd: _endDate,
+        );
+      },
     );
-    if (picked != null) {
-      setState(() {
-        _startDate = picked;
-      });
-    }
-  }
 
-  // دالة لاختيار تاريخ النهاية
-  Future<void> _pickEndDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _endDate ?? (_startDate ?? DateTime.now()),
-      firstDate: _startDate ?? DateTime.now(),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null) {
+    if (result != null) {
       setState(() {
-        _endDate = picked;
+        _startDate = result['range_start'];
+        _endDate = result['range_end'];
       });
     }
   }
@@ -58,10 +52,11 @@ class _SearchDialogState extends State<SearchDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Search On Trips",
+            "Search",
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
+
           // حقل البحث
           TextField(
             controller: _searchController,
@@ -75,36 +70,19 @@ class _SearchDialogState extends State<SearchDialog> {
           ),
           const SizedBox(height: 30),
 
-          // اختيار تاريخ البداية والنهاية
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () => _pickStartDate(context),
-                  child: Text(
-                    _startDate == null
-                        ? "Start Date"
-                        : dateFormat.format(_startDate!),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () => _pickEndDate(context),
-                  child: Text(
-                    _endDate == null
-                        ? "End Date"
-                        : dateFormat.format(_endDate!),
-                  ),
-                ),
-              ),
-            ],
+          // زر واحد لاختيار الرينج
+          ElevatedButton(
+            onPressed: () => _pickDateRange(context),
+            child: Text(
+              (_startDate == null || _endDate == null)
+                  ? "Select Date"
+                  : "${dateFormat.format(_startDate!)} → ${dateFormat.format(_endDate!)}",
+            ),
           ),
 
           const SizedBox(height: 40),
 
-          // 🔹 الكاتيجوري بنفس حجم الأزرار
+          // 🔹 الكاتيجوري
           Row(
             children: [
               Flexible(
@@ -115,7 +93,7 @@ class _SearchDialogState extends State<SearchDialog> {
                     });
                   },
                   child: SizedBox(
-                    height: 120, // نفس ارتفاع زرار التاريخ
+                    height: 120,
                     child: GoldCategory(isSelected: selectedCategoryIndex == 0),
                   ),
                 ),
@@ -158,40 +136,47 @@ class _SearchDialogState extends State<SearchDialog> {
           const SizedBox(height: 50),
 
           // أزرار التأكيد والإلغاء
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // أزرار التأكيد والإلغاء
+          Column(
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context, {
-                    'searchText': _searchController.text,
-                    'startDate': _startDate,
-                    'endDate': _endDate,
-                    'category': selectedCategoryIndex,
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF002E70),
-                ),
-                child: Text(
-                  Localizations.localeOf(context).languageCode == 'ar'
-                      ? 'حسناً'
-                      : 'Ok',
-                  style: const TextStyle(color: Colors.white),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, {
+                      'searchText': _searchController.text,
+                      'startDate': _startDate,
+                      'endDate': _endDate,
+                      'category': selectedCategoryIndex,
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF002E70),
+                  ),
+                  child: Text(
+                    Localizations.localeOf(context).languageCode == 'ar'
+                        ? 'حسناً'
+                        : 'Ok',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context, null);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlue,
-                ),
-                child: Text(
-                  Localizations.localeOf(context).languageCode == 'ar'
-                      ? 'إلغاء'
-                      : 'Cancel',
-                  style: const TextStyle(color: Colors.white),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, null);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                  ),
+                  child: Text(
+                    Localizations.localeOf(context).languageCode == 'ar'
+                        ? 'إلغاء'
+                        : 'Cancel',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],

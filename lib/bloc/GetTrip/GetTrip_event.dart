@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:tripto/core/models/CarModel.dart';
 
 abstract class GetTripEvent extends Equatable {
   const GetTripEvent();

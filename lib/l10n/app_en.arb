@@ -324,5 +324,7 @@
   "startDate": "Start Date",
   "endDate": "End Date",
   "ok": "OK",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "contactus": "Contact-Us",
+  "messagebody": "Message"
 }

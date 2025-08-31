@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pages/NavBar/listPages/SideMenu.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 import '../../../../core/models/Saved_model.dart';
 import '../../screens/payment/payment_option.dart';
 import 'package:tripto/l10n/app_localizations.dart';

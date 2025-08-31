@@ -136,11 +136,29 @@ class SignupPageState extends State<SignupPage> {
                     FilteringTextInputFormatter.digitsOnly, // ✅ كده صح
                   ],
                   decoration: InputDecoration(
-                    labelText: "Phone Number",
+                    labelText: AppLocalizations.of(context)!.phone,
+                    labelStyle: TextStyle(color: Color(0xFF002E70)),
+
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    prefixIcon: Icon(Icons.phone),
+
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(
+                        color: Colors.black45,
+                        width: 1,
+                      ),
+                    ),
+
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF002E70),
+                        width: 2,
+                      ),
+                    ),
+                    suffixIcon: Icon(Icons.phone),
                   ),
                   onChanged: (value) {
                     completePhoneNumber = value; // ✅ نخزن الرقم في المتغير
@@ -186,6 +204,7 @@ class SignupPageState extends State<SignupPage> {
                   obscure: obsecureText2,
                   toggle: () => setState(() => obsecureText2 = !obsecureText2),
                   labelText: AppLocalizations.of(context)!.confirmPassword,
+
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return AppLocalizations.of(
@@ -321,9 +340,11 @@ class SignupPageState extends State<SignupPage> {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(color: Color(0xFF002E70)),
+
         suffixIcon: Icon(icon),
-        filled: true,
-        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+        // filled: true,
+        // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -331,7 +352,7 @@ class SignupPageState extends State<SignupPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.grey, width: 2),
+          borderSide: const BorderSide(color: Color(0xFF002E70), width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -358,14 +379,16 @@ class SignupPageState extends State<SignupPage> {
       obscureText: obscure,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(color: Color(0xFF002E70)),
+
         suffixIcon: IconButton(
           icon: Icon(
             obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
           ),
           onPressed: toggle,
         ),
-        filled: true,
-        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+        // filled: true,
+        // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -373,7 +396,7 @@ class SignupPageState extends State<SignupPage> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.grey, width: 2),
+          borderSide: const BorderSide(color: Color(0xFF002E70), width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

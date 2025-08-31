@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/core/constants/videoplayer_widget.dart';
-import 'package:tripto/core/models/ActivityCardModel.dart';
+// import 'package:tripto/core/models/ActivityCardModel.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
-import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
-import 'package:http/http.dart' as http;
+// import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
+// import 'package:http/http.dart' as http;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../bloc/ِAuth/AuthState.dart';
@@ -144,9 +144,9 @@ class _ActivityPageState extends State<ActivityPage> {
     // 4. الصورة الافتراضية
     return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
 
-    Widget _buildDefaultPlaceholder() {
-      return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
-    }
+    // Widget _buildDefaultPlaceholder() {
+    //   return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+    // }
   }
 
   Widget _buildActivityCard(BuildContext context, GetActivityModel activity) {

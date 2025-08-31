@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
@@ -16,7 +16,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
