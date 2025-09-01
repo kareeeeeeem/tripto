@@ -1,11 +1,11 @@
 class ContactusModel {
-  final String Name;
+  final String name;
   final String email;
   final int phone;
   final String messagebody;
 
   ContactusModel({
-    required this.Name,
+    required this.name,
     required this.email,
     required this.phone,
     required this.messagebody,

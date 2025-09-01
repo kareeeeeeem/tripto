@@ -63,7 +63,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                       child: Center(
                         child: CircularProgressIndicator(
                           strokeWidth: 3,
-                          color: Colors.blue,
+                          color: Color(0xFF002E70),
                         ),
                       ),
                     );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/bloc/ContactUs/ContactUs_Event.dart';
+import 'package:tripto/bloc/ContactUs/ContactUs_bloc.dart';
+import 'package:tripto/core/models/ContactUs_Model.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 
@@ -188,7 +192,29 @@ class _ContactUsState extends State<ContactUs> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (nameController.text.isEmpty ||
+                      phoneController.text.isEmpty ||
+                      emailController.text.isEmpty ||
+                      messagebodyController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Please enter valid data"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  final contactusModel = ContactusModel(
+                    name: nameController.text,
+                    phone: int.tryParse(phoneController.text) ?? 0,
+                    email: emailController.text,
+                    messagebody: messagebodyController.text,
+                  );
+                  context.read<ContactusBloc>().add(
+                    SubmitContactUs(contactusModel: contactusModel),
+                  );
+                },
                 child: Text(
                   AppLocalizations.of(context)!.submitmessage,
 
@@ -235,39 +261,4 @@ class _ContactUsState extends State<ContactUs> {
       ),
     ),
   );
-
-  // Widget buildTextFormField({
-  //   required TextEditingController controller,
-  //   required IconData icon,
-  //   String? labelText,
-  //   TextInputType keyboardType = TextInputType.text,
-  //   // String? Function(String?)? validator,
-  // }) {
-  //   return TextFormField(
-  //     controller: controller,
-  //     keyboardType: keyboardType,
-  //     decoration: InputDecoration(
-  //       labelText: labelText,
-  //       suffixIcon: Icon(
-  //         icon,
-  //         color: Colors.grey, // 👈 اللون العادي
-  //       ),
-  //       filled: true,
-  //       fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-  //       border: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(6),
-  //         borderSide: const BorderSide(color: Colors.black45),
-  //       ),
-  //       enabledBorder: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(6),
-  //         borderSide: const BorderSide(color: Colors.black45),
-  //       ),
-  //       focusedBorder: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(8),
-  //         borderSide: const BorderSide(color: Colors.grey, width: 2),
-  //       ),
-  //     ),
-  //     // validator: validator,
-  //   );
-  // }
 }

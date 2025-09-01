@@ -98,7 +98,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
         child: BlocBuilder<HotelsBloc, HotelsState>(
           builder: (context, state) {
             if (state is HotelsLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(color: Color(0xFF002E70)),
+              );
             } else if (state is HotelsError) {
               return Center(child: Text(state.message));
             } else if (state is HotelsLoaded) {

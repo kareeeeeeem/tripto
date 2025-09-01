@@ -342,7 +342,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(color: Colors.white),
+              const CircularProgressIndicator(color: Color(0xFF002E70)),
               const SizedBox(height: 20),
               Text(
                 'Loading trips...',
@@ -415,7 +415,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
             videoWidget = Chewie(controller: chewieController);
           } else {
             videoWidget = const Center(
-              child: CircularProgressIndicator(color: Colors.white),
+              child: CircularProgressIndicator(color: Color(0xFF002E70)),
             );
           }
 
@@ -609,7 +609,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   // دالة لبناء مؤشر التحميل للصفحات الإضافية
   Widget _buildLoadingIndicator() {
-    return const Center(child: CircularProgressIndicator(color: Colors.white));
+    return const Center(
+      child: CircularProgressIndicator(color: Color(0xFF002E70)),
+    );
   }
 
   // دوال مساعدة إضافية
