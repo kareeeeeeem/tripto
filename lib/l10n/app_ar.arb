@@ -321,5 +321,6 @@
   "ok": "موافق",
   "cancel": "إلغاء",
   "contactus": "تواصل معنا",
-  "messagebody": " الرساله"
+  "messagebody": " الرساله",
+  "submitmessage": "إرسال الرساله"
 }

@@ -1058,4 +1058,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messagebody => 'Message';
+
+  @override
+  String get submitmessage => 'Submit Message';
 }

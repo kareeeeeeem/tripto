@@ -326,5 +326,6 @@
   "ok": "OK",
   "cancel": "Cancel",
   "contactus": "Contact-Us",
-  "messagebody": "Message"
+  "messagebody": "Message",
+  "submitmessage": "Submit Message"
 }

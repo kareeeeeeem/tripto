@@ -1969,6 +1969,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message'**
   String get messagebody;
+
+  /// No description provided for @submitmessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Message'**
+  String get submitmessage;
 }
 
 class _AppLocalizationsDelegate

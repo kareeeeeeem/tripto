@@ -1050,4 +1050,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get messagebody => ' الرساله';
+
+  @override
+  String get submitmessage => 'إرسال الرساله';
 }

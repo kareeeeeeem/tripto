@@ -175,6 +175,32 @@ class _ContactUsState extends State<ContactUs> {
                 // prefixIcon: Icon(Icons.message),
               ),
             ),
+            // //////////////////////////////////////////*/////////////////////////////
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.878,
+              height: MediaQuery.of(context).size.height * 0.05875,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF002E70),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {},
+                child: Text(
+                  AppLocalizations.of(context)!.submitmessage,
+
+                  style: GoogleFonts.markaziText(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            // //////////////////////////////////////////////////////////////////////////////////////
             Padding(
               padding: EdgeInsets.all(
                 MediaQuery.of(context).size.width * 0.2, // 10% من عرض الشاشة
