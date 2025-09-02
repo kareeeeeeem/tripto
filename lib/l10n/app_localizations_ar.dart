@@ -90,7 +90,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get finish => 'إنتهاء';
 
   @override
-  String get tourismcompany => 'ِشركة السياحة';
+  String get tourismcompany => 'شركة السياحة';
 
   @override
   String get flyingcompany => 'شركة الطيران';
@@ -670,19 +670,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deletmyaccount => 'حذف حسابي';
 
   @override
-  String get single => 'Single';
+  String get single => 'فردي';
 
   @override
-  String get double => 'Double';
+  String get double => 'ثنائي';
 
   @override
-  String get triple => 'Triple';
+  String get triple => 'ثلاثي';
 
   @override
-  String get quad => 'Quad';
+  String get quad => 'رباعي';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => 'غير معروف';
 
   @override
   String get privacypolicy => 'سياسة الخصوصية';

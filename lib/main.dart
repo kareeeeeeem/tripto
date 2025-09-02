@@ -4,10 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
+import 'package:tripto/bloc&repo/ContactUs/ContactUs_bloc.dart';
+import 'package:tripto/bloc&repo/ContactUs/ContactUs_repository.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/ProfileRepository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_repository.dart';
 import 'package:tripto/bloc&repo/car/car_repository.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
@@ -62,6 +70,21 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
+        RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
+        RepositoryProvider<FilteredTripsByDateRepository>(
+          create: (_) => FilteredTripsByDateRepository(),
+        ),
+        RepositoryProvider<FilteredTripsByCategoryRepository>(
+          create: (_) => FilteredTripsByCategoryRepository(),
+        ),
+
+        RepositoryProvider<SearchSubDestinationRepository>(
+          create: (_) => SearchSubDestinationRepository(),
+        ),
+
+        RepositoryProvider<ContactusRepository>(
+          create: (_) => ContactusRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -99,6 +122,38 @@ class _TripToAppState extends State<TripToApp> {
                   repository: RepositoryProvider.of<AuthRepository>(context),
                 ),
           ),
+          BlocProvider<ContactusBloc>(
+            create:
+                (context) => ContactusBloc(
+                  contactusRepository:
+                      RepositoryProvider.of<ContactusRepository>(context),
+                ),
+          ),
+
+          BlocProvider<FilteredTripsBloc>(
+            create:
+                (context) => FilteredTripsBloc(
+                  RepositoryProvider.of<FilteredTripsByDateRepository>(context),
+                ),
+          ),
+
+          BlocProvider<CategoryTripBloc>(
+            create:
+                (context) => CategoryTripBloc(
+                  RepositoryProvider.of<FilteredTripsByCategoryRepository>(
+                    context,
+                  ),
+                ),
+          ),
+
+          BlocProvider<SearchSubDestinationBloc>(
+            create:
+                (context) => SearchSubDestinationBloc(
+                  RepositoryProvider.of<SearchSubDestinationRepository>(
+                    context,
+                  ),
+                ),
+          ),
         ],
         child: MaterialApp(
           navigatorObservers: [routeObserver],
@@ -124,11 +179,10 @@ class _TripToAppState extends State<TripToApp> {
 
           routes: AppRoutes.routes,
           initialRoute: '/',
-          //home: App(),
 
           // routes: AppRoutes.routes,
           // home: App(),
-          //home: Privacypolicy(),
+          // home: Privacypolicy(),
         ),
       ),
     );

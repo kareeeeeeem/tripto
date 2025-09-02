@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_Bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/searchontrip_Event.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Event.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/DateCardStandalone.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/CategoryGold.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/DiamondCategory.dart';
@@ -17,6 +21,8 @@ class SearchDialog extends StatefulWidget {
 
 class _SearchDialogState extends State<SearchDialog> {
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _subDestinationController =
+      TextEditingController();
   DateTime? _startDate;
   DateTime? _endDate;
   int selectedCategoryIndex = -1;
@@ -42,17 +48,29 @@ class _SearchDialogState extends State<SearchDialog> {
     }
   }
 
+  String? getSelectedCategory() {
+    switch (selectedCategoryIndex) {
+      case 0:
+        return "1"; // Gold
+      case 1:
+        return "2"; // Diamond
+      case 2:
+        return "3"; // Platinum
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('yyyy-MM-dd');
-    final size = MediaQuery.of(context).size; // ✅ حجم الشاشة
+    final size = MediaQuery.of(context).size;
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return SizedBox(
-      height: size.height * 0.55, // ياخد 70% من ارتفاع الشاشة
-      width: size.width * 0.9, // ياخد 90% من عرض الشاشة
+      height: size.height * 0.65,
+      width: size.width * 0.9,
       child: SingleChildScrollView(
-        // ✅ علشان مايحصلش overflow
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -60,13 +78,15 @@ class _SearchDialogState extends State<SearchDialog> {
               "Search",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: size.height * 0.02),
+            SizedBox(height: size.height * 0.10),
 
-            // حقل البحث
+            // 🔹 حقل البحث العام
+
+            // 🔹 حقل Sub-destination
             TextField(
-              controller: _searchController,
+              controller: _subDestinationController,
               decoration: InputDecoration(
-                hintText: "trip",
+                hintText: "Sub-destination (e.g., Giza)",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.lightBlue),
@@ -79,7 +99,7 @@ class _SearchDialogState extends State<SearchDialog> {
             ),
             SizedBox(height: size.height * 0.03),
 
-            // زر واحد لاختيار الرينج
+            // زر اختيار الرينج
             ElevatedButton(
               onPressed: () => _pickDateRange(context),
               child: Text(
@@ -141,19 +161,38 @@ class _SearchDialogState extends State<SearchDialog> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
+                      final selectedCategory = getSelectedCategory();
+                      final subDestination =
+                          _subDestinationController.text.trim();
+
+                      // 🔹 فلترة التاريخ
                       if (_startDate != null && _endDate != null) {
-                        // إرسال Event للـ FilteredTripsBloc
                         context.read<FilteredTripsBloc>().add(
                           FilterTripsByDateRangeEvent(_startDate!, _endDate!),
                         );
                       }
 
-                      // إرجاع باقي بيانات البحث
+                      // 🔹 فلترة الكاتيجوري
+                      if (selectedCategory != null) {
+                        context.read<CategoryTripBloc>().add(
+                          FetchTripsByCategoryEvent(selectedCategory),
+                        );
+                      }
+
+                      // 🔹 فلترة Sub-destination
+                      if (subDestination.isNotEmpty) {
+                        context.read<SearchSubDestinationBloc>().add(
+                          SearchSubDestinationRequested(subDestination),
+                        );
+                      }
+
+                      // 🔹 إرجاع البيانات
                       Navigator.pop(context, {
                         'searchText': _searchController.text,
                         'startDate': _startDate,
                         'endDate': _endDate,
-                        'category': selectedCategoryIndex,
+                        'category': selectedCategory,
+                        'subDestination': subDestination,
                       });
                     },
                     style: ElevatedButton.styleFrom(

@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_repository.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/searchontrip_Event.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/searchontrip_State.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
 
 class FilteredTripsBloc extends Bloc<FilteredTripsEvent, FilteredTripsState> {
-  final FilteredTripsRepository repo;
+  final FilteredTripsByDateRepository repo;
 
   FilteredTripsBloc(this.repo) : super(FilteredTripsInitial()) {
     on<FilterTripsByDateRangeEvent>(_onFilterByDateRange);

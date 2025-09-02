@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_Bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_repository.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
@@ -496,14 +496,14 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    // نفتح الـ Dialog وناخد التاريخ المحدد
+                    // نفتح الـ Dialog وناخد التاريخ والفئة المحددة
                     final result = await showDialog<Map<String, dynamic>>(
                       context: context,
                       builder:
                           (context) => BlocProvider<FilteredTripsBloc>(
                             create:
                                 (_) => FilteredTripsBloc(
-                                  FilteredTripsRepository(), // <-- هنا positional
+                                  FilteredTripsByDateRepository(),
                                 ),
                             child: Dialog(
                               backgroundColor: Colors.white.withOpacity(0.95),
@@ -518,34 +518,71 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           ),
                     );
 
-                    // إذا المستخدم اختار تاريخ
-                    // إذا المستخدم اختار تاريخ
-                    // إذا المستخدم اختار تاريخ
-                    if (result != null &&
-                        result['startDate'] != null &&
-                        result['endDate'] != null) {
+                    if (result != null) {
                       setState(
                         () => _isLoadingFirstPage = true,
                       ); // إظهار التحميل
 
                       try {
-                        // جلب الرحلات المفلترة حسب التاريخ من الـ Repository
-                        final filteredTripsData =
-                            await FilteredTripsRepository().fetchTripsByDate(
-                              result['startDate'],
-                              result['endDate'],
-                            );
+                        // فلترة الرحلات على النسخة الأصلية
+                        List<Map<String, dynamic>> filteredTrips = List.from(
+                          _allTrips,
+                        );
 
-                        // تحويل الرحلات الجديدة إلى التنسيق المطلوب للفيديو
-                        final filteredTripsJson =
-                            filteredTripsData
-                                .map((trip) => trip.toVideoPlayerJson())
-                                .toList();
+                        // فلترة حسب التاريخ إذا تم اختياره
+                        if (result['startDate'] != null &&
+                            result['endDate'] != null) {
+                          final start = result['startDate'] as DateTime;
+                          final end = result['endDate'] as DateTime;
+                          filteredTrips =
+                              filteredTrips.where((trip) {
+                                final tripDateStr =
+                                    trip['start_date']?.toString() ?? '';
+                                if (tripDateStr.isEmpty) return false;
+                                final tripDate = DateTime.tryParse(tripDateStr);
+                                if (tripDate == null) return false;
+                                return tripDate.isAfter(
+                                      start.subtract(const Duration(days: 1)),
+                                    ) &&
+                                    tripDate.isBefore(
+                                      end.add(const Duration(days: 1)),
+                                    );
+                              }).toList();
+                        }
+
+                        // فلترة حسب الكاتيجوري
+                        final categoryIndex = result['category'];
+                        if (categoryIndex != null) {
+                          final categoryStr =
+                              categoryIndex.toString(); // تحويل للـ String
+                          filteredTrips =
+                              filteredTrips.where((trip) {
+                                return trip['category']?.toString() ==
+                                    categoryStr;
+                              }).toList();
+                        }
+
+                        // فلترة حسب sub-destination
+                        final subDestinationQuery =
+                            result['subDestination'] as String?;
+                        if (subDestinationQuery != null &&
+                            subDestinationQuery.isNotEmpty) {
+                          filteredTrips =
+                              filteredTrips.where((trip) {
+                                final tripSubDestination =
+                                    (trip['sub_destination_name_en'] ??
+                                            trip['sub_destination_name_ar'] ??
+                                            '')
+                                        .toString()
+                                        .toLowerCase();
+                                return tripSubDestination.contains(
+                                  subDestinationQuery.toLowerCase(),
+                                );
+                              }).toList();
+                        }
 
                         setState(() {
-                          // ❌ لا تغير _allTrips
-                          // _allTrips = filteredTripsJson; // احذف هذا السطر
-                          // قبل ما تعيّن _trips للفلترة
+                          // تنظيف الفيديوهات القديمة
                           _chewieControllers.forEach(
                             (_, controller) => controller.pause(),
                           );
@@ -556,19 +593,19 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           _videoControllers.clear();
                           _videoErrorState.clear();
 
-                          // ✅ استبدل فقط _trips
-                          _trips = filteredTripsJson.take(_perPage).toList();
+                          // تحديث الرحلات المعروضة
+                          _trips = filteredTrips.take(_perPage).toList();
                           _personCounterKeys = List.generate(
                             _trips.length,
                             (index) => GlobalKey<PersonCounterWithPriceState>(),
                           );
                           _currentPage = 0;
                           _currentIndex = 0;
-                          _hasMoreData = _allTrips.length > _perPage;
+                          _hasMoreData = filteredTrips.length > _perPage;
                           _isLoadingFirstPage = false;
                           _initialErrorMessage =
                               _trips.isEmpty
-                                  ? "No trips found for selected dates"
+                                  ? "No trips found for selected filters"
                                   : "";
                         });
 
@@ -582,7 +619,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                         setState(() {
                           _isLoadingFirstPage = false;
                           _initialErrorMessage =
-                              'Failed to load trips for selected date';
+                              'Failed to load trips for selected filters';
                         });
                       }
                     }

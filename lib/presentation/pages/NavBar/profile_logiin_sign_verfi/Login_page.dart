@@ -125,6 +125,9 @@ class _LoginState extends State<Login> {
                         suffixIcon: const Icon(Icons.phone),
                         // filled: true,
                         // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                        prefixIcon: const Icon(Icons.phone),
+                        filled: true,
+                        fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
                           borderSide: const BorderSide(color: Colors.black45),

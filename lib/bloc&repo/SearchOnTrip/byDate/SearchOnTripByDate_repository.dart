@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 import 'package:tripto/core/services/api.dart';
 
-class FilteredTripsRepository {
+class FilteredTripsByDateRepository {
   final storage = const FlutterSecureStorage();
 
   Future<List<GetTripModel>> fetchTripsByDate(
