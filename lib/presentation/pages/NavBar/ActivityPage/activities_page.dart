@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/core/constants/videoplayer_widget.dart';
 // import 'package:tripto/core/models/ActivityCardModel.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
@@ -9,7 +9,7 @@ import 'package:tripto/core/models/activityPageModel.dart';
 // import 'package:http/http.dart' as http;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../bloc/ِAuth/AuthState.dart';
+import '../../../../bloc&repo/ِAuth/AuthState.dart';
 import '../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
 import '../../../../core/routes/app_routes.dart';
 import '../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes

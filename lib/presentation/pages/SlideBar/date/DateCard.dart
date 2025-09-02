@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc&repo/date/date_bloc.dart';
+import 'package:tripto/bloc&repo/date/date_event.dart';
+import 'package:tripto/bloc&repo/date/date_state.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
 class DateCard extends StatefulWidget {

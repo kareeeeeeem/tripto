@@ -6,9 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'; // 🚀 ضفنا الـ import ده
-import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthState.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthEvent.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthState.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
 class SignupPage extends StatefulWidget {

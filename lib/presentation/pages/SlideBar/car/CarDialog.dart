@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
+import 'package:tripto/bloc&repo/car/car_bloc.dart';
+import 'package:tripto/bloc&repo/car/car_state.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
 

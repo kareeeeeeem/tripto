@@ -3,17 +3,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthRepository.dart';
-import 'package:tripto/bloc/ProfileUserDate/Edit/EditBloc.dart';
-import 'package:tripto/bloc/ProfileUserDate/logout/LogoutBloc.dart';
-import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
-import 'package:tripto/bloc/Repositories/TripsRepository.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
+import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
+import 'package:tripto/bloc&repo/ProfileUserDate/logout/LogoutBloc.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
+import 'package:tripto/bloc&repo/ProfileUserDate/ProfileRepository.dart';
+import 'package:tripto/bloc&repo/car/car_repository.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
@@ -58,7 +59,7 @@ class _TripToAppState extends State<TripToApp> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
-        RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
+        RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
       ],
@@ -72,13 +73,18 @@ class _TripToAppState extends State<TripToApp> {
                   ),
                 ),
           ),
-          BlocProvider<GetTripBloc>(
+          BlocProvider<TripBloc>(
             create:
                 (context) =>
-                    GetTripBloc(RepositoryProvider.of<TripsRepository>(context))
+                    TripBloc(RepositoryProvider.of<TripRepository>(context))
                       ..add(FetchTrips()),
           ),
-          BlocProvider<TripBloc>(create: (context) => TripBloc()),
+          BlocProvider<TripBloc>(
+            create:
+                (context) =>
+                    TripBloc(RepositoryProvider.of<TripRepository>(context))
+                      ..add(FetchTrips()),
+          ),
           BlocProvider(
             create:
                 (context) => UpdateUserBloc(

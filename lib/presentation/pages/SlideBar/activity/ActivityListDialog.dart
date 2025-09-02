@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
-import 'package:tripto/bloc/%D9%90Auth/AuthState.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthEvent.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthState.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
-import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/SlideBar/activity/ActivitiesCard.dart';
+import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 
 class ActivitiesListDialog extends StatefulWidget {
   final int? initialSelectedActivityId; // ✅ هنا نقبل المعرف فقط
+  final GlobalKey<PersonCounterWithPriceState>? personCounterKey; // ✅ أضف هذا
 
-  const ActivitiesListDialog({Key? key, this.initialSelectedActivityId})
-    : super(key: key);
+  const ActivitiesListDialog({
+    Key? key,
+    this.initialSelectedActivityId,
+    this.personCounterKey,
+  }) : super(key: key);
 
   @override
   State<ActivitiesListDialog> createState() => _ActivitiesListDialogState();
@@ -147,8 +151,14 @@ class _ActivitiesListDialogState extends State<ActivitiesListDialog> {
                       setState(() {
                         selectedIndex = null;
                       });
+                      // ✅ تصفير السعر عند Cancel
+                      if (widget.personCounterKey != null) {
+                        widget.personCounterKey!.currentState
+                            ?.setSelectedActivityPrice(0);
+                      }
                       Navigator.pop(context, null);
                     },
+
                     child: Text(
                       AppLocalizations.of(context)!.cancelActivity,
                       style: TextStyle(color: Colors.white, fontSize: 16),

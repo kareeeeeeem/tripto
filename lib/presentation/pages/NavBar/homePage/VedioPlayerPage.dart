@@ -2,10 +2,12 @@ import 'dart:async';
 // import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
-import 'package:tripto/bloc/Repositories/TripsRepository.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/searchDialog.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTrip_repository.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
@@ -93,7 +95,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
 
     try {
-      final allTripsData = await TripsRepository().fetchTrips();
+      final allTripsData = await TripRepository().fetchTrips();
       if (!mounted) return;
 
       if (allTripsData.isEmpty) {
@@ -109,8 +111,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
           allTripsData.map((trip) => trip.toVideoPlayerJson()).toList();
 
       setState(() {
-        _allTrips = allTrips;
-        _trips = allTrips.take(_perPage).toList(); // أخذ أول دفعة
+        _allTrips = allTrips; // حفظ النسخة الأصلية
+        _trips = _allTrips.take(_perPage).toList();
         _personCounterKeys = List.generate(
           _trips.length,
           (index) => GlobalKey<PersonCounterWithPriceState>(),
@@ -228,7 +230,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     setState(() => _currentIndex = index);
 
-    context.read<GetTripBloc>().add(ChangeCurrentTripEvent(index));
+    context.read<TripBloc>().add(ChangeCurrentTripEvent(index));
 
     // التخلص من الفيديوهات البعيدة
     _disposeDistantVideos(index);
@@ -363,19 +365,35 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, color: Colors.white, size: 50),
+              const Icon(Icons.search_off, color: Colors.white, size: 50),
               const SizedBox(height: 20),
               Text(
                 _initialErrorMessage,
                 textAlign: TextAlign.center,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _fetchAllTrips,
-                child: const Text('Retry'),
+                onPressed: () {
+                  setState(() {
+                    _trips =
+                        _allTrips
+                            .take(_perPage)
+                            .toList(); // استرجاع الرحلات الأصلية
+                    _personCounterKeys = List.generate(
+                      _trips.length,
+                      (index) => GlobalKey<PersonCounterWithPriceState>(),
+                    );
+                    _currentPage = 0;
+                    _currentIndex = 0;
+                    _initialErrorMessage = "";
+                    _hasMoreData = _allTrips.length > _perPage;
+                  });
+
+                  if (_trips.isNotEmpty)
+                    _initializeAndPreloadVideo(0, autoPlay: true);
+                },
+                child: const Text("Back to all trips"),
               ),
             ],
           ),
@@ -478,21 +496,96 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    await showDialog(
+                    // نفتح الـ Dialog وناخد التاريخ المحدد
+                    final result = await showDialog<Map<String, dynamic>>(
                       context: context,
                       builder:
-                          (context) => Dialog(
-                            backgroundColor: Colors.white, // 🔹 الخلفية بيضاء
-
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: SearchDialog(),
+                          (context) => BlocProvider<FilteredTripsBloc>(
+                            create:
+                                (_) => FilteredTripsBloc(
+                                  FilteredTripsRepository(), // <-- هنا positional
+                                ),
+                            child: Dialog(
+                              backgroundColor: Colors.white.withOpacity(0.95),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: SearchDialog(),
+                              ),
                             ),
                           ),
                     );
+
+                    // إذا المستخدم اختار تاريخ
+                    // إذا المستخدم اختار تاريخ
+                    // إذا المستخدم اختار تاريخ
+                    if (result != null &&
+                        result['startDate'] != null &&
+                        result['endDate'] != null) {
+                      setState(
+                        () => _isLoadingFirstPage = true,
+                      ); // إظهار التحميل
+
+                      try {
+                        // جلب الرحلات المفلترة حسب التاريخ من الـ Repository
+                        final filteredTripsData =
+                            await FilteredTripsRepository().fetchTripsByDate(
+                              result['startDate'],
+                              result['endDate'],
+                            );
+
+                        // تحويل الرحلات الجديدة إلى التنسيق المطلوب للفيديو
+                        final filteredTripsJson =
+                            filteredTripsData
+                                .map((trip) => trip.toVideoPlayerJson())
+                                .toList();
+
+                        setState(() {
+                          // ❌ لا تغير _allTrips
+                          // _allTrips = filteredTripsJson; // احذف هذا السطر
+                          // قبل ما تعيّن _trips للفلترة
+                          _chewieControllers.forEach(
+                            (_, controller) => controller.pause(),
+                          );
+                          _chewieControllers.clear();
+                          _videoControllers.forEach(
+                            (_, controller) => controller.dispose(),
+                          );
+                          _videoControllers.clear();
+                          _videoErrorState.clear();
+
+                          // ✅ استبدل فقط _trips
+                          _trips = filteredTripsJson.take(_perPage).toList();
+                          _personCounterKeys = List.generate(
+                            _trips.length,
+                            (index) => GlobalKey<PersonCounterWithPriceState>(),
+                          );
+                          _currentPage = 0;
+                          _currentIndex = 0;
+                          _hasMoreData = _allTrips.length > _perPage;
+                          _isLoadingFirstPage = false;
+                          _initialErrorMessage =
+                              _trips.isEmpty
+                                  ? "No trips found for selected dates"
+                                  : "";
+                        });
+
+                        // تهيئة الفيديوهات الجديدة
+                        if (_trips.isNotEmpty) {
+                          _initializeAndPreloadVideo(0, autoPlay: true);
+                          if (_trips.length > 1) _initializeAndPreloadVideo(1);
+                        }
+                      } catch (e) {
+                        debugPrint('Error fetching filtered trips: $e');
+                        setState(() {
+                          _isLoadingFirstPage = false;
+                          _initialErrorMessage =
+                              'Failed to load trips for selected date';
+                        });
+                      }
+                    }
                   },
                 ),
               ),

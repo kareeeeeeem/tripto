@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
-import 'package:tripto/bloc/GetTrip/GetTrip_state.dart';
-import 'package:tripto/bloc/Hotel/hotelEvents.dart';
-import 'package:tripto/bloc/Hotel/hotelRep.dart';
+import 'package:tripto/bloc&repo/Hotel/hotelEvents.dart';
+import 'package:tripto/bloc&repo/Hotel/hotelRep.dart';
+import 'package:tripto/bloc&repo/car/car_bloc.dart';
+import 'package:tripto/bloc&repo/car/car_event.dart';
+import 'package:tripto/bloc&repo/car/car_repository.dart';
+import 'package:tripto/bloc&repo/date/date_bloc.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_state.dart';
 import 'package:tripto/core/constants/SelectRightButton.dart';
 import 'package:tripto/core/models/CarModel.dart';
-import 'package:tripto/bloc/Repositories/TripsRepository.dart';
-import 'package:tripto/bloc/Hotel/hotelBloc.dart';
+import 'package:tripto/bloc&repo/Hotel/hotelBloc.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/pages/SlideBar/activity/ActivityListDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDialog.dart';
@@ -87,7 +90,7 @@ class _RightButtonsState extends State<RightButtons> {
         setState(() => selectedIndex = -1);
       }
     });
-    context.read<GetTripBloc>().add(FetchTrips());
+    context.read<TripBloc>().add(FetchTrips());
   }
 
   @override
@@ -102,9 +105,9 @@ class _RightButtonsState extends State<RightButtons> {
     const Color selectedIconColor = Colors.blue;
 
     final List<_ButtonData> buttons = [];
-    final tripState = context.watch<GetTripBloc>().state;
+    final tripState = context.watch<TripBloc>().state;
 
-    if (tripState is! GetTripLoaded || tripState.trips.isEmpty) {
+    if (tripState is! TripLoaded || tripState.trips.isEmpty) {
       return const SizedBox();
     }
 
@@ -141,8 +144,8 @@ class _RightButtonsState extends State<RightButtons> {
               selectedIndex = buttons.length;
               _selectedFilterDate = null;
             });
-            context.read<GetTripBloc>().add(
-              FilterTripsByCategoryEvent(categoryId: selectedCategoryValue),
+            context.read<TripBloc>().add(
+              FilterTripsByCategoryEvent(selectedCategoryValue),
             );
             _focusScopeNode.unfocus();
           }
@@ -227,11 +230,8 @@ class _RightButtonsState extends State<RightButtons> {
                   _rangeEnd = result['range_end'];
                 });
 
-                context.read<GetTripBloc>().add(
-                  FilterTripsByDateRangeEvent(
-                    startDate: _rangeStart!,
-                    endDate: _rangeEnd!,
-                  ),
+                context.read<TripBloc>().add(
+                  FilterTripsByDateRangeEvent(_rangeStart!, _rangeEnd!),
                 );
 
                 // افتح أول زر بعد التاريخ
@@ -363,7 +363,7 @@ class _RightButtonsState extends State<RightButtons> {
                     ),
                     BlocProvider(
                       create:
-                          (_) => CarBloc(carRepository: CarRepository())..add(
+                          (_) => CarBloc(CarRepository())..add(
                             LoadCars(
                               subDestinationId: trip.subDestinationId!,
                               category: trip.category,
@@ -390,8 +390,9 @@ class _RightButtonsState extends State<RightButtons> {
                       context: context,
                       builder:
                           (context) => ActivitiesListDialog(
-                            initialSelectedActivityId:
-                                selectedActivityId, // ✅ تم إضافة هذا السطر
+                            initialSelectedActivityId: selectedActivityId,
+                            personCounterKey: widget.personCounterKey, // ✅ هنا
+                            // ✅ تم إضافة هذا السطر
                           ),
                     );
                 if (selectedActivityFromDialog != null) {
@@ -406,20 +407,23 @@ class _RightButtonsState extends State<RightButtons> {
                   });
                   widget.personCounterKey?.currentState
                       ?.setSelectedActivityPrice(price);
-                } else {
-                  setState(() {
-                    selectedActivityId = null;
-                  });
-                  widget.personCounterKey?.currentState
-                      ?.setSelectedActivityPrice(0);
                 }
+                // else {
+                //   setState(() {
+                //     selectedActivityId = null;
+                //   });
+                //   widget.personCounterKey?.currentState
+                //       ?.setSelectedActivityPrice(0);
+                // }
+
+                // } else {
+                //   setState(() {
+                //     selectedCarId = null;
+                //     selectedCar = null;
+                //   });
+                //widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
+                // }
               }
-            } else {
-              setState(() {
-                selectedCarId = null;
-                selectedCar = null;
-              });
-              widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
             }
           },
         ),
@@ -444,8 +448,10 @@ class _RightButtonsState extends State<RightButtons> {
                   context: context,
                   builder:
                       (context) => ActivitiesListDialog(
-                        initialSelectedActivityId:
-                            selectedActivityId, // ✅ تم إضافة هذا السطر
+                        initialSelectedActivityId: selectedActivityId,
+                        personCounterKey:
+                            widget.personCounterKey, // ✅ لازم يبقى موجود
+                        // ✅ تم إضافة هذا السطر
                       ),
                 );
 
@@ -463,12 +469,12 @@ class _RightButtonsState extends State<RightButtons> {
                 price,
               );
             } else {
-              setState(() {
-                selectedActivityId = null;
-              });
-              widget.personCounterKey?.currentState?.setSelectedActivityPrice(
-                0,
-              );
+              // setState(() {
+              //   selectedActivityId = null;
+              // });
+              // widget.personCounterKey?.currentState?.setSelectedActivityPrice(
+              //   0,
+              // );
             }
           },
         ),
