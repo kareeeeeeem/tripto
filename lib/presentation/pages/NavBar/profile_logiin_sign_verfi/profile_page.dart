@@ -12,7 +12,6 @@ import 'package:tripto/bloc/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc/ProfileUserDate/logout/LogoutEvent.dart';
 import 'package:tripto/bloc/ProfileUserDate/logout/LogoutState.dart';
 import 'package:tripto/core/constants/Colors_Fonts_Icons.dart';
-import 'package:tripto/core/constants/Profiletextfield.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';

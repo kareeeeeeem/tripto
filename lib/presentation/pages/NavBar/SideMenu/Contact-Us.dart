@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/bloc/ContactUs/ContactIs_state.dart';
 import 'package:tripto/bloc/ContactUs/ContactUs_Event.dart';
 import 'package:tripto/bloc/ContactUs/ContactUs_bloc.dart';
 import 'package:tripto/core/models/ContactUs_Model.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
+
+bool isLoading = false;
 
 class ContactUs extends StatefulWidget {
   const ContactUs({super.key});
@@ -23,225 +26,272 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
-        // elevation: 0,
-        scrolledUnderElevation: 0,
-        centerTitle: true,
-        title: Text(
-          AppLocalizations.of(context)!.contactus,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+    return BlocListener<ContactusBloc, ContactUsState>(
+      listener: (context, state) {
+        //... your existing listener
+        if (state is ContactLoading) {
+          setState(() => isLoading = true);
+        } else {
+          setState(() {
+            isLoading = false;
+          });
 
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SideMenu()),
-              (route) => false,
+          if (state is ContactSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                duration: Duration(milliseconds: 10), // مدة ظهور الرسالة
+              ),
             );
-          },
-          icon: Icon(
-            Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons
-                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
-                : Icons
-                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
-            size: 35,
-            color: Colors.black,
+          } else if (state is ContactFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Error: ${state.error}"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      },
+
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          // elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+          title: Text(
+            AppLocalizations.of(context)!.contactus,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SideMenu()),
+                (route) => false,
+              );
+            },
+            icon: Icon(
+              Localizations.localeOf(context).languageCode == 'ar'
+                  ? Icons
+                      .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                  : Icons
+                      .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+              size: 35,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05, // 5% يمين/شمال
-          // vertical: MediaQuery.of(context).size.height * 0.2, // 2% فوق/تحت
-        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal:
+                MediaQuery.of(context).size.width * 0.05, // 5% يمين/شمال
+            // vertical: MediaQuery.of(context).size.height * 0.2, // 2% فوق/تحت
+          ),
 
-        child: Column(
-          children: [
-            buildLabel(AppLocalizations.of(context)!.name),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.name,
-                labelStyle: TextStyle(color: Color(0xFF002E70)),
+          child: Column(
+            children: [
+              buildLabel(AppLocalizations.of(context)!.name),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.name,
+                  labelStyle: TextStyle(color: Color(0xFF002E70)),
 
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.black45, width: 1),
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF002E70),
-                    width: 2,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF002E70),
+                      width: 2,
+                    ),
+                  ),
+                  suffixIcon: Icon(Icons.person),
                 ),
-                suffixIcon: Icon(Icons.person),
               ),
-            ),
-            // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            buildLabel(AppLocalizations.of(context)!.phone),
-            TextFormField(
-              keyboardType: TextInputType.phone,
-              controller: phoneController,
+              // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+              buildLabel(AppLocalizations.of(context)!.phone),
+              TextFormField(
+                keyboardType: TextInputType.phone,
+                controller: phoneController,
 
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.phone,
-                labelStyle: TextStyle(color: Color(0xFF002E70)),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.phone,
+                  labelStyle: TextStyle(color: Color(0xFF002E70)),
 
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.black45, width: 1),
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF002E70), // 👈 اللون وقت الـ focus
-                    width: 2,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF002E70), // 👈 اللون وقت الـ focus
+                      width: 2,
+                    ),
+                  ),
+                  suffixIcon: Icon(Icons.phone),
                 ),
-                suffixIcon: Icon(Icons.phone),
               ),
-            ),
-            // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            buildLabel(AppLocalizations.of(context)!.email),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              controller: emailController,
+              // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+              buildLabel(AppLocalizations.of(context)!.email),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                controller: emailController,
 
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.email,
-                labelStyle: TextStyle(color: Color(0xFF002E70)),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.email,
+                  labelStyle: TextStyle(color: Color(0xFF002E70)),
 
-                fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.black45, width: 1),
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF002E70),
-                    width: 2,
+                  fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF002E70),
+                      width: 2,
+                    ),
+                  ),
+                  suffixIcon: Icon(Icons.email),
                 ),
-                suffixIcon: Icon(Icons.email),
               ),
-            ),
-            // //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            buildLabel(AppLocalizations.of(context)!.messagebody),
+              // //////////////////////////////////////////////////////////////////////////////////////////////////////////
+              // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              buildLabel(AppLocalizations.of(context)!.messagebody),
 
-            TextFormField(
-              controller: messagebodyController,
-              keyboardType: TextInputType.multiline,
-              maxLines: 100, // هنا حددت 6 أسطر
-              minLines: 6, // أقل حاجة 3 أسطر
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.messagebody,
-                labelStyle: TextStyle(color: Color(0xFF002E70)),
-                // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.black45, width: 1),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF002E70),
-                    width: 2,
+              TextFormField(
+                controller: messagebodyController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 100, // هنا حددت 6 أسطر
+                minLines: 6, // أقل حاجة 3 أسطر
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.messagebody,
+                  labelStyle: TextStyle(color: Color(0xFF002E70)),
+                  // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF002E70),
+                      width: 2,
+                    ),
+                  ),
+                  // prefixIcon: Icon(Icons.message),
                 ),
-                // prefixIcon: Icon(Icons.message),
               ),
-            ),
-            // //////////////////////////////////////////*/////////////////////////////
-            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              // //////////////////////////////////////////*/////////////////////////////
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.878,
-              height: MediaQuery.of(context).size.height * 0.05875,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF002E70),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.878,
+                height: MediaQuery.of(context).size.height * 0.05875,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF002E70),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  if (nameController.text.isEmpty ||
-                      phoneController.text.isEmpty ||
-                      emailController.text.isEmpty ||
-                      messagebodyController.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Please enter valid data"),
-                        backgroundColor: Colors.red,
-                      ),
+                  onPressed: () {
+                    if (nameController.text.isEmpty ||
+                        phoneController.text.isEmpty ||
+                        emailController.text.isEmpty ||
+                        messagebodyController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Please enter valid data"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+                    final contactusModel = ContactusModel(
+                      name: nameController.text,
+                      phone: phoneController.text,
+                      email: emailController.text,
+                      messagebody: messagebodyController.text,
+                      subject: "Contact Us",
                     );
-                    return;
-                  }
-                  final contactusModel = ContactusModel(
-                    name: nameController.text,
-                    phone: int.tryParse(phoneController.text) ?? 0,
-                    email: emailController.text,
-                    messagebody: messagebodyController.text,
-                  );
-                  context.read<ContactusBloc>().add(
-                    SubmitContactUs(contactusModel: contactusModel),
-                  );
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.submitmessage,
+                    context.read<ContactusBloc>().add(
+                      SubmitContactUs(contactusModel: contactusModel),
+                    );
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.submitmessage,
 
-                  style: GoogleFonts.markaziText(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    style: GoogleFonts.markaziText(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            // //////////////////////////////////////////////////////////////////////////////////////
-            Padding(
-              padding: EdgeInsets.all(
-                MediaQuery.of(context).size.width * 0.2, // 10% من عرض الشاشة
-              ),
-              child: Container(
-                width: 400,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Logo.png"),
+              // //////////////////////////////////////////////////////////////////////////////////////
+              Padding(
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.2, // 10% من عرض الشاشة
+                ),
+                child: Container(
+                  width: 400,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Logo.png"),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -3,14 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthState.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/presentation/app/app.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/home_page.dart';
+
 import 'package:flutter/services.dart'; // ضروري لإدخال الأرقام فقط
 
 class Login extends StatefulWidget {
@@ -26,7 +24,7 @@ class _LoginState extends State<Login> {
 
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final _storage = const FlutterSecureStorage();
+  // final _storage = const FlutterSecureStorage();
 
   @override
   void dispose() {

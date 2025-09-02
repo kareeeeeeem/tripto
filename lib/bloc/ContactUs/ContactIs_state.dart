@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:tripto/core/models/ContactUs_Model.dart';
 
 abstract class ContactUsState extends Equatable {
   const ContactUsState();
@@ -20,12 +19,8 @@ class ContactFailure extends ContactUsState {
 }
 
 class ContactSuccess extends ContactUsState {
-  // final List <ContactusModel> contact ;
   final String message;
-  const ContactSuccess({
-    // required this.contact ,
-    required this.message,
-  });
+  const ContactSuccess({required this.message});
 
   @override
   // TODO: implement props

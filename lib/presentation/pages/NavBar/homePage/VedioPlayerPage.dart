@@ -288,12 +288,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
   }
 
-  void _handleLanguageChange() {
-    final currentLocale = Localizations.localeOf(context).languageCode;
-    final newLocale =
-        currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
-    TripToApp.setLocale(context, newLocale);
-  }
+  // void _handleLanguageChange() {
+  //   final currentLocale = Localizations.localeOf(context).languageCode;
+  //   final newLocale =
+  //       currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+  //   TripToApp.setLocale(context, newLocale);
+  // }
 
   @override
   void dispose() {

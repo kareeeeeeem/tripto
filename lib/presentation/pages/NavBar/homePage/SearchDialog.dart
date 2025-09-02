@@ -4,7 +4,6 @@ import 'package:tripto/presentation/pages/NavBar/homePage/DateCardStandalone.dar
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/CategoryGold.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/DiamondCategory.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/PlatinumCategory.dart';
-import 'package:tripto/presentation/pages/SlideBar/date/DateCard.dart';
 
 class SearchDialog extends StatefulWidget {
   const SearchDialog({super.key});

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc/%D9%90Auth/AuthRepository.dart';
+import 'package:tripto/bloc/ContactUs/ContactUs_bloc.dart';
 import 'package:tripto/bloc/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc/ProfileUserDate/logout/LogoutBloc.dart';
+import 'package:tripto/bloc/Repositories/ContactUs_repository.dart';
 import 'package:tripto/bloc/ِAuth/AuthBloc.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
@@ -61,6 +63,9 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<TripsRepository>(create: (_) => TripsRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
+        RepositoryProvider<ContactusRepository>(
+          create: (_) => ContactusRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -91,6 +96,13 @@ class _TripToAppState extends State<TripToApp> {
             create:
                 (context) => LogoutBloc(
                   repository: RepositoryProvider.of<AuthRepository>(context),
+                ),
+          ),
+          BlocProvider<ContactusBloc>(
+            create:
+                (context) => ContactusBloc(
+                  contactusRepository:
+                      RepositoryProvider.of<ContactusRepository>(context),
                 ),
           ),
         ],
