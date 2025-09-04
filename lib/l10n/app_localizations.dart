@@ -1975,6 +1975,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit Message'**
   String get submitmessage;
+
+  /// No description provided for @report.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get report;
+
+  /// No description provided for @sendreport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Report'**
+  String get sendreport;
 }
 
 class _AppLocalizationsDelegate

@@ -322,5 +322,7 @@
   "cancel": "إلغاء",
   "contactus": "تواصل معنا",
   "messagebody": " الرساله",
-  "submitmessage": "إرسال الرساله"
+  "submitmessage": "إرسال الرساله",
+  "report": "تقرير",
+  "sendreport": "إرسال تقرير"
 }

@@ -1061,4 +1061,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get submitmessage => 'Submit Message';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String get sendreport => 'Send Report';
 }

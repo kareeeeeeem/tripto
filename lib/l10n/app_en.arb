@@ -327,5 +327,7 @@
   "cancel": "Cancel",
   "contactus": "Contact-Us",
   "messagebody": "Message",
-  "submitmessage": "Submit Message"
+  "submitmessage": "Submit Message",
+  "report": "Report",
+  "sendreport": "Send Report"
 }

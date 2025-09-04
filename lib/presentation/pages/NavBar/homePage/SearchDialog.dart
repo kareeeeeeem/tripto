@@ -60,10 +60,20 @@ class _SearchDialogState extends State<SearchDialog> {
           TextField(
             controller: _searchController,
             decoration: InputDecoration(
-              hintText: "trip",
+              hintText: "Trip",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.lightBlue),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.black45, width: 1),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: Color(0xFF002E70),
+                  width: 2,
+                ),
               ),
             ),
           ),
@@ -71,11 +81,15 @@ class _SearchDialogState extends State<SearchDialog> {
 
           // زر واحد لاختيار الرينج
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF002E70),
+            ),
             onPressed: () => _pickDateRange(context),
             child: Text(
               (_startDate == null || _endDate == null)
                   ? "Select Date"
                   : "${dateFormat.format(_startDate!)} → ${dateFormat.format(_endDate!)}",
+              style: TextStyle(color: Colors.white),
             ),
           ),
 

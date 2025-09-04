@@ -3,6 +3,7 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
 import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/About-us.dart';
@@ -250,7 +251,6 @@ class _SideMenuState extends State<SideMenu> {
                   size: 30,
                 ),
                 title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
                       child: Row(
@@ -514,6 +514,60 @@ class _SideMenuState extends State<SideMenu> {
                   );
                 },
               ),
+              // 4/99999999999999999999999999999999999999999999999999999999999
+              const Divider(
+                thickness: 0.3, // سُمك الخط
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.description,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.report,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Report(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Report()),
+                  );
+                },
+              ),
+              // /////////////////////////////////////////////////////////////////////////////
             ],
           ),
         ),

@@ -13,6 +13,7 @@ import 'package:tripto/bloc/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc/Repositories/ProfileRepository.dart';
 import 'package:tripto/bloc/Repositories/TripsRepository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
 import 'package:tripto/bloc/GetTrip/GetTrip_event.dart';
@@ -130,7 +131,7 @@ class _TripToAppState extends State<TripToApp> {
 
           routes: AppRoutes.routes,
           initialRoute: '/',
-          //home: App(),
+          // home: Report(),
 
           // routes: AppRoutes.routes,
           // home: App(),

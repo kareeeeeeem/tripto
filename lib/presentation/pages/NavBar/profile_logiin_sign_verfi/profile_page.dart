@@ -133,7 +133,11 @@ class _ProfilePageState extends State<ProfilePage> {
     final height = MediaQuery.of(context).size.height;
 
     if (isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(color: Color(0xFF002E70)),
+        ),
+      );
     }
 
     return MultiBlocListener(
@@ -221,7 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 children: [
                   const CircleAvatar(
-                    radius: 55,
+                    radius: 50,
                     backgroundImage: AssetImage("assets/images/pro.png"),
                   ),
                   SizedBox(height: height * 0.07),
@@ -238,9 +242,24 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.name,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      prefixIcon: Icon(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black45,
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF002E70),
+                          width: 2,
+                        ),
+                      ),
+
+                      suffixIcon: Icon(
                         Icons.person,
                       ), // استخدم Icons.person بدل Icons.name
                     ),
@@ -266,9 +285,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.email,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      prefixIcon: Icon(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black45,
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF002E70),
+                          width: 2,
+                        ),
+                      ),
+                      suffixIcon: Icon(
                         Icons.email,
                       ), // استخدم Icons.person بدل Icons.name
                     ),
@@ -313,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: height * 0.06,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
+                        backgroundColor: Color(0xFF002E70),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

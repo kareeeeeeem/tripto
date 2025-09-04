@@ -1053,4 +1053,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get submitmessage => 'إرسال الرساله';
+
+  @override
+  String get report => 'تقرير';
+
+  @override
+  String get sendreport => 'إرسال تقرير';
 }
