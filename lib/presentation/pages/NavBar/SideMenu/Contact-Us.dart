@@ -264,7 +264,10 @@ class _ContactUsState extends State<ContactUs> {
                       subject: "Contact Us",
                     );
                     context.read<ContactusBloc>().add(
-                      SubmitContactUs(contactusModel: contactusModel),
+                      SubmitContactUs(
+                        contactusModel: contactusModel,
+                        pagetype: "contactus",
+                      ),
                     );
                   },
                   child: Text(
