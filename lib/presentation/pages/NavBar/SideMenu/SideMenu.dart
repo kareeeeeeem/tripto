@@ -270,8 +270,8 @@ class _SideMenuState extends State<SideMenu> {
                             child: Text(
                               Localizations.localeOf(context).languageCode ==
                                       "en"
-                                  ? " تغيير اللغة "
-                                  : "Change Language",
+                                  ? "Change Language"
+                                  : " تغيير اللغة ",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -287,14 +287,14 @@ class _SideMenuState extends State<SideMenu> {
                                             context,
                                           ).languageCode ==
                                           'ar'
-                                      ? 30.0
+                                      ? 80.0
                                       : 0.0,
                               left:
                                   Localizations.localeOf(
                                             context,
                                           ).languageCode ==
                                           'en'
-                                      ? 80.0
+                                      ? 20.0
                                       : 0.0,
                             ),
 

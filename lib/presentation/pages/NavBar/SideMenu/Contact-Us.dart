@@ -44,8 +44,11 @@ class _ContactUsState extends State<ContactUs> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                duration: Duration(milliseconds: 10), // مدة ظهور الرسالة
               ),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SideMenu()),
             );
           } else if (state is ContactFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
