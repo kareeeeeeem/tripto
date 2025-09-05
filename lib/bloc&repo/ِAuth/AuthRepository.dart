@@ -67,12 +67,24 @@ class AuthRepository {
     final data = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      if (data['token'] != null) {
-        await storage.write(key: 'token', value: data['token']);
+      // خزن التوكن لو موجود
+      final token = data['token'];
+      if (token != null) {
+        await storage.write(key: 'token', value: token);
       }
-      if (data['user'] != null) {
-        await storage.write(key: 'user_data', value: jsonEncode(data['user']));
+
+      // لو في يوزر جوا الريسبونس
+      final user = data['user'];
+      if (user != null) {
+        await storage.write(key: 'name', value: user['name'] ?? '');
+        await storage.write(key: 'email', value: user['email'] ?? '');
+        await storage.write(key: 'phone', value: user['phone'] ?? '');
+        await storage.write(key: 'number', value: user['number'] ?? '');
+
+        // خزن نسخة كاملة من بيانات اليوزر
+        await storage.write(key: 'user_data', value: jsonEncode(user));
       }
+
       return data;
     } else {
       return {

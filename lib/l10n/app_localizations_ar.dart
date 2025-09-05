@@ -355,7 +355,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalPriceForStay => 'إجمالي سعر الإقامة';
 
   @override
-  String get continueButton => 'استمر';
+  String get continueButton => 'متابعة';
 
   @override
   String get cancelHotel => 'إلغاء الفندق';
@@ -1053,4 +1053,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get submitmessage => 'إرسال الرساله';
+
+  @override
+  String get report => 'تقرير';
+
+  @override
+  String get sendreport => 'إرسال تقرير';
+
+  @override
+  String get search => 'البحث';
+
+  @override
+  String get enterHotelName => 'Enter hotel name';
 }

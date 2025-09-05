@@ -7,7 +7,7 @@ import 'package:tripto/core/services/api.dart';
 class ContactusRepository {
   Future<void> CreateMessage(ContactusModel contactusModel) async {
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}cars'),
+      Uri.parse('${ApiConstants.baseUrl}contacts'),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

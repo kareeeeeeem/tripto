@@ -360,7 +360,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueButton => 'Continue';
 
   @override
-  String get cancelHotel => 'Cancel Hotel';
+  String get cancelHotel => 'Cancel hotel';
 
   @override
   String get cancelActivity => 'Cancel Activity';
@@ -1061,4 +1061,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get submitmessage => 'Submit Message';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String get sendreport => 'Send Report';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get enterHotelName => 'Enter hotel name';
 }

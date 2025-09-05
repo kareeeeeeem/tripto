@@ -73,10 +73,10 @@ class SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Colors.black45, width: 1),
-    );
+    // final inputBorder = OutlineInputBorder(
+    //   borderRadius: BorderRadius.circular(8),
+    //   borderSide: const BorderSide(color: Colors.black45, width: 1),
+    // );
 
     return Scaffold(
       backgroundColor: Colors.white,

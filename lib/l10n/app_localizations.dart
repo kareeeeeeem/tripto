@@ -779,7 +779,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancelHotel.
   ///
   /// In en, this message translates to:
-  /// **'Cancel Hotel'**
+  /// **'Cancel hotel'**
   String get cancelHotel;
 
   /// No description provided for @cancelActivity.
@@ -1975,6 +1975,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit Message'**
   String get submitmessage;
+
+  /// No description provided for @report.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get report;
+
+  /// No description provided for @sendreport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Report'**
+  String get sendreport;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @enterHotelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter hotel name'**
+  String get enterHotelName;
 }
 
 class _AppLocalizationsDelegate

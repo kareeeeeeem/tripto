@@ -328,7 +328,15 @@
   "contactus": "Contact-Us",
   "messagebody": "Message",
   "submitmessage": "Submit Message",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "report": "Report",
+  "sendreport": "Send Report",
+  "hotel": "Hotel",
+  "search": "Search",
+  "enterHotelName": "Enter hotel name",
+  "cancel": "Cancel",
+  "cancelHotel": "Cancel hotel"
+
+
 
 }
-

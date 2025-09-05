@@ -327,7 +327,15 @@
   "double": "ثنائي",
   "triple": "ثلاثي",
   "quad": "رباعي",
-  "unknown": "غير معروف"
+  "unknown": "غير معروف",
+  "report": "تقرير",
+  "sendreport": "إرسال تقرير",
+  "hotel": "الفندق",
+  "search": "البحث",
+  "cancel": "إلغاء",
+  "continueButton": "متابعة",
+  "cancelHotel": "إلغاء الفندق"
+
+
 
 }
-

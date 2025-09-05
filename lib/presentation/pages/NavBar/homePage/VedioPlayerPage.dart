@@ -290,12 +290,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
   }
 
-  void _handleLanguageChange() {
-    final currentLocale = Localizations.localeOf(context).languageCode;
-    final newLocale =
-        currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
-    TripToApp.setLocale(context, newLocale);
-  }
+  // void _handleLanguageChange() {
+  //   final currentLocale = Localizations.localeOf(context).languageCode;
+  //   final newLocale =
+  //       currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
+  //   TripToApp.setLocale(context, newLocale);
+  // }
 
   @override
   void dispose() {
@@ -404,7 +404,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: PageView.builder(
+      body:
+      
+      
+       PageView.builder(
         controller: _scrollController,
         scrollDirection: Axis.vertical,
         itemCount: _trips.length + (_hasMoreData ? 1 : 0), // +1 لشعار التحميل
@@ -581,40 +584,38 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                                 );
                               }).toList();
                         }
+setState(() {
+  // تنظيف الفيديوهات القديمة
+  _chewieControllers.forEach((_, controller) => controller.pause());
+  _chewieControllers.clear();
+  _videoControllers.forEach((_, controller) => controller.dispose());
+  _videoControllers.clear();
+  _videoErrorState.clear();
 
-                        setState(() {
-                          // تنظيف الفيديوهات القديمة
-                          _chewieControllers.forEach(
-                            (_, controller) => controller.pause(),
-                          );
-                          _chewieControllers.clear();
-                          _videoControllers.forEach(
-                            (_, controller) => controller.dispose(),
-                          );
-                          _videoControllers.clear();
-                          _videoErrorState.clear();
+  // تحديث الرحلات المعروضة
+  _trips = filteredTrips.take(_perPage).toList();
+  _personCounterKeys = List.generate(
+    _trips.length,
+    (index) => GlobalKey<PersonCounterWithPriceState>(),
+  );
+  _currentPage = 0;
+  _currentIndex = 0;
+  _hasMoreData = filteredTrips.length > _perPage;
+  _isLoadingFirstPage = false;
+  _initialErrorMessage =
+      _trips.isEmpty ? "No trips found for selected filters" : "";
 
-                          // تحديث الرحلات المعروضة
-                          _trips = filteredTrips.take(_perPage).toList();
-                          _personCounterKeys = List.generate(
-                            _trips.length,
-                            (index) => GlobalKey<PersonCounterWithPriceState>(),
-                          );
-                          _currentPage = 0;
-                          _currentIndex = 0;
-                          _hasMoreData = filteredTrips.length > _perPage;
-                          _isLoadingFirstPage = false;
-                          _initialErrorMessage =
-                              _trips.isEmpty
-                                  ? "No trips found for selected filters"
-                                  : "";
-                        });
+  // إعادة ضبط الـ PageView
+  _scrollController.jumpToPage(0);
+});
 
-                        // تهيئة الفيديوهات الجديدة
-                        if (_trips.isNotEmpty) {
-                          _initializeAndPreloadVideo(0, autoPlay: true);
-                          if (_trips.length > 1) _initializeAndPreloadVideo(1);
-                        }
+// تهيئة الفيديوهات الجديدة
+if (_trips.isNotEmpty) {
+  _initializeAndPreloadVideo(0, autoPlay: true);
+  if (_trips.length > 1) _initializeAndPreloadVideo(1);
+}
+
+
                       } catch (e) {
                         debugPrint('Error fetching filtered trips: $e');
                         setState(() {

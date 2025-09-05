@@ -33,10 +33,20 @@ class FilteredTripsByDateRepository {
       if (response.statusCode == 200) {
         final decoded = json.decode(response.body);
         if (decoded is Map && decoded.containsKey('trips')) {
-          return (decoded['trips'] as List)
-              .map((json) => GetTripModel.fromJson(json))
-              .toList();
-        }
+  final allTrips = (decoded['trips'] as List)
+      .map((json) => GetTripModel.fromJson(json))
+      .toList();
+
+  // فلترة الرحلات التي تتقاطع مع الفترة المختارة
+  final filteredTrips = allTrips.where((trip) {
+    final tripStart = DateTime.parse(trip.fromDate);
+    final tripEnd = DateTime.parse(trip.toDate);
+    return tripStart.isBefore(to) && tripEnd.isAfter(from);
+  }).toList();
+
+  return filteredTrips;
+}
+
       }
 
       throw Exception('Failed to fetch trips by date: ${response.statusCode}');

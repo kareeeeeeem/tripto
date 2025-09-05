@@ -10,9 +10,20 @@ abstract class ContactusEvent extends Equatable {
 
 class SubmitContactUs extends ContactusEvent {
   final ContactusModel contactusModel;
+  final String pagetype;
 
-  const SubmitContactUs({required this.contactusModel});
+  const SubmitContactUs({required this.contactusModel, required this.pagetype});
 
   @override
   List<Object?> get props => [contactusModel];
 }
+
+// class SubmitReport extends ContactusEvent{
+//   final String subject ;
+//   final String message ;
+
+//   SubmitReport({required this.message , required this.subject});
+//   @override
+//   // TODO: implement props
+//   List<Object?> get props => [subject,message];
+// }
