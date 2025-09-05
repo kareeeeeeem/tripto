@@ -12,7 +12,7 @@ import 'package:tripto/bloc&repo/%D9%90Auth/AuthState.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   SignupPageState createState() => SignupPageState();

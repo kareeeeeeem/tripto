@@ -56,7 +56,7 @@ class RightButtons extends StatefulWidget {
   final DateTime? startDate; // ← جديد
   final DateTime? endDate;
 
-  RightButtons({
+  const RightButtons({
     super.key,
     this.selectedTripIndex = 0,
     required currentTripCategory,

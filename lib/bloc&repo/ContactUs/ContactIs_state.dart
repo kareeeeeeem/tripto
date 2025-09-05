@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:tripto/core/models/ContactUs_Model.dart';
 
 abstract class ContactUsState extends Equatable {
   const ContactUsState();

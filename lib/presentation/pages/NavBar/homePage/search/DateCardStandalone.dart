@@ -29,7 +29,7 @@ class _DateCardStandaloneState extends State<DateCardStandalone> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
 
   @override
   void initState() {

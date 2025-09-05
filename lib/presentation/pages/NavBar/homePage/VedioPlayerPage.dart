@@ -390,8 +390,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     _hasMoreData = _allTrips.length > _perPage;
                   });
 
-                  if (_trips.isNotEmpty)
+                  if (_trips.isNotEmpty) {
                     _initializeAndPreloadVideo(0, autoPlay: true);
+                  }
                 },
                 child: const Text("Back to all trips"),
               ),

@@ -58,19 +58,19 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
               Text(
                 AppLocalizations.of(context)!.cancellation3,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
               Text(
                 AppLocalizations.of(context)!.cancellation4,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation5,
                 style: const TextStyle(
@@ -78,12 +78,12 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation6,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation7,
                 style: const TextStyle(
@@ -91,7 +91,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: RichText(
@@ -188,7 +188,7 @@ class _CancellattionState extends State<Cancellattion> {
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation16,
                 style: const TextStyle(
@@ -196,7 +196,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation17,
                 style: const TextStyle(
@@ -276,7 +276,7 @@ class _CancellattionState extends State<Cancellattion> {
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation24,
                 style: const TextStyle(
@@ -284,7 +284,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation25,
                 style: const TextStyle(
@@ -292,7 +292,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation26,
                 style: const TextStyle(
@@ -300,7 +300,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation27,
                 style: const TextStyle(
@@ -308,7 +308,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation28,
                 style: const TextStyle(
@@ -316,7 +316,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation29,
                 style: const TextStyle(
@@ -324,7 +324,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation30,
                 style: const TextStyle(
@@ -332,7 +332,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation31,
                 style: const TextStyle(
@@ -340,7 +340,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation32,
                 style: const TextStyle(
@@ -348,7 +348,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation33,
                 style: const TextStyle(
@@ -356,7 +356,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation34,
                 style: const TextStyle(
@@ -364,7 +364,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation35,
                 style: const TextStyle(
@@ -372,7 +372,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation36,
                 style: const TextStyle(
@@ -380,7 +380,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation37,
                 style: const TextStyle(
@@ -448,7 +448,7 @@ class _CancellattionState extends State<Cancellattion> {
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation44,
                 style: const TextStyle(
@@ -456,7 +456,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation45,
                 style: const TextStyle(
@@ -464,12 +464,12 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation46,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation47,
                 style: const TextStyle(
@@ -477,7 +477,7 @@ class _CancellattionState extends State<Cancellattion> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.cancellation48,
                 style: const TextStyle(fontSize: 16),

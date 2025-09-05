@@ -9,7 +9,7 @@ class CarSelectionPage extends StatefulWidget {
   // ⚠️ تم إزالة nextSteps و hasActivity من هنا.
   final int? selectedCarId;
 
-  const CarSelectionPage({Key? key, this.selectedCarId}) : super(key: key);
+  const CarSelectionPage({super.key, this.selectedCarId});
 
   @override
   State<CarSelectionPage> createState() => _CarSelectionPageState();

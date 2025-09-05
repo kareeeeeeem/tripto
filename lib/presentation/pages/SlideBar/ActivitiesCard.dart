@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthEvent.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthState.dart';
-import 'package:tripto/core/constants/Expanded_text.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import '../../../l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
-import 'package:tripto/core/models/activityPageModel.dart';
-import '../../../l10n/app_localizations.dart';
 
 class ActivityCard extends StatelessWidget {
   final GetActivityModel activity;
@@ -20,8 +16,8 @@ class ActivityCard extends StatelessWidget {
     required this.activity,
     required this.isSelected,
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +50,11 @@ class ActivityCard extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Container(
+                          child: SizedBox(
                             height: double.infinity,
                             width: 100,
                             child:
                                 (activity.images.isNotEmpty &&
-                                        activity.images[0] != null &&
                                         activity.images[0].isNotEmpty)
                                     ? Image.network(
                                       activity.images[0].replaceFirst(
@@ -105,8 +100,7 @@ class ActivityCard extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text:
-                                          AppLocalizations.of(context)!.price +
-                                          ' :',
+                                          '${AppLocalizations.of(context)!.price} :',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.black,
@@ -169,8 +163,7 @@ class ActivityCard extends StatelessWidget {
 class ActivitiesListDialog extends StatefulWidget {
   final GetActivityModel? initiallySelectedActivity; // ✅ جديد
 
-  const ActivitiesListDialog({Key? key, this.initiallySelectedActivity})
-    : super(key: key);
+  const ActivitiesListDialog({super.key, this.initiallySelectedActivity});
 
   @override
   State<ActivitiesListDialog> createState() => _ActivitiesListDialogState();

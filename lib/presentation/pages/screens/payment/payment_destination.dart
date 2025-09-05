@@ -78,7 +78,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                               0.01, // أو النسبة اللي تناسبك
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!.destination + " :",
+                          "${AppLocalizations.of(context)!.destination} :",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -115,7 +115,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.number + " :",
+                        "${AppLocalizations.of(context)!.number} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -200,7 +200,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.category + " :",
+                        "${AppLocalizations.of(context)!.category} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -209,7 +209,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                       Text(
-                        AppLocalizations.of(context)!.gold + " :",
+                        "${AppLocalizations.of(context)!.gold} :",
                         style: TextStyle(
                           color: Color(0xFFF1B31C),
                           fontSize: 20,
@@ -225,7 +225,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.price + " :",
+                        "${AppLocalizations.of(context)!.price} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -253,7 +253,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
                     child: Text(
-                      AppLocalizations.of(context)!.payment + " :",
+                      "${AppLocalizations.of(context)!.payment} :",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -268,7 +268,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: TextField(
                         keyboardType: TextInputType.number,
@@ -301,7 +301,7 @@ class _PaymentDestinationState extends State<PaymentDestination> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       children: [

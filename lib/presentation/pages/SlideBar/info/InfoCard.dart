@@ -2,11 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tripto/core/constants/Expanded_text.dart';
-import 'package:tripto/core/constants/Colors_Fonts_Icons.dart';
-import 'package:tripto/core/models/info_details_model.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
-import '../../../../core/routes/app_routes.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class InfoCard extends StatelessWidget {

@@ -157,7 +157,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: Container(
+                                  child: SizedBox(
                                     height: 100,
                                     width: 100,
                                     child:
@@ -181,8 +181,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                                 child,
                                                 loadingProgress,
                                               ) {
-                                                if (loadingProgress == null)
+                                                if (loadingProgress == null) {
                                                   return child;
+                                                }
                                                 return const Center(
                                                   child:
                                                       CircularProgressIndicator(),

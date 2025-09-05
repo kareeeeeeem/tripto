@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/Hotelsـmodel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
-import 'package:video_player/video_player.dart';
 
 class HotelAdelPage extends StatefulWidget {
   final HotelModel hotel;
@@ -13,7 +12,7 @@ class HotelAdelPage extends StatefulWidget {
 }
 
 class _HotelAdelPageState extends State<HotelAdelPage> {
-  PageController _pageController = PageController(viewportFraction: 0.9);
+  final PageController _pageController = PageController(viewportFraction: 0.9);
   int _currentPage = 0;
   // VideoPlayerController? _videoController;
 

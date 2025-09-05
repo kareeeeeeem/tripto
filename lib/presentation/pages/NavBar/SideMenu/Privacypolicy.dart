@@ -58,19 +58,19 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
               Text(
                 AppLocalizations.of(context)!.privacypolicy2,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
               Text(
                 AppLocalizations.of(context)!.privacypolicy3,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy4,
                 style: const TextStyle(
@@ -78,7 +78,7 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy5,
                 style: const TextStyle(
@@ -86,22 +86,22 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy6,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy7,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy8,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy9,
                 style: const TextStyle(
@@ -109,27 +109,27 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy10,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy11,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy12,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy13,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy14,
                 style: const TextStyle(
@@ -137,42 +137,42 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy15,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy16,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy17,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy18,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy19,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy20,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy21,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy22,
                 style: const TextStyle(
@@ -180,37 +180,37 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy23,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy24,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy25,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy26,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy27,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy28,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy29,
                 style: const TextStyle(
@@ -218,22 +218,22 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy30,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy31,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy32,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy33,
                 style: const TextStyle(
@@ -241,32 +241,32 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy34,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy35,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy36,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy37,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy38,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy39,
                 style: const TextStyle(
@@ -274,32 +274,32 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy40,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy41,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy42,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy43,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy44,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy45,
                 style: const TextStyle(
@@ -307,17 +307,17 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy46,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy47,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
               Text(
                 AppLocalizations.of(context)!.privacypolicy48,
@@ -326,12 +326,12 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy49,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy50,
                 style: const TextStyle(
@@ -339,12 +339,12 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy51,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.privacypolicy52,
                 style: const TextStyle(
@@ -352,12 +352,12 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy53,
                 style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy54,
                 style: const TextStyle(
@@ -365,7 +365,7 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context)!.size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               Text(
                 AppLocalizations.of(context)!.privacypolicy55,
                 style: const TextStyle(fontSize: 16),

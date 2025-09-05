@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart'; // لو عندك موديل Trip
+// لو عندك موديل Trip
 
 class SearchSubDestinationRepository {
   final String baseUrl =

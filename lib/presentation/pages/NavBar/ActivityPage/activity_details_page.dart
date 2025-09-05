@@ -111,7 +111,6 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.25,
                     );
-                    ;
                   },
                 ),
               ),
@@ -191,7 +190,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                           left: MediaQuery.of(context).size.width * 0.01,
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!.destination + " : ",
+                          "${AppLocalizations.of(context)!.destination} : ",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -244,7 +243,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.numberofpeople + " :",
+                        "${AppLocalizations.of(context)!.numberofpeople} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -320,7 +319,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.category + " :",
+                        "${AppLocalizations.of(context)!.category} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -355,7 +354,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   child: Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.price + " :",
+                        "${AppLocalizations.of(context)!.price} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

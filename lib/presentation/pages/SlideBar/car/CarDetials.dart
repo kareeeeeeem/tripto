@@ -25,7 +25,7 @@ class CarCard extends StatelessWidget {
     final displayColor = car.color;
 
     // Format price with 2 decimals and currency symbol (تقدر تعدل العملة لو حبيت)
-    final priceText = '${car.price.toStringAsFixed(2)}';
+    final priceText = car.price.toStringAsFixed(2);
 
     return InkWell(
       onTap: onTap,
@@ -82,7 +82,7 @@ class CarCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.color + ': $displayColor',
+                  '${AppLocalizations.of(context)!.color}: $displayColor',
                   style: TextStyle(fontSize: 13, color: textColor),
                 ),
                 Row(

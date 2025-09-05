@@ -13,10 +13,10 @@ class ActivitiesListDialog extends StatefulWidget {
   final GlobalKey<PersonCounterWithPriceState>? personCounterKey; // ✅ أضف هذا
 
   const ActivitiesListDialog({
-    Key? key,
+    super.key,
     this.initialSelectedActivityId,
     this.personCounterKey,
-  }) : super(key: key);
+  });
 
   @override
   State<ActivitiesListDialog> createState() => _ActivitiesListDialogState();

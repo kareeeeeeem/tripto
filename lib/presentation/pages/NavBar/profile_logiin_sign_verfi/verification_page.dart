@@ -95,7 +95,7 @@ class _VerificationState extends State<Verification> {
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                 Text(
-                  ("${widget.phoneNumber}"),
+                  (widget.phoneNumber),
                   style:  GoogleFonts.markaziText(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

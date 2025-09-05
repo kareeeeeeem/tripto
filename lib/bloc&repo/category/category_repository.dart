@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
-import 'package:tripto/core/models/CategoryModel.dart';
 import 'package:tripto/core/services/api.dart';
 
 class CategoryRepository {

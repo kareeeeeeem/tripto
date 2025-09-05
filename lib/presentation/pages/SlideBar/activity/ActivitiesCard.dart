@@ -12,9 +12,9 @@ class ActivityCard extends StatelessWidget {
     required this.activity,
     required this.isSelected,
     required this.onTap,
-    Key? key,
+    super.key,
     // this.initialSelectedActivityId, // ✅ جديد
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +47,11 @@ class ActivityCard extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Container(
+                          child: SizedBox(
                             height: double.infinity,
                             width: 100,
                             child:
                                 (activity.images.isNotEmpty &&
-                                        activity.images[0] != null &&
                                         activity.images[0].isNotEmpty)
                                     ? Image.network(
                                       activity.images[0].replaceFirst(
@@ -98,8 +97,7 @@ class ActivityCard extends StatelessWidget {
                                   children: [
                                     TextSpan(
                                       text:
-                                          AppLocalizations.of(context)!.price +
-                                          ' :',
+                                          '${AppLocalizations.of(context)!.price} :',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.black,

@@ -175,7 +175,7 @@ class _ActivityPageState extends State<ActivityPage> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Container(
+                    child: SizedBox(
                       height: double.infinity,
                       width: 100,
                       child: _buildMediaWidget(
@@ -214,7 +214,7 @@ class _ActivityPageState extends State<ActivityPage> {
                             children: [
                               TextSpan(
                                 text:
-                                    AppLocalizations.of(context)!.price + ' :',
+                                    '${AppLocalizations.of(context)!.price} :',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[600],
@@ -255,26 +255,23 @@ class _ActivityPageState extends State<ActivityPage> {
                           //   height: MediaQuery.of(context).size.height * 0.0001,
                           // ),
                           Row(
-                            children:
-                                Localizations.localeOf(context).languageCode ==
-                                        'ar'
-                                    ? [
-                                      Text(
-                                        " ${AppLocalizations.of(context)!.duration}" +
-                                            ": ",
-                                      ),
-                                      Text("${activity.activityduration} "),
-                                      // Text(AppLocalizations.of(context)!.min),
-                                    ]
-                                    : [
-                                      Text(
-                                        "${AppLocalizations.of(context)!.duration}" +
-                                            ": ",
-                                      ),
-                                      Text("${activity.activityduration} "),
-                                      // Text(AppLocalizations.of(context)!.min),
-                                    ],
-                          ),
+  children: Localizations.localeOf(context).languageCode == 'ar'
+      ? [
+          Text(
+            "${AppLocalizations.of(context)!.duration}: ",
+          ),
+          Text("${activity.activityduration} "),
+          // Text(AppLocalizations.of(context)!.min),
+        ]
+      : [
+          Text(
+            "${AppLocalizations.of(context)!.duration}: ",
+          ),
+          Text("${activity.activityduration} "),
+          // Text(AppLocalizations.of(context)!.min),
+        ],
+),
+
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.015,
                           ),
