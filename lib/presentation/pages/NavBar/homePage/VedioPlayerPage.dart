@@ -367,7 +367,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     _initializeAndPreloadVideo(0, autoPlay: true);
                   }
                 },
-                child: const Text("Back to all trips"),
+                  child: Text(
+                    "Back to all trips",
+                    style: TextStyle(
+                      color: Colors.white, // النص (foreground)
+                      backgroundColor: Color(0xFF002E70), // خلفية النص
+                    ),
+                  ),
               ),
             ],
           ),
@@ -638,7 +644,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       );
       _isLoadingFirstPage = false;
       _initialErrorMessage =
-          _trips.isEmpty ? "No trips found for the selected criteria" : "";
+          _trips.isEmpty ? "No trips found for this chose" : "";
       _scrollController.jumpToPage(0);
       if (_trips.isNotEmpty) {
         _initializeAndPreloadVideo(0, autoPlay: true);
