@@ -10,8 +10,6 @@ import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/ProfileRepository.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_repository.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_repository.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
@@ -66,25 +64,17 @@ class _TripToAppState extends State<TripToApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
+         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
-        RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
-        RepositoryProvider<FilteredTripsByDateRepository>(
-          create: (_) => FilteredTripsByDateRepository(),
-        ),
-        RepositoryProvider<FilteredTripsByCategoryRepository>(
-          create: (_) => FilteredTripsByCategoryRepository(),
-        ),
-
-        RepositoryProvider<SearchSubDestinationRepository>(
-          create: (_) => SearchSubDestinationRepository(),
-        ),
-
         RepositoryProvider<ContactusRepository>(
           create: (_) => ContactusRepository(),
         ),
+                RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
+                   RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
+
+
       ],
       child: MultiBlocProvider(
         providers: [
@@ -102,12 +92,7 @@ class _TripToAppState extends State<TripToApp> {
                     TripBloc(RepositoryProvider.of<TripRepository>(context))
                       ..add(FetchTrips()),
           ),
-          BlocProvider<TripBloc>(
-            create:
-                (context) =>
-                    TripBloc(RepositoryProvider.of<TripRepository>(context))
-                      ..add(FetchTrips()),
-          ),
+       
           BlocProvider(
             create:
                 (context) => UpdateUserBloc(
@@ -129,31 +114,18 @@ class _TripToAppState extends State<TripToApp> {
                       RepositoryProvider.of<ContactusRepository>(context),
                 ),
           ),
-
-          BlocProvider<FilteredTripsBloc>(
-            create:
-                (context) => FilteredTripsBloc(
-                  RepositoryProvider.of<FilteredTripsByDateRepository>(context),
-                ),
+         BlocProvider<SearchTripByDateBloc>(
+            create: (context) => SearchTripByDateBloc(
+              repository: RepositoryProvider.of<SearchTripByDateRepository>(context),
+            ),
+          ),
+             BlocProvider<SearchTripByCategoryBloc>(
+            create: (context) => SearchTripByCategoryBloc(
+              repository: RepositoryProvider.of<SearchTripByCategoryRepository>(context),
+            ),
           ),
 
-          BlocProvider<CategoryTripBloc>(
-            create:
-                (context) => CategoryTripBloc(
-                  RepositoryProvider.of<FilteredTripsByCategoryRepository>(
-                    context,
-                  ),
-                ),
-          ),
-
-          BlocProvider<SearchSubDestinationBloc>(
-            create:
-                (context) => SearchSubDestinationBloc(
-                  RepositoryProvider.of<SearchSubDestinationRepository>(
-                    context,
-                  ),
-                ),
-          ),
+          
         ],
         child: MaterialApp(
           navigatorObservers: [routeObserver],

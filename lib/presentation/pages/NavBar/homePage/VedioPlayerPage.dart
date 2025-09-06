@@ -1,11 +1,13 @@
 import 'dart:async';
-// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_repository.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchDialog.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
@@ -18,7 +20,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
@@ -58,16 +59,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // <-- أضف هذا السطر
-
-    _fetchAllTrips(); // نبدأ بتحميل كل الرحلات أولاً
+    WidgetsBinding.instance.addObserver(this);
+    _fetchAllTrips();
   }
 
-  // ✅ الخطوة 2: أضف didChangeDependencies للاشتراك
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // اشترك في مراقب التنقل
     routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
   }
 
@@ -106,12 +104,11 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         return;
       }
 
-      // تحويل إلى التنسيق المطلوب
       final allTrips =
           allTripsData.map((trip) => trip.toVideoPlayerJson()).toList();
 
       setState(() {
-        _allTrips = allTrips; // حفظ النسخة الأصلية
+        _allTrips = allTrips;
         _trips = _allTrips.take(_perPage).toList();
         _personCounterKeys = List.generate(
           _trips.length,
@@ -121,7 +118,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         _hasMoreData = _allTrips.length > _perPage;
       });
 
-      // تحميل الفيديو الحالي (وتشغيله) والفيديو التالي
       _initializeAndPreloadVideo(0, autoPlay: true);
       if (_trips.length > 1) {
         _initializeAndPreloadVideo(1);
@@ -156,7 +152,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     setState(() {
       _trips.addAll(newTrips);
-      // توسيع قائمة المفاتيح لتشمل الرحلات الجديدة
       _personCounterKeys.addAll(
         List.generate(
           newTrips.length,
@@ -182,10 +177,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
 
     try {
-      final directLink =
-          _isDriveUrl(videoUrl)
-              ? await _getDirectDriveLink(videoUrl)
-              : videoUrl;
+      final directLink = _isDriveUrl(videoUrl)
+          ? await _getDirectDriveLink(videoUrl)
+          : videoUrl;
       final controller = VideoPlayerController.network(directLink);
       _videoControllers[index] = controller;
       await controller.initialize();
@@ -196,7 +190,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         looping: true,
         showControls: false,
         allowFullScreen: false,
-        // _isMuted: _isMuted ? 0.0 : 1.0,
       );
 
       if (mounted) {
@@ -213,18 +206,15 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   // --- دالة تغيير الصفحة هي التي تدير كل شيء ---
   void _onPageChanged(int index) {
-    // إيقاف الفيديو السابق
     if (_chewieControllers.containsKey(_currentIndex)) {
       _chewieControllers[_currentIndex]?.pause();
     }
 
-    // تشغيل الفيديو الحالي
     final currentChewieController = _chewieControllers[index];
     if (currentChewieController != null) {
       currentChewieController.play();
       currentChewieController.setVolume(_isMuted ? 0.0 : 1.0);
     } else {
-      // إذا لم يكن الفيديو جاهزًا، قم بتهيئته وتشغيله
       _initializeAndPreloadVideo(index, autoPlay: true);
     }
 
@@ -232,10 +222,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     context.read<TripBloc>().add(ChangeCurrentTripEvent(index));
 
-    // التخلص من الفيديوهات البعيدة
     _disposeDistantVideos(index);
 
-    // تحميل الفيديو التالي والسابق
     if (index + 1 < _trips.length) {
       _initializeAndPreloadVideo(index + 1);
     }
@@ -243,7 +231,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       _initializeAndPreloadVideo(index - 1);
     }
 
-    // جلب المزيد من البيانات عند الاقتراب من النهاية
     if (index >= _trips.length - 2 && !_isLoadingMore && _hasMoreData) {
       _fetchMoreTrips();
     }
@@ -256,13 +243,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         .where((key) => !indexesToKeep.contains(key))
         .toList()
         .forEach((key) {
-          _videoControllers[key]?.dispose();
-          _chewieControllers[key]?.dispose();
-          _videoControllers.remove(key);
-          _chewieControllers.remove(key);
-          _videoErrorState.remove(key);
-          debugPrint("Disposed video at index $key");
-        });
+      _videoControllers[key]?.dispose();
+      _chewieControllers[key]?.dispose();
+      _videoControllers.remove(key);
+      _chewieControllers.remove(key);
+      _videoErrorState.remove(key);
+      debugPrint("Disposed video at index $key");
+    });
   }
 
   // --- الدوال المساعدة الأصلية ---
@@ -290,17 +277,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
   }
 
-  // void _handleLanguageChange() {
-  //   final currentLocale = Localizations.localeOf(context).languageCode;
-  //   final newLocale =
-  //       currentLocale == 'ar' ? const Locale('en') : const Locale('ar');
-  //   TripToApp.setLocale(context, newLocale);
-  // }
-
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // <-- أضف هذا السطر
-    routeObserver.unsubscribe(this); // ✅ ألغِ الاشتراك
+    WidgetsBinding.instance.removeObserver(this);
+    routeObserver.unsubscribe(this);
 
     _scrollController.dispose();
     _videoControllers.forEach((_, controller) => controller.dispose());
@@ -310,20 +290,16 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   @override
   void didPushNext() {
-    // أوقف الفيديو الحالي
     _chewieControllers[_currentIndex]?.pause();
     debugPrint("Navigated away from VideoPlayerScreen, pausing video.");
   }
 
-  /// يتم استدعاؤها عند العودة إلى هذه الصفحة من صفحة أخرى
   @override
   void didPopNext() {
-    // أعد تشغيل الفيديو الحالي
     _chewieControllers[_currentIndex]?.play();
     debugPrint("Returned to VideoPlayerScreen, playing video.");
   }
 
-  //////////////////////////////
   void pauseCurrentVideo() {
     _chewieControllers[_currentIndex]?.pause();
   }
@@ -331,6 +307,15 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   void playCurrentVideo() {
     _chewieControllers[_currentIndex]?.play();
   }
+
+  void _disposeAllVideos() {
+  _videoControllers.forEach((_, c) => c.dispose());
+  _chewieControllers.forEach((_, c) => c.dispose());
+  _videoControllers.clear();
+  _chewieControllers.clear();
+  _videoErrorState.clear();
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -377,9 +362,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                 onPressed: () {
                   setState(() {
                     _trips =
-                        _allTrips
-                            .take(_perPage)
-                            .toList(); // استرجاع الرحلات الأصلية
+                        _allTrips.take(_perPage).toList();
                     _personCounterKeys = List.generate(
                       _trips.length,
                       (index) => GlobalKey<PersonCounterWithPriceState>(),
@@ -402,351 +385,298 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       );
     }
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body:
-      
-      
-       PageView.builder(
-        controller: _scrollController,
-        scrollDirection: Axis.vertical,
-        itemCount: _trips.length + (_hasMoreData ? 1 : 0), // +1 لشعار التحميل
-        onPageChanged: _onPageChanged,
-        itemBuilder: (context, index) {
-          // إذا كان هذا هو العنصر الأخير وهناك المزيد من البيانات
-          if (index >= _trips.length) {
-            return _buildLoadingIndicator();
-          }
+    return MultiBlocListener(
+  listeners: [
+    BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
+      listener: (context, state) {
+        if (state is SearchTripByDateLoaded) {
+          final newTrips = state.trips
+              .map((tripModel) => tripModel.toVideoPlayerJson())
+              .toList();
 
-          final currentTrip = _trips[index];
-          final destinationName = _getLocalizedDestinationName(
-            currentTrip,
-            context,
-          );
-          final subDestination = _getLocalizedSubDestinationName(
-            currentTrip,
-            context,
-          );
-          final chewieController = _chewieControllers[index];
-          final hasError = _videoErrorState[index] ?? false;
-
-          Widget videoWidget;
-          if (hasError) {
-            videoWidget = _buildVideoErrorWidget();
-          } else if (chewieController != null) {
-            videoWidget = Chewie(controller: chewieController);
-          } else {
-            videoWidget = const Center(
-              child: CircularProgressIndicator(color: Color(0xFF002E70)),
+          setState(() {
+            _disposeAllVideos();
+            _currentPage = 0;
+            _isLoadingMore = false;
+            _hasMoreData = newTrips.length > _perPage;
+            _trips = newTrips;
+            _personCounterKeys = List.generate(
+              _trips.length,
+              (index) => GlobalKey<PersonCounterWithPriceState>(),
             );
-          }
+            _isLoadingFirstPage = false;
+            _initialErrorMessage =
+                _trips.isEmpty ? "No trips found for selected date range" : "";
+            _scrollController.jumpToPage(0);
+            if (_trips.isNotEmpty) {
+              _initializeAndPreloadVideo(0, autoPlay: true);
+              if (_trips.length > 1) _initializeAndPreloadVideo(1);
+            }
+          });
+        }
+      },
+    ),
+    BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
+      listener: (context, state) {
+        if (state is SearchTripByCategoryLoaded) {
+            print("✅ Trips by Category Loaded: ${state.trips}");
 
-          return Stack(
-            children: [
-              // عرض الفيديو
-              Positioned.fill(
-                child: SizedBox.expand(
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width:
-                          _videoControllers[index]?.value.size.width ??
-                          screenWidth,
-                      height:
-                          _videoControllers[index]?.value.size.height ??
-                          screenHeight,
-                      child: videoWidget,
-                    ),
-                  ),
-                ),
-              ),
+          final newTrips = state.trips
+    .map((tripModel) => tripModel.toVideoPlayerJson())
+    .toList()
+    .cast<Map<String, dynamic>>();
 
-              // باقي واجهتك الأصلية
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 30,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      destinationName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+
+          setState(() {
+            _disposeAllVideos();
+            _currentPage = 0;
+            _isLoadingMore = false;
+            _hasMoreData = newTrips.length > _perPage;
+            _trips = newTrips;
+            _personCounterKeys = List.generate(
+              _trips.length,
+              (index) => GlobalKey<PersonCounterWithPriceState>(),
+            );
+            _isLoadingFirstPage = false;
+            _initialErrorMessage =
+                _trips.isEmpty ? "No trips found for selected category" : "";
+            _scrollController.jumpToPage(0);
+            if (_trips.isNotEmpty) {
+              _initializeAndPreloadVideo(0, autoPlay: true);
+              if (_trips.length > 1) _initializeAndPreloadVideo(1);
+            }
+          });
+        }
+      },
+    ),
+  ],
+
+
+      
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: PageView.builder(
+          controller: _scrollController,
+          scrollDirection: Axis.vertical,
+          itemCount: _trips.length + (_hasMoreData ? 1 : 0),
+          onPageChanged: _onPageChanged,
+          itemBuilder: (context, index) {
+            if (index >= _trips.length) {
+              return _buildLoadingIndicator();
+            }
+
+            final currentTrip = _trips[index];
+            final destinationName = _getLocalizedDestinationName(
+              currentTrip,
+              context,
+            );
+            final subDestination = _getLocalizedSubDestinationName(
+              currentTrip,
+              context,
+            );
+            final chewieController = _chewieControllers[index];
+            final hasError = _videoErrorState[index] ?? false;
+
+            Widget videoWidget;
+            if (hasError) {
+              videoWidget = _buildVideoErrorWidget();
+            } else if (chewieController != null) {
+              videoWidget = Chewie(controller: chewieController);
+            } else {
+              videoWidget = const Center(
+                child: CircularProgressIndicator(color: Color(0xFF002E70)),
+              );
+            }
+            
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: SizedBox.expand(
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SizedBox(
+                        width:
+                            _videoControllers[index]?.value.size.width ??
+                            screenWidth,
+                        height:
+                            _videoControllers[index]?.value.size.height ??
+                            screenHeight,
+                        child: videoWidget,
                       ),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 10,
-                left:
-                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                right:
-                    Directionality.of(context) == TextDirection.rtl ? null : 10,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.search_rounded,
-                    size: 30,
-                    color: Colors.white,
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 30,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        destinationName,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                  onPressed: () async {
-                    // نفتح الـ Dialog وناخد التاريخ والفئة المحددة
-                    final result = await showDialog<Map<String, dynamic>>(
-                      context: context,
-                      builder:
-                          (context) => BlocProvider<FilteredTripsBloc>(
-                            create:
-                                (_) => FilteredTripsBloc(
-                                  FilteredTripsByDateRepository(),
-                                ),
-                            child: Dialog(
-                              backgroundColor: Colors.white.withOpacity(0.95),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: SearchDialog(),
-                              ),
-                            ),
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 10,
+                  left:
+                      Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                  right:
+                      Directionality.of(context) == TextDirection.rtl ? null : 10,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.search_rounded,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      final result = await showDialog<Map<String, dynamic>>(
+                        context: context,
+                        builder: (ctx) => Dialog(
+                          backgroundColor: Colors.white.withOpacity(0.95),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                    );
-
-                    if (result != null) {
-                      setState(
-                        () => _isLoadingFirstPage = true,
-                      ); // إظهار التحميل
-
-                      try {
-                        // فلترة الرحلات على النسخة الأصلية
-                        List<Map<String, dynamic>> filteredTrips = List.from(
-                          _allTrips,
-                        );
-
-                        // فلترة حسب التاريخ إذا تم اختياره
-                        if (result['startDate'] != null &&
-                            result['endDate'] != null) {
-                          final start = result['startDate'] as DateTime;
-                          final end = result['endDate'] as DateTime;
-                          filteredTrips =
-                              filteredTrips.where((trip) {
-                                final tripDateStr =
-                                    trip['start_date']?.toString() ?? '';
-                                if (tripDateStr.isEmpty) return false;
-                                final tripDate = DateTime.tryParse(tripDateStr);
-                                if (tripDate == null) return false;
-                                return tripDate.isAfter(
-                                      start.subtract(const Duration(days: 1)),
-                                    ) &&
-                                    tripDate.isBefore(
-                                      end.add(const Duration(days: 1)),
-                                    );
-                              }).toList();
-                        }
-
-                        // فلترة حسب الكاتيجوري
-                        final categoryIndex = result['category'];
-                        if (categoryIndex != null) {
-                          final categoryStr =
-                              categoryIndex.toString(); // تحويل للـ String
-                          filteredTrips =
-                              filteredTrips.where((trip) {
-                                return trip['category']?.toString() ==
-                                    categoryStr;
-                              }).toList();
-                        }
-
-                        // فلترة حسب sub-destination
-                        final subDestinationQuery =
-                            result['subDestination'] as String?;
-                        if (subDestinationQuery != null &&
-                            subDestinationQuery.isNotEmpty) {
-                          filteredTrips =
-                              filteredTrips.where((trip) {
-                                final tripSubDestination =
-                                    (trip['sub_destination_name_en'] ??
-                                            trip['sub_destination_name_ar'] ??
-                                            '')
-                                        .toString()
-                                        .toLowerCase();
-                                return tripSubDestination.contains(
-                                  subDestinationQuery.toLowerCase(),
-                                );
-                              }).toList();
-                        }
-setState(() {
-  // تنظيف الفيديوهات القديمة
-  _chewieControllers.forEach((_, controller) => controller.pause());
-  _chewieControllers.clear();
-  _videoControllers.forEach((_, controller) => controller.dispose());
-  _videoControllers.clear();
-  _videoErrorState.clear();
-
-  // تحديث الرحلات المعروضة
-  _trips = filteredTrips.take(_perPage).toList();
-  _personCounterKeys = List.generate(
-    _trips.length,
-    (index) => GlobalKey<PersonCounterWithPriceState>(),
-  );
-  _currentPage = 0;
-  _currentIndex = 0;
-  _hasMoreData = filteredTrips.length > _perPage;
-  _isLoadingFirstPage = false;
-  _initialErrorMessage =
-      _trips.isEmpty ? "No trips found for selected filters" : "";
-
-  // إعادة ضبط الـ PageView
-  _scrollController.jumpToPage(0);
-});
-
-// تهيئة الفيديوهات الجديدة
-if (_trips.isNotEmpty) {
-  _initializeAndPreloadVideo(0, autoPlay: true);
-  if (_trips.length > 1) _initializeAndPreloadVideo(1);
-}
-
-
-                      } catch (e) {
-                        debugPrint('Error fetching filtered trips: $e');
-                        setState(() {
-                          _isLoadingFirstPage = false;
-                          _initialErrorMessage =
-                              'Failed to load trips for selected filters';
-                        });
-                      }
-                    }
-                  },
-                ),
-              ),
-
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 10,
-                left:
-                    Directionality.of(context) == TextDirection.rtl ? null : 10,
-                right:
-                    Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                child: IconButton(
-                  icon: Icon(
-                    _isMuted ? Icons.volume_off : Icons.volume_up,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  onPressed: _toggleMute,
-                ),
-              ),
-              Align(
-                alignment:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right:
-                        Directionality.of(context) == TextDirection.ltr
-                            ? 10
-                            : 0,
-                    left:
-                        Directionality.of(context) == TextDirection.rtl
-                            ? 10
-                            : 0,
-                  ),
-                  child: RightButtons(
-                    selectedTripIndex: index,
-                    currentTripCategory: currentTrip['category'] ?? 0,
-                    personCounterKey: _personCounterKeys[index],
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: screenHeight * 0.18,
-                left:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? null
-                        : screenWidth * 0.060,
-                right:
-                    Directionality.of(context) == TextDirection.rtl
-                        ? screenWidth * 0.060
-                        : null,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left:
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? 0
-                                : screenWidth * 0.025,
-                        right:
-                            Localizations.localeOf(context).languageCode == 'ar'
-                                ? screenWidth * 0.025
-                                : 0,
-                      ),
-                      child: Countrywithcity(
-                        countryName: destinationName,
-                        cityName: subDestination,
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.001),
-                    PersonCounterWithPrice(
-                      key: _personCounterKeys[index],
-                      basePricePerPerson:
-                          double.tryParse(
-                            currentTrip['price_per_person']?.toString() ?? '0',
-                          ) ??
-                          0,
-                      maxPersons: currentTrip['max_person'] ?? 30,
-                      textColor: Colors.white,
-                      iconColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      carPrice: selectedCarPrice,
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: screenHeight * 0.12,
-                left: 20,
-                right: 20,
-                child: Center(
-                  child: CustomButton(
-                    text: AppLocalizations.of(context)!.booknow,
-                    onPressed:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PaymentOption(),
+                          child: const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: SearchDialog(),
                           ),
                         ),
-                    width: screenWidth * 0.80,
-                    height: 40,
+                      );
+                    },
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 10,
+                  left:
+                      Directionality.of(context) == TextDirection.rtl ? null : 10,
+                  right:
+                      Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                  child: IconButton(
+                    icon: Icon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: _toggleMute,
+                  ),
+                ),
+                Align(
+                  alignment:
+                      Directionality.of(context) == TextDirection.rtl
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      right:
+                          Directionality.of(context) == TextDirection.ltr
+                              ? 10
+                              : 0,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? 10
+                              : 0,
+                    ),
+                    child: RightButtons(
+                      selectedTripIndex: index,
+                      currentTripCategory: currentTrip['category'] ?? 0,
+                      personCounterKey: _personCounterKeys[index],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: screenHeight * 0.18,
+                  left:
+                      Directionality.of(context) == TextDirection.rtl
+                          ? null
+                          : screenWidth * 0.060,
+                  right:
+                      Directionality.of(context) == TextDirection.rtl
+                          ? screenWidth * 0.060
+                          : null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left:
+                              Localizations.localeOf(context).languageCode == 'ar'
+                                  ? 0
+                                  : screenWidth * 0.025,
+                          right:
+                              Localizations.localeOf(context).languageCode == 'ar'
+                                  ? screenWidth * 0.025
+                                  : 0,
+                        ),
+                        child: Countrywithcity(
+                          countryName: destinationName,
+                          cityName: subDestination,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.001),
+                      PersonCounterWithPrice(
+                        key: _personCounterKeys[index],
+                        basePricePerPerson:
+                            double.tryParse(
+                              currentTrip['price_per_person']?.toString() ?? '0',
+                            ) ??
+                            0,
+                        maxPersons: currentTrip['max_persons'] ?? 30,
+                        textColor: Colors.white,
+                        iconColor: Colors.black,
+                        backgroundColor: Colors.white,
+                        carPrice: selectedCarPrice,
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  bottom: screenHeight * 0.12,
+                  left: 20,
+                  right: 20,
+                  child: Center(
+                    child: CustomButton(
+                      text: AppLocalizations.of(context)!.booknow,
+                      onPressed:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PaymentOption(),
+                            ),
+                          ),
+                      width: screenWidth * 0.80,
+                      height: 40,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
-  // دالة لبناء مؤشر التحميل للصفحات الإضافية
   Widget _buildLoadingIndicator() {
     return const Center(
       child: CircularProgressIndicator(color: Color(0xFF002E70)),
     );
   }
 
-  // دوال مساعدة إضافية
   Widget _buildVideoErrorWidget() {
     return const Center(
       child: Column(

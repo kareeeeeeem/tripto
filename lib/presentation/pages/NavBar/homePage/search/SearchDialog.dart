@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripByCategory_Bloc/SearchOnTripBySubDestination_Event.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/DateCardStandalone.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/CategoryGold.dart';
 import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/DiamondCategory.dart';
@@ -20,7 +18,6 @@ class SearchDialog extends StatefulWidget {
 }
 
 class _SearchDialogState extends State<SearchDialog> {
-  final TextEditingController _searchController = TextEditingController();
   final TextEditingController _subDestinationController =
       TextEditingController();
   DateTime? _startDate;
@@ -48,19 +45,6 @@ class _SearchDialogState extends State<SearchDialog> {
     }
   }
 
-  String? getSelectedCategory() {
-    switch (selectedCategoryIndex) {
-      case 0:
-        return "1"; // Gold
-      case 1:
-        return "2"; // Diamond
-      case 2:
-        return "3"; // Platinum
-      default:
-        return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('yyyy-MM-dd');
@@ -75,18 +59,18 @@ class _SearchDialogState extends State<SearchDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Search",
+              isArabic ? "بحث" : "Search",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.10),
 
-            // 🔹 حقل البحث العام
-
-            // 🔹 حقل Sub-destination
+            // ✅ إدخال الوجهة الفرعية
             TextField(
               controller: _subDestinationController,
               decoration: InputDecoration(
-                hintText: "Sub-destination (e.g., Giza)",
+                hintText: isArabic
+                    ? "وجهة فرعية (مثال: الجيزة)"
+                    : "Sub-destination (e.g., Giza)",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.lightBlue),
@@ -99,19 +83,19 @@ class _SearchDialogState extends State<SearchDialog> {
             ),
             SizedBox(height: size.height * 0.03),
 
-            // زر اختيار الرينج
+            // ✅ اختيار التاريخ
             ElevatedButton(
               onPressed: () => _pickDateRange(context),
               child: Text(
                 (_startDate == null || _endDate == null)
-                    ? "Select Date"
+                    ? (isArabic ? "اختر التاريخ" : "Select Date")
                     : "${dateFormat.format(_startDate!)} → ${dateFormat.format(_endDate!)}",
               ),
             ),
 
             SizedBox(height: size.height * 0.04),
 
-            // 🔹 الكاتيجوري
+            // ✅ اختيار الكاتيجوري
             Row(
               children: [
                 Expanded(
@@ -154,46 +138,32 @@ class _SearchDialogState extends State<SearchDialog> {
 
             SizedBox(height: size.height * 0.05),
 
-            // أزرار التأكيد والإلغاء
+            // ✅ أزرار التحكم
             Column(
               children: [
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      final selectedCategory = getSelectedCategory();
-                      final subDestination =
-                          _subDestinationController.text.trim();
-
-                       // 🔹 فلترة التاريخ
+                      // البحث بناءً على التاريخ
                       if (_startDate != null && _endDate != null) {
-                        context.read<FilteredTripsBloc>().add(
-                          FilterTripsByDateRangeEvent(_startDate!, _endDate!),
-                        );
+                        context.read<SearchTripByDateBloc>().add(
+                              FetchTripsByDate(
+                                from: _startDate!,
+                                to: _endDate!,
+                              ),
+                            );
                       }
 
-                      // 🔹 فلترة الكاتيجوري
-                      if (selectedCategory != null) {
-                        context.read<CategoryTripBloc>().add(
-                          FetchTripsByCategoryEvent(selectedCategory),
-                        );
+                      // البحث بناءً على الكاتيجوري
+                      if (selectedCategoryIndex != -1) {
+                        final categoryNumber = selectedCategoryIndex + 1;
+                        context.read<SearchTripByCategoryBloc>().add(
+                              FetchTripsByCategory(category: categoryNumber),
+                            );
                       }
 
-                      // 🔹 فلترة Sub-destination
-                      if (subDestination.isNotEmpty) {
-                        context.read<SearchSubDestinationBloc>().add(
-                          SearchSubDestinationRequested(subDestination),
-                        );
-                      }
-
-                      // 🔹 إرجاع البيانات
-                      Navigator.pop(context, {
-                        'searchText': _searchController.text,
-                        'startDate': _startDate,
-                        'endDate': _endDate,
-                        'category': selectedCategory,
-                        'subDestination': subDestination,
-                      });
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF002E70),

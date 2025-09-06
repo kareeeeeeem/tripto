@@ -1,57 +1,22 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
-import 'package:tripto/core/services/api.dart';
 
-class FilteredTripsByDateRepository {
-  final storage = const FlutterSecureStorage();
+class SearchTripByDateRepository {
+  Future<List<GetTripModel>> fetchTripsByDate(DateTime from, DateTime to) async {
+    final url = Uri.parse(
+        'https://tripto.blueboxpet.com/api/trips/search/date?from=${from.toIso8601String().split("T")[0]}&to=${to.toIso8601String().split("T")[0]}');
 
-  Future<List<GetTripModel>> fetchTripsByDate(
-    DateTime from,
-    DateTime to,
-  ) async {
-    try {
-      final token = await storage.read(key: 'token');
-      final fromStr = from.toIso8601String().split('T').first;
-      final toStr = to.toIso8601String().split('T').first;
+    final response = await http.get(url);
 
-      final url = Uri.parse(
-        '${ApiConstants.baseUrl}trips/search/date?from=$fromStr&to=$toStr',
-      );
-
-      final headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
-      };
-
-      final response = await http
-          .get(url, headers: headers)
-          .timeout(const Duration(seconds: 15));
-
-      if (response.statusCode == 200) {
-        final decoded = json.decode(response.body);
-        if (decoded is Map && decoded.containsKey('trips')) {
-  final allTrips = (decoded['trips'] as List)
-      .map((json) => GetTripModel.fromJson(json))
-      .toList();
-
-  // فلترة الرحلات التي تتقاطع مع الفترة المختارة
-  final filteredTrips = allTrips.where((trip) {
-    final tripStart = DateTime.parse(trip.fromDate);
-    final tripEnd = DateTime.parse(trip.toDate);
-    return tripStart.isBefore(to) && tripEnd.isAfter(from);
-  }).toList();
-
-  return filteredTrips;
-}
-
-      }
-
-      throw Exception('Failed to fetch trips by date: ${response.statusCode}');
-    } catch (e) {
-      rethrow;
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final trips = (data['trips'] as List)
+          .map((tripJson) => GetTripModel.fromJson(tripJson))
+          .toList();
+      return trips;
+    } else {
+      throw Exception('Failed to fetch trips');
     }
   }
 }

@@ -1,17 +1,30 @@
-import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class CategoryTripState {}
+abstract class SearchTripByCategoryState extends Equatable {
+  const SearchTripByCategoryState();
 
-class CategoryTripInitial extends CategoryTripState {}
-
-class CategoryTripLoading extends CategoryTripState {}
-
-class CategoryTripLoaded extends CategoryTripState {
-  final List<GetTripModel> trips;
-  CategoryTripLoaded(this.trips);
+  @override
+  List<Object?> get props => [];
 }
 
-class CategoryTripError extends CategoryTripState {
+class SearchTripByCategoryInitial extends SearchTripByCategoryState {}
+
+class SearchTripByCategoryLoading extends SearchTripByCategoryState {}
+
+class SearchTripByCategoryLoaded extends SearchTripByCategoryState {
+  final List<dynamic> trips;
+
+  const SearchTripByCategoryLoaded({required this.trips});
+
+  @override
+  List<Object?> get props => [trips];
+}
+
+class SearchTripByCategoryError extends SearchTripByCategoryState {
   final String message;
-  CategoryTripError(this.message);
+
+  const SearchTripByCategoryError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

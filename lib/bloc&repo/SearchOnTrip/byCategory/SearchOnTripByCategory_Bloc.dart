@@ -3,17 +3,19 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_repository.dart';
 
-class CategoryTripBloc extends Bloc<CategoryTripEvent, CategoryTripState> {
-  final FilteredTripsByCategoryRepository repository;
+class SearchTripByCategoryBloc
+    extends Bloc<SearchTripByCategoryEvent, SearchTripByCategoryState> {
+  final SearchTripByCategoryRepository repository;
 
-  CategoryTripBloc(this.repository) : super(CategoryTripInitial()) {
-    on<FetchTripsByCategoryEvent>((event, emit) async {
-      emit(CategoryTripLoading());
+  SearchTripByCategoryBloc({required this.repository})
+      : super(SearchTripByCategoryInitial()) {
+    on<FetchTripsByCategory>((event, emit) async {
+      emit(SearchTripByCategoryLoading());
       try {
         final trips = await repository.fetchTripsByCategory(event.category);
-        emit(CategoryTripLoaded(trips));
+        emit(SearchTripByCategoryLoaded(trips: trips));
       } catch (e) {
-        emit(CategoryTripError(e.toString()));
+        emit(SearchTripByCategoryError(message: e.toString()));
       }
     });
   }

@@ -1,27 +1,30 @@
 import 'package:equatable/equatable.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 
-abstract class FilteredTripsState extends Equatable {
-  const FilteredTripsState();
+abstract class SearchTripByDateState extends Equatable {
+  const SearchTripByDateState();
+
   @override
   List<Object?> get props => [];
 }
 
-class FilteredTripsInitial extends FilteredTripsState {}
+class SearchTripByDateInitial extends SearchTripByDateState {}
 
-class FilteredTripsLoading extends FilteredTripsState {}
+class SearchTripByDateLoading extends SearchTripByDateState {}
 
-class FilteredTripsLoaded extends FilteredTripsState {
+class SearchTripByDateLoaded extends SearchTripByDateState {
   final List<GetTripModel> trips;
-  const FilteredTripsLoaded(this.trips);
+
+  const SearchTripByDateLoaded(this.trips);
 
   @override
   List<Object?> get props => [trips];
 }
 
-class FilteredTripsError extends FilteredTripsState {
+class SearchTripByDateError extends SearchTripByDateState {
   final String message;
-  const FilteredTripsError(this.message);
+
+  const SearchTripByDateError(this.message);
 
   @override
   List<Object?> get props => [message];
