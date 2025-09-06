@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
@@ -20,6 +22,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
+
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
@@ -30,31 +34,26 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class VideoPlayerScreenState extends State<VideoPlayerScreen>
     with WidgetsBindingObserver, RouteAware {
-  // --- الثوابت والمتغيرات الأصلية الخاصة بك ---
-  // ignore: unused_field
   final _storage = const FlutterSecureStorage();
   final _scrollController = PageController();
-  // ignore: unused_field
   final double _bookingPricePerPerson = 0.0;
   double selectedCarPrice = 0.0;
   List<GlobalKey<PersonCounterWithPriceState>> _personCounterKeys = [];
-  List<Map<String, dynamic>> _allTrips = []; // كل الرحلات
-  List<Map<String, dynamic>> _trips = []; // الرحلات المعروضة حالياً
+  List<Map<String, dynamic>> _allTrips = [];
+  List<Map<String, dynamic>> _trips = [];
   int _currentIndex = 0;
   bool _isMuted = false;
 
-  // --- متغيرات الحالة لإدارة الفيديو والتحميل ---
   final Map<int, VideoPlayerController> _videoControllers = {};
   final Map<int, ChewieController> _chewieControllers = {};
   final Map<int, bool> _videoErrorState = {};
 
-  // --- متغيرات للتحميل الكسول (Lazy Loading) ---
   bool _isLoadingFirstPage = true;
   String _initialErrorMessage = '';
-  int _currentPage = 0; // الصفحة الحالية
+  int _currentPage = 0;
   bool _isLoadingMore = false;
   bool _hasMoreData = true;
-  final int _perPage = 5; // عدد الفيديوهات التي يتم تحميلها في كل مرة
+  final int _perPage = 5;
 
   @override
   void initState() {
@@ -85,7 +84,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
   }
 
-  // --- جلب كل الرحلات مرة واحدة ---
   Future<void> _fetchAllTrips() async {
     setState(() {
       _isLoadingFirstPage = true;
@@ -132,7 +130,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
   }
 
-  // --- جلب المزيد من البيانات عند التمرير (Lazy Loading) ---
   Future<void> _fetchMoreTrips() async {
     if (_isLoadingMore || !_hasMoreData) return;
 
@@ -163,7 +160,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
   }
 
-  // --- دالة موحدة للتهيئة والتحميل المسبق ---
   Future<void> _initializeAndPreloadVideo(
     int index, {
     bool autoPlay = false,
@@ -204,7 +200,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
   }
 
-  // --- دالة تغيير الصفحة هي التي تدير كل شيء ---
   void _onPageChanged(int index) {
     if (_chewieControllers.containsKey(_currentIndex)) {
       _chewieControllers[_currentIndex]?.pause();
@@ -236,7 +231,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
   }
 
-  // --- التخلص من المتحكمات البعيدة لتحرير الذاكرة ---
   void _disposeDistantVideos(int currentIndex) {
     final indexesToKeep = [currentIndex, currentIndex - 1, currentIndex + 1];
     _videoControllers.keys
@@ -252,7 +246,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     });
   }
 
-  // --- الدوال المساعدة الأصلية ---
   bool _isDriveUrl(String url) => url.contains('drive.google.com');
 
   String? _extractDriveId(String url) {
@@ -309,13 +302,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   }
 
   void _disposeAllVideos() {
-  _videoControllers.forEach((_, c) => c.dispose());
-  _chewieControllers.forEach((_, c) => c.dispose());
-  _videoControllers.clear();
-  _chewieControllers.clear();
-  _videoErrorState.clear();
-}
-
+    _videoControllers.forEach((_, c) => c.dispose());
+    _chewieControllers.forEach((_, c) => c.dispose());
+    _videoControllers.clear();
+    _chewieControllers.clear();
+    _videoErrorState.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -361,8 +353,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    _trips =
-                        _allTrips.take(_perPage).toList();
+                    _trips = _allTrips.take(_perPage).toList();
                     _personCounterKeys = List.generate(
                       _trips.length,
                       (index) => GlobalKey<PersonCounterWithPriceState>(),
@@ -372,7 +363,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     _initialErrorMessage = "";
                     _hasMoreData = _allTrips.length > _perPage;
                   });
-
                   if (_trips.isNotEmpty) {
                     _initializeAndPreloadVideo(0, autoPlay: true);
                   }
@@ -386,73 +376,35 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
 
     return MultiBlocListener(
-  listeners: [
-    BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
-      listener: (context, state) {
-        if (state is SearchTripByDateLoaded) {
-          final newTrips = state.trips
-              .map((tripModel) => tripModel.toVideoPlayerJson())
-              .toList();
-
-          setState(() {
-            _disposeAllVideos();
-            _currentPage = 0;
-            _isLoadingMore = false;
-            _hasMoreData = newTrips.length > _perPage;
-            _trips = newTrips;
-            _personCounterKeys = List.generate(
-              _trips.length,
-              (index) => GlobalKey<PersonCounterWithPriceState>(),
-            );
-            _isLoadingFirstPage = false;
-            _initialErrorMessage =
-                _trips.isEmpty ? "No trips found for selected date range" : "";
-            _scrollController.jumpToPage(0);
-            if (_trips.isNotEmpty) {
-              _initializeAndPreloadVideo(0, autoPlay: true);
-              if (_trips.length > 1) _initializeAndPreloadVideo(1);
+      listeners: [
+        BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
+          listener: (context, state) {
+            if (state is SearchTripByDateLoaded) {
+              _updateTripsList(state.trips);
+            } else if (state is SearchTripByDateError) {
+              _showErrorSnackBar(state.message);
             }
-          });
-        }
-      },
-    ),
-    BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
-      listener: (context, state) {
-        if (state is SearchTripByCategoryLoaded) {
-            print("✅ Trips by Category Loaded: ${state.trips}");
-
-          final newTrips = state.trips
-    .map((tripModel) => tripModel.toVideoPlayerJson())
-    .toList()
-    .cast<Map<String, dynamic>>();
-
-
-          setState(() {
-            _disposeAllVideos();
-            _currentPage = 0;
-            _isLoadingMore = false;
-            _hasMoreData = newTrips.length > _perPage;
-            _trips = newTrips;
-            _personCounterKeys = List.generate(
-              _trips.length,
-              (index) => GlobalKey<PersonCounterWithPriceState>(),
-            );
-            _isLoadingFirstPage = false;
-            _initialErrorMessage =
-                _trips.isEmpty ? "No trips found for selected category" : "";
-            _scrollController.jumpToPage(0);
-            if (_trips.isNotEmpty) {
-              _initializeAndPreloadVideo(0, autoPlay: true);
-              if (_trips.length > 1) _initializeAndPreloadVideo(1);
+          },
+        ),
+        BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
+          listener: (context, state) {
+            if (state is SearchTripByCategoryLoaded) {
+              _updateTripsList(state.trips);
+            } else if (state is SearchTripByCategoryError) {
+              _showErrorSnackBar(state.message);
             }
-          });
-        }
-      },
-    ),
-  ],
-
-
-      
+          },
+        ),
+        BlocListener<SearchTripBySubDestinationBloc, SearchTripBySubDestinationState>(
+          listener: (context, state) {
+            if (state is SearchTripBySubDestinationLoaded) {
+              _updateTripsList(state.trips);
+            } else if (state is SearchTripBySubDestinationError) {
+              _showErrorSnackBar(state.message);
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         backgroundColor: Colors.black,
         body: PageView.builder(
@@ -544,7 +496,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                       color: Colors.white,
                     ),
                     onPressed: () async {
-                      final result = await showDialog<Map<String, dynamic>>(
+                      await showDialog<void>(
                         context: context,
                         builder: (ctx) => Dialog(
                           backgroundColor: Colors.white.withOpacity(0.95),
@@ -629,17 +581,17 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                       ),
                       SizedBox(height: screenHeight * 0.001),
                       PersonCounterWithPrice(
-                        key: _personCounterKeys[index],
-                        basePricePerPerson:
-                            double.tryParse(
-                              currentTrip['price_per_person']?.toString() ?? '0',
-                            ) ??
-                            0,
-                        maxPersons: currentTrip['max_persons'] ?? 30,
-                        textColor: Colors.white,
-                        iconColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        carPrice: selectedCarPrice,
+                          key: _personCounterKeys[index],
+                          basePricePerPerson:
+                              double.tryParse(
+                                currentTrip['price_per_person']?.toString() ?? '0',
+                              ) ??
+                              0,
+                          maxPersons: currentTrip['max_persons'] ?? 30,
+                          textColor: Colors.white,
+                          iconColor: Colors.black,
+                          backgroundColor: Colors.white,
+                          carPrice: selectedCarPrice,
                       ),
                     ],
                   ),
@@ -669,6 +621,43 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         ),
       ),
     );
+  }
+
+  void _updateTripsList(List<GetTripModel> trips) {
+    if (!mounted) return;
+    final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
+    setState(() {
+      _disposeAllVideos();
+      _currentPage = 0;
+      _isLoadingMore = false;
+      _hasMoreData = newTrips.length > _perPage;
+      _trips = newTrips;
+      _personCounterKeys = List.generate(
+        _trips.length,
+        (index) => GlobalKey<PersonCounterWithPriceState>(),
+      );
+      _isLoadingFirstPage = false;
+      _initialErrorMessage =
+          _trips.isEmpty ? "No trips found for the selected criteria" : "";
+      _scrollController.jumpToPage(0);
+      if (_trips.isNotEmpty) {
+        _initializeAndPreloadVideo(0, autoPlay: true);
+        if (_trips.length > 1) _initializeAndPreloadVideo(1);
+      }
+    });
+  }
+
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+    setState(() {
+      _initialErrorMessage = message;
+    });
   }
 
   Widget _buildLoadingIndicator() {

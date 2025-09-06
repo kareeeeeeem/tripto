@@ -10,6 +10,8 @@ import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/ProfileRepository.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_repository.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_repository.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
@@ -73,6 +75,7 @@ class _TripToAppState extends State<TripToApp> {
         ),
                 RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
                    RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
+                       RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
 
 
       ],
@@ -124,7 +127,11 @@ class _TripToAppState extends State<TripToApp> {
               repository: RepositoryProvider.of<SearchTripByCategoryRepository>(context),
             ),
           ),
-
+             BlocProvider<SearchTripBySubDestinationBloc>(
+                create: (context) => SearchTripBySubDestinationBloc(
+                  repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
+                ),
+              ),
           
         ],
         child: MaterialApp(

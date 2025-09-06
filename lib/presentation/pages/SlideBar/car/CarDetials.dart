@@ -113,7 +113,6 @@ class CarCard extends StatelessWidget {
                         color: Colors.blueAccent,
                         size: 22,
                       ),
-                      Icon(Icons.check_circle, color: Colors.green, size: 22),
                     ],
                   ],
                 ),

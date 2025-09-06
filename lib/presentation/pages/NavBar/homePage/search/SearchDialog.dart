@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Event.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
@@ -136,6 +138,7 @@ class _SearchDialogState extends State<SearchDialog> {
               ],
             ),
 
+
             SizedBox(height: size.height * 0.05),
 
             // ✅ أزرار التحكم
@@ -144,27 +147,37 @@ class _SearchDialogState extends State<SearchDialog> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // البحث بناءً على التاريخ
-                      if (_startDate != null && _endDate != null) {
-                        context.read<SearchTripByDateBloc>().add(
-                              FetchTripsByDate(
-                                from: _startDate!,
-                                to: _endDate!,
-                              ),
-                            );
-                      }
+onPressed: () {
+  // البحث بناءً على التاريخ
+  if (_startDate != null && _endDate != null) {
+    context.read<SearchTripByDateBloc>().add(
+      FetchTripsByDate(
+        from: _startDate!,
+        to: _endDate!,
+      ),
+    );
+  }
 
-                      // البحث بناءً على الكاتيجوري
-                      if (selectedCategoryIndex != -1) {
-                        final categoryNumber = selectedCategoryIndex + 1;
-                        context.read<SearchTripByCategoryBloc>().add(
-                              FetchTripsByCategory(category: categoryNumber),
-                            );
-                      }
+  // البحث بناءً على الكاتيجوري
+  if (selectedCategoryIndex != -1) {
+    final categoryNumber = selectedCategoryIndex + 1;
+    context.read<SearchTripByCategoryBloc>().add(
+      FetchTripsByCategory(category: categoryNumber),
+    );
+  }
 
-                      Navigator.pop(context);
-                    },
+  // البحث بالـ subDestination
+  if (_subDestinationController.text.isNotEmpty) {
+    context.read<SearchTripBySubDestinationBloc>().add(
+      FetchTripsBySubDestination(
+        subDestination: _subDestinationController.text.trim(),
+      ),
+    );
+  }
+
+  Navigator.pop(context);
+},
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF002E70),
                     ),

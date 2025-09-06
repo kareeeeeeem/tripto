@@ -395,6 +395,8 @@ class _RightButtonsState extends State<RightButtons> {
                             // ✅ تم إضافة هذا السطر
                           ),
                     );
+
+                    
                 if (selectedActivityFromDialog != null) {
                   final price =
                       double.tryParse(

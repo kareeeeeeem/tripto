@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 
 abstract class SearchTripByCategoryState extends Equatable {
   const SearchTripByCategoryState();
@@ -12,13 +13,13 @@ class SearchTripByCategoryInitial extends SearchTripByCategoryState {}
 class SearchTripByCategoryLoading extends SearchTripByCategoryState {}
 
 class SearchTripByCategoryLoaded extends SearchTripByCategoryState {
-  final List<dynamic> trips;
-
+  final List<GetTripModel> trips;
   const SearchTripByCategoryLoaded({required this.trips});
-
-  @override
-  List<Object?> get props => [trips];
+  @override List<Object?> get props => [trips];
 }
+
+// bloc already passes repository result => OK
+
 
 class SearchTripByCategoryError extends SearchTripByCategoryState {
   final String message;

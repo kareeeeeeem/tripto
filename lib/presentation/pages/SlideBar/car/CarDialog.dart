@@ -4,12 +4,17 @@ import 'package:tripto/bloc&repo/car/car_bloc.dart';
 import 'package:tripto/bloc&repo/car/car_state.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
+import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 
 class CarSelectionPage extends StatefulWidget {
-  // ⚠️ تم إزالة nextSteps و hasActivity من هنا.
   final int? selectedCarId;
+  final GlobalKey<PersonCounterWithPriceState>? personCounterKey; // ✅
 
-  const CarSelectionPage({super.key, this.selectedCarId});
+  const CarSelectionPage({
+    super.key,
+    this.selectedCarId,
+    this.personCounterKey,
+  });
 
   @override
   State<CarSelectionPage> createState() => _CarSelectionPageState();
@@ -118,14 +123,14 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // ✅ زر الاستمرار
                       ElevatedButton(
-                        onPressed:
-                            (selectedIndex != null && cars.isNotEmpty)
-                                ? () {
-                                  final selectedCar = cars[selectedIndex!];
-                                  Navigator.of(context).pop(selectedCar);
-                                }
-                                : null,
+                        onPressed: (selectedIndex != null && cars.isNotEmpty)
+                            ? () {
+                                final selectedCar = cars[selectedIndex!];
+                                Navigator.of(context).pop(selectedCar);
+                              }
+                            : null,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF002E70),
                           foregroundColor: Colors.white,
@@ -147,6 +152,7 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                         ),
                       ),
                       const SizedBox(height: 8),
+                      // ✅ زر الإلغاء
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.lightBlue,
@@ -161,6 +167,13 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                           elevation: 0,
                         ),
                         onPressed: () {
+                          setState(() {
+                            selectedIndex = null;
+                          });
+                          // ✅ تصفير السعر الإضافي للعربية
+                          widget.personCounterKey?.currentState
+                              ?.setSelectedCarPrice(0);
+
                           Navigator.of(context).pop(null);
                         },
                         child: Text(
