@@ -20,6 +20,7 @@ class SearchDialog extends StatefulWidget {
 }
 
 class _SearchDialogState extends State<SearchDialog> {
+
   final TextEditingController _subDestinationController =
       TextEditingController();
   DateTime? _startDate;
@@ -147,36 +148,38 @@ class _SearchDialogState extends State<SearchDialog> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-onPressed: () {
-  // البحث بناءً على التاريخ
-  if (_startDate != null && _endDate != null) {
-    context.read<SearchTripByDateBloc>().add(
-      FetchTripsByDate(
-        from: _startDate!,
-        to: _endDate!,
-      ),
-    );
-  }
 
-  // البحث بناءً على الكاتيجوري
-  if (selectedCategoryIndex != -1) {
-    final categoryNumber = selectedCategoryIndex + 1;
-    context.read<SearchTripByCategoryBloc>().add(
-      FetchTripsByCategory(category: categoryNumber),
-    );
-  }
 
-  // البحث بالـ subDestination
-  if (_subDestinationController.text.isNotEmpty) {
-    context.read<SearchTripBySubDestinationBloc>().add(
-      FetchTripsBySubDestination(
-        subDestination: _subDestinationController.text.trim(),
-      ),
-    );
-  }
+                  onPressed: () {
+                    // البحث بناءً على التاريخ
+                    if (_startDate != null && _endDate != null) {
+                      context.read<SearchTripByDateBloc>().add(
+                        FetchTripsByDate(
+                          from: _startDate!,
+                          to: _endDate!,
+                        ),
+                      );
+                    }
 
-  Navigator.pop(context);
-},
+                  // البحث بناءً على الكاتيجوري
+                  if (selectedCategoryIndex != -1) {
+                    final categoryNumber = selectedCategoryIndex + 1;
+                    context.read<SearchTripByCategoryBloc>().add(
+                      FetchTripsByCategory(category: categoryNumber),
+                    );
+                  }
+
+                  // البحث بالـ subDestination
+                  if (_subDestinationController.text.isNotEmpty) {
+                    context.read<SearchTripBySubDestinationBloc>().add(
+                      FetchTripsBySubDestination(
+                        subDestination: _subDestinationController.text.trim(),
+                      ),
+                    );
+                  }
+
+                  Navigator.pop(context);
+                },
 
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF002E70),

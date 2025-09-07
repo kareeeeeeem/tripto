@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/car/car_bloc.dart';
 import 'package:tripto/bloc&repo/car/car_state.dart';
+import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
@@ -22,10 +23,14 @@ class CarSelectionPage extends StatefulWidget {
 
 class _CarSelectionPageState extends State<CarSelectionPage> {
   int? selectedIndex;
+  int? selectedCarId; // ✅ أضف هذا
+  Carmodel? selectedCar;
 
   @override
   void initState() {
     super.initState();
+        selectedCarId = widget.selectedCarId; // 🟢 خلي المتغير يبدأ بقيمة الـ widget
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final state = context.read<CarBloc>().state;
       if (state is CarLoaded && widget.selectedCarId != null) {
@@ -169,12 +174,16 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                         onPressed: () {
                           setState(() {
                             selectedIndex = null;
+                            selectedCarId = null;        // ✅ مسح الـ ID
+                            selectedCar = null;
                           });
-                          // ✅ تصفير السعر الإضافي للعربية
-                          widget.personCounterKey?.currentState
-                              ?.setSelectedCarPrice(0);
+                          
+                          // ⚡ تصفير سعر العربية في العداد
+                          widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
 
-                          Navigator.of(context).pop(null);
+                          Navigator.of(context).pop(null); // ترجع null لو Cancel
+
+
                         },
                         child: Text(
                           AppLocalizations.of(context)!.cancelCar,

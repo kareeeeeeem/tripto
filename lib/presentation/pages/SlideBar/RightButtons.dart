@@ -371,7 +371,10 @@ class _RightButtonsState extends State<RightButtons> {
                           ),
                     ),
                   ],
-                  child: CarSelectionPage(selectedCarId: selectedCarId),
+                  child: CarSelectionPage(
+                    selectedCarId: selectedCarId,
+                      personCounterKey: widget.personCounterKey, // ✅ ده المهم
+                    ),
                 );
               },
             );

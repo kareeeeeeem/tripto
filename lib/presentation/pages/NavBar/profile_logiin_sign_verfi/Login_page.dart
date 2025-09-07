@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
