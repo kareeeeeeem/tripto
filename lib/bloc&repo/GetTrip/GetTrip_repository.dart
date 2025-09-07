@@ -39,4 +39,6 @@ class TripRepository {
       rethrow;
     }
   }
+
+  Future fetchTripsByCategory(int category) async {}
 }

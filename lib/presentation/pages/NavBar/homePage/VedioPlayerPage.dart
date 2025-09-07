@@ -33,7 +33,13 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class VideoPlayerScreenState extends State<VideoPlayerScreen>
     with WidgetsBindingObserver, RouteAware {
-      
+
+    Future<void> _refresh() async {
+    // هنا تحط اللوجيك بتاع جلب كل الرحلات من الـ API
+    print("🔄 Refreshing all trips...");
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
   final _storage = const FlutterSecureStorage();
   final _scrollController = PageController();
   final double _bookingPricePerPerson = 0.0;
@@ -351,6 +357,14 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                 style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+                foregroundColor: Colors.white, // لون النص أبيض
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
                 onPressed: () {
                   setState(() {
                     _trips = _allTrips.take(_perPage).toList();
@@ -371,7 +385,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     "Back to all trips",
                     style: TextStyle(
                       color: Colors.white, // النص (foreground)
-                      backgroundColor: Color(0xFF002E70), // خلفية النص
                     ),
                   ),
               ),
@@ -413,217 +426,234 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       ],
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: PageView.builder(
-          controller: _scrollController,
-          scrollDirection: Axis.vertical,
-          itemCount: _trips.length + (_hasMoreData ? 1 : 0),
-          onPageChanged: _onPageChanged,
-          itemBuilder: (context, index) {
-            if (index >= _trips.length) {
-              return _buildLoadingIndicator();
+        body: NotificationListener<OverscrollNotification>(
+          onNotification: (overscroll) {
+            if (overscroll.overscroll < 0) {
+              // المستخدم بيسحب لتحت
+              _fetchAllTrips();
             }
+            return false;
+          },
 
-            final currentTrip = _trips[index];
-            final destinationName = _getLocalizedDestinationName(
-              currentTrip,
-              context,
-            );
-            final subDestination = _getLocalizedSubDestinationName(
-              currentTrip,
-              context,
-            );
-            final chewieController = _chewieControllers[index];
-            final hasError = _videoErrorState[index] ?? false;
-
-            Widget videoWidget;
-            if (hasError) {
-              videoWidget = _buildVideoErrorWidget();
-            } else if (chewieController != null) {
-              videoWidget = Chewie(controller: chewieController);
-            } else {
-              videoWidget = const Center(
-                child: CircularProgressIndicator(color: Color(0xFF002E70)),
-              );
-            }
+          child: RefreshIndicator(
+            color: const Color(0xFF002E70),
+            onRefresh: () async{
+                await _fetchAllTrips();
+            },
+          
+            child: PageView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.vertical,
+              itemCount: _trips.length + (_hasMoreData ? 1 : 0),
+              onPageChanged: _onPageChanged,
+              itemBuilder: (context, index) {
+                if (index >= _trips.length) {
+                  return _buildLoadingIndicator();
+                }
             
-            return Stack(
-              children: [
-                Positioned.fill(
-                  child: SizedBox.expand(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width:
-                            _videoControllers[index]?.value.size.width ??
-                            screenWidth,
-                        height:
-                            _videoControllers[index]?.value.size.height ??
-                            screenHeight,
-                        child: videoWidget,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 30,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        destinationName,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 10,
-                  left:
-                      Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                  right:
-                      Directionality.of(context) == TextDirection.rtl ? null : 10,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.search_rounded,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    onPressed: () async {
-                      await showDialog<void>(
-                        context: context,
-                        builder: (ctx) => Dialog(
-                          backgroundColor: Colors.white.withOpacity(0.95),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: SearchDialog(),
+                final currentTrip = _trips[index];
+                final destinationName = _getLocalizedDestinationName(
+                  currentTrip,
+                  context,
+                );
+                final subDestination = _getLocalizedSubDestinationName(
+                  currentTrip,
+                  context,
+                );
+                final chewieController = _chewieControllers[index];
+                final hasError = _videoErrorState[index] ?? false;
+            
+                Widget videoWidget;
+                if (hasError) {
+                  videoWidget = _buildVideoErrorWidget();
+                } else if (chewieController != null) {
+                  videoWidget = Chewie(controller: chewieController);
+                } else {
+                  videoWidget = const Center(
+                    child: CircularProgressIndicator(color: Color(0xFF002E70)),
+                  );
+                }
+                
+                return Stack(
+                  children: [
+                    Positioned.fill(
+                      child: SizedBox.expand(
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: SizedBox(
+                            width:
+                                _videoControllers[index]?.value.size.width ??
+                                screenWidth,
+                            height:
+                                _videoControllers[index]?.value.size.height ??
+                                screenHeight,
+                            child: videoWidget,
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 10,
-                  left:
-                      Directionality.of(context) == TextDirection.rtl ? null : 10,
-                  right:
-                      Directionality.of(context) == TextDirection.rtl ? 10 : null,
-                  child: IconButton(
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    onPressed: _toggleMute,
-                  ),
-                ),
-                Align(
-                  alignment:
-                      Directionality.of(context) == TextDirection.rtl
-                          ? Alignment.centerLeft
-                          : Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right:
-                          Directionality.of(context) == TextDirection.ltr
-                              ? 10
-                              : 0,
-                      left:
-                          Directionality.of(context) == TextDirection.rtl
-                              ? 10
-                              : 0,
-                    ),
-                    child: RightButtons(
-                      selectedTripIndex: index,
-                      currentTripCategory: currentTrip['category'] ?? 0,
-                      personCounterKey: _personCounterKeys[index],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: screenHeight * 0.18,
-                  left:
-                      Directionality.of(context) == TextDirection.rtl
-                          ? null
-                          : screenWidth * 0.060,
-                  right:
-                      Directionality.of(context) == TextDirection.rtl
-                          ? screenWidth * 0.060
-                          : null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left:
-                              Localizations.localeOf(context).languageCode == 'ar'
-                                  ? 0
-                                  : screenWidth * 0.025,
-                          right:
-                              Localizations.localeOf(context).languageCode == 'ar'
-                                  ? screenWidth * 0.025
-                                  : 0,
-                        ),
-                        child: Countrywithcity(
-                          countryName: destinationName,
-                          cityName: subDestination,
-                        ),
                       ),
-                      SizedBox(height: screenHeight * 0.001),
-                      PersonCounterWithPrice(
-                          key: _personCounterKeys[index],
-                          basePricePerPerson:
-                              double.tryParse(
-                                currentTrip['price_per_person']?.toString() ?? '0',
-                              ) ??
-                              0,
-                          maxPersons: currentTrip['max_persons'] ?? 30,
-                          textColor: Colors.white,
-                          iconColor: Colors.black,
-                          backgroundColor: Colors.white,
-                          carPrice: selectedCarPrice,
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: screenHeight * 0.12,
-                  left: 20,
-                  right: 20,
-                  child: Center(
-                    child: CustomButton(
-                      text: AppLocalizations.of(context)!.booknow,
-                      onPressed:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PaymentOption(),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).padding.top + 30,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            destinationName,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                      width: screenWidth * 0.80,
-                      height: 40,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          },
+                    Positioned(
+                      top: MediaQuery.of(context).padding.top + 10,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                      right:
+                          Directionality.of(context) == TextDirection.rtl ? null : 10,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.search_rounded,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        onPressed: () async {
+                          await showDialog<void>(
+                            context: context,
+                            builder: (ctx) => Dialog(
+                              backgroundColor: Colors.white.withOpacity(0.95),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: SearchDialog(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).padding.top + 10,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl ? null : 10,
+                      right:
+                          Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                      child: IconButton(
+                        icon: Icon(
+                          _isMuted ? Icons.volume_off : Icons.volume_up,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: _toggleMute,
+                      ),
+                    ),
+                    Align(
+                      alignment:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? Alignment.centerLeft
+                              : Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right:
+                              Directionality.of(context) == TextDirection.ltr
+                                  ? 10
+                                  : 0,
+                          left:
+                              Directionality.of(context) == TextDirection.rtl
+                                  ? 10
+                                  : 0,
+                        ),
+                        child: RightButtons(
+                          selectedTripIndex: index,
+                          currentTripCategory: currentTrip['category'] ?? 0,
+                          personCounterKey: _personCounterKeys[index],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: screenHeight * 0.18,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? null
+                              : screenWidth * 0.060,
+                      right:
+                          Directionality.of(context) == TextDirection.rtl
+                              ? screenWidth * 0.060
+                              : null,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left:
+                                  Localizations.localeOf(context).languageCode == 'ar'
+                                      ? 0
+                                      : screenWidth * 0.025,
+                              right:
+                                  Localizations.localeOf(context).languageCode == 'ar'
+                                      ? screenWidth * 0.025
+                                      : 0,
+                            ),
+                            child: Countrywithcity(
+                              countryName: destinationName,
+                              cityName: subDestination,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.001),
+                          PersonCounterWithPrice(
+                              key: _personCounterKeys[index],
+                              basePricePerPerson:
+                                  double.tryParse(
+                                    currentTrip['price_per_person']?.toString() ?? '0',
+                                  ) ??
+                                  0,
+                              maxPersons: currentTrip['max_persons'] ?? 30,
+                              textColor: Colors.white,
+                              iconColor: Colors.black,
+                              backgroundColor: Colors.white,
+                              carPrice: selectedCarPrice,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: screenHeight * 0.12,
+                      left: 20,
+                      right: 20,
+                      child: Center(
+                        child: CustomButton(
+                          text: AppLocalizations.of(context)!.booknow,
+                          onPressed:
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PaymentOption(),
+                                ),
+                              ),
+                          width: screenWidth * 0.80,
+                          height: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -632,8 +662,11 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   void _updateTripsList(List<GetTripModel> trips) {
     if (!mounted) return;
     final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
+
+    // أول حاجة: اقفل كل الفيديوهات القديمة
+    _disposeAllVideos();
+
     setState(() {
-      _disposeAllVideos();
       _currentPage = 0;
       _isLoadingMore = false;
       _hasMoreData = newTrips.length > _perPage;
@@ -644,14 +677,21 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       );
       _isLoadingFirstPage = false;
       _initialErrorMessage =
-          _trips.isEmpty ? "No trips found for this chose" : "";
-      _scrollController.jumpToPage(0);
+          _trips.isEmpty ? "No trips found for this choice" : "";
+    });
+
+    // ✨ بعد ما يتعمل setState وتخلص، نرجّع الـ PageView لأول صفحة ونجهّز الفيديو
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpToPage(0);
+      }
       if (_trips.isNotEmpty) {
         _initializeAndPreloadVideo(0, autoPlay: true);
         if (_trips.length > 1) _initializeAndPreloadVideo(1);
       }
     });
   }
+
 
   void _showErrorSnackBar(String message) {
     if (!mounted) return;
