@@ -1999,6 +1999,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter hotel name'**
   String get enterHotelName;
+
+  /// No description provided for @issue.
+  ///
+  /// In en, this message translates to:
+  /// **'Description issue'**
+  String get issue;
 }
 
 class _AppLocalizationsDelegate

@@ -251,102 +251,62 @@ class _SideMenuState extends State<SideMenu> {
                   size: 30,
                 ),
                 title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              final currentLocale =
-                                  Localizations.localeOf(context).languageCode;
-                              final newLocale =
-                                  currentLocale == 'ar'
-                                      ? const Locale('en')
-                                      : const Locale('ar');
-                              TripToApp.setLocale(context, newLocale);
-                              setState(() {});
-                            },
-                            child: Text(
-                              Localizations.localeOf(context).languageCode ==
-                                      "en"
-                                  ? "Change Language"
-                                  : " تغيير اللغة ",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(
-                              right:
-                                  Localizations.localeOf(
-                                            context,
-                                          ).languageCode ==
-                                          'ar'
-                                      ? 80.0
-                                      : 0.0,
-                              left:
-                                  Localizations.localeOf(
-                                            context,
-                                          ).languageCode ==
-                                          'en'
-                                      ? 20.0
-                                      : 0.0,
-                            ),
-
-                            child: TextButton(
-                              onPressed: () {
-                                final currentLocale =
-                                    Localizations.localeOf(
-                                      context,
-                                    ).languageCode;
-                                final newLocale =
-                                    currentLocale == 'ar'
-                                        ? const Locale('en')
-                                        : const Locale('ar');
-                                TripToApp.setLocale(context, newLocale);
-                                setState(() {});
-                              },
-                              child: Text(
-                                Localizations.localeOf(context).languageCode ==
-                                        "en"
-                                    ? "اللغة العربيه"
-                                    : "English",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        final currentLocale =
-                            Localizations.localeOf(context).languageCode;
-                        final newLocale =
-                            currentLocale == 'ar'
-                                ? const Locale('en')
-                                : const Locale('ar');
-                        TripToApp.setLocale(context, newLocale);
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
+                    Text(
+                      Localizations.localeOf(context).languageCode == "en"
+                          ? "Change Language"
+                          : "تغيير اللغة",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            final currentLocale =
+                                Localizations.localeOf(context).languageCode;
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
+                            TripToApp.setLocale(context, newLocale);
+                            setState(() {});
+                          },
+                          child: Text(
+                            Localizations.localeOf(context).languageCode == "en"
+                                ? "اللغة العربيه"
+                                : "English",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            final currentLocale =
+                                Localizations.localeOf(context).languageCode;
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
+                            TripToApp.setLocale(context, newLocale);
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Localizations.localeOf(context).languageCode == 'ar'
+                                ? Icons.keyboard_arrow_left_outlined
+                                : Icons.keyboard_arrow_right_outlined,
+                            size: 35,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

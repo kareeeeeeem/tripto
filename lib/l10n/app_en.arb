@@ -335,8 +335,6 @@
   "search": "Search",
   "enterHotelName": "Enter hotel name",
   "cancel": "Cancel",
-  "cancelHotel": "Cancel hotel"
-
-
-
+  "cancelHotel": "Cancel hotel",
+  "issue": "Description issue"
 }

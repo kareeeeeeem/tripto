@@ -1065,4 +1065,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterHotelName => 'Enter hotel name';
+
+  @override
+  String get issue => 'وصف المشكلة';
 }

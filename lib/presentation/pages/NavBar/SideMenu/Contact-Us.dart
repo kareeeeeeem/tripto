@@ -22,6 +22,7 @@ class _ContactUsState extends State<ContactUs> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController messagebodyController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +199,41 @@ class _ContactUsState extends State<ContactUs> {
               ),
               // //////////////////////////////////////////////////////////////////////////////////////////////////////////
               // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              // buildLabel(AppLocalizations.of(context)!.name),
+              buildLabel("Subject"),
+
+              TextFormField(
+                keyboardType: TextInputType.text,
+                controller: subjectController,
+                decoration: InputDecoration(
+                  labelText: "Subject",
+
+                  // labelText: AppLocalizations.of(context)!.name,
+                  labelStyle: TextStyle(color: Color(0xFF002E70)),
+
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.black45,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF002E70),
+                      width: 2,
+                    ),
+                  ),
+                  suffixIcon: Icon(Icons.subject),
+                ),
+              ),
+              // 7/9999999999999999999999999999999999999999999999999
               buildLabel(AppLocalizations.of(context)!.messagebody),
 
               TextFormField(
@@ -260,7 +296,7 @@ class _ContactUsState extends State<ContactUs> {
                       phone: phoneController.text,
                       email: emailController.text,
                       messagebody: messagebodyController.text,
-                      subject: "Contact Us",
+                      subject: subjectController.text,
                     );
                     context.read<ContactusBloc>().add(
                       SubmitContactUs(
