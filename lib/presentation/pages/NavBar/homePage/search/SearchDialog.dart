@@ -8,9 +8,6 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/DateCardStandalone.dart';
-import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/CategoryGold.dart';
-import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/DiamondCategory.dart';
-import 'package:tripto/presentation/pages/SlideBar/category/CategoryPages/PlatinumCategory.dart';
 
 class SearchDialog extends StatefulWidget {
   const SearchDialog({super.key});
@@ -20,9 +17,7 @@ class SearchDialog extends StatefulWidget {
 }
 
 class _SearchDialogState extends State<SearchDialog> {
-
-  final TextEditingController _subDestinationController =
-      TextEditingController();
+  final TextEditingController _subDestinationController = TextEditingController();
   DateTime? _startDate;
   DateTime? _endDate;
   int selectedCategoryIndex = -1;
@@ -30,14 +25,12 @@ class _SearchDialogState extends State<SearchDialog> {
   Future<void> _pickDateRange(BuildContext context) async {
     final result = await showDialog<Map<String, DateTime?>>(
       context: context,
-      builder: (ctx) {
-        return DateCardStandalone(
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2100),
-          initialRangeStart: _startDate,
-          initialRangeEnd: _endDate,
-        );
-      },
+      builder: (ctx) => DateCardStandalone(
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+        initialRangeStart: _startDate,
+        initialRangeEnd: _endDate,
+      ),
     );
 
     if (result != null) {
@@ -46,6 +39,44 @@ class _SearchDialogState extends State<SearchDialog> {
         _endDate = result['range_end'];
       });
     }
+  }
+
+  Widget _buildCategory(String label, IconData iconData, Color color, int index) {
+    final isSelected = selectedCategoryIndex == index;
+    return GestureDetector(
+      onTap: () => setState(() => selectedCategoryIndex = index),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // نص ثابت
+            ),
+          ),
+
+          const SizedBox(height: 8),
+          
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: isSelected ? 80 : 70,  // يكبر لو متحدد
+            height: isSelected ? 80 : 70,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: isSelected
+                  ? [BoxShadow(color: Colors.black26, blurRadius: 6)]
+                  : [],
+            ),
+            child: Icon(
+              iconData,
+              size: isSelected ? 60 : 50,  // يكبر لو متحدد
+              color: color,  // اللون ثابت
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -65,15 +96,13 @@ class _SearchDialogState extends State<SearchDialog> {
               isArabic ? "بحث" : "Search",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: size.height * 0.10),
+            SizedBox(height: size.height * 0.08),
 
-            // ✅ إدخال الوجهة الفرعية
+            // إدخال الوجهة الفرعية
             TextField(
               controller: _subDestinationController,
               decoration: InputDecoration(
-                hintText: isArabic
-                    ? "وجهة فرعية (مثال: الجيزة)"
-                    : "Sub-destination (e.g., Giza)",
+                hintText: isArabic ? "وجهة فرعية (مثال: الجيزة)" : "Sub-destination (e.g., Giza)",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.lightBlue),
@@ -86,7 +115,7 @@ class _SearchDialogState extends State<SearchDialog> {
             ),
             SizedBox(height: size.height * 0.03),
 
-            // ✅ اختيار التاريخ
+            // اختيار التاريخ
             ElevatedButton(
               onPressed: () => _pickDateRange(context),
               child: Text(
@@ -95,119 +124,102 @@ class _SearchDialogState extends State<SearchDialog> {
                     : "${dateFormat.format(_startDate!)} → ${dateFormat.format(_endDate!)}",
               ),
             ),
-
             SizedBox(height: size.height * 0.04),
 
-            // ✅ اختيار الكاتيجوري
+            // اختيار الكاتيجوري
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => selectedCategoryIndex = 0),
-                    child: SizedBox(
-                      height: size.height * 0.15,
-                      child: GoldCategory(
-                        isSelected: selectedCategoryIndex == 0,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: size.width * 0.02),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => selectedCategoryIndex = 1),
-                    child: SizedBox(
-                      height: size.height * 0.15,
-                      child: DiamondCategory(
-                        isSelected: selectedCategoryIndex == 1,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: size.width * 0.02),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => selectedCategoryIndex = 2),
-                    child: SizedBox(
-                      height: size.height * 0.15,
-                      child: PlatinumCategory(
-                        isSelected: selectedCategoryIndex == 2,
-                      ),
-                    ),
-                  ),
-                ),
+                _buildCategory('Gold', Icons.diamond, Colors.amber, 0),
+                _buildCategory('Diamond', Icons.diamond_outlined, Colors.blueAccent, 1),
+                _buildCategory('Platinum', Icons.diamond_outlined, Colors.grey, 2),
               ],
             ),
-
-
             SizedBox(height: size.height * 0.05),
 
-            // ✅ أزرار التحكم
-            Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
+            // أزرار التحكم
+            // أزرار التحكم
+Column(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          // البحث بالتاريخ
+          if (_startDate != null && _endDate != null) {
+            context.read<SearchTripByDateBloc>().add(
+              FetchTripsByDate(from: _startDate!, to: _endDate!),
+            );
+          }
 
+          // البحث بالكاتيجوري
+          if (selectedCategoryIndex != -1) {
+            context.read<SearchTripByCategoryBloc>().add(
+              FetchTripsByCategory(category: selectedCategoryIndex + 1),
+            );
+          }
 
-                  onPressed: () {
-                    // البحث بناءً على التاريخ
-                    if (_startDate != null && _endDate != null) {
-                      context.read<SearchTripByDateBloc>().add(
-                        FetchTripsByDate(
-                          from: _startDate!,
-                          to: _endDate!,
-                        ),
-                      );
-                    }
+          // البحث بالـ subDestination
+          if (_subDestinationController.text.isNotEmpty) {
+            context.read<SearchTripBySubDestinationBloc>().add(
+              FetchTripsBySubDestination(
+                subDestination: _subDestinationController.text.trim(),
+              ),
+            );
+          }
 
-                  // البحث بناءً على الكاتيجوري
-                  if (selectedCategoryIndex != -1) {
-                    final categoryNumber = selectedCategoryIndex + 1;
-                    context.read<SearchTripByCategoryBloc>().add(
-                      FetchTripsByCategory(category: categoryNumber),
-                    );
-                  }
+          Navigator.pop(context);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF002E70),
+        ),
+        child: Text(
+          isArabic ? 'حسناً' : 'Ok',
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    ),
+    const SizedBox(height: 8),
+    SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () => Navigator.pop(context, null),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+        child: Text(
+          isArabic ? 'إلغاء' : 'Cancel',
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    ),
+    const SizedBox(height: 8),
+    // زر Back to all trips بنفس لوجيك VideoPlayerScreen
+    SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          // Reset الرحلات
+          context.read<SearchTripByDateBloc>().add(FetchTripsByDate(
+            from: DateTime(2000),
+            to: DateTime(2100),
+          ));
+          context.read<SearchTripByCategoryBloc>().add(FetchTripsByCategory(category: 0));
+          context.read<SearchTripBySubDestinationBloc>().add(FetchTripsBySubDestination(subDestination: ''));
 
-                  // البحث بالـ subDestination
-                  if (_subDestinationController.text.isNotEmpty) {
-                    context.read<SearchTripBySubDestinationBloc>().add(
-                      FetchTripsBySubDestination(
-                        subDestination: _subDestinationController.text.trim(),
-                      ),
-                    );
-                  }
+          Navigator.pop(context); // اغلاق الـ Dialog
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF002E70),
+        ),
+        child: Text(
+          isArabic ? 'العودة لكل الرحلات' : 'Back to all trips',
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    ),
+  ],
+),
 
-                  Navigator.pop(context);
-                },
-
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF002E70),
-                    ),
-                    child: Text(
-                      isArabic ? 'حسناً' : 'Ok',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: size.height * 0.01),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context, null),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightBlue,
-                    ),
-                    child: Text(
-                      isArabic ? 'إلغاء' : 'Cancel',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
