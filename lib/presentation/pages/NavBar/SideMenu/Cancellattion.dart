@@ -13,6 +13,8 @@ class Cancellattion extends StatefulWidget {
 class _CancellattionState extends State<Cancellattion> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -51,6 +53,21 @@ class _CancellattionState extends State<Cancellattion> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    20,
+                  ), // هنا بتتحكم في النعومة
+
+                  child: Image.asset(
+                    "assets/images/cancellation.png",
+                    width: screenWidth * 0.8,
+                    height: screenHeight * 0.20,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation2,
                 style: const TextStyle(

@@ -12,6 +12,8 @@ class Privacypolicy extends StatefulWidget {
 class _PrivacypolicyState extends State<Privacypolicy> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -51,6 +53,14 @@ class _PrivacypolicyState extends State<Privacypolicy> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ClipRRect(
+                child: Image.asset(
+                  "assets/images/privacy.png",
+                  width: screenWidth * 0.9,
+                  height: screenHeight * 0.20,
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
               Text(
                 AppLocalizations.of(context)!.introduction,
                 style: const TextStyle(
