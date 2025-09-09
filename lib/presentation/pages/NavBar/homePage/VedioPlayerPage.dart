@@ -102,7 +102,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
       if (allTripsData.isEmpty) {
         setState(() {
-          _initialErrorMessage = 'No trips available';
+        _initialErrorMessage = AppLocalizations.of(context)!.noTrips;
           _isLoadingFirstPage = false;
         });
         return;
@@ -381,8 +381,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     _initializeAndPreloadVideo(0, autoPlay: true);
                   }
                 },
-                  child: Text(
-                    "Back to all trips",
+                  child: Text(AppLocalizations.of(context)!.backToAllTrips,
                     style: TextStyle(
                       color: Colors.white, // النص (foreground)
                     ),
@@ -530,7 +529,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          await showDialog<void>(
+
+                                // 1️⃣ إعادة تحميل كل الرحلات في السيرش
+
+                          final result = await showDialog<bool>(
                             context: context,
                             builder: (ctx) => Dialog(
                               backgroundColor: Colors.white.withOpacity(0.95),
@@ -543,6 +545,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                               ),
                             ),
                           );
+                          if(result == true){
+                            
+                             _disposeAllVideos(); // وقف كل الفيديوهات القديمة
+
+                            _fetchAllTrips();
+                          }
                         },
                       ),
                     ),
@@ -579,7 +587,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                         ),
                         child: RightButtons(
                           selectedTripIndex: index,
-                          currentTripCategory: currentTrip['category'] ?? 0,
+                         // currentTripCategory: currentTrip['category'] ?? -1,
                           personCounterKey: _personCounterKeys[index],
                         ),
                       ),
@@ -659,38 +667,31 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     );
   }
 
-  void _updateTripsList(List<GetTripModel> trips) {
-    if (!mounted) return;
-    final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
+void _updateTripsList(List<GetTripModel> trips) {
+  if (!mounted) return;
+  _disposeAllVideos();
 
-    // أول حاجة: اقفل كل الفيديوهات القديمة
-    _disposeAllVideos();
+  final filteredTrips = trips.map((trip) => trip.toVideoPlayerJson()).toList();
 
-    setState(() {
-      _currentPage = 0;
-      _isLoadingMore = false;
-      _hasMoreData = newTrips.length > _perPage;
-      _trips = newTrips;
-      _personCounterKeys = List.generate(
-        _trips.length,
-        (index) => GlobalKey<PersonCounterWithPriceState>(),
-      );
-      _isLoadingFirstPage = false;
-      _initialErrorMessage =
-          _trips.isEmpty ? "No trips found for this choice" : "";
-    });
+  setState(() {
+    _trips = filteredTrips;
+    _personCounterKeys = List.generate(
+      filteredTrips.length,
+      (index) => GlobalKey<PersonCounterWithPriceState>(),
+    );
+    _currentIndex = 0;
+    _isLoadingFirstPage = false;
+    _hasMoreData = filteredTrips.length > _perPage;
+    _currentPage = 0;
+  });
 
-    // ✨ بعد ما يتعمل setState وتخلص، نرجّع الـ PageView لأول صفحة ونجهّز الفيديو
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.jumpToPage(0);
-      }
-      if (_trips.isNotEmpty) {
-        _initializeAndPreloadVideo(0, autoPlay: true);
-        if (_trips.length > 1) _initializeAndPreloadVideo(1);
-      }
-    });
-  }
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    _scrollController.jumpToPage(0);
+    if (_trips.isNotEmpty) _initializeAndPreloadVideo(0, autoPlay: true);
+    if (_trips.length > 1) _initializeAndPreloadVideo(1);
+  });
+}
+
 
 
   void _showErrorSnackBar(String message) {

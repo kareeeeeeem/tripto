@@ -130,14 +130,13 @@ class _SearchDialogState extends State<SearchDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildCategory('Gold', Icons.diamond, Colors.amber, 0),
-                _buildCategory('Diamond', Icons.diamond_outlined, Colors.blueAccent, 1),
-                _buildCategory('Platinum', Icons.diamond_outlined, Colors.grey, 2),
+                _buildCategory( isArabic ? "ذهبي" : "Gold"    , Icons.diamond, Colors.amber, 0),
+                _buildCategory( isArabic? "الماسي" : "Diamond" , Icons.diamond_outlined, Colors.blueAccent, 1),
+                _buildCategory( isArabic? "بلاتيني" : 'Platinum', Icons.diamond_outlined, Colors.grey, 2),
               ],
             ),
             SizedBox(height: size.height * 0.05),
 
-            // أزرار التحكم
             // أزرار التحكم
 Column(
   mainAxisSize: MainAxisSize.min,
@@ -193,32 +192,27 @@ Column(
       ),
     ),
     const SizedBox(height: 8),
-    // زر Back to all trips بنفس لوجيك VideoPlayerScreen
-    SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          // Reset الرحلات
-          context.read<SearchTripByDateBloc>().add(FetchTripsByDate(
-            from: DateTime(2000),
-            to: DateTime(2100),
-          ));
-          context.read<SearchTripByCategoryBloc>().add(FetchTripsByCategory(category: 0));
-          context.read<SearchTripBySubDestinationBloc>().add(FetchTripsBySubDestination(subDestination: ''));
 
-          Navigator.pop(context); // اغلاق الـ Dialog
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF002E70),
-        ),
-        child: Text(
-          isArabic ? 'العودة لكل الرحلات' : 'Back to all trips',
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
-  ],
-),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // 1️⃣ إعادة تحميل كل الرحلات
+                  Navigator.pop(context, true); // نرجع true للدلالة على "كل الرحلات"
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 4, 112, 0),
+                ),
+                child: Text(
+                  isArabic ? 'كل الرحلات' : 'All trips',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+
+
+              ],
+            ),
 
           ],
         ),

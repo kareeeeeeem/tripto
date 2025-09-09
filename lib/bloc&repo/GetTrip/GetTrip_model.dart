@@ -51,7 +51,7 @@ class GetTripModel {
     // معالجة category لتحويلها من String إلى int إذا لزم الأمر
     final categoryValue = json['category']?.toString();
     final parsedCategory =
-        categoryValue != null ? int.tryParse(categoryValue) ?? 0 : 0;
+        categoryValue != null ? int.tryParse(categoryValue) ?? -1 : -1;
 
     // معالجة التواريخ
     DateTime? parseDateTime(dynamic date) {

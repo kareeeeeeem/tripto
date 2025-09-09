@@ -335,7 +335,9 @@
   "search": "Search",
   "enterHotelName": "Enter hotel name",
   "cancel": "Cancel",
-  "cancelHotel": "Cancel hotel"
+  "cancelHotel": "Cancel hotel",
+  "noTrips": "No trips available",
+  "backToAllTrips": "Back to all trips"
 
 
 

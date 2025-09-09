@@ -1073,4 +1073,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterHotelName => 'Enter hotel name';
+
+  @override
+  String get noTrips => 'No trips available';
+
+  @override
+  String get backToAllTrips => 'Back to all trips';
 }

@@ -332,10 +332,11 @@
   "sendreport": "إرسال تقرير",
   "hotel": "الفندق",
   "search": "البحث",
+  "enterHotelName": "ادخل اسم الفندق",
   "cancel": "إلغاء",
   "continueButton": "متابعة",
-  "cancelHotel": "إلغاء الفندق"
-
-
+  "cancelHotel": "إلغاء الفندق",
+  "noTrips": "لا توجد رحلات",
+  "backToAllTrips": "العودة إلى كل الرحلات"
 
 }

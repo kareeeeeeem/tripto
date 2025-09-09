@@ -1064,5 +1064,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get search => 'البحث';
 
   @override
-  String get enterHotelName => 'Enter hotel name';
+  String get enterHotelName => 'ادخل اسم الفندق';
+
+  @override
+  String get noTrips => 'لا توجد رحلات';
+
+  @override
+  String get backToAllTrips => 'العودة إلى كل الرحلات';
 }
