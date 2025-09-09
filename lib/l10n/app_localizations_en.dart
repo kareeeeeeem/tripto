@@ -1079,4 +1079,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backToAllTrips => 'Back to all trips';
+
+  @override
+  String get issue => 'Description issue';
 }

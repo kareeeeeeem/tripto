@@ -2011,6 +2011,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to all trips'**
   String get backToAllTrips;
+
+  /// No description provided for @issue.
+  ///
+  /// In en, this message translates to:
+  /// **'Description issue'**
+  String get issue;
 }
 
 class _AppLocalizationsDelegate
