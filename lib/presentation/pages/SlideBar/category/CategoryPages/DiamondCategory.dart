@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/DiagonalPainter.dart';
-
 import '../../../../../l10n/app_localizations.dart';
 
 class DiamondCategory extends StatelessWidget {
@@ -9,59 +7,46 @@ class DiamondCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 200,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFE9F1F1), // Diamond Light Blue
-            Color(0x55BAE0EB),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          AppLocalizations.of(context)!.diamond,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+            fontSize: 16,
+          ),
         ),
-        boxShadow: [
-          if (isSelected)
-            const BoxShadow(
-              color: Colors.blueAccent,
-              blurRadius: 10,
-              spreadRadius: 2,
+        const SizedBox(height: 8),
+        Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.lightBlueAccent.withOpacity(0.3), // خلفية دائرية خفيفة
+            border: Border.all(
+              color: Colors.lightBlueAccent,
+              width: 2,
             ),
-        ],
-        border: Border.all(
-          color: isSelected ? Colors.blueAccent : Colors.cyanAccent,
-          width: isSelected ? 3 : 2,
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            Positioned.fill(child: CustomPaint(painter: DiagonalPainter())),
-            Positioned(
-              top: 10,
-              left: 10,
-              child: Text(
-                AppLocalizations.of(context)!.diamond,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+            boxShadow: [
+              if (isSelected)
+                const BoxShadow(
+                  color: Colors.blueAccent,
+                  blurRadius: 10,
+                  spreadRadius: 2,
                 ),
-              ),
+            ],
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.diamond_outlined,
+              size: 40,
+              color: Color(0xFFE9F1F1), // لون الجوهره الأصلي
             ),
-            const Center(
-              child: Icon(
-                Icons.diamond_outlined,
-                size: 50,
-                color: Color(0xFFE9F1F1),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

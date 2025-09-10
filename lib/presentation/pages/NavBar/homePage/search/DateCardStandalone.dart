@@ -1,64 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 
-class DateCardStandalone extends StatefulWidget {
+class ArabicDateRangePicker extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
-  final DateTime? initialRangeStart;
-  final DateTime? initialRangeEnd;
 
-  const DateCardStandalone({
-    super.key,
+  const ArabicDateRangePicker({
+    Key? key,
     required this.firstDate,
     required this.lastDate,
-    this.initialRangeStart,
-    this.initialRangeEnd,
-  });
-
-  DateTime getLastDatePlusOneDay() {
-    return lastDate.add(const Duration(days: 1));
-  }
+  }) : super(key: key);
 
   @override
-  State<DateCardStandalone> createState() => _DateCardStandaloneState();
+  State<ArabicDateRangePicker> createState() => _ArabicDateRangePickerState();
 }
 
-class _DateCardStandaloneState extends State<DateCardStandalone> {
-  DateTime _focusedDay = DateTime.now();
+class _ArabicDateRangePickerState extends State<ArabicDateRangePicker> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
 
-  final CalendarFormat _calendarFormat = CalendarFormat.month;
-
-  @override
-  void initState() {
-    super.initState();
-    // ✅ بدل lastDate بـ DateTime.now()
-    _focusedDay = widget.initialRangeEnd ?? DateTime.now();
-    _rangeStart = widget.initialRangeStart;
-    _rangeEnd = widget.initialRangeEnd;
-
-    _focusedDay = _clampDate(_focusedDay);
-    _rangeStart = _rangeStart != null ? _clampDate(_rangeStart!) : null;
-    _rangeEnd = _rangeEnd != null ? _clampDate(_rangeEnd!) : null;
+  String _arabicDigits(String input) {
+    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    for (int i = 0; i < 10; i++) {
+      input = input.replaceAll(english[i], arabic[i]);
+    }
+    return input;
   }
 
-  DateTime _clampDate(DateTime date) {
-    if (date.isBefore(widget.firstDate)) return widget.firstDate;
-    if (date.isAfter(widget.lastDate)) return widget.lastDate;
-    return date;
-  }
+  String _formatDate(BuildContext context, DateTime date) {
+    final locale = Localizations.localeOf(context).languageCode;
+    String formatted = DateFormat('yyyy-MM-dd', locale).format(date);
 
-  String _formatDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+    if (locale == 'ar') {
+      return _arabicDigits(formatted);
+    }
+    return formatted;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isSelectionValid = _rangeStart != null && _rangeEnd != null;
+    final locale = Localizations.localeOf(context).languageCode;
+    final loc = AppLocalizations.of(context)!;
 
     return AlertDialog(
       backgroundColor: Colors.white,
-      surfaceTintColor: Colors.transparent,
       contentPadding: EdgeInsets.zero,
       content: Container(
         width: double.maxFinite,
@@ -66,80 +55,152 @@ class _DateCardStandaloneState extends State<DateCardStandalone> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 12),
             TableCalendar(
+              locale: locale,
               firstDay: widget.firstDate,
               lastDay: widget.lastDate,
-              focusedDay: _focusedDay,
-              calendarFormat: _calendarFormat,
-              rangeSelectionMode: RangeSelectionMode.toggledOn,
-              rangeStartDay: _rangeStart,
-              rangeEndDay: _rangeEnd,
-
-              onRangeSelected: (start, end, focusedDay) {
-                setState(() {
-                  _rangeStart = start;
-                  _rangeEnd = end;
-                  _focusedDay = focusedDay;
-                });
-                debugPrint("Start: $start | End: $end");
-              },
-
-              headerStyle: const HeaderStyle(
+              focusedDay: _rangeStart ?? DateTime.now(),
+              headerStyle: HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
+                titleTextFormatter: (date, locale) {
+                  final formatted = DateFormat.yMMMM(locale).format(date);
+                  return locale == 'ar' ? _arabicDigits(formatted) : formatted;
+                },
               ),
-              calendarStyle: const CalendarStyle(
-                todayDecoration: BoxDecoration(
-                  color: Color.fromARGB(255, 3, 3, 174),
-                  shape: BoxShape.circle,
-                ),
-                rangeStartDecoration: BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                rangeEndDecoration: BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                withinRangeDecoration: BoxDecoration(
-                  color: Colors.lightBlueAccent,
-                  shape: BoxShape.rectangle,
-                ),
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              selectedDayPredicate: (day) {
+                if (_rangeStart != null && _rangeEnd != null) {
+                  return day.isAfter(_rangeStart!.subtract(const Duration(days: 1))) &&
+                      day.isBefore(_rangeEnd!.add(const Duration(days: 1)));
+                }
+                if (_rangeStart != null && _rangeEnd == null) {
+                  return isSameDay(day, _rangeStart);
+                }
+                return false;
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  if (_rangeStart == null || (_rangeStart != null && _rangeEnd != null)) {
+                    _rangeStart = selectedDay;
+                    _rangeEnd = null;
+                  } else if (_rangeStart != null && _rangeEnd == null) {
+                    if (selectedDay.isBefore(_rangeStart!)) {
+                      _rangeEnd = _rangeStart;
+                      _rangeStart = selectedDay;
+                    } else {
+                      _rangeEnd = selectedDay;
+                    }
+                  }
+                });
+              },
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (context, day, focusedDay) {
+                  final text =
+                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                  return Center(
+                    child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  );
+                },
+                todayBuilder: (context, day, focusedDay) {
+                  final text =
+                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                  return Center(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        text,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  );
+                },
+                selectedBuilder: (context, day, focusedDay) {
+                  final text =
+                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                  return Center(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        text,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  );
+                },
+                outsideBuilder: (context, day, focusedDay) {
+                  final text =
+                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                  return Center(
+                    child: Text(
+                      text,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  );
+                },
+                disabledBuilder: (context, day, focusedDay) {
+                  final text =
+                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                  return Center(
+                    child: Text(
+                      text,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  );
+                },
               ),
             ),
-
             const SizedBox(height: 16),
-            if (isSelectionValid) ...[
-              Text(
-                "You chose from ${_formatDate(_rangeStart!)}",
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
+            if (_rangeStart != null && _rangeEnd != null)
+              Column(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.youChoseFrom(
+                      _formatDate(context, _rangeStart!),
+                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    AppLocalizations.of(context)!.youChoseTo(
+                      _formatDate(context, _rangeEnd!),
+                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                "You chose to ${_formatDate(_rangeEnd!)}",
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
-              ),
-            ],
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, null),
-                  child: const Text("Cancel"),
+                  child: Text(loc.cancel),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
-                  onPressed:
-                      isSelectionValid
-                          ? () {
-                            Navigator.pop(context, {
-                              'range_start': _rangeStart,
-                              'range_end': _rangeEnd,
-                            });
-                          }
-                          : null,
-                  child: const Text("Ok"),
+                  onPressed: (_rangeStart != null && _rangeEnd != null)
+                      ? () {
+                          Navigator.pop(context, {
+                            'range_start': _rangeStart!,
+                            'range_end': _rangeEnd!,
+                          });
+                        }
+                      : null,
+                  child: Text(loc.ok),
                 ),
               ],
             ),

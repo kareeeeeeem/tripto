@@ -22,24 +22,36 @@ class _SearchDialogState extends State<SearchDialog> {
   DateTime? _endDate;
   int selectedCategoryIndex = -1;
 
-  Future<void> _pickDateRange(BuildContext context) async {
-    final result = await showDialog<Map<String, DateTime?>>(
-      context: context,
-      builder: (ctx) => DateCardStandalone(
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2100),
-        initialRangeStart: _startDate,
-        initialRangeEnd: _endDate,
-      ),
-    );
+  String _arabicDigits(String input) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    if (!isArabic) return input;
 
-    if (result != null) {
-      setState(() {
-        _startDate = result['range_start'];
-        _endDate = result['range_end'];
-      });
+    const english = ['0','1','2','3','4','5','6','7','8','9'];
+    const arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+    for (int i = 0; i < 10; i++) {
+      input = input.replaceAll(english[i], arabic[i]);
     }
+    return input;
   }
+void _showDatePicker(BuildContext context) async {
+  final result = await showDialog(
+    context: context,
+    builder: (context) => ArabicDateRangePicker(
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    ),
+  );
+
+  if (result != null) {
+    setState(() {
+      _startDate = result['range_start'];
+      _endDate = result['range_end'];
+    });
+  }
+}
+
+
 
   Widget _buildCategory(String label, IconData iconData, Color color, int index) {
     final isSelected = selectedCategoryIndex == index;
@@ -48,31 +60,17 @@ class _SearchDialogState extends State<SearchDialog> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black, // نص ثابت
-            ),
-          ),
-
+          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           const SizedBox(height: 8),
-          
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            width: isSelected ? 80 : 70,  // يكبر لو متحدد
+            width: isSelected ? 80 : 70,
             height: isSelected ? 80 : 70,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: isSelected
-                  ? [BoxShadow(color: Colors.black26, blurRadius: 6)]
-                  : [],
+              boxShadow: isSelected ? [BoxShadow(color: Colors.black26, blurRadius: 6)] : [],
             ),
-            child: Icon(
-              iconData,
-              size: isSelected ? 60 : 50,  // يكبر لو متحدد
-              color: color,  // اللون ثابت
-            ),
+            child: Icon(iconData, size: isSelected ? 60 : 50, color: color),
           ),
         ],
       ),
@@ -81,7 +79,7 @@ class _SearchDialogState extends State<SearchDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('yyyy-MM-dd');
+    final dateFormat = DateFormat('yyyy-MM-dd', Localizations.localeOf(context).languageCode);
     final size = MediaQuery.of(context).size;
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
@@ -92,128 +90,94 @@ class _SearchDialogState extends State<SearchDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              isArabic ? "بحث" : "Search",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: size.height * 0.08),
+            Text(isArabic ? "بحث" : "Search", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.05),
 
-            // إدخال الوجهة الفرعية
             TextField(
               controller: _subDestinationController,
               decoration: InputDecoration(
-                hintText: isArabic ? "وجهة فرعية (مثال: الجيزة)" : "Sub-destination (e.g., Giza)",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.lightBlue),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Colors.lightBlue),
-                ),
+                hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
+                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
               ),
             ),
             SizedBox(height: size.height * 0.03),
 
             // اختيار التاريخ
-            ElevatedButton(
-              onPressed: () => _pickDateRange(context),
-              child: Text(
-                (_startDate == null || _endDate == null)
-                    ? (isArabic ? "اختر التاريخ" : "Select Date")
-                    : "${dateFormat.format(_startDate!)} → ${dateFormat.format(_endDate!)}",
+              ElevatedButton.icon(
+                onPressed: () => _showDatePicker(context),
+                icon: const Icon(Icons.date_range, color: Colors.white),
+                label: Text(
+                  (_startDate == null || _endDate == null)
+                      ? (isArabic ? "اختر التاريخ" : "Select Date")
+                      : "${DateFormat('yyyy-MM-dd', 'ar').format(_startDate!)} → ${DateFormat('yyyy-MM-dd', 'ar').format(_endDate!)}",
+                  style: const TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 4,
+                  shadowColor: Colors.black45,
+                ),
               ),
-            ),
+
             SizedBox(height: size.height * 0.04),
 
-            // اختيار الكاتيجوري
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildCategory( isArabic ? "ذهبي" : "Gold"    , Icons.diamond, Colors.amber, 0),
-                _buildCategory( isArabic? "الماسي" : "Diamond" , Icons.diamond_outlined, Colors.blueAccent, 1),
-                _buildCategory( isArabic? "بلاتيني" : 'Platinum', Icons.diamond_outlined, Colors.grey, 2),
+                _buildCategory(isArabic ? "ذهبي" : "Gold", Icons.diamond, Colors.amber, 0),
+                _buildCategory(isArabic ? "الماسي" : "Diamond", Icons.diamond_outlined, Colors.blueAccent, 1),
+                _buildCategory(isArabic ? "بلاتيني" : 'Platinum', Icons.diamond_outlined, Colors.grey, 2),
               ],
             ),
             SizedBox(height: size.height * 0.05),
 
-            // أزرار التحكم
-Column(
-  mainAxisSize: MainAxisSize.min,
-  children: [
-    SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          // البحث بالتاريخ
-          if (_startDate != null && _endDate != null) {
-            context.read<SearchTripByDateBloc>().add(
-              FetchTripsByDate(from: _startDate!, to: _endDate!),
-            );
-          }
-
-          // البحث بالكاتيجوري
-          if (selectedCategoryIndex != -1) {
-            context.read<SearchTripByCategoryBloc>().add(
-              FetchTripsByCategory(category: selectedCategoryIndex + 1),
-            );
-          }
-
-          // البحث بالـ subDestination
-          if (_subDestinationController.text.isNotEmpty) {
-            context.read<SearchTripBySubDestinationBloc>().add(
-              FetchTripsBySubDestination(
-                subDestination: _subDestinationController.text.trim(),
-              ),
-            );
-          }
-
-          Navigator.pop(context);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF002E70),
-        ),
-        child: Text(
-          isArabic ? 'حسناً' : 'Ok',
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
-    const SizedBox(height: 8),
-    SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () => Navigator.pop(context, null),
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
-        child: Text(
-          isArabic ? 'إلغاء' : 'Cancel',
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
-    const SizedBox(height: 8),
-
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // 1️⃣ إعادة تحميل كل الرحلات
-                  Navigator.pop(context, true); // نرجع true للدلالة على "كل الرحلات"
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 4, 112, 0),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_startDate != null && _endDate != null) {
+                        context.read<SearchTripByDateBloc>().add(FetchTripsByDate(from: _startDate!, to: _endDate!));
+                      }
+                      if (selectedCategoryIndex != -1) {
+                        context.read<SearchTripByCategoryBloc>().add(FetchTripsByCategory(category: selectedCategoryIndex));
+                      }
+                      if (_subDestinationController.text.isNotEmpty) {
+                        context.read<SearchTripBySubDestinationBloc>().add(FetchTripsBySubDestination(subDestination: _subDestinationController.text.trim()));
+                      }
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF002E70)),
+                    child: Text(isArabic ? 'حسناً' : 'Ok', style: const TextStyle(color: Colors.white)),
+                  ),
                 ),
-                child: Text(
-                  isArabic ? 'كل الرحلات' : 'All trips',
-                  style: const TextStyle(color: Colors.white),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context, null),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+                    child: Text(isArabic ? 'إلغاء' : 'Cancel', style: const TextStyle(color: Colors.white)),
+                  ),
                 ),
-              ),
-            ),
-
-
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 18, 114, 159)),
+                    child: Text(isArabic ? 'كل الرحلات' : 'All trips', style: const TextStyle(color: Colors.white)),
+                  ),
+                ),
               ],
             ),
-
           ],
         ),
       ),

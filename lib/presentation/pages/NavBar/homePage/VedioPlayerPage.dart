@@ -395,34 +395,56 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     return MultiBlocListener(
       listeners: [
-        BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
+
+
+
+                BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
           listener: (context, state) {
             if (state is SearchTripByDateLoaded) {
               _updateTripsList(state.trips);
-            } else if (state is SearchTripByDateError) {
-              _showErrorSnackBar(state.message);
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             }
           },
         ),
-        BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
+
+
+                BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
           listener: (context, state) {
             if (state is SearchTripByCategoryLoaded) {
               _updateTripsList(state.trips);
+
+              // ✨ هنا تضيف
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             } else if (state is SearchTripByCategoryError) {
               _showErrorSnackBar(state.message);
             }
           },
         ),
+
+
+
+
+
+
         BlocListener<SearchTripBySubDestinationBloc, SearchTripBySubDestinationState>(
           listener: (context, state) {
             if (state is SearchTripBySubDestinationLoaded) {
               _updateTripsList(state.trips);
-            } else if (state is SearchTripBySubDestinationError) {
-              _showErrorSnackBar(state.message);
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             }
           },
         ),
+              
+              
+      
+      
       ],
+
+
+
+
+
+
       child: Scaffold(
         backgroundColor: Colors.black,
         body: NotificationListener<OverscrollNotification>(
@@ -586,8 +608,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                                   : 0,
                         ),
                         child: RightButtons(
-                          selectedTripIndex: index,
-                         // currentTripCategory: currentTrip['category'] ?? -1,
+                           tripId: currentTrip['id'],
+
+
+                          currentTripCategory: currentTrip['category'] ?? -1,
                           personCounterKey: _personCounterKeys[index],
                         ),
                       ),
@@ -667,31 +691,38 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     );
   }
 
-void _updateTripsList(List<GetTripModel> trips) {
-  if (!mounted) return;
-  _disposeAllVideos();
+  void _updateTripsList(List<GetTripModel> trips) {
+    if (!mounted) return;
+    // أول حاجة: اقفل كل الفيديوهات القديمة
+    _disposeAllVideos();
 
-  final filteredTrips = trips.map((trip) => trip.toVideoPlayerJson()).toList();
+    final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
 
-  setState(() {
-    _trips = filteredTrips;
-    _personCounterKeys = List.generate(
-      filteredTrips.length,
-      (index) => GlobalKey<PersonCounterWithPriceState>(),
-    );
-    _currentIndex = 0;
-    _isLoadingFirstPage = false;
-    _hasMoreData = filteredTrips.length > _perPage;
-    _currentPage = 0;
-  });
+    setState(() {
+      _currentPage = 0;
+      _isLoadingMore = false;
+      _hasMoreData = newTrips.length > _perPage;
+      _trips = newTrips;
+      _personCounterKeys = List.generate(
+        _trips.length,
+        (index) => GlobalKey<PersonCounterWithPriceState>(),
+      );
+      _isLoadingFirstPage = false;
+      _initialErrorMessage =
+          _trips.isEmpty ? AppLocalizations.of(context)!.noTrips : "";
+    });
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    _scrollController.jumpToPage(0);
-    if (_trips.isNotEmpty) _initializeAndPreloadVideo(0, autoPlay: true);
-    if (_trips.length > 1) _initializeAndPreloadVideo(1);
-  });
-}
-
+    // ✨ بعد ما يتعمل setState وتخلص، نرجّع الـ PageView لأول صفحة ونجهّز الفيديو
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpToPage(0);
+      }
+      if (_trips.isNotEmpty) {
+        _initializeAndPreloadVideo(0, autoPlay: true);
+        if (_trips.length > 1) _initializeAndPreloadVideo(1);
+      }
+    });
+  }
 
 
   void _showErrorSnackBar(String message) {
