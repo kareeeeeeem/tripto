@@ -51,14 +51,14 @@ class _ButtonData {
 }
 
 class RightButtons extends StatefulWidget {
-  final int selectedTripIndex;
+  final int tripId;
   final GlobalKey<PersonCounterWithPriceState>? personCounterKey;
   final DateTime? startDate; // ← جديد
   final DateTime? endDate;
 
   const RightButtons({
     super.key,
-    this.selectedTripIndex = 0,
+    required this.tripId,
     required currentTripCategory,
     this.personCounterKey, // ← أضف هذا
 
@@ -110,8 +110,11 @@ class _RightButtonsState extends State<RightButtons> {
     if (tripState is! TripLoaded || tripState.trips.isEmpty) {
       return const SizedBox();
     }
+      final trip = tripState.trips.firstWhere(
+        (t) => t.id == widget.tripId,
+        orElse: () => tripState.trips.first,
+      );
 
-    final trip = tripState.trips[widget.selectedTripIndex];
     final bool showHotel = trip.hasHotel == true || trip.hasHotel == 1;
     final bool showCar = trip.hasCar == true || trip.hasCar == 1;
     final bool showActivity = trip.hasActivity;

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 
 abstract class TripEvent extends Equatable {
   const TripEvent();
@@ -36,3 +37,38 @@ class ChangeCurrentTripEvent extends TripEvent {
   @override
   List<Object?> get props => [newIndex];
 }
+
+
+
+
+
+class SetTripsEvent extends TripEvent {
+  final List<GetTripModel> trips;
+  SetTripsEvent(this.trips);
+}
+
+
+class SelectHotelForTrip extends TripEvent {
+  final int tripId;
+  final int hotelId;
+  const SelectHotelForTrip(this.tripId, this.hotelId);
+}
+
+class SelectCarForTrip extends TripEvent {
+  final int tripId;
+  final int carId;
+  const SelectCarForTrip(this.tripId, this.carId);
+}
+
+class SelectActivityForTrip extends TripEvent {
+  final int tripId;
+  final int activityId;
+  const SelectActivityForTrip(this.tripId, this.activityId);
+}
+
+class SelectCategoryForTrip extends TripEvent {
+  final int tripId;
+  final int categoryValue;
+  const SelectCategoryForTrip(this.tripId, this.categoryValue);
+}
+

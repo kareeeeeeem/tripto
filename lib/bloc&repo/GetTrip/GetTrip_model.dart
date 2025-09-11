@@ -51,7 +51,7 @@ class GetTripModel {
     // معالجة category لتحويلها من String إلى int إذا لزم الأمر
     final categoryValue = json['category']?.toString();
     final parsedCategory =
-        categoryValue != null ? int.tryParse(categoryValue) ?? 0 : 0;
+        categoryValue != null ? int.tryParse(categoryValue) ?? -1 : -1;
 
     // معالجة التواريخ
     DateTime? parseDateTime(dynamic date) {
@@ -148,19 +148,28 @@ class GetTripModel {
       subDestination?['name_en']?.toString() ?? '';
 
   Map<String, dynamic> toVideoPlayerJson() {
-    return {
-      'id': id,
-      'destination': destination ?? {},
-      'sub_destination': subDestination ?? {},
-      'destination_name_ar': destinationNameAr,
-      'destination_name_en': destinationNameEn,
-      'sub_destination_name_ar': subDestinationNameAr,
-      'sub_destination_name_en': subDestinationNameEn,
-      'price': price,
-      'price_per_person': pricePerPerson,
-      'video_url': videoUrl,
-      'from_date': fromDate,
-      'to_date': toDate,
-    };
-  }
+  return {
+    "id": id,
+    "video_url": videoUrl,
+    "price": price,
+    "price_per_person": pricePerPerson,
+    "from_date": fromDate,
+    "to_date": toDate,
+    "destination": destination ?? {},
+    "sub_destination": subDestination ?? {},
+    "destination_name_ar": destinationNameAr,
+    "destination_name_en": destinationNameEn,
+    "sub_destination_name_ar": subDestinationNameAr,
+    "sub_destination_name_en": subDestinationNameEn,
+    
+    // ✅ الحقول اللي RightButtons محتاجها
+    "has_car": hasCar,
+    "has_hotel": hasHotel,
+    "has_fly": hasFly,
+    "has_activity": hasActivity,
+    "category": category,
+    "max_persons": maxPersons,
+  };
+}
+
 }

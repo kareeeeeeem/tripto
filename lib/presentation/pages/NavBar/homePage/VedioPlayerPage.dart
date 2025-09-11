@@ -102,7 +102,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
       if (allTripsData.isEmpty) {
         setState(() {
-          _initialErrorMessage = 'No trips available';
+        _initialErrorMessage = AppLocalizations.of(context)!.noTrips;
           _isLoadingFirstPage = false;
         });
         return;
@@ -381,8 +381,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     _initializeAndPreloadVideo(0, autoPlay: true);
                   }
                 },
-                  child: Text(
-                    "Back to all trips",
+                  child: Text(AppLocalizations.of(context)!.backToAllTrips,
                     style: TextStyle(
                       color: Colors.white, // النص (foreground)
                     ),
@@ -396,34 +395,56 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     return MultiBlocListener(
       listeners: [
-        BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
+
+
+
+                BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
           listener: (context, state) {
             if (state is SearchTripByDateLoaded) {
               _updateTripsList(state.trips);
-            } else if (state is SearchTripByDateError) {
-              _showErrorSnackBar(state.message);
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             }
           },
         ),
-        BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
+
+
+                BlocListener<SearchTripByCategoryBloc, SearchTripByCategoryState>(
           listener: (context, state) {
             if (state is SearchTripByCategoryLoaded) {
               _updateTripsList(state.trips);
+
+              // ✨ هنا تضيف
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             } else if (state is SearchTripByCategoryError) {
               _showErrorSnackBar(state.message);
             }
           },
         ),
+
+
+
+
+
+
         BlocListener<SearchTripBySubDestinationBloc, SearchTripBySubDestinationState>(
           listener: (context, state) {
             if (state is SearchTripBySubDestinationLoaded) {
               _updateTripsList(state.trips);
-            } else if (state is SearchTripBySubDestinationError) {
-              _showErrorSnackBar(state.message);
+              context.read<TripBloc>().add(SetTripsEvent(state.trips));
             }
           },
         ),
+              
+              
+      
+      
       ],
+
+
+
+
+
+
       child: Scaffold(
         backgroundColor: Colors.black,
         body: NotificationListener<OverscrollNotification>(
@@ -530,7 +551,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          await showDialog<void>(
+
+                                // 1️⃣ إعادة تحميل كل الرحلات في السيرش
+
+                          final result = await showDialog<bool>(
                             context: context,
                             builder: (ctx) => Dialog(
                               backgroundColor: Colors.white.withOpacity(0.95),
@@ -543,6 +567,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                               ),
                             ),
                           );
+                          if(result == true){
+                            
+                             _disposeAllVideos(); // وقف كل الفيديوهات القديمة
+
+                            _fetchAllTrips();
+                          }
                         },
                       ),
                     ),
@@ -578,8 +608,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                                   : 0,
                         ),
                         child: RightButtons(
-                          selectedTripIndex: index,
-                          currentTripCategory: currentTrip['category'] ?? 0,
+                           tripId: currentTrip['id'],
+
+
+                          currentTripCategory: currentTrip['category'] ?? -1,
                           personCounterKey: _personCounterKeys[index],
                         ),
                       ),
@@ -661,10 +693,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   void _updateTripsList(List<GetTripModel> trips) {
     if (!mounted) return;
-    final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
-
     // أول حاجة: اقفل كل الفيديوهات القديمة
     _disposeAllVideos();
+
+    final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
 
     setState(() {
       _currentPage = 0;
@@ -677,7 +709,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       );
       _isLoadingFirstPage = false;
       _initialErrorMessage =
-          _trips.isEmpty ? "No trips found for this choice" : "";
+          _trips.isEmpty ? AppLocalizations.of(context)!.noTrips : "";
     });
 
     // ✨ بعد ما يتعمل setState وتخلص، نرجّع الـ PageView لأول صفحة ونجهّز الفيديو

@@ -1064,7 +1064,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get search => 'البحث';
 
   @override
-  String get enterHotelName => 'Enter hotel name';
+  String get enterHotelName => 'ادخل اسم الفندق';
 
   @override
   String get issue => 'وصف المشكلة';
@@ -1078,4 +1078,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get errorConnection =>
       'تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get noTrips => 'لا توجد رحلات';
+
+  @override
+  String get backToAllTrips => 'العودة إلى كل الرحلات';
 }

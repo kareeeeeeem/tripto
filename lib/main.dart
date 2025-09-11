@@ -32,6 +32,8 @@ final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

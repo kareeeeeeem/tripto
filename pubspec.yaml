@@ -113,6 +113,15 @@ dependencies:
   webview_flutter: ^4.13.0
   #chat to whatsapp
 
+  syncfusion_flutter_calendar: ^31.1.17
+
+  syncfusion_flutter_datepicker: ^31.1.17
+
+  syncfusion_localizations: ^31.1.17
+
+
+
+
 
 dev_dependencies:
   flutter_test:

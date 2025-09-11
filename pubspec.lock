@@ -1146,6 +1146,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
+  syncfusion_flutter_calendar:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_calendar
+      sha256: "24bfd30e538eab8834851a9374119e40dc4b88423e0e6beedbce9d29ba26fe3c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "31.1.17"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "917022225a57ddf1287f9cd840acdcfab3197b92e84964476f6a2f9e87a78ace"
+      url: "https://pub.dev"
+    source: hosted
+    version: "31.1.17"
+  syncfusion_flutter_datepicker:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datepicker
+      sha256: b3662135e1553a7fae40260a9c3b1f1f87aa76bb519294a68c1607bb94345d51
+      url: "https://pub.dev"
+    source: hosted
+    version: "31.1.17"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      sha256: "82fbcf20a0d4ef959d4a7143e0cff323f1a9375d8855b6bd3b4cd5373bd84ce5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "31.1.17"
   synchronized:
     dependency: transitive
     description:
@@ -1178,6 +1210,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
+  timezone:
+    dependency: transitive
+    description:
+      name: timezone
+      sha256: dd14a3b83cfd7cb19e7888f1cbc20f258b8d71b54c06f79ac585f14093a287d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1"
   timing:
     dependency: transitive
     description:

@@ -107,19 +107,19 @@ class _HotelsDialogState extends State<HotelsDialog> {
 
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-    const Spacer(), // يخلي المسافة قبل النص
-        const Spacer(), // يخلي المسافة قبل النص
+                  const Spacer(), // يخلي المسافة قبل النص
+                      const Spacer(), // يخلي المسافة قبل النص
 
-    Center(
-      child: Text(
-        AppLocalizations.of(context)!.hotel,
-        style: const TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    const Spacer(),
+                  Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.hotel,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.search),
                     tooltip: "Search Hotels",
@@ -149,31 +149,30 @@ class _HotelsDialogState extends State<HotelsDialog> {
                             ),
                             actions: [
                                 TextButton(
-  onPressed: () {
-    if (searchQuery.isNotEmpty) {
-      searchBloc.add(
-        SearchHotelsByName(
-          query: searchQuery,
-          subDestinationId: widget.subDestinationId,
-        ),
-      );
-    }
-    Navigator.pop(context);
-  },
-  style: TextButton.styleFrom(
-    backgroundColor: const Color(0xFF002E70), // أزرق داكن للخلفية
-    foregroundColor: Colors.white, // لون النص أبيض
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-  ),
-  child: Text(
-    AppLocalizations.of(context)!.search,
-    style: const TextStyle(fontWeight: FontWeight.bold),
-  ),
-)
-,
+                                onPressed: () {
+                                  if (searchQuery.isNotEmpty) {
+                                    searchBloc.add(
+                                      SearchHotelsByName(
+                                        query: searchQuery,
+                                        subDestinationId: widget.subDestinationId,
+                                      ),
+                                    );
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor: const Color(0xFF002E70), // أزرق داكن للخلفية
+                                  foregroundColor: Colors.white, // لون النص أبيض
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.search,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
                                   style: TextButton.styleFrom(

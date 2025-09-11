@@ -29,9 +29,6 @@ class _CategoryCardState extends State<CategoryCard> {
     _selectedCategoryIndex = widget.initialSelectedCategory;
   }
 
-  // ✅ تم إزالة دالة _onCategorySelected لأننا لن نسمح بالاختيار
-  // لذلك لا حاجة لهذه الدالة بعد الآن.
-
   @override
   Widget build(BuildContext context) {
     final bool isRTL = Directionality.of(context) == TextDirection.rtl;

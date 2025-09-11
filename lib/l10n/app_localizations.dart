@@ -2023,6 +2023,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to connect to server Check your internet connection and try again.'**
   String get errorConnection;
+
+  /// No description provided for @noTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips available'**
+  String get noTrips;
+
+  /// No description provided for @backToAllTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to all trips'**
+  String get backToAllTrips;
 }
 
 class _AppLocalizationsDelegate
