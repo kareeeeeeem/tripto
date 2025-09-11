@@ -1076,4 +1076,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get issue => 'Description issue';
+
+  @override
+  String get noInternetMessage =>
+      'Make sure you are connected to the internet and try again.';
+
+  @override
+  String get tryagain => 'Try again';
+
+  @override
+  String get errorConnection =>
+      'Failed to connect to server Check your internet connection and try again.';
 }

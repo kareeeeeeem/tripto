@@ -336,5 +336,8 @@
   "enterHotelName": "Enter hotel name",
   "cancel": "Cancel",
   "cancelHotel": "Cancel hotel",
-  "issue": "Description issue"
+  "issue": "Description issue",
+  "noInternetMessage": "Make sure you are connected to the internet and try again.",
+  "tryagain": "Try again",
+  "errorConnection": "Failed to connect to server Check your internet connection and try again."
 }

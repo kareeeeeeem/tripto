@@ -14,7 +14,7 @@ import '../../presentation/pages/screens/payment/payment_destination.dart';
 import '../models/activityPageModel.dart';
 
 class AppRoutes {
-  static const splash = '/';
+  static const splash = '/splas';
   static const welcome = '/welcomePage';
   static const app = '/app';
   static const videoPlayer = '/videoPlayer';

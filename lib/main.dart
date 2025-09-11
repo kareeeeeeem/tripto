@@ -22,6 +22,7 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
+import 'package:tripto/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -66,18 +67,22 @@ class _TripToAppState extends State<TripToApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
+        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<ContactusRepository>(
           create: (_) => ContactusRepository(),
         ),
-                RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
-                   RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
-                       RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
-
-
+        RepositoryProvider<SearchTripByDateRepository>(
+          create: (_) => SearchTripByDateRepository(),
+        ),
+        RepositoryProvider<SearchTripByCategoryRepository>(
+          create: (_) => SearchTripByCategoryRepository(),
+        ),
+        RepositoryProvider<SearchTripBySubDestinationRepository>(
+          create: (_) => SearchTripBySubDestinationRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -95,7 +100,7 @@ class _TripToAppState extends State<TripToApp> {
                     TripBloc(RepositoryProvider.of<TripRepository>(context))
                       ..add(FetchTrips()),
           ),
-       
+
           BlocProvider(
             create:
                 (context) => UpdateUserBloc(
@@ -117,22 +122,31 @@ class _TripToAppState extends State<TripToApp> {
                       RepositoryProvider.of<ContactusRepository>(context),
                 ),
           ),
-         BlocProvider<SearchTripByDateBloc>(
-            create: (context) => SearchTripByDateBloc(
-              repository: RepositoryProvider.of<SearchTripByDateRepository>(context),
-            ),
-          ),
-             BlocProvider<SearchTripByCategoryBloc>(
-            create: (context) => SearchTripByCategoryBloc(
-              repository: RepositoryProvider.of<SearchTripByCategoryRepository>(context),
-            ),
-          ),
-             BlocProvider<SearchTripBySubDestinationBloc>(
-                create: (context) => SearchTripBySubDestinationBloc(
-                  repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
+          BlocProvider<SearchTripByDateBloc>(
+            create:
+                (context) => SearchTripByDateBloc(
+                  repository: RepositoryProvider.of<SearchTripByDateRepository>(
+                    context,
+                  ),
                 ),
-              ),
-          
+          ),
+          BlocProvider<SearchTripByCategoryBloc>(
+            create:
+                (context) => SearchTripByCategoryBloc(
+                  repository:
+                      RepositoryProvider.of<SearchTripByCategoryRepository>(
+                        context,
+                      ),
+                ),
+          ),
+          BlocProvider<SearchTripBySubDestinationBloc>(
+            create:
+                (context) => SearchTripBySubDestinationBloc(
+                  repository: RepositoryProvider.of<
+                    SearchTripBySubDestinationRepository
+                  >(context),
+                ),
+          ),
         ],
         child: MaterialApp(
           navigatorObservers: [routeObserver],
@@ -157,7 +171,11 @@ class _TripToAppState extends State<TripToApp> {
           debugShowCheckedModeBanner: false,
 
           routes: AppRoutes.routes,
-          initialRoute: '/',
+          initialRoute: AppRoutes.splash, // أو أي صفحة انت عايز تبدأ بيها
+          builder: (context, child) {
+            // هنا هنلف كل الصفحات بالـ Wrapper
+            return Wrapper(child: child ?? const SizedBox());
+          },
           // home: Report(),
 
           // routes: AppRoutes.routes,

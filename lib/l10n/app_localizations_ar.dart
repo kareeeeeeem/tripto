@@ -1068,4 +1068,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get issue => 'وصف المشكلة';
+
+  @override
+  String get noInternetMessage => 'اتأكد إنك متوصل بالإنترنت وحاول تاني.';
+
+  @override
+  String get tryagain => 'حاول تاني';
+
+  @override
+  String get errorConnection =>
+      'تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.';
 }
