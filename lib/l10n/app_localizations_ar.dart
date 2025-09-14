@@ -1074,4 +1074,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get issue => 'وصف المشكلة';
+
+  @override
+  String get mytrips => ' رحلاتي';
 }

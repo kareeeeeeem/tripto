@@ -1082,4 +1082,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get issue => 'Description issue';
+
+  @override
+  String get mytrips => 'My Trips';
 }

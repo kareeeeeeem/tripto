@@ -14,18 +14,6 @@ class HotelAdelPage extends StatefulWidget {
 class _HotelAdelPageState extends State<HotelAdelPage> {
   final PageController _pageController = PageController(viewportFraction: 0.9);
   int _currentPage = 0;
-  // VideoPlayerController? _videoController;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (widget.hotel.videoUrl.isNotEmpty) {
-  //     _videoController = VideoPlayerController.network(widget.hotel.videoUrl)
-  //       ..initialize().then((_) {
-  //         setState(() {});
-  //       });
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -81,11 +69,6 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
         ),
       ),
-      // if (_videoController != null && _videoController!.value.isInitialized)
-      //   AspectRatio(
-      //     aspectRatio: _videoController!.value.aspectRatio,
-      //     child: VideoPlayer(_videoController!),
-      //   ),
     ];
 
     return Scaffold(

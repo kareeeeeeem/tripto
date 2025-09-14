@@ -22,6 +22,9 @@ class _ArabicDateRangePickerState extends State<ArabicDateRangePicker> {
   DateTime? _rangeEnd;
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
+  
+  
+
   String _arabicDigits(String input) {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
@@ -45,6 +48,7 @@ class _ArabicDateRangePickerState extends State<ArabicDateRangePicker> {
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).languageCode;
     final loc = AppLocalizations.of(context)!;
+
 
     return AlertDialog(
       backgroundColor: Colors.white,
@@ -163,6 +167,10 @@ class _ArabicDateRangePickerState extends State<ArabicDateRangePicker> {
                 },
               ),
             ),
+
+            
+
+
             const SizedBox(height: 16),
             if (_rangeStart != null && _rangeEnd != null)
               Column(

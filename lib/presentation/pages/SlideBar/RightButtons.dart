@@ -38,6 +38,7 @@ Color _getColorForCategory(int categoryValue) {
   }
 }
 
+
 class _ButtonData {
   final Widget iconWidget;
   final String label;
@@ -53,19 +54,35 @@ class _ButtonData {
 class RightButtons extends StatefulWidget {
   final int tripId;
   final GlobalKey<PersonCounterWithPriceState>? personCounterKey;
-  final DateTime? startDate; // ← جديد
+  final DateTime? startDate;
   final DateTime? endDate;
+  final Function(DateTime?, DateTime?)? onDateRangeSelected;
+  final Function(int?, double)? onHotelSelected;
+  final Function(int?, double)? onCarSelected;
+  final Function(int?, double)? onActivitySelected;
+  final Function(int?, double)? onFlightSelected;
+  final int? selectedHotelId;
+  final int? selectedCarId;
+  final int? selectedActivityId;
+  final int? selectedFlightId;
 
   const RightButtons({
     super.key,
     required this.tripId,
     required currentTripCategory,
-    this.personCounterKey, // ← أضف هذا
-
+    this.personCounterKey,
     this.startDate,
     this.endDate,
+    this.onDateRangeSelected,
+    this.onHotelSelected,
+    this.onCarSelected,
+    this.onActivitySelected,
+    this.onFlightSelected,
+    this.selectedHotelId,
+    this.selectedCarId,
+    this.selectedActivityId,
+    this.selectedFlightId,
   });
-
   @override
   State<RightButtons> createState() => _RightButtonsState();
 }
@@ -77,9 +94,16 @@ class _RightButtonsState extends State<RightButtons> {
   Carmodel? selectedCar;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+
   int? selectedHotelId;
   int? selectedCarId;
-  int? selectedActivityId; // ✅ جديد
+  int? selectedActivityId; 
+  double selectedHotelPrice = 0.0;
+  double selectedCarPrice = 0.0;
+  double selectedActivityPrice = 0.0;
+  int? selectedFlightId;
+  double selectedFlightPrice = 0.0;
+
 
   @override
   void initState() {
@@ -122,8 +146,11 @@ class _RightButtonsState extends State<RightButtons> {
     // Get the category value from the trip (converting from string if needed)
     final int categoryValue = int.tryParse(trip.category.toString()) ?? 0;
 
-    // Category Button
 
+
+    ///////////////////////////////////////////////
+    /// Category Button
+    /// 
     buttons.add(
       _ButtonData(
         iconWidget: Transform(
@@ -156,8 +183,13 @@ class _RightButtonsState extends State<RightButtons> {
       ),
     );
 
-    // Date Button
-    if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
+
+
+
+    ///////////////////////////////////////////////
+    /// Date Button
+    /// 
+   if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
           iconWidget: Stack(
@@ -168,18 +200,15 @@ class _RightButtonsState extends State<RightButtons> {
                     ? Icons.flight
                     : Icons.calendar_today,
                 size: 30,
-                color:
-                    selectedIndex == buttons.length
-                        ? selectedIconColor
-                        : defaultIconColor,
+                color: selectedIndex == buttons.length ? Colors.white : Colors.white,
               ),
               if (trip.hasFly == true || trip.hasFly == 1)
                 Positioned(
                   bottom: 0,
                   child: Text(
-                    _selectedFilterDate != null
-                        ? DateFormat('d').format(_selectedFilterDate!)
-                        : '', // لو فاضي ما يظهرش أي رقم
+                    _rangeStart != null
+                        ? DateFormat('d').format(_rangeStart!)
+                        : '',
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -190,10 +219,9 @@ class _RightButtonsState extends State<RightButtons> {
                 ),
             ],
           ),
-          label:
-              (trip.hasFly == true || trip.hasFly == 1)
-                  ? AppLocalizations.of(context)!.fly
-                  : AppLocalizations.of(context)!.date,
+          label: (trip.hasFly == true || trip.hasFly == 1)
+              ? AppLocalizations.of(context)!.fly
+              : AppLocalizations.of(context)!.date,
           onPressed: () async {
             try {
               final firstDate = DateTime.parse(trip.fromDate);
@@ -207,37 +235,43 @@ class _RightButtonsState extends State<RightButtons> {
                 return;
               }
 
-              final result = await showDialog<Map<String, DateTime>>(
+              final result = await showDialog<Map<String, DateTime>?>(
                 context: context,
-                builder:
-                    (context) => BlocProvider(
+                builder: (context) => BlocProvider(
                       create: (context) => DateSelectionBloc(),
                       child: DateCard(
                         firstDate: firstDate,
                         lastDate: lastDate,
-                        initialRangeStart: _selectedFilterDate,
-                        initialRangeEnd:
-                            _selectedFilterDate != null
-                                ? _selectedFilterDate!.add(
-                                  const Duration(days: 1),
-                                )
-                                : firstDate.add(const Duration(days: 1)),
+                        initialRangeStart: _rangeStart,
+                        initialRangeEnd: _rangeEnd,
                       ),
                     ),
               );
 
               if (result != null) {
+                final DateTime? newRangeStart = result['range_start'];
+                final DateTime? newRangeEnd = result['range_end'];
+
                 setState(() {
-                  _selectedFilterDate = result['range_start'];
-                  _rangeStart = result['range_start'];
-                  _rangeEnd = result['range_end'];
+                  _rangeStart = newRangeStart;
+                  _rangeEnd = newRangeEnd;
                 });
+                
+                // 🆕 استدعاء الـ callback لتمرير البيانات إلى VideoPlayerScreen
+                if (_rangeStart != null && _rangeEnd != null) {
+                      final fromDate = DateFormat('yyyy-MM-dd').format(_rangeStart!);
+                      final toDate = DateFormat('yyyy-MM-dd').format(_rangeEnd!);
 
-                context.read<TripBloc>().add(
-                  FilterTripsByDateRangeEvent(_rangeStart!, _rangeEnd!),
-                );
+                      widget.onDateRangeSelected?.call(
+                        DateTime.parse(fromDate),
+                        DateTime.parse(toDate),
+                      );
 
-                // افتح أول زر بعد التاريخ
+                      print("✅ Date selected: from=$fromDate to=$toDate");
+                    }
+                // 🆕 يمكنك هنا استدعاء Bloc لتصفية الرحلات إذا لزم الأمر
+
+                // 🆕 افتح أول زر بعد التاريخ
                 Future.delayed(const Duration(milliseconds: 300), () {
                   final int dateButtonIndex = buttons.indexWhere(
                     (b) =>
@@ -267,6 +301,13 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
+    
+
+
+
+    ///////////////////////////////////////////////
+    /// Hotel Button
+    /// 
     if (showHotel) {
       buttons.add(
         _ButtonData(
@@ -305,16 +346,29 @@ class _RightButtonsState extends State<RightButtons> {
                     ? _rangeEnd!.difference(_rangeStart!).inDays
                     : 1;
 
+                      // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
+              widget.onHotelSelected?.call(
+                selectedHotel.id,
+                selectedHotel.pricePerNight * nights,
+              );
+
             if (selectedHotel != null) {
-              // ✅ Continue → خزّن الفندق واضبط السعر
-              setState(() {
-                selectedHotelId = selectedHotel.id;
-              });
 
               widget.personCounterKey?.currentState?.setSelectedHotelPrice(
                 selectedHotel.pricePerNight,
                 nights,
               );
+              // ✅ Continue → خزّن الفندق واضبط السعر
+               setState(() {
+                      selectedHotelId = selectedHotel.id; // ✅ نخزن id الفندق
+                      final nights = (_rangeStart != null && _rangeEnd != null)
+                          ? _rangeEnd!.difference(_rangeStart!).inDays
+                          : 1;
+                      selectedHotelPrice = selectedHotel.pricePerNight * nights;
+                    });
+                      print("✅ Hotel Selected: id=$selectedHotelId, price=$selectedHotelPrice");
+
+
 
               // 🔹 تحديد الزر الحالي للـ Hotel
               final currentIndex = buttons.indexWhere(
@@ -328,22 +382,22 @@ class _RightButtonsState extends State<RightButtons> {
                   selectedIndex = nextButtonIndex;
                 });
                 buttons[nextButtonIndex].onPressed?.call();
-              }
-              // } else {
-              //   // ❌ Cancel → مسح الفندق واضبط السعر بـ 0
-              //   setState(() {
-              //     selectedHotelId = null;
-              //   });
-
-              //   widget.personCounterKey?.currentState?.setSelectedHotelPrice(
-              //     0,
-              //     nights,
-              //   );
+              }             
             }
           },
         ),
       );
     }
+
+
+
+
+
+
+    /////////////////////////////////////////////// 
+    ///Car Button
+    ///
+
     if (showCar) {
       buttons.add(
         _ButtonData(
@@ -379,14 +433,26 @@ class _RightButtonsState extends State<RightButtons> {
                       personCounterKey: widget.personCounterKey, // ✅ ده المهم
                     ),
                 );
+                
               },
             );
 
             if (selectedCarFromDialog != null) {
+
+              // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
+              widget.onCarSelected?.call(
+                selectedCarFromDialog.id,
+                selectedCarFromDialog.price,
+              );
+
               setState(() {
                 selectedCarId = selectedCarFromDialog.id;
                 selectedCar = selectedCarFromDialog;
+                    selectedCarPrice = selectedCarFromDialog.price; // ✅
+
               });
+              print("✅ Car Selected: id=$selectedCarId, price=$selectedCarPrice");
+
               widget.personCounterKey?.currentState?.setSelectedCarPrice(
                 selectedCarFromDialog.price,
               );
@@ -401,7 +467,6 @@ class _RightButtonsState extends State<RightButtons> {
                             // ✅ تم إضافة هذا السطر
                           ),
                     );
-
                     
                 if (selectedActivityFromDialog != null) {
                   final price =
@@ -412,25 +477,23 @@ class _RightButtonsState extends State<RightButtons> {
                   setState(() {
                     selectedActivityId =
                         selectedActivityFromDialog.id; // ✅ تم حفظ المعرف هنا
+                          selectedActivityPrice = price;
+
                   });
+                  print("✅ Activity Selected: id=$selectedActivityId, price=$selectedActivityPrice");
+                
+                      // 🆕 هنا تضيف الكولباك عشان يوصل للـ VideoPlayerScreen
+                          widget.onActivitySelected?.call(
+                            selectedActivityFromDialog.id,
+                            price,
+                          );
+
+
+
                   widget.personCounterKey?.currentState
                       ?.setSelectedActivityPrice(price);
                 }
-                // else {
-                //   setState(() {
-                //     selectedActivityId = null;
-                //   });
-                //   widget.personCounterKey?.currentState
-                //       ?.setSelectedActivityPrice(0);
-                // }
-
-                // } else {
-                //   setState(() {
-                //     selectedCarId = null;
-                //     selectedCar = null;
-                //   });
-                //widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
-                // }
+              
               }
             }
           },
@@ -438,7 +501,12 @@ class _RightButtonsState extends State<RightButtons> {
       );
     }
 
-    // Activities Button
+
+
+    ///////////////////////////////////////////
+    //// Activities Button
+    ///
+    
     if (trip.hasActivity) {
       buttons.add(
         _ButtonData(
@@ -469,27 +537,30 @@ class _RightButtonsState extends State<RightButtons> {
                     selectedActivityFromDialog.price.toString(),
                   ) ??
                   0.0;
+            // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
+              widget.onActivitySelected?.call(
+                selectedActivityFromDialog.id,
+                price,
+              );
+              
               setState(() {
                 selectedActivityId =
-                    selectedActivityFromDialog.id; // ✅ تم حفظ المعرف هنا
+                    selectedActivityId = selectedActivityFromDialog.id;
+                     selectedActivityPrice = price; // ✅
               });
               widget.personCounterKey?.currentState?.setSelectedActivityPrice(
                 price,
               );
-            } else {
-              // setState(() {
-              //   selectedActivityId = null;
-              // });
-              // widget.personCounterKey?.currentState?.setSelectedActivityPrice(
-              //   0,
-              // );
-            }
+            } 
           },
         ),
       );
     }
 
-    // Save Button
+    /////////////////////////////////////////
+    /// Save Button
+    /// 
+    
     buttons.add(
       _ButtonData(
         iconWidget: Icon(
@@ -529,6 +600,8 @@ class _RightButtonsState extends State<RightButtons> {
         },
       ),
     );
+
+
 
     return FocusScope(
       node: _focusScopeNode,

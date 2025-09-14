@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTripsPage.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
@@ -33,25 +34,7 @@ class _SideMenuState extends State<SideMenu> {
           AppLocalizations.of(context)!.sidemenu,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       final currentLocale =
-        //           Localizations.localeOf(context).languageCode;
-        //       final newLocale =
-        //           currentLocale == 'ar'
-        //               ? const Locale('en')
-        //               : const Locale('ar');
-        //       TripToApp.setLocale(context, newLocale);
-        //       setState(() {});
-        //     },
-        //     icon: const Icon(
-        //       Icons.language,
-        //       size: 30,
-        //       color: Color(0xFF002E70),
-        //     ),
-        //   ),
-        // ],
+        
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -89,6 +72,65 @@ class _SideMenuState extends State<SideMenu> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
+
+              //My Trips
+              ListTile(
+                leading: const Icon(
+                  Icons.trip_origin,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.mytrips,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyTripsPage(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      icon: Icon(
+                        Localizations.localeOf(context).languageCode == 'ar'
+                            ? Icons
+                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
+                            : Icons
+                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyTripsPage()),
+                  );
+                },
+              ),
+
+
+
+
+             const Divider(
+                thickness: 0.3,
+                color: Colors.grey,
+              ),
+
+              //favorite
               ListTile(
                 leading: const Icon(
                   Icons.favorite,

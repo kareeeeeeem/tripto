@@ -2017,6 +2017,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description issue'**
   String get issue;
+
+  /// No description provided for @mytrips.
+  ///
+  /// In en, this message translates to:
+  /// **'My Trips'**
+  String get mytrips;
 }
 
 class _AppLocalizationsDelegate

@@ -162,7 +162,6 @@ class GetTripModel {
     "sub_destination_name_ar": subDestinationNameAr,
     "sub_destination_name_en": subDestinationNameEn,
     
-    // ✅ الحقول اللي RightButtons محتاجها
     "has_car": hasCar,
     "has_hotel": hasHotel,
     "has_fly": hasFly,

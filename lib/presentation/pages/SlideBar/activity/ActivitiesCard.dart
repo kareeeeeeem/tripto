@@ -6,14 +6,12 @@ class ActivityCard extends StatelessWidget {
   final GetActivityModel activity;
   final bool isSelected;
   final VoidCallback onTap;
-  // final int? initialSelectedActivityId; // ✅ جديد
 
   const ActivityCard({
     required this.activity,
     required this.isSelected,
     required this.onTap,
     super.key,
-    // this.initialSelectedActivityId, // ✅ جديد
   });
 
   @override

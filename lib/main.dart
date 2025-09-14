@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripRepository.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_bloc.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_repository.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
@@ -23,6 +25,8 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
+import 'package:showcaseview/showcaseview.dart';
+
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
@@ -72,12 +76,12 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
-        RepositoryProvider<ContactusRepository>(
-          create: (_) => ContactusRepository(),
-        ),
-                RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
-                   RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
-                       RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
+        RepositoryProvider<ContactusRepository>(create: (_) => ContactusRepository(),),
+        RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
+            RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
+                RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
+       RepositoryProvider<OrderTripRepository>( create: (_) => OrderTripRepository(),),
+
 
 
       ],
@@ -134,39 +138,41 @@ class _TripToAppState extends State<TripToApp> {
                   repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
                 ),
               ),
+              BlocProvider<OrderTripBloc>(
+                create: (context) => OrderTripBloc(
+                  RepositoryProvider.of<OrderTripRepository>(context),
+                ),
+              ),
+
           
         ],
-        child: MaterialApp(
-          navigatorObservers: [routeObserver],
-
-          locale: _locale,
-          supportedLocales: const [Locale('en'), Locale('ar')],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          theme: ThemeData(
-            textTheme: GoogleFonts.loraTextTheme(),
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: Colors.black,
-              selectionColor: Colors.grey,
-              selectionHandleColor: Colors.grey,
+       child: ShowCaseWidget(
+          builder: (context) => MaterialApp(
+            navigatorObservers: [routeObserver],
+            locale: _locale,
+            supportedLocales: const [Locale('en'), Locale('ar')],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: ThemeData(
+              textTheme: GoogleFonts.loraTextTheme(),
+              textSelectionTheme: const TextSelectionThemeData(
+                cursorColor: Colors.black,
+                selectionColor: Colors.grey,
+                selectionHandleColor: Colors.grey,
+              ),
             ),
+            title: 'TripTo',
+            debugShowCheckedModeBanner: false,
+            routes: AppRoutes.routes,
+            initialRoute: '/',
           ),
-          title: 'TripTo',
-          debugShowCheckedModeBanner: false,
-
-          routes: AppRoutes.routes,
-          initialRoute: '/',
-          // home: Report(),
-
-          // routes: AppRoutes.routes,
-          // home: App(),
-          // home: Privacypolicy(),
         ),
-      ),
-    );
+
+        ),
+      );
   }
 }

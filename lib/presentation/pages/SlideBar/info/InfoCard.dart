@@ -30,7 +30,7 @@ class InfoCard extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.tourismcompany,
                   style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 4, 112),
+                    color: Color.fromARGB(255, 2, 4, 62),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

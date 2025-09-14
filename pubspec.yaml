@@ -117,6 +117,8 @@ dependencies:
 
   syncfusion_localizations: ^31.1.17
 
+  showcaseview: ^4.0.1
+
 
 
 

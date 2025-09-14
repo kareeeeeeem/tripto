@@ -42,6 +42,9 @@ class _DateCardState extends State<DateCard> {
     _focusedDay = _clampDate(_focusedDay);
     _rangeStart = widget.initialRangeStart != null ? _clampDate(widget.initialRangeStart!) : null;
     _rangeEnd = widget.initialRangeEnd != null ? _clampDate(widget.initialRangeEnd!) : null;
+  
+  
+  
   }
 
   DateTime _clampDate(DateTime date) {
@@ -232,6 +235,40 @@ class _DateCardState extends State<DateCard> {
                       child: Text(txt, style: const TextStyle(color: Colors.grey)),
                     );
                   },
+                  rangeStartBuilder: (context, day, focusedDay) {
+                    
+  final txt = _dayNumberText(context, day); // استخدم نفس الدالة
+  return Center(
+    child: Container(
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor, shape: BoxShape.circle),
+      padding: const EdgeInsets.all(8),
+      child: Text(txt, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+    ),
+  );
+},
+
+rangeEndBuilder: (context, day, focusedDay) {
+  final txt = _dayNumberText(context, day); // هنا أيضًا
+  return Center(
+    child: Container(
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor, shape: BoxShape.circle),
+      padding: const EdgeInsets.all(8),
+      child: Text(txt, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+    ),
+  );
+},
+
+withinRangeBuilder: (context, day, focusedDay) {
+  final txt = _dayNumberText(context, day); // هنا كذلك
+  return Center(
+    child: Container(
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor.withOpacity(0.2), shape: BoxShape.rectangle),
+      padding: const EdgeInsets.all(8),
+      child: Text(txt, style: const TextStyle(fontWeight: FontWeight.bold)),
+    ),
+  );
+},
+
 
                   // dowBuilder => يرسم رؤوس أيام الأسبوع (Sat, Sun...) — نستخدم التاريخ الممرَّر
                   dowBuilder: (context, day) {

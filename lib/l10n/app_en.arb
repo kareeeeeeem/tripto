@@ -338,5 +338,8 @@
   "cancelHotel": "Cancel hotel",
   "noTrips": "No trips available",
   "backToAllTrips": "Back to all trips",
-  "issue": "Description issue"
+  "issue": "Description issue",
+  "mytrips": "My Trips"
+
+
 }

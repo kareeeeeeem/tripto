@@ -14,7 +14,7 @@ class DiamondCategory extends StatelessWidget {
           AppLocalizations.of(context)!.diamond,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
             fontSize: 16,
           ),
         ),
@@ -42,7 +42,7 @@ class DiamondCategory extends StatelessWidget {
             child: Icon(
               Icons.diamond_outlined,
               size: 40,
-              color: Color(0xFFE9F1F1), // لون الجوهره الأصلي
+              color: Color(0xFF70D0E0), // لون الجوهره الأصلي
             ),
           ),
         ),
