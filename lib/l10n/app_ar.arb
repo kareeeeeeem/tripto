@@ -343,6 +343,14 @@
   "noTrips": "لا توجد رحلات",
   "backToAllTrips": "العودة إلى كل الرحلات",
   "issue": "وصف المشكلة",
-  "mytrips": " رحلاتي"
+  "mytrips": " رحلاتي",
+  "showcaseCategoryDescription": "فئة الرحلة ",
+  "showcaseDateDescription": "اختار تواريخ رحلتك",
+  "showcaseHotelDescription": "اختر فندق إقامتك من القائمة المتاحة",
+  "showcaseCarDescription": "اختر سيارتك لتسهيل التنقل خلال الرحلة",
+  "showcaseActivitiesDescription": "استعرض الأنشطة المتاحة وخطط لمغامراتك",
+  "showcaseSaveDescription": "اضغط هنا لحفظ الرحلة والعودة إليها لاحقًا",
+  "showcaseInfoDescription": "للاطلاع على معلومات حول هذه الوجهة"
+
 
 }

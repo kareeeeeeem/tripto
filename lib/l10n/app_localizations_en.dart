@@ -1096,4 +1096,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mytrips => 'My Trips';
+
+  @override
+  String get showcaseCategoryDescription => 'preferred trip category.';
+
+  @override
+  String get showcaseDateDescription => 'Choose your trip dates.';
+
+  @override
+  String get showcaseHotelDescription =>
+      'Select your hotel from the available list.';
+
+  @override
+  String get showcaseCarDescription =>
+      'Choose your car for easy travel during the trip.';
+
+  @override
+  String get showcaseActivitiesDescription =>
+      'Browse available activities and plan your adventures.';
+
+  @override
+  String get showcaseSaveDescription =>
+      'Tap here to save the trip and return to it later.';
+
+  @override
+  String get showcaseInfoDescription =>
+      'To view information about this destination.';
 }

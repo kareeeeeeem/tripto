@@ -147,28 +147,28 @@ class GetTripModel {
   String get subDestinationNameEn =>
       subDestination?['name_en']?.toString() ?? '';
 
-  Map<String, dynamic> toVideoPlayerJson() {
-  return {
-    "id": id,
-    "video_url": videoUrl,
-    "price": price,
-    "price_per_person": pricePerPerson,
-    "from_date": fromDate,
-    "to_date": toDate,
-    "destination": destination ?? {},
-    "sub_destination": subDestination ?? {},
-    "destination_name_ar": destinationNameAr,
-    "destination_name_en": destinationNameEn,
-    "sub_destination_name_ar": subDestinationNameAr,
-    "sub_destination_name_en": subDestinationNameEn,
-    
-    "has_car": hasCar,
-    "has_hotel": hasHotel,
-    "has_fly": hasFly,
-    "has_activity": hasActivity,
-    "category": category,
-    "max_persons": maxPersons,
-  };
-}
+    Map<String, dynamic> toVideoPlayerJson() {
+    return {
+      "id": id,
+      "video_url": videoUrl,
+      "price": price,
+      "price_per_person": pricePerPerson,
+      "from_date": fromDate,
+      "to_date": toDate,
+      "destination": destination ?? {},
+      "sub_destination": subDestination ?? {},
+      "destination_name_ar": destinationNameAr,
+      "destination_name_en": destinationNameEn,
+      "sub_destination_name_ar": subDestinationNameAr,
+      "sub_destination_name_en": subDestinationNameEn,
+      
+      "has_car": hasCar,
+      "has_hotel": hasHotel,
+      "has_fly": hasFly,
+      "has_activity": hasActivity,
+      "category": category,
+      "max_persons": maxPersons,
+    };
+  }
 
 }

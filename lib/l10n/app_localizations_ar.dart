@@ -1086,4 +1086,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get mytrips => ' رحلاتي';
+
+  @override
+  String get showcaseCategoryDescription => 'فئة الرحلة ';
+
+  @override
+  String get showcaseDateDescription => 'اختار تواريخ رحلتك';
+
+  @override
+  String get showcaseHotelDescription => 'اختر فندق إقامتك من القائمة المتاحة';
+
+  @override
+  String get showcaseCarDescription => 'اختر سيارتك لتسهيل التنقل خلال الرحلة';
+
+  @override
+  String get showcaseActivitiesDescription =>
+      'استعرض الأنشطة المتاحة وخطط لمغامراتك';
+
+  @override
+  String get showcaseSaveDescription =>
+      'اضغط هنا لحفظ الرحلة والعودة إليها لاحقًا';
+
+  @override
+  String get showcaseInfoDescription => 'للاطلاع على معلومات حول هذه الوجهة';
 }

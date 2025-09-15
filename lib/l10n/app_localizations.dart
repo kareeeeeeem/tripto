@@ -2041,6 +2041,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Trips'**
   String get mytrips;
+
+  /// No description provided for @showcaseCategoryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'preferred trip category.'**
+  String get showcaseCategoryDescription;
+
+  /// No description provided for @showcaseDateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your trip dates.'**
+  String get showcaseDateDescription;
+
+  /// No description provided for @showcaseHotelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your hotel from the available list.'**
+  String get showcaseHotelDescription;
+
+  /// No description provided for @showcaseCarDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your car for easy travel during the trip.'**
+  String get showcaseCarDescription;
+
+  /// No description provided for @showcaseActivitiesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse available activities and plan your adventures.'**
+  String get showcaseActivitiesDescription;
+
+  /// No description provided for @showcaseSaveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap here to save the trip and return to it later.'**
+  String get showcaseSaveDescription;
+
+  /// No description provided for @showcaseInfoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'To view information about this destination.'**
+  String get showcaseInfoDescription;
 }
 
 class _AppLocalizationsDelegate

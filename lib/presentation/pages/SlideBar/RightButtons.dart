@@ -23,6 +23,9 @@ import 'package:tripto/presentation/pages/SlideBar/hotel/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 
+import 'package:showcaseview/showcaseview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 enum CategoryType { none, gold, diamond, platinum }
 
 Color _getColorForCategory(int categoryValue) {
@@ -66,6 +69,9 @@ class RightButtons extends StatefulWidget {
   final int? selectedActivityId;
   final int? selectedFlightId;
 
+
+  
+
   const RightButtons({
     super.key,
     required this.tripId,
@@ -105,6 +111,17 @@ class _RightButtonsState extends State<RightButtons> {
   double selectedFlightPrice = 0.0;
 
 
+
+    // ✅ مفاتيح ShowcaseView
+  final GlobalKey _categoryKey = GlobalKey();
+  final GlobalKey _dateKey = GlobalKey();
+  final GlobalKey _hotelKey = GlobalKey();
+  final GlobalKey _carKey = GlobalKey();
+  final GlobalKey _activitiesKey = GlobalKey();
+  final GlobalKey _saveKey = GlobalKey();
+  final GlobalKey _infoKey = GlobalKey();
+
+
   @override
   void initState() {
     super.initState();
@@ -115,6 +132,29 @@ class _RightButtonsState extends State<RightButtons> {
       }
     });
     context.read<TripBloc>().add(FetchTrips());
+    
+
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startShowcase();
+    });
+  }
+
+  void _startShowcase() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool showcaseShown = prefs.getBool('showcase_shown') ?? false;
+
+    if (!showcaseShown) {
+      ShowCaseWidget.of(context).startShowCase([
+        _categoryKey,
+        _dateKey,
+        _hotelKey,
+        _carKey,
+        _activitiesKey,
+        _saveKey,
+        _infoKey,
+      ]);
+      prefs.setBool('showcase_shown', true);
+    }
   }
 
   @override
@@ -139,12 +179,15 @@ class _RightButtonsState extends State<RightButtons> {
         orElse: () => tripState.trips.first,
       );
 
-    final bool showHotel = trip.hasHotel == true || trip.hasHotel == 1;
-    final bool showCar = trip.hasCar == true || trip.hasCar == 1;
-    final bool showActivity = trip.hasActivity;
 
-    // Get the category value from the trip (converting from string if needed)
-    final int categoryValue = int.tryParse(trip.category.toString()) ?? 0;
+
+    final int categoryValue                     = int.tryParse(trip.category.toString()) ?? 0;
+
+    final bool showHotel = trip.hasHotel       == true || trip.hasHotel == 1;
+    final bool showCar = trip.hasCar           == true || trip.hasCar == 1;
+    final bool showActivity = trip.hasActivity == true || trip.hasActivity == 1;
+
+
 
 
 
@@ -153,12 +196,16 @@ class _RightButtonsState extends State<RightButtons> {
     /// 
     buttons.add(
       _ButtonData(
-        iconWidget: Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()..scale(-1.0, 1.0),
-          child: Icon(
-            Icons.diamond_outlined,
-            color: _getColorForCategory(categoryValue),
+       iconWidget: Showcase( // ✅ إضافة Showcase هنا
+        key: _categoryKey,
+            description: AppLocalizations.of(context)!.showcaseCategoryDescription, 
+          child: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()..scale(-1.0, 1.0),
+            child: Icon(
+              Icons.diamond_outlined,
+              color: _getColorForCategory(categoryValue),
+            ),
           ),
         ),
         label: AppLocalizations.of(context)!.category,
@@ -192,32 +239,36 @@ class _RightButtonsState extends State<RightButtons> {
    if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
-          iconWidget: Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(
-                (trip.hasFly == true || trip.hasFly == 1)
-                    ? Icons.flight
-                    : Icons.calendar_today,
-                size: 30,
-                color: selectedIndex == buttons.length ? Colors.white : Colors.white,
-              ),
-              if (trip.hasFly == true || trip.hasFly == 1)
-                Positioned(
-                  bottom: 0,
-                  child: Text(
-                    _rangeStart != null
-                        ? DateFormat('d').format(_rangeStart!)
-                        : '',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      shadows: [Shadow(color: Colors.white, blurRadius: 2)],
+         iconWidget: Showcase( 
+          key: _dateKey,
+            description: AppLocalizations.of(context)!.showcaseDateDescription, 
+                      child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  (trip.hasFly == true || trip.hasFly == 1)
+                      ? Icons.flight
+                      : Icons.calendar_today,
+                  size: 30,
+                  color: selectedIndex == buttons.length ? Colors.white : Colors.white,
+                ),
+                if (trip.hasFly == true || trip.hasFly == 1)
+                  Positioned(
+                    bottom: 0,
+                    child: Text(
+                      _rangeStart != null
+                          ? DateFormat('d').format(_rangeStart!)
+                          : '',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        shadows: [Shadow(color: Colors.white, blurRadius: 2)],
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           label: (trip.hasFly == true || trip.hasFly == 1)
               ? AppLocalizations.of(context)!.fly
@@ -311,12 +362,16 @@ class _RightButtonsState extends State<RightButtons> {
     if (showHotel) {
       buttons.add(
         _ButtonData(
-          iconWidget: Icon(
-            Icons.hotel,
-            color:
-                selectedIndex == buttons.length
-                    ? selectedIconColor
-                    : defaultIconColor,
+         iconWidget: Showcase( // ✅ إضافة Showcase هنا
+          key: _hotelKey,
+                      description: AppLocalizations.of(context)!.showcaseHotelDescription, 
+                      child: Icon(
+              Icons.hotel,
+              color:
+                  selectedIndex == buttons.length
+                      ? selectedIconColor
+                      : defaultIconColor,
+            ),
           ),
           label: AppLocalizations.of(context)!.hotel,
           onPressed: () async {
@@ -401,12 +456,16 @@ class _RightButtonsState extends State<RightButtons> {
     if (showCar) {
       buttons.add(
         _ButtonData(
-          iconWidget: Icon(
-            Icons.directions_car,
-            color:
-                selectedIndex == buttons.length
-                    ? selectedIconColor
-                    : defaultIconColor,
+         iconWidget: Showcase( // ✅ إضافة Showcase هنا
+          key: _carKey,
+                      description: AppLocalizations.of(context)!.showcaseCarDescription, 
+                      child: Icon(
+              Icons.directions_car,
+              color:
+                  selectedIndex == buttons.length
+                      ? selectedIconColor
+                      : defaultIconColor,
+            ),
           ),
           label: AppLocalizations.of(context)!.car,
           onPressed: () async {
@@ -463,8 +522,7 @@ class _RightButtonsState extends State<RightButtons> {
                       builder:
                           (context) => ActivitiesListDialog(
                             initialSelectedActivityId: selectedActivityId,
-                            personCounterKey: widget.personCounterKey, // ✅ هنا
-                            // ✅ تم إضافة هذا السطر
+                            personCounterKey: widget.personCounterKey, 
                           ),
                     );
                     
@@ -510,12 +568,16 @@ class _RightButtonsState extends State<RightButtons> {
     if (trip.hasActivity) {
       buttons.add(
         _ButtonData(
-          iconWidget: Icon(
-            Icons.category_outlined,
-            color:
-                selectedIndex == buttons.length
-                    ? selectedIconColor
-                    : defaultIconColor,
+         iconWidget: Showcase( // ✅ إضافة Showcase هنا
+          key: _activitiesKey,
+                      description: AppLocalizations.of(context)!.showcaseActivitiesDescription, 
+                      child: Icon(
+              Icons.category_outlined,
+              color:
+                  selectedIndex == buttons.length
+                      ? selectedIconColor
+                      : defaultIconColor,
+            ),
           ),
           label: AppLocalizations.of(context)!.activities,
           onPressed: () async {
@@ -563,27 +625,44 @@ class _RightButtonsState extends State<RightButtons> {
     
     buttons.add(
       _ButtonData(
-        iconWidget: Icon(
-          Icons.bookmark_border,
-          color:
-              selectedIndex == buttons.length
-                  ? selectedIconColor
-                  : defaultIconColor,
+       iconWidget: Showcase( // ✅ إضافة Showcase هنا
+        key: _saveKey,
+                    description: AppLocalizations.of(context)!.showcaseSaveDescription, 
+                  child: Icon(
+            Icons.bookmark_border,
+            color:
+                selectedIndex == buttons.length
+                    ? selectedIconColor
+                    : defaultIconColor,
+          ),
         ),
         label: AppLocalizations.of(context)!.save,
         onPressed: () => debugPrint('Save pressed'),
       ),
     );
 
-    // Info Button
+
+
+
+
+
+
+
+    ///////////////////////////////
+    /// Info Button
+    /// 
     buttons.add(
       _ButtonData(
-        iconWidget: Icon(
-          Icons.info_outline,
-          color:
-              selectedIndex == buttons.length
-                  ? selectedIconColor
-                  : defaultIconColor,
+       iconWidget: Showcase( // ✅ إضافة Showcase هنا
+        key: _infoKey,
+                    description: AppLocalizations.of(context)!.showcaseInfoDescription, 
+                  child: Icon(
+            Icons.info_outline,
+            color:
+                selectedIndex == buttons.length
+                    ? selectedIconColor
+                    : defaultIconColor,
+          ),
         ),
         label: AppLocalizations.of(context)!.info,
         onPressed: () async {

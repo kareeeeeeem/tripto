@@ -58,7 +58,7 @@ class TripToApp extends StatefulWidget {
 }
 
 class _TripToAppState extends State<TripToApp> {
-  Locale _locale = const Locale('en');
+  Locale _locale = const Locale('ar');
 
   void setLocale(Locale locale) {
     setState(() {
