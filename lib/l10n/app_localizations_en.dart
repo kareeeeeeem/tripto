@@ -1075,13 +1075,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterHotelName => 'Enter hotel name';
 
   @override
+  String get issue => 'Description issue';
+
+  @override
+  String get noInternetMessage =>
+      'Make sure you are connected to the internet and try again.';
+
+  @override
+  String get tryagain => 'Try again';
+
+  @override
+  String get errorConnection =>
+      'Failed to connect to server Check your internet connection and try again.';
+
+  @override
   String get noTrips => 'No trips available';
 
   @override
   String get backToAllTrips => 'Back to all trips';
-
-  @override
-  String get issue => 'Description issue';
 
   @override
   String get mytrips => 'My Trips';

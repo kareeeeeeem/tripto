@@ -56,8 +56,7 @@ class MyTripsPage extends StatelessWidget {
             itemCount: 6, // عدد الرحلات التجريبية
             itemBuilder: (context, index) {
               return Card(
-                  color: Colors.white, // <- هذا هو التعديل
-
+                  color: Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

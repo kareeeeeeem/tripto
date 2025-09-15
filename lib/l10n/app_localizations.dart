@@ -2000,6 +2000,30 @@ abstract class AppLocalizations {
   /// **'Enter hotel name'**
   String get enterHotelName;
 
+  /// No description provided for @issue.
+  ///
+  /// In en, this message translates to:
+  /// **'Description issue'**
+  String get issue;
+
+  /// No description provided for @noInternetMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure you are connected to the internet and try again.'**
+  String get noInternetMessage;
+
+  /// No description provided for @tryagain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryagain;
+
+  /// No description provided for @errorConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to connect to server Check your internet connection and try again.'**
+  String get errorConnection;
+
   /// No description provided for @noTrips.
   ///
   /// In en, this message translates to:
@@ -2011,12 +2035,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to all trips'**
   String get backToAllTrips;
-
-  /// No description provided for @issue.
-  ///
-  /// In en, this message translates to:
-  /// **'Description issue'**
-  String get issue;
 
   /// No description provided for @mytrips.
   ///

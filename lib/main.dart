@@ -24,9 +24,9 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
+import 'package:tripto/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';
-
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
@@ -34,8 +34,6 @@ final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -72,81 +70,65 @@ class _TripToAppState extends State<TripToApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
+        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
-        RepositoryProvider<ContactusRepository>(create: (_) => ContactusRepository(),),
+        RepositoryProvider<ContactusRepository>(create: (_) => ContactusRepository()),
         RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
-            RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
-                RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
-       RepositoryProvider<OrderTripRepository>( create: (_) => OrderTripRepository(),),
-
-
-
+        RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
+        RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
+        RepositoryProvider<OrderTripRepository>(create: (_) => OrderTripRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create:
-                (context) => AuthBloc(
-                  authRepository: RepositoryProvider.of<AuthRepository>(
-                    context,
-                  ),
-                ),
+            create: (context) => AuthBloc(
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
+            ),
           ),
           BlocProvider<TripBloc>(
-            create:
-                (context) =>
-                    TripBloc(RepositoryProvider.of<TripRepository>(context))
-                      ..add(FetchTrips()),
+            create: (context) => TripBloc(
+              RepositoryProvider.of<TripRepository>(context),
+            )..add(FetchTrips()),
           ),
-       
-          BlocProvider(
-            create:
-                (context) => UpdateUserBloc(
-                  userRepository: RepositoryProvider.of<UserRepository>(
-                    context,
-                  ),
-                ),
+          BlocProvider<UpdateUserBloc>(
+            create: (context) => UpdateUserBloc(
+              userRepository: RepositoryProvider.of<UserRepository>(context),
+            ),
           ),
           BlocProvider<LogoutBloc>(
-            create:
-                (context) => LogoutBloc(
-                  repository: RepositoryProvider.of<AuthRepository>(context),
-                ),
+            create: (context) => LogoutBloc(
+              repository: RepositoryProvider.of<AuthRepository>(context),
+            ),
           ),
           BlocProvider<ContactusBloc>(
-            create:
-                (context) => ContactusBloc(
-                  contactusRepository:
-                      RepositoryProvider.of<ContactusRepository>(context),
-                ),
+            create: (context) => ContactusBloc(
+              contactusRepository: RepositoryProvider.of<ContactusRepository>(context),
+            ),
           ),
-         BlocProvider<SearchTripByDateBloc>(
+          BlocProvider<SearchTripByDateBloc>(
             create: (context) => SearchTripByDateBloc(
               repository: RepositoryProvider.of<SearchTripByDateRepository>(context),
             ),
           ),
-             BlocProvider<SearchTripByCategoryBloc>(
+          BlocProvider<OrderTripBloc>(
+            create: (context) => OrderTripBloc(
+              RepositoryProvider.of<OrderTripRepository>(context),
+            ),
+          ),
+          BlocProvider<SearchTripByCategoryBloc>(
             create: (context) => SearchTripByCategoryBloc(
               repository: RepositoryProvider.of<SearchTripByCategoryRepository>(context),
             ),
           ),
-             BlocProvider<SearchTripBySubDestinationBloc>(
-                create: (context) => SearchTripBySubDestinationBloc(
-                  repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
-                ),
-              ),
-              BlocProvider<OrderTripBloc>(
-                create: (context) => OrderTripBloc(
-                  RepositoryProvider.of<OrderTripRepository>(context),
-                ),
-              ),
-
-          
+          BlocProvider<SearchTripBySubDestinationBloc>(
+            create: (context) => SearchTripBySubDestinationBloc(
+              repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
+            ),
+          ),
         ],
-       child: ShowCaseWidget(
+        child: ShowCaseWidget(
           builder: (context) => MaterialApp(
             navigatorObservers: [routeObserver],
             locale: _locale,
@@ -168,11 +150,13 @@ class _TripToAppState extends State<TripToApp> {
             title: 'TripTo',
             debugShowCheckedModeBanner: false,
             routes: AppRoutes.routes,
-            initialRoute: '/',
+            initialRoute: AppRoutes.splash,
+            builder: (context, child) {
+              return Wrapper(child: child ?? const SizedBox());
+            },
           ),
         ),
-
-        ),
-      );
+      ),
+    );
   }
 }

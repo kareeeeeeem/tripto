@@ -13,13 +13,16 @@ class AboutUs extends StatefulWidget {
 class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         // elevation: 0,
-        // scrolledUnderElevation: 0,
+        scrolledUnderElevation: 0,
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.aboutus,
@@ -68,6 +71,14 @@ class _AboutUsState extends State<AboutUs> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ClipRRect(
+              child: Image.asset(
+                "assets/images/aboutus.png",
+                width: screenWidth * 0.9, // 80% من عرض الشاشة
+                height: screenHeight * 0.20, // 25% من طول الشاشة
+                fit: BoxFit.fitHeight, // يملأ المساحة مع الحفاظ على النسب
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RichText(

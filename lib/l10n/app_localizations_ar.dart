@@ -1067,13 +1067,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterHotelName => 'ادخل اسم الفندق';
 
   @override
+  String get issue => 'وصف المشكلة';
+
+  @override
+  String get noInternetMessage => 'اتأكد إنك متوصل بالإنترنت وحاول تاني.';
+
+  @override
+  String get tryagain => 'حاول تاني';
+
+  @override
+  String get errorConnection => 'تأكد من اتصالك بالإنترنت ';
+
+  @override
   String get noTrips => 'لا توجد رحلات';
 
   @override
   String get backToAllTrips => 'العودة إلى كل الرحلات';
-
-  @override
-  String get issue => 'وصف المشكلة';
 
   @override
   String get mytrips => ' رحلاتي';

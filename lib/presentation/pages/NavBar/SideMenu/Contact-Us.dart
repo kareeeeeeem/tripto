@@ -26,6 +26,8 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return BlocListener<ContactusBloc, ContactUsState>(
       listener: (context, state) {
         //... your existing listener
@@ -102,6 +104,15 @@ class _ContactUsState extends State<ContactUs> {
 
           child: Column(
             children: [
+              ClipRRect(
+                child: Image.asset(
+                  "assets/images/contactus.png",
+                  width: screenWidth * 0.9, // 80% من عرض الشاشة
+                  height: screenHeight * 0.20, // 25% من طول الشاشة
+                  fit: BoxFit.fitHeight, // يملأ المساحة مع الحفاظ على النسب
+                ),
+              ),
+              // SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               buildLabel(AppLocalizations.of(context)!.name),
               TextFormField(
                 keyboardType: TextInputType.text,

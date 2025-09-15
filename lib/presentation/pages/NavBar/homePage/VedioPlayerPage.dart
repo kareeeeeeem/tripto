@@ -797,7 +797,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
                                 final orderData = {
 
-                                        "trip_id": currentTrip!['id'],
+                                        "trip_id": currentTrip['id'],
                                         "user_id": currentUser!['id'], // من Bloc أو storage
 
                                         "sub_destination_id": currentTrip['sub_destination']?['id'],
@@ -808,9 +808,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                                         "persons": personCounterState?.currentPersons ?? 1,
                                         "total_price": personCounterState?.totalPrice ?? 0.0,
                                         
-                                        "status": "PENDING",
+                                        "status": "pending",
 
-                                        "note": "كريم عماد واحد بس", 
+                                        "note":"", 
 
                                         "fly_id": selectedFlyId,
 
