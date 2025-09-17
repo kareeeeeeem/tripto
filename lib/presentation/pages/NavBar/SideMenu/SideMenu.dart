@@ -10,7 +10,9 @@ import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/About-us.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Cancellattion.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
-// import 'package:tripto/presentation/pages/SideMenu';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = FlutterSecureStorage();
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -282,6 +284,11 @@ class _SideMenuState extends State<SideMenu> {
                   );
                 },
               ),
+
+
+
+              /////lang
+              ///
               const Divider(
                 thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
@@ -353,6 +360,9 @@ class _SideMenuState extends State<SideMenu> {
                   ],
                 ),
               ),
+
+
+
 
               // 28/88888888888888888888888888888888888888888888888888888
               const Divider(

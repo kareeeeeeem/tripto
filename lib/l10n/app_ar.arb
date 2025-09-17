@@ -350,7 +350,30 @@
   "showcaseCarDescription": "اختر سيارتك لتسهيل التنقل خلال الرحلة",
   "showcaseActivitiesDescription": "استعرض الأنشطة المتاحة وخطط لمغامراتك",
   "showcaseSaveDescription": "اضغط هنا لحفظ الرحلة والعودة إليها لاحقًا",
-  "showcaseInfoDescription": "للاطلاع على معلومات حول هذه الوجهة"
-
+  "showcaseInfoDescription": "للاطلاع على معلومات حول هذه الوجهة",
+  "mytrips": "رحلاتي",
+  "noTrips": "لم توجد أي رحلات",
+  "tripNumber": "رحلة رقم",
+  "name": "الاسم",
+  "persons": "عدد الأشخاص",
+  "totalPrice": "السعر الكلي",
+  "fromDate": "من",
+  "toDate": "إلى",
+  "status": "الحالة",
+  "tripDetails": "تفاصيل الرحلة",
+  "note": "ملاحظة",
+  "close": "إغلاق",
+  "error": "خطأ",
+  "tripId": "معرّف الرحلة",
+  "userId": "معرّف المستخدم",
+  "email": "البريد الإلكتروني",
+  "phone": "الهاتف",
+  "hotelId": "معرّف الفندق",
+  "carId": "معرّف السيارة",
+  "activityId": "معرّف النشاط",
+  "flyId": "معرّف الطيران",
+  "hotelPrice": "سعر الفندق",
+  "carPrice": "سعر السيارة",
+  "activityPrice": "سعر النشاط"
 
 }

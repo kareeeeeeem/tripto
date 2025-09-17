@@ -24,7 +24,7 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
-import 'package:tripto/wrappers/internet_wrapper.dart';
+import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -58,7 +58,7 @@ class TripToApp extends StatefulWidget {
 }
 
 class _TripToAppState extends State<TripToApp> {
-  Locale _locale = const Locale('ar');
+  Locale _locale = const Locale('en');
 
   void setLocale(Locale locale) {
     setState(() {

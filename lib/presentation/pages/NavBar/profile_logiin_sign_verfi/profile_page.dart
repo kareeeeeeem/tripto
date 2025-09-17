@@ -350,8 +350,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         FocusScope.of(context).unfocus();
+
+                        // ✅ مسح كل بيانات المستخدم
+                          final storage = SecureStorageService();
+                          await storage.clearUserData();
+
+                           // ✅ إرسال حدث Logout
+
                         context.read<LogoutBloc>().add(LogoutRequested());
                       },
                       child: Text(
@@ -381,7 +388,12 @@ class SecureStorageService {
 
   Future<void> saveUser(String userJson) async {
     await _storage.write(key: 'user_data', value: userJson);
+   // await _storage.write(key: 'jwt_token', value: response['token']);
+          
   }
+
+
+
 
   Future<Map<String, dynamic>?> getUser() async {
     final userData = await _storage.read(key: 'user_data');
@@ -389,5 +401,13 @@ class SecureStorageService {
       return jsonDecode(userData);
     }
     return null;
+  }
+
+
+  // ✅ دالة جديدة لمسح كل بيانات المستخدم
+  Future<void> clearUserData() async {
+    await _storage.delete(key: 'user_data');
+    await _storage.delete(key: 'userId');
+    await _storage.delete(key: 'token');
   }
 }

@@ -319,7 +319,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get error => 'Error!';
+  String get error => 'Error';
 
   @override
   String get passwordNotStrong => 'Password is not strong enough';
@@ -1089,7 +1089,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Failed to connect to server Check your internet connection and try again.';
 
   @override
-  String get noTrips => 'No trips available';
+  String get noTrips => 'You didn\'t make any trips';
 
   @override
   String get backToAllTrips => 'Back to all trips';
@@ -1122,4 +1122,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get showcaseInfoDescription =>
       'To view information about this destination.';
+
+  @override
+  String get tripNumber => 'Trip No.';
+
+  @override
+  String get persons => 'Persons';
+
+  @override
+  String get totalPrice => 'Total Price';
+
+  @override
+  String get fromDate => 'From';
+
+  @override
+  String get toDate => 'To';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get tripDetails => 'Trip Details';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get tripId => 'Trip ID';
+
+  @override
+  String get userId => 'User ID';
+
+  @override
+  String get hotelId => 'Hotel ID';
+
+  @override
+  String get carId => 'Car ID';
+
+  @override
+  String get activityId => 'Activity ID';
+
+  @override
+  String get flyId => 'Fly ID';
+
+  @override
+  String get hotelPrice => 'Hotel Price';
+
+  @override
+  String get carPrice => 'Car Price';
+
+  @override
+  String get activityPrice => 'Activity Price';
 }

@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
-  /// **'Error!'**
+  /// **'Error'**
   String get error;
 
   /// No description provided for @passwordNotStrong.
@@ -2027,7 +2027,7 @@ abstract class AppLocalizations {
   /// No description provided for @noTrips.
   ///
   /// In en, this message translates to:
-  /// **'No trips available'**
+  /// **'You didn\'t make any trips'**
   String get noTrips;
 
   /// No description provided for @backToAllTrips.
@@ -2083,6 +2083,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To view information about this destination.'**
   String get showcaseInfoDescription;
+
+  /// No description provided for @tripNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip No.'**
+  String get tripNumber;
+
+  /// No description provided for @persons.
+  ///
+  /// In en, this message translates to:
+  /// **'Persons'**
+  String get persons;
+
+  /// No description provided for @totalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get totalPrice;
+
+  /// No description provided for @fromDate.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get fromDate;
+
+  /// No description provided for @toDate.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get toDate;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @tripDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Details'**
+  String get tripDetails;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @tripId.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip ID'**
+  String get tripId;
+
+  /// No description provided for @userId.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get userId;
+
+  /// No description provided for @hotelId.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel ID'**
+  String get hotelId;
+
+  /// No description provided for @carId.
+  ///
+  /// In en, this message translates to:
+  /// **'Car ID'**
+  String get carId;
+
+  /// No description provided for @activityId.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity ID'**
+  String get activityId;
+
+  /// No description provided for @flyId.
+  ///
+  /// In en, this message translates to:
+  /// **'Fly ID'**
+  String get flyId;
+
+  /// No description provided for @hotelPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Price'**
+  String get hotelPrice;
+
+  /// No description provided for @carPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Price'**
+  String get carPrice;
+
+  /// No description provided for @activityPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Price'**
+  String get activityPrice;
 }
 
 class _AppLocalizationsDelegate
