@@ -1163,4 +1163,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get activityPrice => 'سعر النشاط';
+
+  @override
+  String get pleaseLoginFirst =>
+      'من فضلك سجل دخولك اولا او انشاء حسابك ان لم تقم';
 }

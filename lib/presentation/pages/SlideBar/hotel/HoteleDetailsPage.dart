@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/Hotelsـmodel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HotelAdelPage extends StatefulWidget {
   final HotelModel hotel;
@@ -279,13 +280,26 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           ),
                           const SizedBox(width: 6),
                           Expanded(
-                            child: Text(
-                              hotel.mapLocation,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final Uri url = Uri.parse(hotel.mapLocation); // ده اللينك اللي جاي من الـ API
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Text(
+                                hotel.mapLocation,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue, // يخليها باين إنها لينك
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
-                            ),
+                            )
+
                           ),
                         ],
                       ),

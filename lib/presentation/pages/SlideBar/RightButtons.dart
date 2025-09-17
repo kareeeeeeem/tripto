@@ -354,97 +354,85 @@ class _RightButtonsState extends State<RightButtons> {
     }
     
 
-
-
-    ///////////////////////////////////////////////
-    /// Hotel Button
-    /// 
-    if (showHotel) {
-      buttons.add(
-        _ButtonData(
-         iconWidget: Showcase( // ✅ إضافة Showcase هنا
-          key: _hotelKey,
-                      description: AppLocalizations.of(context)!.showcaseHotelDescription, 
-                      child: Icon(
-              Icons.hotel,
-              color:
-                  selectedIndex == buttons.length
-                      ? selectedIconColor
-                      : defaultIconColor,
+///////////////////////////
+//////////////////
+      /// Hotel Button ///  
+      if (showHotel) {
+        buttons.add(
+          _ButtonData(
+            iconWidget: Showcase(
+              key: _hotelKey,
+              description: AppLocalizations.of(context)!.showcaseHotelDescription,
+              child: Icon(
+                Icons.hotel,
+                color: selectedIndex == buttons.length
+                    ? selectedIconColor
+                    : defaultIconColor,
+              ),
             ),
-          ),
-          label: AppLocalizations.of(context)!.hotel,
-          onPressed: () async {
-            final selectedHotel = await showDialog(
-              context: context,
-              builder:
-                  (context) => BlocProvider(
-                    create:
-                        (_) => HotelsBloc(
-                          hotelsRepository: HotelsRepository(),
-                        )..add(
-                          FetchHotels(subDestinationId: trip.subDestinationId!),
-                        ),
-                    child: HotelsDialog(
-                      subDestinationId: trip.subDestinationId!,
-                      personCounterKey: widget.personCounterKey,
-                      startDate: _rangeStart,
-                      endDate: _rangeEnd,
-                      nextSteps: [],
-                      selectedHotelId: selectedHotelId,
+            label: AppLocalizations.of(context)!.hotel,
+            onPressed: () async {
+              final selectedHotel = await showDialog(
+                context: context,
+                builder: (context) => BlocProvider(
+                  create: (_) => HotelsBloc(
+                    hotelsRepository: HotelsRepository(),
+                  )..add(
+                      FetchHotels(subDestinationId: trip.subDestinationId!),
                     ),
+                  child: HotelsDialog(
+                    subDestinationId: trip.subDestinationId!,
+                    personCounterKey: widget.personCounterKey,
+                    startDate: _rangeStart,
+                    endDate: _rangeEnd,
+                    nextSteps: [],
+                    selectedHotelId: selectedHotelId,
                   ),
-            );
-
-            final int nights =
-                _rangeStart != null && _rangeEnd != null
-                    ? _rangeEnd!.difference(_rangeStart!).inDays
-                    : 1;
-
-                      // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
-              widget.onHotelSelected?.call(
-                selectedHotel.id,
-                selectedHotel.pricePerNight * nights,
+                ),
               );
 
-            if (selectedHotel != null) {
+              // ✅ اعمل check الأول
+              if (selectedHotel != null) {
+                final int nights =
+                    _rangeStart != null && _rangeEnd != null
+                        ? _rangeEnd!.difference(_rangeStart!).inDays
+                        : 1;
 
-              widget.personCounterKey?.currentState?.setSelectedHotelPrice(
-                selectedHotel.pricePerNight,
-                nights,
-              );
-              // ✅ Continue → خزّن الفندق واضبط السعر
-               setState(() {
-                      selectedHotelId = selectedHotel.id; // ✅ نخزن id الفندق
-                      final nights = (_rangeStart != null && _rangeEnd != null)
-                          ? _rangeEnd!.difference(_rangeStart!).inDays
-                          : 1;
-                      selectedHotelPrice = selectedHotel.pricePerNight * nights;
-                    });
-                      print("✅ Hotel Selected: id=$selectedHotelId, price=$selectedHotelPrice");
+                // 🆕 استدعاء الـ callback بعد التأكد إنه مش null
+                widget.onHotelSelected?.call(
+                  selectedHotel.id,
+                  selectedHotel.pricePerNight * nights,
+                );
 
+                widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+                  selectedHotel.pricePerNight,
+                  nights,
+                );
 
-
-              // 🔹 تحديد الزر الحالي للـ Hotel
-              final currentIndex = buttons.indexWhere(
-                (b) => b.label == AppLocalizations.of(context)!.hotel,
-              );
-              final nextButtonIndex = currentIndex + 1;
-
-              if (nextButtonIndex < buttons.length) {
-                // فتح الزر التالي مباشرة
                 setState(() {
-                  selectedIndex = nextButtonIndex;
+                  selectedHotelId = selectedHotel.id;
+                  selectedHotelPrice = selectedHotel.pricePerNight * nights;
                 });
-                buttons[nextButtonIndex].onPressed?.call();
-              }             
-            }
-          },
-        ),
-      );
-    }
 
+                print("✅ Hotel Selected: id=$selectedHotelId, price=$selectedHotelPrice");
 
+                // 🔹 تحديد الزر الحالي للـ Hotel
+                final currentIndex = buttons.indexWhere(
+                  (b) => b.label == AppLocalizations.of(context)!.hotel,
+                );
+                final nextButtonIndex = currentIndex + 1;
+
+                if (nextButtonIndex < buttons.length) {
+                  setState(() {
+                    selectedIndex = nextButtonIndex;
+                  });
+                  buttons[nextButtonIndex].onPressed?.call();
+                }
+              }
+            },
+          ),
+        );
+      }
 
 
 

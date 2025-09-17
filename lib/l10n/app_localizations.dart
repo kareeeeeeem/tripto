@@ -2191,6 +2191,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Activity Price'**
   String get activityPrice;
+
+  /// No description provided for @pleaseLoginFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in first or create your account if you haven\'t already.'**
+  String get pleaseLoginFirst;
 }
 
 class _AppLocalizationsDelegate

@@ -1176,4 +1176,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get activityPrice => 'Activity Price';
+
+  @override
+  String get pleaseLoginFirst =>
+      'Please log in first or create your account if you haven\'t already.';
 }

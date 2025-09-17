@@ -85,10 +85,7 @@ class AuthRepository {
 
 
         // خزن نسخة كاملة من بيانات اليوزر
-        await storage.write(key: 'user_data', value: jsonEncode(user));
-
-         // بنخزن اليوزر id عشان لما نخش علي ال mytrips يلاقيه ويجيبهم 
-       // await storage.write(key: 'userId', value: user['id'].toString());
+        await storage.write(key: 'userId', value: user['id'].toString());
 
       }
 

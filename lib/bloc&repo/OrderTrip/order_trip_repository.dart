@@ -5,17 +5,18 @@ import 'order_trip_model.dart';
 class OrderTripSearcMyTripsRepository {
   final String baseUrl = "https://tripto.blueboxpet.com/api";
 
-  Future<List<OrderTripSearcMyTrips>> fetchUserTrips(int userId) async {
+  Future<List<OrderTripSearcMyTrips>> fetchUserTrips(int? userId) async {
     if (userId == null) {
-    throw Exception("User not logged in"); // ✨ لو مفيش يوزر
-  }
+      throw Exception("User not logged in"); // ✨ لو مفيش يوزر
+    }
+
     final url = Uri.parse('$baseUrl/order-trips/user?user_id=$userId');
-    print("🔗 Request URL: $url"); // اطبع اللينك
+    print("🔗 Request URL: $url");
 
     final response = await http.get(url);
 
-    print("📡 Response Status: ${response.statusCode}"); // اطبع الكود
-    print("📦 Response Body: ${response.body}"); // اطبع الريسبونس
+    print("📡 Response Status: ${response.statusCode}");
+    print("📦 Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       final List data = jsonDecode(response.body);

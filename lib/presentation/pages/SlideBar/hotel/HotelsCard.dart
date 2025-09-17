@@ -106,7 +106,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
               child: Row(
 
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
+                  children: [
                   const Spacer(), // يخلي المسافة قبل النص
                       const Spacer(), // يخلي المسافة قبل النص
 
@@ -129,6 +129,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                         builder: (context) {
                           String searchQuery = "";
                           return AlertDialog(
+                            backgroundColor: Colors.white,
                             title: Text(AppLocalizations.of(context)!.search),
                             content: TextField(
                               autofocus: true,

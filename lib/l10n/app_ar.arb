@@ -374,6 +374,8 @@
   "flyId": "معرّف الطيران",
   "hotelPrice": "سعر الفندق",
   "carPrice": "سعر السيارة",
-  "activityPrice": "سعر النشاط"
+  "activityPrice": "سعر النشاط",
+  "pleaseLoginFirst": "من فضلك سجل دخولك اولا او انشاء حسابك ان لم تقم"
+
 
 }

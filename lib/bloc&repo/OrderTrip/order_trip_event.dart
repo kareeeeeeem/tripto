@@ -6,7 +6,7 @@ abstract class OrderTripSearcMyTripsEvent extends Equatable {
 }
 
 class FetchUserTrips extends OrderTripSearcMyTripsEvent {
-  final int userId;
+  final int? userId;
 
   FetchUserTrips(this.userId);
 

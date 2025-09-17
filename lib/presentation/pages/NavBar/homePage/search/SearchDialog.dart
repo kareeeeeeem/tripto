@@ -87,21 +87,22 @@ void _showDatePicker(BuildContext context) async {
       height: size.height * 0.65,
       width: size.width * 0.9,
       child: SingleChildScrollView(
+
+
         child: Column(
+
+
+
           mainAxisSize: MainAxisSize.min,
+
+
           children: [
-            Text(isArabic ? "بحث" : "Search", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+
+
+            Text(isArabic ? "البحث عن رحله" : "Search on trip", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: size.height * 0.05),
 
-            TextField(
-              controller: _subDestinationController,
-              decoration: InputDecoration(
-                hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
-              ),
-            ),
-            SizedBox(height: size.height * 0.03),
+
 
             // اختيار التاريخ
               ElevatedButton.icon(
@@ -125,6 +126,18 @@ void _showDatePicker(BuildContext context) async {
               ),
 
             SizedBox(height: size.height * 0.04),
+
+            // اختيار الواجهه
+
+            TextField(
+              controller: _subDestinationController,
+              decoration: InputDecoration(
+                hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
+                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
+              ),
+            ),
+            SizedBox(height: size.height * 0.03),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

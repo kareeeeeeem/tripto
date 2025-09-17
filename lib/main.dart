@@ -27,12 +27,13 @@ import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
     GlobalKey<VideoPlayerScreenState>();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([
@@ -60,10 +61,28 @@ class TripToApp extends StatefulWidget {
 class _TripToAppState extends State<TripToApp> {
   Locale _locale = const Locale('en');
 
-  void setLocale(Locale locale) {
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedLocale();
+  }
+
+  /// تحميل اللغة المحفوظة من SharedPreferences
+  Future<void> _loadSavedLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final langCode = prefs.getString('language_code') ?? 'en';
+    setState(() {
+      _locale = Locale(langCode);
+    });
+  }
+
+  /// تغيير اللغة + حفظها
+  void setLocale(Locale locale) async {
     setState(() {
       _locale = locale;
     });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', locale.languageCode);
   }
 
   @override
@@ -74,11 +93,16 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
-        RepositoryProvider<ContactusRepository>(create: (_) => ContactusRepository()),
-        RepositoryProvider<SearchTripByDateRepository>(create: (_) => SearchTripByDateRepository()),
-        RepositoryProvider<SearchTripByCategoryRepository>(create: (_) => SearchTripByCategoryRepository()),
-        RepositoryProvider<SearchTripBySubDestinationRepository>(create: (_) => SearchTripBySubDestinationRepository()),
-        RepositoryProvider<OrderTripRepository>(create: (_) => OrderTripRepository()),
+        RepositoryProvider<ContactusRepository>(
+            create: (_) => ContactusRepository()),
+        RepositoryProvider<SearchTripByDateRepository>(
+            create: (_) => SearchTripByDateRepository()),
+        RepositoryProvider<SearchTripByCategoryRepository>(
+            create: (_) => SearchTripByCategoryRepository()),
+        RepositoryProvider<SearchTripBySubDestinationRepository>(
+            create: (_) => SearchTripBySubDestinationRepository()),
+        RepositoryProvider<OrderTripRepository>(
+            create: (_) => OrderTripRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -104,12 +128,14 @@ class _TripToAppState extends State<TripToApp> {
           ),
           BlocProvider<ContactusBloc>(
             create: (context) => ContactusBloc(
-              contactusRepository: RepositoryProvider.of<ContactusRepository>(context),
+              contactusRepository:
+                  RepositoryProvider.of<ContactusRepository>(context),
             ),
           ),
           BlocProvider<SearchTripByDateBloc>(
             create: (context) => SearchTripByDateBloc(
-              repository: RepositoryProvider.of<SearchTripByDateRepository>(context),
+              repository:
+                  RepositoryProvider.of<SearchTripByDateRepository>(context),
             ),
           ),
           BlocProvider<OrderTripBloc>(
@@ -119,12 +145,14 @@ class _TripToAppState extends State<TripToApp> {
           ),
           BlocProvider<SearchTripByCategoryBloc>(
             create: (context) => SearchTripByCategoryBloc(
-              repository: RepositoryProvider.of<SearchTripByCategoryRepository>(context),
+              repository:
+                  RepositoryProvider.of<SearchTripByCategoryRepository>(context),
             ),
           ),
           BlocProvider<SearchTripBySubDestinationBloc>(
             create: (context) => SearchTripBySubDestinationBloc(
-              repository: RepositoryProvider.of<SearchTripBySubDestinationRepository>(context),
+              repository: RepositoryProvider.of<
+                  SearchTripBySubDestinationRepository>(context),
             ),
           ),
         ],
