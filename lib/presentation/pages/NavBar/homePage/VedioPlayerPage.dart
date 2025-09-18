@@ -636,21 +636,15 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                         ),
                         onPressed: () async {
 
-                                // 1️⃣ إعادة تحميل كل الرحلات في السيرش
+                         // 1️⃣ إعادة تحميل كل الرحلات في السيرش
 
-                          final result = await showDialog<bool>(
-                            context: context,
-                            builder: (ctx) => Dialog(
-                              backgroundColor: Colors.white.withOpacity(0.95),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          final result = await Navigator.push<bool>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (ctx) => const SearchPage(),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: SearchDialog(),
-                              ),
-                            ),
-                          );
+                            );
+
                           if(result == true){
                             
                              _disposeAllVideos(); // وقف كل الفيديوهات القديمة

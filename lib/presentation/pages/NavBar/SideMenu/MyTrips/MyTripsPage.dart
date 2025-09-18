@@ -81,7 +81,7 @@ class _MyTripsPageState extends State<MyTripsPage> {
         body: BlocBuilder<OrderTripSearcMyTripsBloc, OrderTripSearcMyTripsState>(
           builder: (context, state) {
             if (state is OrderTripSearcMyTripsLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: Color(0xFF002E70)),);
             } else if (state is OrderTripSearcMyTripsLoaded) {
               final trips = state.trips;
 
