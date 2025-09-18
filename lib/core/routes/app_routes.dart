@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTripsPage.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTrips/MyTripsPage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/Login_page.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignUp_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';

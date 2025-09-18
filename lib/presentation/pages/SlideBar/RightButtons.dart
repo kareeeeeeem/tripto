@@ -135,27 +135,27 @@ class _RightButtonsState extends State<RightButtons> {
     
 
      WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startShowcase();
+      _startRightButtonsShowcase();
     });
   }
+void _startRightButtonsShowcase() async {
+  final prefs = await SharedPreferences.getInstance();
+  final bool showcaseShown = prefs.getBool('showcase_shown') ?? false;
 
-  void _startShowcase() async {
-    final prefs = await SharedPreferences.getInstance();
-    final bool showcaseShown = prefs.getBool('showcase_shown') ?? false;
-
-    if (!showcaseShown) {
-      ShowCaseWidget.of(context).startShowCase([
-        _categoryKey,
-        _dateKey,
-        _hotelKey,
-        _carKey,
-        _activitiesKey,
-        _saveKey,
-        _infoKey,
-      ]);
-      prefs.setBool('showcase_shown', true);
-    }
+  if (!showcaseShown) {
+    ShowCaseWidget.of(context).startShowCase([
+      _categoryKey,
+      _dateKey,
+      _hotelKey,
+      _carKey,
+      _activitiesKey,
+      _saveKey,
+      _infoKey,
+    ]);
+    prefs.setBool('showcase_shown', true);
   }
+}
+
 
   @override
   void dispose() {

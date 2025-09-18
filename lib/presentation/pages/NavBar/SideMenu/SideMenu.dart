@@ -3,7 +3,7 @@ import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
-import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTripsPage.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTrips/MyTripsPage.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';

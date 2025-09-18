@@ -375,7 +375,17 @@
   "hotelPrice": "Hotel Price",
   "carPrice": "Car Price",
   "activityPrice": "Activity Price",
-  "pleaseLoginFirst": "Please log in first or create your account if you haven't already."
+  "pleaseLoginFirst": "Please log in first or create your account if you haven't already.",
+  "pending": "Pending",
+  "confirmed": "Confirmed",
+  "canceled": "Canceled",
+  "loadingTrips": "Loading trips...",
+  "tripPlace": "Trip location",
+  "tripPricePerPerson": "Price per person in the trip, and you can increase the number of people",
+  "bookTrip": "Click here to book the trip",
+  "tripSoundControl": "Control the trip sound",
+  "searchDestination": "Search for your favorite destination"
+
 
 
 }

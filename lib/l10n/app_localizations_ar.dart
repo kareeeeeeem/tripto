@@ -1166,5 +1166,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pleaseLoginFirst =>
-      'من فضلك سجل دخولك اولا او انشاء حسابك ان لم تقم';
+      'من فضلك سجل دخولك أولا أو أنشئ حسابك إذا لم يكن لديك';
+
+  @override
+  String get pending => 'قيد الانتظار';
+
+  @override
+  String get confirmed => 'مؤكد';
+
+  @override
+  String get canceled => 'ملغي';
+
+  @override
+  String get loadingTrips => 'جاري جلب الرحلات...';
+
+  @override
+  String get tripPlace => 'مكان الرحلة';
+
+  @override
+  String get tripPricePerPerson =>
+      'سعر الفرد في الرحلة وبإمكانك زيادة عدد الأفراد';
+
+  @override
+  String get bookTrip => 'اضغط هنا لحجز الرحلة';
+
+  @override
+  String get tripSoundControl => 'التحكم بصوت الرحلة';
+
+  @override
+  String get searchDestination => 'ابحث عن الوجهة اللي تحبها';
 }

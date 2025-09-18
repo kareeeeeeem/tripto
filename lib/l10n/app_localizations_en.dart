@@ -1180,4 +1180,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pleaseLoginFirst =>
       'Please log in first or create your account if you haven\'t already.';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get confirmed => 'Confirmed';
+
+  @override
+  String get canceled => 'Canceled';
+
+  @override
+  String get loadingTrips => 'Loading trips...';
+
+  @override
+  String get tripPlace => 'Trip location';
+
+  @override
+  String get tripPricePerPerson =>
+      'Price per person in the trip, and you can increase the number of people';
+
+  @override
+  String get bookTrip => 'Click here to book the trip';
+
+  @override
+  String get tripSoundControl => 'Control the trip sound';
+
+  @override
+  String get searchDestination => 'Search for your favorite destination';
 }

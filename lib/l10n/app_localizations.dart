@@ -2197,6 +2197,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please log in first or create your account if you haven\'t already.'**
   String get pleaseLoginFirst;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// No description provided for @canceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get canceled;
+
+  /// No description provided for @loadingTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading trips...'**
+  String get loadingTrips;
+
+  /// No description provided for @tripPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip location'**
+  String get tripPlace;
+
+  /// No description provided for @tripPricePerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per person in the trip, and you can increase the number of people'**
+  String get tripPricePerPerson;
+
+  /// No description provided for @bookTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to book the trip'**
+  String get bookTrip;
+
+  /// No description provided for @tripSoundControl.
+  ///
+  /// In en, this message translates to:
+  /// **'Control the trip sound'**
+  String get tripSoundControl;
+
+  /// No description provided for @searchDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for your favorite destination'**
+  String get searchDestination;
 }
 
 class _AppLocalizationsDelegate

@@ -375,7 +375,15 @@
   "hotelPrice": "سعر الفندق",
   "carPrice": "سعر السيارة",
   "activityPrice": "سعر النشاط",
-  "pleaseLoginFirst": "من فضلك سجل دخولك اولا او انشاء حسابك ان لم تقم"
-
+  "pleaseLoginFirst": "من فضلك سجل دخولك أولا أو أنشئ حسابك إذا لم يكن لديك",
+  "pending": "قيد الانتظار",
+  "confirmed": "مؤكد",
+  "canceled": "ملغي",
+  "loadingTrips": "جاري جلب الرحلات...",
+  "tripPlace": "مكان الرحلة",
+  "tripPricePerPerson": "سعر الفرد في الرحلة وبإمكانك زيادة عدد الأفراد",
+  "bookTrip": "اضغط هنا لحجز الرحلة",
+  "tripSoundControl": "التحكم بصوت الرحلة",
+  "searchDestination": "ابحث عن الوجهة اللي تحبها"
 
 }

@@ -6,6 +6,7 @@ import 'package:tripto/bloc&repo/OrderTrip/order_trip_repository.dart';
 import 'package:tripto/bloc&repo/OrderTrip/order_trip_state.dart';
 import 'package:tripto/bloc&repo/OrderTrip/order_trip_event.dart';
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTrips/TripDetailsPage.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 
 class MyTripsPage extends StatefulWidget {
@@ -134,7 +135,19 @@ class _MyTripsPageState extends State<MyTripsPage> {
                               //Text("${AppLocalizations.of(context)!.persons}: ${trip.persons ?? '-'}"),
                               Text("${AppLocalizations.of(context)!.toDate}: ${trip.toDate ?? '-'}"),                          
                               Text("${AppLocalizations.of(context)!.totalPrice}: ${trip.totalPrice ?? '-'}"),
-                              Text("${AppLocalizations.of(context)!.status}: ${trip.status ?? '-'}"),
+                              Text(
+                                "${AppLocalizations.of(context)!.status}: ${getStatusLabel(trip.status, context)}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: getStatusColor(trip.status), // ✅ هنا بنستعمل الألوان
+                                ),
+                              ),
+
+
+
+
+
 
                             ],
                           ),
@@ -144,8 +157,14 @@ class _MyTripsPageState extends State<MyTripsPage> {
                                 : Icons.keyboard_arrow_right,
                           ),
                           onTap: () {
-                            _showTripDetailsDialog(trip);
-                          },
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TripDetailsPage(trip: trip),
+                                ),
+                              );
+                            },
+
                         ),
                       );
                     },
@@ -161,85 +180,31 @@ class _MyTripsPageState extends State<MyTripsPage> {
         ),
       ),
     );
+  }// خارج الـ Widget:
+String getStatusLabel(String? status, BuildContext context) {
+  switch (status) {
+    case 'pending':
+      return AppLocalizations.of(context)!.pending;
+    case 'confirmed':
+      return AppLocalizations.of(context)!.confirmed;
+    case 'canceled':
+      return AppLocalizations.of(context)!.canceled;
+    default:
+      return "-";
   }
+}
 
-  // 🛠️ Dialog + Details method
-  void _showTripDetailsDialog(dynamic trip) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF252F9B),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
-          children: [
-            const Icon(Icons.info, color: Colors.white, size: 26),
-            const SizedBox(width: 8),
-            Text(
-              "${AppLocalizations.of(context)!.tripDetails} ",
-             // ${trip.tripId}
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-             // _buildDetailRow(Icons.confirmation_number, AppLocalizations.of(context)!.tripId, trip.tripId),
-             // _buildDetailRow(Icons.person, AppLocalizations.of(context)!.userId, trip.userId),
-             // _buildDetailRow(Icons.email, AppLocalizations.of(context)!.email, trip.customerEmail),
-             // _buildDetailRow(Icons.hotel, AppLocalizations.of(context)!.hotelId, trip.hotelId),
-             // _buildDetailRow(Icons.directions_car, AppLocalizations.of(context)!.carId, trip.carId),
-             // _buildDetailRow(Icons.local_activity, AppLocalizations.of(context)!.activityId, trip.activityId),
-
-              _buildDetailRow(Icons.person, AppLocalizations.of(context)!.name, trip.customerName), // الاسم
-              _buildDetailRow(Icons.phone, AppLocalizations.of(context)!.phone, trip.customerPhone), // الهاتف
-              _buildDetailRow(Icons.date_range, AppLocalizations.of(context)!.fromDate, trip.fromDate), // من
-              _buildDetailRow(Icons.date_range, AppLocalizations.of(context)!.toDate, trip.toDate), // إلى
-              _buildDetailRow(Icons.group, AppLocalizations.of(context)!.persons, trip.persons), // عدد الأشخاص
-
-              _buildDetailRow(Icons.flight, AppLocalizations.of(context)!.flyId, trip.flyId), // معرّف الطيران
-              _buildDetailRow(Icons.hotel, AppLocalizations.of(context)!.hotelPrice, trip.hotelPrice), // سعر الفندق
-              _buildDetailRow(Icons.directions_car, AppLocalizations.of(context)!.carPrice, trip.carPrice), // سعر السيارة
-              _buildDetailRow(Icons.local_activity, AppLocalizations.of(context)!.activityPrice, trip.activityPrice), // سعر النشاط
-              _buildDetailRow(Icons.note, AppLocalizations.of(context)!.note, trip.note), // ملاحظة
-              _buildDetailRow(Icons.attach_money, AppLocalizations.of(context)!.totalPrice, trip.totalPrice), // السعر الكلي
-              _buildDetailRow(Icons.check_circle, AppLocalizations.of(context)!.status, trip.status), // الحالة
-
-                          
-             ],           
-          ),
-        ),
-        actions: [
-          TextButton.icon(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.close, color: Colors.white),
-            label: Text(
-              AppLocalizations.of(context)!.close,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
+Color getStatusColor(String? status) {
+  switch (status) {
+    case 'pending':
+      return Colors.orange;   // انتظار
+    case 'confirmed':
+      return Colors.green;    // مؤكد
+    case 'canceled':
+      return Colors.red;      // ملغي
+    default:
+      return Colors.black;    // في حالة غير معروف
   }
+}
 
-  Widget _buildDetailRow(IconData icon, String label, dynamic value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.amber, size: 20),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              "$label: ${value ?? '-'}",
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

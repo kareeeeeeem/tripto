@@ -7,7 +7,6 @@ class OrderTripSearcMyTrips {
   final String? customerPhone;
   final int? persons;
   final String? totalPrice;
-  final String? status;
   final String? note;
   final String? fromDate;
   final String? toDate;
@@ -18,6 +17,9 @@ class OrderTripSearcMyTrips {
   final String? hotelPrice;
   final String? carPrice;
   final String? activityPrice;
+    final String? status;
+
+
 
   OrderTripSearcMyTrips({
     this.tripId,
@@ -28,7 +30,6 @@ class OrderTripSearcMyTrips {
     this.customerPhone,
     this.persons,
     this.totalPrice,
-    this.status,
     this.note,
     this.fromDate,
     this.toDate,
@@ -39,6 +40,8 @@ class OrderTripSearcMyTrips {
     this.hotelPrice,
     this.carPrice,
     this.activityPrice,
+    this.status,
+
   });
 
   factory OrderTripSearcMyTrips.fromJson(Map<String, dynamic> json) {
@@ -51,7 +54,6 @@ class OrderTripSearcMyTrips {
       customerPhone: json['customer_phone'],
       persons: json['persons'],
       totalPrice: json['total_price']?.toString(),
-      status: json['status'],
       note: json['note'],
       fromDate: json['from_date'],
       toDate: json['to_date'],
@@ -62,6 +64,8 @@ class OrderTripSearcMyTrips {
       hotelPrice: json['hotel_price']?.toString(),
       carPrice: json['car_price']?.toString(),
       activityPrice: json['activity_price']?.toString(),
+      status: json['status'],
+
     );
   }
 }
