@@ -22,6 +22,7 @@ import 'package:tripto/bloc&repo/car/car_repository.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
+import 'package:tripto/core/theme.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
 import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
@@ -54,20 +55,33 @@ class TripToApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 
+static void toggleTheme(BuildContext context) {
+    final _TripToAppState? state =
+        context.findAncestorStateOfType<_TripToAppState>();
+    if (state != null) {
+      final current = state._themeMode;
+      state.setThemeMode(
+        current == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark,
+      );
+    }
+  }
   @override
   State<TripToApp> createState() => _TripToAppState();
 }
 
 class _TripToAppState extends State<TripToApp> {
-  Locale _locale = const Locale('en');
+  Locale _locale = const Locale('en'); //lan
+    ThemeMode _themeMode = ThemeMode.system; // theme
+
 
   @override
   void initState() {
     super.initState();
     _loadSavedLocale();
+      _loadSavedTheme(); 
+
   }
 
-  /// تحميل اللغة المحفوظة من SharedPreferences
   Future<void> _loadSavedLocale() async {
     final prefs = await SharedPreferences.getInstance();
     final langCode = prefs.getString('language_code') ?? 'en';
@@ -76,7 +90,6 @@ class _TripToAppState extends State<TripToApp> {
     });
   }
 
-  /// تغيير اللغة + حفظها
   void setLocale(Locale locale) async {
     setState(() {
       _locale = locale;
@@ -84,7 +97,29 @@ class _TripToAppState extends State<TripToApp> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('language_code', locale.languageCode);
   }
+  //////////////////////////
 
+
+
+  Future<void> _loadSavedTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final themeIndex = prefs.getInt('theme_mode') ?? 0;
+    setState(() {
+      _themeMode = ThemeMode.values[themeIndex];
+    });
+  }
+
+  void setThemeMode(ThemeMode mode) async {
+    setState(() => _themeMode = mode);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('theme_mode', mode.index);
+  }
+  ////////////////////////////
+  
+  
+  
+  
+  
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -167,14 +202,19 @@ class _TripToAppState extends State<TripToApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            theme: ThemeData(
-              textTheme: GoogleFonts.loraTextTheme(),
-              textSelectionTheme: const TextSelectionThemeData(
-                cursorColor: Colors.black,
-                selectionColor: Colors.grey,
-                selectionHandleColor: Colors.grey,
-              ),
-            ),
+
+
+
+             //  theme قي ملف core=>theme
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: _themeMode,
+
+
+
+
+
+
             title: 'TripTo',
             debugShowCheckedModeBanner: false,
             routes: AppRoutes.routes,

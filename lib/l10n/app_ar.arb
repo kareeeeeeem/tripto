@@ -130,7 +130,7 @@
   "parking": "موقف سيارات",
   "pool": "مسبح",
   "gym": "صالة ألعاب رياضية",
-  "spa": "سباي",
+  "spa": "سبا",
   "restaurant": "مطعم",
   "roomService": "خدمة الغرف",
   "petFriendly": "مسموح باصطحاب الحيوانات",
@@ -340,7 +340,7 @@
   "noInternetMessage": "اتأكد إنك متوصل بالإنترنت وحاول تاني.",
   "tryagain": "حاول تاني",
   "errorConnection": "تأكد من اتصالك بالإنترنت ",
-  "noTrips": "لا توجد رحلات",
+  "noTrips": "لا توجد اي رحلات",
   "backToAllTrips": "العودة إلى كل الرحلات",
   "issue": "وصف المشكلة",
   "mytrips": " رحلاتي",
@@ -384,6 +384,6 @@
   "tripPricePerPerson": "سعر الفرد في الرحلة وبإمكانك زيادة عدد الأفراد",
   "bookTrip": "اضغط هنا لحجز الرحلة",
   "tripSoundControl": "التحكم بصوت الرحلة",
-  "searchDestination": "ابحث عن الوجهة اللي تحبها"
-
+  "searchDestination": "ابحث عن الوجهة اللي تحبها",
+  "themedate": "تغيير المظهر"
 }

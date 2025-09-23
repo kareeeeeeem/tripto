@@ -352,7 +352,7 @@
   "showcaseSaveDescription": "Tap here to save the trip and return to it later.",
   "showcaseInfoDescription": "To view information about this destination.",
   "mytrips": "My Trips",
-  "noTrips": "You didn't make any trips",
+  "noTrips": "we didn't find any trips",
   "tripNumber": "Trip No.",
   "name": "Name",
   "persons": "Persons",
@@ -383,9 +383,7 @@
   "tripPlace": "Trip location",
   "tripPricePerPerson": "Price per person in the trip, and you can increase the number of people",
   "bookTrip": "Click here to book the trip",
-  "tripSoundControl": "Control the trip sound",
-  "searchDestination": "Search for your favorite destination"
-
-
-
+  "tripSoundControl": "The trip sound",
+  "searchDestination": "Search for your favorite destination",
+  "themedate": "Change mode"
 }

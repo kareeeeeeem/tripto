@@ -156,12 +156,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   content: Text(
                     "${AppLocalizations.of(context)!.profile} updated successfully",
                   ),
+                    backgroundColor: Colors.green,
+
                 ),
               );
             } else if (state is UpdateUserFailure) {
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(state.message)));
+              ).showSnackBar(SnackBar(content: Text(state.message), 
+                backgroundColor: Colors.red,
+
+              ));
             }
           },
         ),

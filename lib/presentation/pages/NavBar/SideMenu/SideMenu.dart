@@ -27,11 +27,13 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
+        foregroundColor: theme.appBarTheme.foregroundColor,
+        backgroundColor: theme.appBarTheme.backgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
@@ -39,7 +41,6 @@ class _SideMenuState extends State<SideMenu> {
           AppLocalizations.of(context)!.sidemenu,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -50,279 +51,110 @@ class _SideMenuState extends State<SideMenu> {
           },
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons
-                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
-                : Icons
-                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+                ? Icons.keyboard_arrow_right_outlined
+                : Icons.keyboard_arrow_left_outlined,
             size: 35,
-            color: Colors.black,
+            color: theme.iconTheme.color,
           ),
         ),
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-          MediaQuery.of(context).size.width * 0.02, // left 2% من العرض
-          MediaQuery.of(context).size.height * 0.1, // top 10% من الارتفاع
-          MediaQuery.of(context).size.width * 0.02, // right 2% من العرض
-          0, // bottom
+          MediaQuery.of(context).size.width * 0.02,
+          MediaQuery.of(context).size.height * 0.1,
+          MediaQuery.of(context).size.width * 0.02,
+          0,
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 243, 241, 241),
-
-            borderRadius: BorderRadius.circular(16), // لو عايز زوايا مدوّرة
+            color: theme.cardColor,
+            borderRadius: BorderRadius.circular(16),
           ),
           height: MediaQuery.of(context).size.height * 0.6,
-          // width: MediaQuery.of(context).size.width * 0.9,
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-
-
-               /////////my
-                 ///
-                          ListTile(
-                        leading: const Icon(
-                          Icons.trip_origin,
-                          color: Color(0xFF002E70),
-                          size: 30,
-                        ),
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.mytrips,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Icon(
-                              Localizations.localeOf(context).languageCode == 'ar'
-                                  ? Icons.keyboard_arrow_left_outlined
-                                  : Icons.keyboard_arrow_right_outlined,
-                              size: 35,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                        onTap: () async {
-                            final storedUserId = await storage.read(key: 'userId');
-
-                            if (storedUserId != null && storedUserId.isNotEmpty) {
-                              // ✅ عندك يوزر → افتح MyTripsPage
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const MyTripsPage()),
-                              );
-                            } else {
-                              // ❌ مفيش يوزر → أولاً طلع SnackBar
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(AppLocalizations.of(context)!.pleaseLoginFirst),
-                                  backgroundColor: Color(0xFF002E70),
-                                  duration: const Duration(seconds: 5),
-                                ),
-                              );
-
-                              // ⏳ ثانياً، بعد ثانية ودِّيه على صفحة تسجيل الدخول
-                              Future.delayed(const Duration(seconds: 1), () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const Signuporlogin()),
-                                );
-                              });
-                            }
-                          },
-
+              _buildMenuItem(
+                context,
+                icon: Icons.trip_origin,
+                label: AppLocalizations.of(context)!.mytrips,
+                onTap: () async {
+                  final storedUserId = await storage.read(key: 'userId');
+                  if (storedUserId != null && storedUserId.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyTripsPage()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            AppLocalizations.of(context)!.pleaseLoginFirst),
+                        backgroundColor: theme.colorScheme.primary,
+                        duration: const Duration(seconds: 5),
                       ),
-
-
-
-             const Divider(
-                thickness: 0.3,
-                color: Colors.grey,
-              ),
-
-              //favorite
-              ListTile(
-                leading: const Icon(
-                  Icons.favorite,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.favourite,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FavoritePage(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FavoritePage()),
-                  );
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Signuporlogin()),
+                      );
+                    });
+                  }
                 },
               ),
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
+              _divider(),
+
+              _buildMenuItem(
+                context,
+                icon: Icons.favorite,
+                label: AppLocalizations.of(context)!.favourite,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FavoritePage()),
+                ),
               ),
+              _divider(),
+
+              _buildMenuItem(
+                context,
+                icon: Icons.info,
+                label: AppLocalizations.of(context)!.aboutus,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutUs()),
+                ),
+              ),
+              _divider(),
+
+              _buildMenuItem(
+                context,
+                icon: Icons.autorenew,
+                label: AppLocalizations.of(context)!.cancellation1,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Cancellattion()),
+                ),
+              ),
+              _divider(),
+
+              // 🌐 تغيير اللغة
               ListTile(
-                leading: const Icon(
-                  Icons.info,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.aboutus,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AboutUs(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AboutUs()),
-                  );
-                },
-              ),
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
-              // الجديد
-              ListTile(
-                leading: const Icon(
-                  Icons.autorenew,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.cancellation1,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Cancellattion(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Cancellattion()),
-                  );
-                },
-              ),
-
-
-
-              /////lang
-              ///
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.language,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
+                leading: const Icon(Icons.language, color: Color(0xFF002E70), size: 30),
+                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       Localizations.localeOf(context).languageCode == "en"
                           ? "Change Language"
                           : "تغيير اللغة",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: theme.textTheme.bodyLarge?.color,
                       ),
                     ),
                     Row(
@@ -331,21 +163,20 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale =
-                                currentLocale == 'ar'
-                                    ? const Locale('en')
-                                    : const Locale('ar');
+                            final newLocale = currentLocale == 'ar'
+                                ? const Locale('en')
+                                : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
                           child: Text(
                             Localizations.localeOf(context).languageCode == "en"
-                                ? "اللغة العربيه"
+                                ? "العربية"
                                 : "English",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: theme.textTheme.bodyLarge?.color,
                             ),
                           ),
                         ),
@@ -353,10 +184,9 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale =
-                                currentLocale == 'ar'
-                                    ? const Locale('en')
-                                    : const Locale('ar');
+                            final newLocale = currentLocale == 'ar'
+                                ? const Locale('en')
+                                : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
@@ -365,7 +195,7 @@ class _SideMenuState extends State<SideMenu> {
                                 ? Icons.keyboard_arrow_left_outlined
                                 : Icons.keyboard_arrow_right_outlined,
                             size: 35,
-                            color: Colors.black,
+                            color: theme.iconTheme.color,
                           ),
                         ),
                       ],
@@ -373,230 +203,126 @@ class _SideMenuState extends State<SideMenu> {
                   ],
                 ),
               ),
+              _divider(),
 
-
-
-
-              // 28/88888888888888888888888888888888888888888888888888888
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
+              // 🌙 تغيير الثيم
               ListTile(
-                leading: const Icon(
-                  Icons.lock,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
+               leading: const Icon(Icons.brightness_4, color: Color(0xFF002E70), size: 30),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.privacypolicy,
+                      AppLocalizations.of(context)!.themedate,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black,
                         fontWeight: FontWeight.bold,
+                        color: theme.textTheme.bodyLarge?.color,
                       ),
                     ),
-
                     IconButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Privacypolicy(),
-                          ),
-                          (route) => false,
-                        );
+                        TripToApp.toggleTheme(context);
                       },
                       icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Icons.dark_mode
+                            : Icons.light_mode,
                         size: 35,
-                        color: Colors.black,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.yellow
+                            : Colors.black,
                       ),
                     ),
                   ],
                 ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Privacypolicy()),
-                  );
-                },
               ),
+              _divider(),
 
-              // 8888888888888888888888888888888888888888888888888888888888888888888888888888888
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.book,
-                  color: Color(0xFF002E70),
-                  size: 30,
+              _buildMenuItem(
+                context,
+                icon: Icons.lock,
+                label: AppLocalizations.of(context)!.privacypolicy,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Privacypolicy()),
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.termsandcondations,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              ),
+              _divider(),
 
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Termsandcondations(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+              _buildMenuItem(
+                context,
+                icon: Icons.book,
+                label: AppLocalizations.of(context)!.termsandcondations,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Termsandcondations()),
                 ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Termsandcondations(),
-                    ),
-                  );
-                },
               ),
-              //31/8888888888888888888888888888888888888888888888888888888888888888888888888888
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.call,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.contactus,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              _divider(),
 
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ContactUs(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+              _buildMenuItem(
+                context,
+                icon: Icons.call,
+                label: AppLocalizations.of(context)!.contactus,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ContactUs()),
                 ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ContactUs()),
-                  );
-                },
               ),
-              // 4/99999999999999999999999999999999999999999999999999999999999
-              const Divider(
-                thickness: 0.3, // سُمك الخط
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.description,
-                  color: Color(0xFF002E70),
-                  size: 30,
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.report,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              _divider(),
 
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Report(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                      icon: Icon(
-                        Localizations.localeOf(context).languageCode == 'ar'
-                            ? Icons
-                                .keyboard_arrow_left_outlined // في العربي: سهم لليمين
-                            : Icons
-                                .keyboard_arrow_right_outlined, // في الإنجليزي: سهم لليسار
-                        size: 35,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+              _buildMenuItem(
+                context,
+                icon: Icons.description,
+                label: AppLocalizations.of(context)!.report,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Report()),
                 ),
-                onTap: () {
-                  // Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Report()),
-                  );
-                },
               ),
-              // /////////////////////////////////////////////////////////////////////////////
             ],
           ),
         ),
       ),
     );
+  }
+
+  // 🔹 عنصر قائمة موحد
+  Widget _buildMenuItem(BuildContext context,
+      {required IconData icon,
+      required String label,
+      required VoidCallback onTap}) {
+    final theme = Theme.of(context);
+    return ListTile(
+leading: Icon(icon, color: const Color(0xFF002E70), size: 30),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: theme.textTheme.bodyLarge?.color,
+            ),
+          ),
+          Icon(
+            Localizations.localeOf(context).languageCode == 'ar'
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
+            size: 35,
+            color: theme.iconTheme.color,
+          ),
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+  // 🔹 Divider موحد
+  Widget _divider() {
+    return const Divider(thickness: 0.3);
   }
 }

@@ -20,6 +20,7 @@ import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profi
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -66,30 +67,22 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   bool _hasMoreData = true;
   final int _perPage = 5;
 
-
   // 📅 التواريخ
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-
   // ✈️ الطيران
   int? selectedFlyId;
   double selectedFlightPrice = 0.0;
   bool? _hasFly;
-
-
     // 🏨 الفندق
   int? selectedHotelId;
   double selectedHotelPrice = 0.0;
-
   // 🚗 العربية
   int? selectedCarId;
   double selectedCarPrice = 0.0;
-
   // 🎟 الأنشطة
   int? selectedActivityId;
-  double selectedActivityPrice = 0.0;
-
-  
+  double selectedActivityPrice = 0.0;  
   // 👥 Person Counter (عشان عدد الأشخاص + السعر)
   final GlobalKey<PersonCounterWithPriceState> personCounterKey =
       GlobalKey<PersonCounterWithPriceState>();
@@ -145,7 +138,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _fetchAllTrips();
-
 
     
   }
@@ -414,7 +406,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
               const CircularProgressIndicator(color: Color(0xFF002E70)),
               const SizedBox(height: 20),
               Text(
-                'Loading trips...',
+                  AppLocalizations.of(context)!.loadingTrips,
+
                 style: Theme.of(
                   context,
                 ).textTheme.titleMedium?.copyWith(color: Colors.white),
@@ -439,7 +432,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
+
+
               const SizedBox(height: 20),
+
+
+
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF002E70), // خلفية كحلي
@@ -471,6 +470,49 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                     ),
                   ),
               ),
+
+
+              const SizedBox(height: 20),
+
+                ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+                foregroundColor: Colors.white, // لون النص أبيض
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+  
+                onPressed: () async {
+                  const phoneNumber = '201028476944';
+                  final message = Uri.encodeComponent(
+                    AppLocalizations.of(context)!.customTripMessage,
+                  );
+                  final url = 'https://wa.me/$phoneNumber?text=$message';
+
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(
+                      Uri.parse(url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.cannotOpenWhatsapp,
+                        ),
+                      ),
+                    );
+                  }
+                },
+
+                  child: Text(AppLocalizations.of(context)!.customtrip,
+                    style: TextStyle(
+                      color: Colors.white, // النص (foreground)
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -479,8 +521,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
     return MultiBlocListener(
       listeners: [
-
-
 
                 BlocListener<SearchTripByDateBloc, SearchTripByDateState>(
           listener: (context, state) {
@@ -506,11 +546,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         ),
 
 
-
-
-
-
-        BlocListener<SearchTripBySubDestinationBloc, SearchTripBySubDestinationState>(
+                BlocListener<SearchTripBySubDestinationBloc, SearchTripBySubDestinationState>(
           listener: (context, state) {
             if (state is SearchTripBySubDestinationLoaded) {
               _updateTripsList(state.trips);
@@ -518,16 +554,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
             }
           },
         ),
-              
-              
-      
-      
       ],
-
-
-
-
-
 
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -628,30 +655,42 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           Directionality.of(context) == TextDirection.rtl ? 10 : null,
                       right:
                           Directionality.of(context) == TextDirection.rtl ? null : 10,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.search_rounded,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        onPressed: () async {
+                      child: Column(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.search_rounded,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                            onPressed: () async {
+                              final result = await Navigator.push<bool>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => const SearchPage(),
+                                ),
+                              );
+                          
+                              if(result == true){
+                                
+                                 _disposeAllVideos(); // وقف كل الفيديوهات القديمة
+                          
+                                _fetchAllTrips();
+                              }
+                            },
+                          ),
+                          const SizedBox(height:2),
 
-                         // 1️⃣ إعادة تحميل كل الرحلات في السيرش
-
-                          final result = await Navigator.push<bool>(
-                              context,
-                              MaterialPageRoute(
-                                builder: (ctx) => const SearchPage(),
+                            const Text(
+                              "Search\nby date",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
                               ),
-                            );
+                            )
 
-                          if(result == true){
-                            
-                             _disposeAllVideos(); // وقف كل الفيديوهات القديمة
-
-                            _fetchAllTrips();
-                          }
-                        },
+                        ],
                       ),
                     ),
                     Positioned(
@@ -736,7 +775,9 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                               cityName: subDestination,
                             ),
                           ),
+
                           SizedBox(height: screenHeight * 0.001),
+
                           PersonCounterWithPrice(
                               key: _personCounterKeys[index],
                               basePricePerPerson:
@@ -750,6 +791,20 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                               backgroundColor: Colors.white,
                               carPrice: selectedCarPrice,
                           ),
+                          Row(
+                            children: [
+                              SizedBox(width: 20,),
+                              Text(
+                                "Price info: includes a tour leader",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
@@ -813,21 +868,19 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
 
                                         "hotel_id": selectedHotelId,   
-                                         "hotel_price": selectedHotelPrice ?? 0.0, 
+                                          "hotel_price": selectedHotelPrice ?? 0.0, 
 
                                         "car_id": selectedCarId,
-                                         "car_price": selectedCarPrice,
+                                          "car_price": selectedCarPrice,
                                       
                                         "activity_id": selectedActivityId,
-                                         "activity_price": selectedActivityPrice,
+                                          "activity_price": selectedActivityPrice,
 
                                       };
-
 
                                         // بعد ما تجهز orderData
                                         final prettyJson = const JsonEncoder.withIndent('  ').convert(orderData);
                                         debugPrint("==== Trip DATA SENT TO API ====\n$prettyJson");
-
 
                                             context.read<OrderTripBloc>().add(SubmitOrderTrip(orderData));
                                           },
@@ -838,7 +891,6 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                         ),
                       ),
                     ),
-
                   ],
                 );
               },
