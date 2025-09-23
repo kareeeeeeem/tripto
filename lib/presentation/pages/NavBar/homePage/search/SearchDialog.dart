@@ -9,14 +9,14 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dar
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/DateCardStandalone.dart';
 
-class SearchDialog extends StatefulWidget {
-  const SearchDialog({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<SearchDialog> createState() => _SearchDialogState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchDialogState extends State<SearchDialog> {
+class _SearchPageState extends State<SearchPage> {
   final TextEditingController _subDestinationController = TextEditingController();
   DateTime? _startDate;
   DateTime? _endDate;
@@ -83,25 +83,25 @@ void _showDatePicker(BuildContext context) async {
     final size = MediaQuery.of(context).size;
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
-    return SizedBox(
-      height: size.height * 0.65,
-      width: size.width * 0.9,
-      child: SingleChildScrollView(
+  return Scaffold(
+          backgroundColor:  Colors.white,
+
+    appBar: AppBar(
+      backgroundColor:  Colors.white,
+      title: Text(isArabic ? "البحث عن رحله" : "Search on trip"),
+        ),
+        
+        body: SingleChildScrollView(  
+        padding: const EdgeInsets.all(16),
         child: Column(
+    
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(isArabic ? "بحث" : "Search", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: size.height * 0.05),
+            
+            // Text(isArabic ? "البحث عن رحله" : "Search on trip", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.10),
 
-            TextField(
-              controller: _subDestinationController,
-              decoration: InputDecoration(
-                hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
-              ),
-            ),
-            SizedBox(height: size.height * 0.03),
+
 
             // اختيار التاريخ
               ElevatedButton.icon(
@@ -124,7 +124,19 @@ void _showDatePicker(BuildContext context) async {
                 ),
               ),
 
-            SizedBox(height: size.height * 0.04),
+            SizedBox(height: size.height * 0.05),
+
+            // اختيار الواجهه
+
+            TextField(
+              controller: _subDestinationController,
+              decoration: InputDecoration(
+                hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
+                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
+              ),
+            ),
+            SizedBox(height: size.height * 0.05),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -139,6 +151,8 @@ void _showDatePicker(BuildContext context) async {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+
+                
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -158,7 +172,7 @@ void _showDatePicker(BuildContext context) async {
                     child: Text(isArabic ? 'حسناً' : 'Ok', style: const TextStyle(color: Colors.white)),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -167,7 +181,7 @@ void _showDatePicker(BuildContext context) async {
                     child: Text(isArabic ? 'إلغاء' : 'Cancel', style: const TextStyle(color: Colors.white)),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

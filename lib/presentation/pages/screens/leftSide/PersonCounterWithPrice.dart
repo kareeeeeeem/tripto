@@ -51,6 +51,10 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
 
   double _selectedHotelPrice = 0.0;
 
+    // ✅ Getters علشان تستعملهم من بره
+  int get currentPersons => _numberOfPeople;
+  double get totalPrice => _totalPrice;
+
   @override
   void initState() {
     super.initState();

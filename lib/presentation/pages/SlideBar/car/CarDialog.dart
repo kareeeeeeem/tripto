@@ -174,15 +174,13 @@ class _CarSelectionPageState extends State<CarSelectionPage> {
                         onPressed: () {
                           setState(() {
                             selectedIndex = null;
-                            selectedCarId = null;        // ✅ مسح الـ ID
+                            selectedCarId = null;   
                             selectedCar = null;
-                          });
-                          
+                          });                          
                           // ⚡ تصفير سعر العربية في العداد
                           widget.personCounterKey?.currentState?.setSelectedCarPrice(0);
 
                           Navigator.of(context).pop(null); // ترجع null لو Cancel
-
 
                         },
                         child: Text(

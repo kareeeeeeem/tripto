@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
-  /// **'Error!'**
+  /// **'Error'**
   String get error;
 
   /// No description provided for @passwordNotStrong.
@@ -2027,7 +2027,7 @@ abstract class AppLocalizations {
   /// No description provided for @noTrips.
   ///
   /// In en, this message translates to:
-  /// **'No trips available'**
+  /// **'You didn\'t make any trips'**
   String get noTrips;
 
   /// No description provided for @backToAllTrips.
@@ -2035,6 +2035,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to all trips'**
   String get backToAllTrips;
+
+  /// No description provided for @mytrips.
+  ///
+  /// In en, this message translates to:
+  /// **'My Trips'**
+  String get mytrips;
+
+  /// No description provided for @showcaseCategoryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'preferred trip category.'**
+  String get showcaseCategoryDescription;
+
+  /// No description provided for @showcaseDateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your trip dates.'**
+  String get showcaseDateDescription;
+
+  /// No description provided for @showcaseHotelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your hotel from the available list.'**
+  String get showcaseHotelDescription;
+
+  /// No description provided for @showcaseCarDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your car for easy travel during the trip.'**
+  String get showcaseCarDescription;
+
+  /// No description provided for @showcaseActivitiesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse available activities and plan your adventures.'**
+  String get showcaseActivitiesDescription;
+
+  /// No description provided for @showcaseSaveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap here to save the trip and return to it later.'**
+  String get showcaseSaveDescription;
+
+  /// No description provided for @showcaseInfoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'To view information about this destination.'**
+  String get showcaseInfoDescription;
+
+  /// No description provided for @tripNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip No.'**
+  String get tripNumber;
+
+  /// No description provided for @persons.
+  ///
+  /// In en, this message translates to:
+  /// **'Persons'**
+  String get persons;
+
+  /// No description provided for @totalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get totalPrice;
+
+  /// No description provided for @fromDate.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get fromDate;
+
+  /// No description provided for @toDate.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get toDate;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @tripDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Details'**
+  String get tripDetails;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @tripId.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip ID'**
+  String get tripId;
+
+  /// No description provided for @userId.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get userId;
+
+  /// No description provided for @hotelId.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel ID'**
+  String get hotelId;
+
+  /// No description provided for @carId.
+  ///
+  /// In en, this message translates to:
+  /// **'Car ID'**
+  String get carId;
+
+  /// No description provided for @activityId.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity ID'**
+  String get activityId;
+
+  /// No description provided for @flyId.
+  ///
+  /// In en, this message translates to:
+  /// **'Fly ID'**
+  String get flyId;
+
+  /// No description provided for @hotelPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel Price'**
+  String get hotelPrice;
+
+  /// No description provided for @carPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Price'**
+  String get carPrice;
+
+  /// No description provided for @activityPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Price'**
+  String get activityPrice;
+
+  /// No description provided for @pleaseLoginFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in first or create your account if you haven\'t already.'**
+  String get pleaseLoginFirst;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// No description provided for @canceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get canceled;
+
+  /// No description provided for @loadingTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading trips...'**
+  String get loadingTrips;
+
+  /// No description provided for @tripPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip location'**
+  String get tripPlace;
+
+  /// No description provided for @tripPricePerPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per person in the trip, and you can increase the number of people'**
+  String get tripPricePerPerson;
+
+  /// No description provided for @bookTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Click here to book the trip'**
+  String get bookTrip;
+
+  /// No description provided for @tripSoundControl.
+  ///
+  /// In en, this message translates to:
+  /// **'Control the trip sound'**
+  String get tripSoundControl;
+
+  /// No description provided for @searchDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for your favorite destination'**
+  String get searchDestination;
 }
 
 class _AppLocalizationsDelegate

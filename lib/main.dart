@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripRepository.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_bloc.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_repository.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
@@ -22,17 +24,17 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
-import 'package:tripto/wrappers/internet_wrapper.dart';
+import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
+import 'package:showcaseview/showcaseview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey =
     GlobalKey<VideoPlayerScreenState>();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -59,10 +61,28 @@ class TripToApp extends StatefulWidget {
 class _TripToAppState extends State<TripToApp> {
   Locale _locale = const Locale('en');
 
-  void setLocale(Locale locale) {
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedLocale();
+  }
+
+  /// تحميل اللغة المحفوظة من SharedPreferences
+  Future<void> _loadSavedLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final langCode = prefs.getString('language_code') ?? 'en';
+    setState(() {
+      _locale = Locale(langCode);
+    });
+  }
+
+  /// تغيير اللغة + حفظها
+  void setLocale(Locale locale) async {
     setState(() {
       _locale = locale;
     });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', locale.languageCode);
   }
 
   @override
@@ -74,115 +94,95 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<ContactusRepository>(
-          create: (_) => ContactusRepository(),
-        ),
+            create: (_) => ContactusRepository()),
         RepositoryProvider<SearchTripByDateRepository>(
-          create: (_) => SearchTripByDateRepository(),
-        ),
+            create: (_) => SearchTripByDateRepository()),
         RepositoryProvider<SearchTripByCategoryRepository>(
-          create: (_) => SearchTripByCategoryRepository(),
-        ),
+            create: (_) => SearchTripByCategoryRepository()),
         RepositoryProvider<SearchTripBySubDestinationRepository>(
-          create: (_) => SearchTripBySubDestinationRepository(),
-        ),
+            create: (_) => SearchTripBySubDestinationRepository()),
+        RepositoryProvider<OrderTripRepository>(
+            create: (_) => OrderTripRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create:
-                (context) => AuthBloc(
-                  authRepository: RepositoryProvider.of<AuthRepository>(
-                    context,
-                  ),
-                ),
-          ),
-          BlocProvider<TripBloc>(
-            create:
-                (context) =>
-                    TripBloc(RepositoryProvider.of<TripRepository>(context))
-                      ..add(FetchTrips()),
-          ),
-
-          BlocProvider(
-            create:
-                (context) => UpdateUserBloc(
-                  userRepository: RepositoryProvider.of<UserRepository>(
-                    context,
-                  ),
-                ),
-          ),
-          BlocProvider<LogoutBloc>(
-            create:
-                (context) => LogoutBloc(
-                  repository: RepositoryProvider.of<AuthRepository>(context),
-                ),
-          ),
-          BlocProvider<ContactusBloc>(
-            create:
-                (context) => ContactusBloc(
-                  contactusRepository:
-                      RepositoryProvider.of<ContactusRepository>(context),
-                ),
-          ),
-          BlocProvider<SearchTripByDateBloc>(
-            create:
-                (context) => SearchTripByDateBloc(
-                  repository: RepositoryProvider.of<SearchTripByDateRepository>(
-                    context,
-                  ),
-                ),
-          ),
-          BlocProvider<SearchTripByCategoryBloc>(
-            create:
-                (context) => SearchTripByCategoryBloc(
-                  repository:
-                      RepositoryProvider.of<SearchTripByCategoryRepository>(
-                        context,
-                      ),
-                ),
-          ),
-          BlocProvider<SearchTripBySubDestinationBloc>(
-            create:
-                (context) => SearchTripBySubDestinationBloc(
-                  repository: RepositoryProvider.of<
-                    SearchTripBySubDestinationRepository
-                  >(context),
-                ),
-          ),
-        ],
-        child: MaterialApp(
-          navigatorObservers: [routeObserver],
-
-          locale: _locale,
-          supportedLocales: const [Locale('en'), Locale('ar')],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          theme: ThemeData(
-            textTheme: GoogleFonts.loraTextTheme(),
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: Colors.black,
-              selectionColor: Colors.grey,
-              selectionHandleColor: Colors.grey,
+            create: (context) => AuthBloc(
+              authRepository: RepositoryProvider.of<AuthRepository>(context),
             ),
           ),
-          title: 'TripTo',
-          debugShowCheckedModeBanner: false,
-
-          routes: AppRoutes.routes,
-          initialRoute: AppRoutes.splash, // أو أي صفحة انت عايز تبدأ بيها
-          builder: (context, child) {
-            // هنا هنلف كل الصفحات بالـ Wrapper
-            return Wrapper(child: child ?? const SizedBox());
-          },
-          // home: Report(),
-
-          // routes: AppRoutes.routes,
-          // home: App(),
-          // home: Privacypolicy(),
+          BlocProvider<TripBloc>(
+            create: (context) => TripBloc(
+              RepositoryProvider.of<TripRepository>(context),
+            )..add(FetchTrips()),
+          ),
+          BlocProvider<UpdateUserBloc>(
+            create: (context) => UpdateUserBloc(
+              userRepository: RepositoryProvider.of<UserRepository>(context),
+            ),
+          ),
+          BlocProvider<LogoutBloc>(
+            create: (context) => LogoutBloc(
+              repository: RepositoryProvider.of<AuthRepository>(context),
+            ),
+          ),
+          BlocProvider<ContactusBloc>(
+            create: (context) => ContactusBloc(
+              contactusRepository:
+                  RepositoryProvider.of<ContactusRepository>(context),
+            ),
+          ),
+          BlocProvider<SearchTripByDateBloc>(
+            create: (context) => SearchTripByDateBloc(
+              repository:
+                  RepositoryProvider.of<SearchTripByDateRepository>(context),
+            ),
+          ),
+          BlocProvider<OrderTripBloc>(
+            create: (context) => OrderTripBloc(
+              RepositoryProvider.of<OrderTripRepository>(context),
+            ),
+          ),
+          BlocProvider<SearchTripByCategoryBloc>(
+            create: (context) => SearchTripByCategoryBloc(
+              repository:
+                  RepositoryProvider.of<SearchTripByCategoryRepository>(context),
+            ),
+          ),
+          BlocProvider<SearchTripBySubDestinationBloc>(
+            create: (context) => SearchTripBySubDestinationBloc(
+              repository: RepositoryProvider.of<
+                  SearchTripBySubDestinationRepository>(context),
+            ),
+          ),
+        ],
+        child: ShowCaseWidget(
+          builder: (context) => MaterialApp(
+            navigatorObservers: [routeObserver],
+            locale: _locale,
+            supportedLocales: const [Locale('en'), Locale('ar')],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: ThemeData(
+              textTheme: GoogleFonts.loraTextTheme(),
+              textSelectionTheme: const TextSelectionThemeData(
+                cursorColor: Colors.black,
+                selectionColor: Colors.grey,
+                selectionHandleColor: Colors.grey,
+              ),
+            ),
+            title: 'TripTo',
+            debugShowCheckedModeBanner: false,
+            routes: AppRoutes.routes,
+            initialRoute: AppRoutes.splash,
+            builder: (context, child) {
+              return Wrapper(child: child ?? const SizedBox());
+            },
+          ),
         ),
       ),
     );

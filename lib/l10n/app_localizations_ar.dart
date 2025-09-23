@@ -198,7 +198,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الملف الشخصي';
 
   @override
-  String get phone => 'رقم الهاتف';
+  String get phone => 'الهاتف';
 
   @override
   String get edit => 'تعديل';
@@ -317,7 +317,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ok => 'موافق';
 
   @override
-  String get error => 'خطأ!';
+  String get error => 'خطأ';
 
   @override
   String get passwordNotStrong => 'كلمة المرور غير قوية بما يكفي';
@@ -1076,12 +1076,123 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tryagain => 'حاول تاني';
 
   @override
-  String get errorConnection =>
-      'تعذر الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.';
+  String get errorConnection => 'تأكد من اتصالك بالإنترنت ';
 
   @override
-  String get noTrips => 'لا توجد رحلات';
+  String get noTrips => 'لم توجد أي رحلات';
 
   @override
   String get backToAllTrips => 'العودة إلى كل الرحلات';
+
+  @override
+  String get mytrips => 'رحلاتي';
+
+  @override
+  String get showcaseCategoryDescription => 'فئة الرحلة ';
+
+  @override
+  String get showcaseDateDescription => 'اختار تواريخ رحلتك';
+
+  @override
+  String get showcaseHotelDescription => 'اختر فندق إقامتك من القائمة المتاحة';
+
+  @override
+  String get showcaseCarDescription => 'اختر سيارتك لتسهيل التنقل خلال الرحلة';
+
+  @override
+  String get showcaseActivitiesDescription =>
+      'استعرض الأنشطة المتاحة وخطط لمغامراتك';
+
+  @override
+  String get showcaseSaveDescription =>
+      'اضغط هنا لحفظ الرحلة والعودة إليها لاحقًا';
+
+  @override
+  String get showcaseInfoDescription => 'للاطلاع على معلومات حول هذه الوجهة';
+
+  @override
+  String get tripNumber => 'رحلة رقم';
+
+  @override
+  String get persons => 'عدد الأشخاص';
+
+  @override
+  String get totalPrice => 'السعر الكلي';
+
+  @override
+  String get fromDate => 'من';
+
+  @override
+  String get toDate => 'إلى';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get tripDetails => 'تفاصيل الرحلة';
+
+  @override
+  String get note => 'ملاحظة';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get tripId => 'معرّف الرحلة';
+
+  @override
+  String get userId => 'معرّف المستخدم';
+
+  @override
+  String get hotelId => 'معرّف الفندق';
+
+  @override
+  String get carId => 'معرّف السيارة';
+
+  @override
+  String get activityId => 'معرّف النشاط';
+
+  @override
+  String get flyId => 'معرّف الطيران';
+
+  @override
+  String get hotelPrice => 'سعر الفندق';
+
+  @override
+  String get carPrice => 'سعر السيارة';
+
+  @override
+  String get activityPrice => 'سعر النشاط';
+
+  @override
+  String get pleaseLoginFirst =>
+      'من فضلك سجل دخولك أولا أو أنشئ حسابك إذا لم يكن لديك';
+
+  @override
+  String get pending => 'قيد الانتظار';
+
+  @override
+  String get confirmed => 'مؤكد';
+
+  @override
+  String get canceled => 'ملغي';
+
+  @override
+  String get loadingTrips => 'جاري جلب الرحلات...';
+
+  @override
+  String get tripPlace => 'مكان الرحلة';
+
+  @override
+  String get tripPricePerPerson =>
+      'سعر الفرد في الرحلة وبإمكانك زيادة عدد الأفراد';
+
+  @override
+  String get bookTrip => 'اضغط هنا لحجز الرحلة';
+
+  @override
+  String get tripSoundControl => 'التحكم بصوت الرحلة';
+
+  @override
+  String get searchDestination => 'ابحث عن الوجهة اللي تحبها';
 }

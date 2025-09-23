@@ -85,10 +85,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         // تخزين التوكن وبيانات المستخدم بعد تسجيل الدخول
         await _storage.write(key: 'jwt_token', value: response['token']);
+          await _storage.write(key: 'user_data',  value: jsonEncode(response['user']),
+          );
+
+         // print("✅ token: ${response['user']['id']}");
+        
         await _storage.write(
-          key: 'user_data',
-          value: jsonEncode(response['user']),
-        );
+            key: 'userId',
+            value: response['user']['id'].toString(),
+          );
+          print("✅ Stored userId: ${response['user']['id']}");
+
 
         emit(
           LoginSuccess(

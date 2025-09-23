@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTrips/MyTripsPage.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
@@ -9,7 +11,11 @@ import 'package:tripto/presentation/app/app.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/About-us.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Cancellattion.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
-// import 'package:tripto/presentation/pages/SideMenu';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
+
+final storage = FlutterSecureStorage();
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -33,25 +39,7 @@ class _SideMenuState extends State<SideMenu> {
           AppLocalizations.of(context)!.sidemenu,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       final currentLocale =
-        //           Localizations.localeOf(context).languageCode;
-        //       final newLocale =
-        //           currentLocale == 'ar'
-        //               ? const Locale('en')
-        //               : const Locale('ar');
-        //       TripToApp.setLocale(context, newLocale);
-        //       setState(() {});
-        //     },
-        //     icon: const Icon(
-        //       Icons.language,
-        //       size: 30,
-        //       color: Color(0xFF002E70),
-        //     ),
-        //   ),
-        // ],
+        
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -89,6 +77,75 @@ class _SideMenuState extends State<SideMenu> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
+
+
+               /////////my
+                 ///
+                          ListTile(
+                        leading: const Icon(
+                          Icons.trip_origin,
+                          color: Color(0xFF002E70),
+                          size: 30,
+                        ),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.mytrips,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(
+                              Localizations.localeOf(context).languageCode == 'ar'
+                                  ? Icons.keyboard_arrow_left_outlined
+                                  : Icons.keyboard_arrow_right_outlined,
+                              size: 35,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        onTap: () async {
+                            final storedUserId = await storage.read(key: 'userId');
+
+                            if (storedUserId != null && storedUserId.isNotEmpty) {
+                              // ✅ عندك يوزر → افتح MyTripsPage
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const MyTripsPage()),
+                              );
+                            } else {
+                              // ❌ مفيش يوزر → أولاً طلع SnackBar
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.pleaseLoginFirst),
+                                  backgroundColor: Color(0xFF002E70),
+                                  duration: const Duration(seconds: 5),
+                                ),
+                              );
+
+                              // ⏳ ثانياً، بعد ثانية ودِّيه على صفحة تسجيل الدخول
+                              Future.delayed(const Duration(seconds: 1), () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const Signuporlogin()),
+                                );
+                              });
+                            }
+                          },
+
+                      ),
+
+
+
+             const Divider(
+                thickness: 0.3,
+                color: Colors.grey,
+              ),
+
+              //favorite
               ListTile(
                 leading: const Icon(
                   Icons.favorite,
@@ -240,6 +297,11 @@ class _SideMenuState extends State<SideMenu> {
                   );
                 },
               ),
+
+
+
+              /////lang
+              ///
               const Divider(
                 thickness: 0.3, // سُمك الخط
                 color: Colors.grey,
@@ -311,6 +373,9 @@ class _SideMenuState extends State<SideMenu> {
                   ],
                 ),
               ),
+
+
+
 
               // 28/88888888888888888888888888888888888888888888888888888
               const Divider(

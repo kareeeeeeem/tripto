@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/Hotelsـmodel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HotelAdelPage extends StatefulWidget {
   final HotelModel hotel;
@@ -14,18 +15,6 @@ class HotelAdelPage extends StatefulWidget {
 class _HotelAdelPageState extends State<HotelAdelPage> {
   final PageController _pageController = PageController(viewportFraction: 0.9);
   int _currentPage = 0;
-  // VideoPlayerController? _videoController;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (widget.hotel.videoUrl.isNotEmpty) {
-  //     _videoController = VideoPlayerController.network(widget.hotel.videoUrl)
-  //       ..initialize().then((_) {
-  //         setState(() {});
-  //       });
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -81,11 +70,6 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
         ),
       ),
-      // if (_videoController != null && _videoController!.value.isInitialized)
-      //   AspectRatio(
-      //     aspectRatio: _videoController!.value.aspectRatio,
-      //     child: VideoPlayer(_videoController!),
-      //   ),
     ];
 
     return Scaffold(
@@ -296,13 +280,26 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           ),
                           const SizedBox(width: 6),
                           Expanded(
-                            child: Text(
-                              hotel.mapLocation,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final Uri url = Uri.parse(hotel.mapLocation); // ده اللينك اللي جاي من الـ API
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Text(
+                                hotel.mapLocation,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue, // يخليها باين إنها لينك
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
-                            ),
+                            )
+
                           ),
                         ],
                       ),

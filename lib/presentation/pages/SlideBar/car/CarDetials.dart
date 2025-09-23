@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/CarModel.dart';
-
 import '../../../../l10n/app_localizations.dart';
 
 class CarCard extends StatelessWidget {
@@ -15,17 +14,16 @@ class CarCard extends StatelessWidget {
     this.onTap,
   });
 
+
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
     final carName = locale.languageCode == 'en' ? car.carNameEn : car.carNameAr;
-
     final textColor = isSelected ? Colors.white : Colors.black;
     final subtitleColor = isSelected ? Colors.white70 : Colors.grey[600];
     final displayColor = car.color;
-
-    // Format price with 2 decimals and currency symbol (تقدر تعدل العملة لو حبيت)
     final priceText = car.price.toStringAsFixed(2);
+
 
     return InkWell(
       onTap: onTap,

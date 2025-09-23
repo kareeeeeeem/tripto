@@ -14,7 +14,7 @@ class PlatinumCategory extends StatelessWidget {
           AppLocalizations.of(context)!.platinum,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
             fontSize: 16,
           ),
         ),
@@ -42,7 +42,7 @@ class PlatinumCategory extends StatelessWidget {
             child: Icon(
               Icons.diamond_outlined,
               size: 40,
-              color: Color(0xFFE1E1E1), // لون الجوهره الأصلي
+              color: Color(0xFF6A6969), // لون الجوهره الأصلي
             ),
           ),
         ),

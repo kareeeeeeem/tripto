@@ -58,15 +58,28 @@ class _LoginState extends State<Login> {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text('Loading...')));
+
           } else if (state is LoginSuccess) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            Navigator.of(context).pushReplacementNamed('/app');
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error), backgroundColor: Colors.red),
-            );
-          }
-        },
+            /// ✅ أضف SnackBar النجاح
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(AppLocalizations.of(context)!.success),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            /// بعد ثانيتين يروح للصفحة
+              Future.delayed(Duration(seconds: 2), () {
+                Navigator.of(context).pushReplacementNamed('/app');
+              });
+            } else if (state is AuthFailure) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+              );
+            }
+          },
         child: Container(
           color: Colors.white,
           child: Center(

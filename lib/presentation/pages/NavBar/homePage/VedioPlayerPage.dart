@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripEvent.dart';
+import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripState.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
@@ -11,10 +16,10 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
 import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchDialog.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
-import 'package:tripto/presentation/pages/screens/payment/payment_option.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -43,7 +48,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   final _storage = const FlutterSecureStorage();
   final _scrollController = PageController();
   final double _bookingPricePerPerson = 0.0;
-  double selectedCarPrice = 0.0;
+
   List<GlobalKey<PersonCounterWithPriceState>> _personCounterKeys = [];
   List<Map<String, dynamic>> _allTrips = [];
   List<Map<String, dynamic>> _trips = [];
@@ -61,11 +66,88 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   bool _hasMoreData = true;
   final int _perPage = 5;
 
+
+  // 📅 التواريخ
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+
+  // ✈️ الطيران
+  int? selectedFlyId;
+  double selectedFlightPrice = 0.0;
+  bool? _hasFly;
+
+
+    // 🏨 الفندق
+  int? selectedHotelId;
+  double selectedHotelPrice = 0.0;
+
+  // 🚗 العربية
+  int? selectedCarId;
+  double selectedCarPrice = 0.0;
+
+  // 🎟 الأنشطة
+  int? selectedActivityId;
+  double selectedActivityPrice = 0.0;
+
+  
+  // 👥 Person Counter (عشان عدد الأشخاص + السعر)
+  final GlobalKey<PersonCounterWithPriceState> personCounterKey =
+      GlobalKey<PersonCounterWithPriceState>();
+
+
+
+
+ // 🆕 ضع الدوال هنا
+    void onDateRangeSelected(DateTime? start, DateTime? end) {
+      setState(() {
+        _rangeStart = start;
+        _rangeEnd = end;
+      });
+      print("✅ VideoPlayerScreen: Date Range Updated -> From: $start, To: $end");
+    }
+    
+    void updateSelectedHotel(int? id, double price) {
+      setState(() {
+        selectedHotelId = id;
+        selectedHotelPrice = price;
+      });
+      print("✅ VideoPlayerScreen: Hotel Updated -> ID: $id, Price: $price");
+    }
+
+    void updateSelectedCar(int? id, double price) {
+      setState(() {
+        selectedCarId = id;
+        selectedCarPrice = price;
+      });
+      print("✅ VideoPlayerScreen: Car Updated -> ID: $id, Price: $price");
+    }
+
+    void updateSelectedActivity(int? id, double price) {
+      setState(() {
+        selectedActivityId = id;
+        selectedActivityPrice = price;
+      });
+      print("✅ VideoPlayerScreen: Activity Updated -> ID: $id, Price: $price");
+    }
+
+    void updateSelectedFlight(int? id, double price) {
+      setState(() {
+        selectedFlyId = id;
+        selectedFlightPrice = price;
+      });
+      print("✅ VideoPlayerScreen: Flight Updated -> ID: $id, Price: $price");
+    }
+    
+
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _fetchAllTrips();
+
+
+    
   }
 
   @override
@@ -315,6 +397,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     _videoErrorState.clear();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -357,7 +441,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                 style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF002E70), // خلفية كحلي
                 foregroundColor: Colors.white, // لون النص أبيض
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -552,21 +636,15 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                         ),
                         onPressed: () async {
 
-                                // 1️⃣ إعادة تحميل كل الرحلات في السيرش
+                         // 1️⃣ إعادة تحميل كل الرحلات في السيرش
 
-                          final result = await showDialog<bool>(
-                            context: context,
-                            builder: (ctx) => Dialog(
-                              backgroundColor: Colors.white.withOpacity(0.95),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          final result = await Navigator.push<bool>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (ctx) => const SearchPage(),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: SearchDialog(),
-                              ),
-                            ),
-                          );
+                            );
+
                           if(result == true){
                             
                              _disposeAllVideos(); // وقف كل الفيديوهات القديمة
@@ -608,14 +686,27 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                                   : 0,
                         ),
                         child: RightButtons(
-                           tripId: currentTrip['id'],
-
-
+                          tripId: currentTrip['id'],
                           currentTripCategory: currentTrip['category'] ?? -1,
                           personCounterKey: _personCounterKeys[index],
+
+
+                        onDateRangeSelected: (start, end) {
+                          setState(() {
+                            _rangeStart=start;
+                            _rangeEnd=end;
+                          });
+                        },
+                          onHotelSelected: updateSelectedHotel,
+                          onCarSelected: updateSelectedCar,
+                          onActivitySelected: updateSelectedActivity,
+                          onFlightSelected: updateSelectedFlight,
                         ),
                       ),
                     ),
+
+
+                    
                     Positioned(
                       bottom: screenHeight * 0.18,
                       left:
@@ -667,20 +758,87 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                       left: 20,
                       right: 20,
                       child: Center(
-                        child: CustomButton(
-                          text: AppLocalizations.of(context)!.booknow,
-                          onPressed:
-                              () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const PaymentOption(),
-                                ),
-                              ),
-                          width: screenWidth * 0.80,
-                          height: 40,
+                        child: BlocConsumer<OrderTripBloc, OrderTripState>(
+                          listener: (context, state) {
+                            if (state is OrderTripSuccess) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Order created successfully ✅")),
+                              );
+                            } else if (state is OrderTripFailure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Error: ${state.error}")),
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is OrderTripLoading) {
+                              return const CircularProgressIndicator(color: Colors.white);
+                            }
+                            return CustomButton(
+                              text: AppLocalizations.of(context)!.booknow,
+                              onPressed: () async {
+                                final storage = SecureStorageService();
+                                final currentUser = await storage.getUser();
+                                final personCounterState = _personCounterKeys[index].currentState;
+
+                                final personCounter = _personCounterKeys[index]
+                                    .currentState
+                                    ?.currentPersons ?? 1;
+
+                                final totalPrice = _personCounterKeys[index]
+                                    .currentState
+                                    ?.totalPrice ?? 0;
+
+                                final orderData = {
+
+                                        "trip_id": currentTrip['id'],
+                                        "user_id": currentUser!['id'], // من Bloc أو storage
+
+                                        "sub_destination_id": currentTrip['sub_destination']?['id'],
+                                        "customer_name": currentUser['name'],
+                                        "customer_email": currentUser['email'],
+                                        "customer_phone": currentUser['phone'],
+
+                                        "persons": personCounterState?.currentPersons ?? 1,
+                                        "total_price": personCounterState?.totalPrice ?? 0.0,
+                                        
+                                        "status": "pending",
+
+                                        "note":"", 
+
+                                        "fly_id": selectedFlyId,
+
+                                        "from_date": _rangeStart != null ? DateFormat('yyyy-MM-dd').format(_rangeStart!) : null,
+                                        "to_date": _rangeEnd != null ? DateFormat('yyyy-MM-dd').format(_rangeEnd!) : null,
+
+
+                                        "hotel_id": selectedHotelId,   
+                                         "hotel_price": selectedHotelPrice ?? 0.0, 
+
+                                        "car_id": selectedCarId,
+                                         "car_price": selectedCarPrice,
+                                      
+                                        "activity_id": selectedActivityId,
+                                         "activity_price": selectedActivityPrice,
+
+                                      };
+
+
+                                        // بعد ما تجهز orderData
+                                        final prettyJson = const JsonEncoder.withIndent('  ').convert(orderData);
+                                        debugPrint("==== Trip DATA SENT TO API ====\n$prettyJson");
+
+
+                                            context.read<OrderTripBloc>().add(SubmitOrderTrip(orderData));
+                                          },
+                                          width: screenWidth * 0.80,
+                                          height: 40,
+                            );
+                          },
                         ),
                       ),
                     ),
+
                   ],
                 );
               },

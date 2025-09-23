@@ -81,8 +81,12 @@ class AuthRepository {
         await storage.write(key: 'phone', value: user['phone'] ?? '');
         await storage.write(key: 'number', value: user['number'] ?? '');
 
+        await storage.write(key: 'userId', value: user['userId'] ?? '');
+
+
         // خزن نسخة كاملة من بيانات اليوزر
-        await storage.write(key: 'user_data', value: jsonEncode(user));
+        await storage.write(key: 'userId', value: user['id'].toString());
+
       }
 
       return data;
@@ -123,6 +127,9 @@ class AuthRepository {
   Future<void> clearUserData() async {
     await storage.delete(key: 'token');
     await storage.delete(key: 'user_data');
+
+    await storage.delete(key: 'userId'); // ✨ مهم عشان الـ MyTrips
+
   }
 
   // جلب التوكن

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/MyTrips/MyTripsPage.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/Login_page.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignUp_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/car/CarDetials.dart';
 import 'package:tripto/core/models/CarModel.dart';
 import 'package:tripto/presentation/app/app.dart';
@@ -32,6 +35,11 @@ class AppRoutes {
   static const FavoritePage = '/FavoritePage';
   static const carCardRoute = 'carCard';
   static const carSelectionPage = '/carSelectionPage';
+  static const login = '/login'; 
+  static const signup = '/signup';
+  static const myTrips = '/myTrips';
+
+
 
   static final routes = <String, WidgetBuilder>{
     splash: (context) => SplashScreen(),
@@ -53,5 +61,9 @@ class AppRoutes {
       final car = ModalRoute.of(context)!.settings.arguments as Carmodel;
       return CarCard(car: car);
     },
+    login: (context) => const Login(), 
+    signup: (context) => SignupPage(),
+    myTrips: (context) => const MyTripsPage(),
+
   };
 }

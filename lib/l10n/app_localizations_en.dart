@@ -319,7 +319,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ok => 'OK';
 
   @override
-  String get error => 'Error!';
+  String get error => 'Error';
 
   @override
   String get passwordNotStrong => 'Password is not strong enough';
@@ -1089,8 +1089,123 @@ class AppLocalizationsEn extends AppLocalizations {
       'Failed to connect to server Check your internet connection and try again.';
 
   @override
-  String get noTrips => 'No trips available';
+  String get noTrips => 'You didn\'t make any trips';
 
   @override
   String get backToAllTrips => 'Back to all trips';
+
+  @override
+  String get mytrips => 'My Trips';
+
+  @override
+  String get showcaseCategoryDescription => 'preferred trip category.';
+
+  @override
+  String get showcaseDateDescription => 'Choose your trip dates.';
+
+  @override
+  String get showcaseHotelDescription =>
+      'Select your hotel from the available list.';
+
+  @override
+  String get showcaseCarDescription =>
+      'Choose your car for easy travel during the trip.';
+
+  @override
+  String get showcaseActivitiesDescription =>
+      'Browse available activities and plan your adventures.';
+
+  @override
+  String get showcaseSaveDescription =>
+      'Tap here to save the trip and return to it later.';
+
+  @override
+  String get showcaseInfoDescription =>
+      'To view information about this destination.';
+
+  @override
+  String get tripNumber => 'Trip No.';
+
+  @override
+  String get persons => 'Persons';
+
+  @override
+  String get totalPrice => 'Total Price';
+
+  @override
+  String get fromDate => 'From';
+
+  @override
+  String get toDate => 'To';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get tripDetails => 'Trip Details';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get tripId => 'Trip ID';
+
+  @override
+  String get userId => 'User ID';
+
+  @override
+  String get hotelId => 'Hotel ID';
+
+  @override
+  String get carId => 'Car ID';
+
+  @override
+  String get activityId => 'Activity ID';
+
+  @override
+  String get flyId => 'Fly ID';
+
+  @override
+  String get hotelPrice => 'Hotel Price';
+
+  @override
+  String get carPrice => 'Car Price';
+
+  @override
+  String get activityPrice => 'Activity Price';
+
+  @override
+  String get pleaseLoginFirst =>
+      'Please log in first or create your account if you haven\'t already.';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get confirmed => 'Confirmed';
+
+  @override
+  String get canceled => 'Canceled';
+
+  @override
+  String get loadingTrips => 'Loading trips...';
+
+  @override
+  String get tripPlace => 'Trip location';
+
+  @override
+  String get tripPricePerPerson =>
+      'Price per person in the trip, and you can increase the number of people';
+
+  @override
+  String get bookTrip => 'Click here to book the trip';
+
+  @override
+  String get tripSoundControl => 'Control the trip sound';
+
+  @override
+  String get searchDestination => 'Search for your favorite destination';
 }
