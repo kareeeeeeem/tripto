@@ -1088,7 +1088,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorConnection => 'Check your internet connection';
 
   @override
-  String get noTrips => 'You didn\'t make any trips';
+  String get noTrips => 'we didn\'t find any trips';
 
   @override
   String get backToAllTrips => 'Back to all trips';
@@ -1203,8 +1203,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookTrip => 'Click here to book the trip';
 
   @override
-  String get tripSoundControl => 'Control the trip sound';
+  String get tripSoundControl => 'The trip sound';
 
   @override
   String get searchDestination => 'Search for your favorite destination';
+
+  @override
+  String get themedate => 'Change mode';
 }

@@ -1,7 +1,9 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/Hotelsـmodel.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
 class HotelAdelPage extends StatefulWidget {
   final HotelModel hotel;
@@ -48,7 +50,6 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
           label,
           style: TextStyle(
             fontSize: MediaQuery.of(context).size.width * 0.03, // 5% من العرض
-
             color: available ? Colors.black : Colors.grey,
           ),
         ),
@@ -61,16 +62,28 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
     final hotel = widget.hotel;
 
     final mediaItems = [
-      ...hotel.images.map(
-        (img) => Image.network(
-          img,
-          fit: BoxFit.cover,
-          errorBuilder:
-              (_, __, ___) =>
-                  Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
-        ),
-      ),
-    ];
+  ...hotel.images.map(
+    (img) => Image.network(
+      img,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) =>
+          Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
+    ),
+  ),
+  ...hotel.images.map(
+    (vid) {
+      final videoController = VideoPlayerController.network(vid);
+      final chewieController = ChewieController(
+        videoPlayerController: videoController,
+        autoPlay: false,
+        looping: true,
+        
+      );
+
+      return Chewie(controller: chewieController);
+    },
+  ),
+];
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
@@ -86,7 +99,10 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                     SizedBox(
                       height:
                           MediaQuery.of(context).size.height *
-                          0.35, // 35% من ارتفاع الشاشة
+                          0.55, // 35% من ارتفاع الشاشة
+                      width:
+                          MediaQuery.of(context).size.width ,
+                        
                       child: PageView.builder(
                         controller: _pageController,
                         itemCount: mediaItems.length,
@@ -192,6 +208,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                   height: 1.5,
                                 ),
                               ),
+
                             ],
                           ),
                         ],

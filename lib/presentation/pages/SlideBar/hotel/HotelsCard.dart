@@ -11,6 +11,7 @@ import 'package:tripto/bloc&repo/SearchHotel/hotelSearchStates.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/SlideBar/hotel/HoteleDetailsPage.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../l10n/app_localizations.dart';
 
 // دالة تحميل صورة الفندق من السيرفر
@@ -36,7 +37,7 @@ class HotelsDialog extends StatefulWidget {
   final GlobalKey<PersonCounterWithPriceState>? personCounterKey;
   final DateTime? startDate;
   final DateTime? endDate;
-  final int? selectedHotelId; // ✅ جديد
+  final int? selectedHotelId; 
 
   const HotelsDialog({
     super.key,
@@ -45,7 +46,7 @@ class HotelsDialog extends StatefulWidget {
     this.personCounterKey,
     this.startDate,
     this.endDate,
-    this.selectedHotelId, // ✅ جديد
+    this.selectedHotelId, 
   });
 
   @override
@@ -100,7 +101,6 @@ class _HotelsDialogState extends State<HotelsDialog> {
         height: MediaQuery.of(context).size.height * 0.75,
         child: Column(
           children: [
-            // عنوان مع أيقونة البحث
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -222,7 +222,54 @@ class _HotelsDialogState extends State<HotelsDialog> {
                   }
 
                   if (hotelsToShow.isEmpty) {
-                    return const Center(child: Text("No hotels found"));
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "No hotels found",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+                              foregroundColor: Colors.white, // لون النص أبيض
+                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () async {
+                              const phoneNumber = '201028476944';
+                              final message = Uri.encodeComponent(
+                                AppLocalizations.of(context)!.customTripMessage,
+                              );
+                              final url = 'https://wa.me/$phoneNumber?text=$message';
+
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(
+                                  Uri.parse(url),
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      AppLocalizations.of(context)!.cannotOpenWhatsapp,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(AppLocalizations.of(context)!.customtrip),
+                          ),
+                        ],
+                      ),
+                    );
                   }
 
                   return ListView.builder(
@@ -300,27 +347,51 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                             fontSize: 16,
                                           ),
                                         ),
-                                        IconButton(
-                                          icon: const Icon(Icons.info_outline),
-                                          onPressed: () {
-                                            final videoPlayerState =
-                                                videoPlayerScreenKey
-                                                    .currentState;
-                                            videoPlayerState
-                                                ?.pauseCurrentVideo();
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) =>
-                                                    HotelAdelPage(hotel: hotel),
-                                              ),
-                                            ).then((_) {
-                                              videoPlayerState
-                                                  ?.playCurrentVideo();
-                                            });
-                                          },
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6), // تقليل الحواف
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(32),
                                         ),
-                                      ],
+                                          backgroundColor: Colors.blueGrey,
+
+                                        minimumSize: const Size(35, 35), // أبعاد ثابتة للزر
+                                      ),
+                                      onPressed: () {
+                                        final videoPlayerState = videoPlayerScreenKey.currentState;
+                                        videoPlayerState?.pauseCurrentVideo();
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => HotelAdelPage(hotel: hotel),
+                                          ),
+                                        ).then((_) {
+                                          videoPlayerState?.playCurrentVideo();
+                                        });
+                                      },
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const [
+                                          // Icon(
+                                          //   Icons.hotel,
+                                          //   size: 20, // حجم الأيقونة
+                                          //   color: Colors.white,
+                                          // ),
+                                          SizedBox(height: 2),
+                                          Text(
+                                            "Info\nHotel", // نص على سطرين
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 12, // حجم أصغر للنص
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ],
                                     ),
                                     const SizedBox(height: 4),
                                     Text(

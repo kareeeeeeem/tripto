@@ -2027,7 +2027,7 @@ abstract class AppLocalizations {
   /// No description provided for @noTrips.
   ///
   /// In en, this message translates to:
-  /// **'You didn\'t make any trips'**
+  /// **'we didn\'t find any trips'**
   String get noTrips;
 
   /// No description provided for @backToAllTrips.
@@ -2243,7 +2243,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripSoundControl.
   ///
   /// In en, this message translates to:
-  /// **'Control the trip sound'**
+  /// **'The trip sound'**
   String get tripSoundControl;
 
   /// No description provided for @searchDestination.
@@ -2251,6 +2251,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search for your favorite destination'**
   String get searchDestination;
+
+  /// No description provided for @themedate.
+  ///
+  /// In en, this message translates to:
+  /// **'Change mode'**
+  String get themedate;
 }
 
 class _AppLocalizationsDelegate

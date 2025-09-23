@@ -382,7 +382,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get gym => 'صالة ألعاب رياضية';
 
   @override
-  String get spa => 'سباي';
+  String get spa => 'سبا';
 
   @override
   String get restaurant => 'مطعم';
@@ -1195,4 +1195,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get searchDestination => 'ابحث عن الوجهة اللي تحبها';
+
+  @override
+  String get themedate => 'تغيير المظهر';
 }
