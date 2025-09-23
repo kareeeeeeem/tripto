@@ -98,7 +98,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
           alignment: Alignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: mediaItems.length,
@@ -122,7 +122,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.lightBlueAccent,
+                    color: Color(0xFF002E70),
                   ),
                   onPressed: () {
                     if (_currentPage > 0) {
@@ -141,7 +141,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 child: IconButton(
                   icon: const Icon(
                     Icons.arrow_forward_ios,
-                    color: Colors.lightBlueAccent,
+                    color: Color(0xFF002E70),
                   ),
                   onPressed: () {
                     if (_currentPage < mediaItems.length - 1) {
@@ -267,9 +267,13 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 15,
+                  ),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment:
+                        AlignmentDirectional
+                            .centerStart, // Start = يمين لو عربي، شمال لو إنجليزي
                     child: ExpandedText(
                       text:
                           Localizations.localeOf(context).languageCode == 'ar'
@@ -399,7 +403,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                   child: Row(
                     children: [
                       Text(
-                        "${AppLocalizations.of(context)!.price} :",
+                        "${AppLocalizations.of(context)!.priceperperson} :",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -408,12 +412,21 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                       Text(
-                        "${widget.activity.price * _numberOfPeople} \$",
+                        "${widget.activity.priceperperson * _numberOfPeople} \$",
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      // icon transportation
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.34),
+                      Icon(
+                        widget.activity.transportation == true
+                            ? Icons.directions_car_filled_sharp
+                            : Icons.directions_walk_sharp,
+                        color: Colors.grey[800],
+                        size: 20,
                       ),
                     ],
                   ),

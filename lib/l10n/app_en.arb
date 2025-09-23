@@ -344,7 +344,7 @@
   "backToAllTrips": "Back to all trips",
   "issue": "Description issue",
   "mytrips": "My Trips",
-  "showcaseCategoryDescription": "preferred trip category.",  
+  "showcaseCategoryDescription": "preferred trip category.",
   "showcaseDateDescription": "Choose your trip dates.",
   "showcaseHotelDescription": "Select your hotel from the available list.",
   "showcaseCarDescription": "Choose your car for easy travel during the trip.",
@@ -385,5 +385,6 @@
   "bookTrip": "Click here to book the trip",
   "tripSoundControl": "The trip sound",
   "searchDestination": "Search for your favorite destination",
-  "themedate": "Change mode"
+  "themedate": "Change mode",
+  "priceperperson": " Price per person"
 }

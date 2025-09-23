@@ -2257,6 +2257,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change mode'**
   String get themedate;
+
+  /// No description provided for @priceperperson.
+  ///
+  /// In en, this message translates to:
+  /// **' Price per person'**
+  String get priceperperson;
 }
 
 class _AppLocalizationsDelegate

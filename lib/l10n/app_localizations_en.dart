@@ -1210,4 +1210,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themedate => 'Change mode';
+
+  @override
+  String get priceperperson => ' Price per person';
 }

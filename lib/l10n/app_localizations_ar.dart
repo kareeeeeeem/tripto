@@ -1198,4 +1198,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get themedate => 'تغيير المظهر';
+
+  @override
+  String get priceperperson => 'السعر للفرد';
 }

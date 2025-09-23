@@ -385,5 +385,6 @@
   "bookTrip": "اضغط هنا لحجز الرحلة",
   "tripSoundControl": "التحكم بصوت الرحلة",
   "searchDestination": "ابحث عن الوجهة اللي تحبها",
-  "themedate": "تغيير المظهر"
+  "themedate": "تغيير المظهر",
+  "priceperperson": "السعر للفرد"
 }
