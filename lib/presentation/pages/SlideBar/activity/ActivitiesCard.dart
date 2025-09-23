@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/main.dart';
+import 'package:tripto/presentation/pages/NavBar/ActivityPage/activity_details_page.dart';
+import 'package:tripto/presentation/pages/SlideBar/activity/ActivityDetailsPage.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -79,15 +82,42 @@ class ActivityCard extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                Localizations.localeOf(context).languageCode ==
-                                        'ar'
-                                    ? activity.activitynamear
-                                    : activity.activitynameen,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    Localizations.localeOf(
+                                              context,
+                                            ).languageCode ==
+                                            'ar'
+                                        ? activity.activitynamear
+                                        : activity.activitynameen,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.info_outline),
+                                    onPressed: () {
+                                      final videoPlayerState =
+                                          videoPlayerScreenKey.currentState;
+                                      videoPlayerState?.pauseCurrentVideo();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder:
+                                              (_) => ActivityDetailsPage(
+                                                activity: activity,
+                                              ),
+                                        ),
+                                      ).then((_) {
+                                        videoPlayerState?.playCurrentVideo();
+                                      });
+                                    },
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 4),
                               Text.rich(

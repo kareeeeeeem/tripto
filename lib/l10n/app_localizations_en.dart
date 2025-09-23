@@ -1085,8 +1085,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryagain => 'Try again';
 
   @override
-  String get errorConnection =>
-      'Failed to connect to server Check your internet connection and try again.';
+  String get errorConnection => 'Check your internet connection';
 
   @override
   String get noTrips => 'You didn\'t make any trips';

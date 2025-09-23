@@ -2021,7 +2021,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorConnection.
   ///
   /// In en, this message translates to:
-  /// **'Failed to connect to server Check your internet connection and try again.'**
+  /// **'Check your internet connection'**
   String get errorConnection;
 
   /// No description provided for @noTrips.

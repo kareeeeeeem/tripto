@@ -19,116 +19,161 @@ class ActivityDetailsPage extends StatefulWidget {
 
 class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
   int _numberOfPeople = 1;
+  final PageController _pageController = PageController(viewportFraction: 0.9);
+  int _currentPage = 0;
 
-  Widget _buildMediaWidget(String videoUrl, List<String> images) {
-    // اول حاجه هيتاكد في لإيديوهات يوتيوب ولا لا
-    if (videoUrl.isNotEmpty &&
-        (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be'))) {
-      final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.25,
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: YoutubePlayer(
-            controller: YoutubePlayerController(
-              initialVideoId: videoId,
-              flags: const YoutubePlayerFlags(
-                autoPlay: false,
-                mute: false,
-                disableDragSeek: false,
-                loop: false,
-                isLive: false,
-                forceHD: false,
-                enableCaption: true,
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildMediaSlider(String videoUrl, List<String> images) {
+    final List<Widget> mediaItems = [];
+
+    // لو الفيديو موجود (YouTube أو فيديو عادي) نحطه كأول عنصر
+    if (videoUrl.isNotEmpty) {
+      if (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be')) {
+        final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
+        mediaItems.add(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: YoutubePlayer(
+              controller: YoutubePlayerController(
+                initialVideoId: videoId,
+                flags: const YoutubePlayerFlags(autoPlay: false, mute: false),
               ),
+              showVideoProgressIndicator: true,
+              progressIndicatorColor: const Color(0xFF002E70),
             ),
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: Color(0xFF002E70),
           ),
-        ),
-      );
+        );
+      } else {
+        final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+        final extension = videoUrl.split('.').last.toLowerCase();
+        if (videoExtensions.contains(extension)) {
+          mediaItems.add(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: VideoplayerWidget(Url: videoUrl),
+            ),
+          );
+        }
+      }
     }
 
-    // لو مفيش لإيديوهات يويتوب هيتأكد فيه لإيديوهات عاديه فيها الامتدادات دي ولا لا
-    if (videoUrl.isNotEmpty) {
-      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
-      final extension = videoUrl.split('.').last.toLowerCase();
-
-      if (videoExtensions.contains(extension)) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.25,
-          width: MediaQuery.of(context).size.width * 0.9,
-
-          child: ClipRRect(
+    // إضافة الصور
+    if (images.isNotEmpty) {
+      for (var img in images) {
+        final fixedUrl = img.replaceFirst("/storage/", "/storage/app/public/");
+        mediaItems.add(
+          ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: VideoplayerWidget(Url: videoUrl),
+            child: Image.network(
+              fixedUrl,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(color: Color(0xFF002E70)),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset("assets/images/Logo.png", fit: BoxFit.cover);
+              },
+            ),
           ),
         );
       }
     }
 
-    // لو برده ملقاش فيديو هيبص علي الصور
-    if (images.isNotEmpty) {
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.25,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.02,
-          ),
-          itemCount: images.length,
-          separatorBuilder:
-              (context, index) =>
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-          itemBuilder: (context, index) {
-            final fixedUrl = images[index].replaceFirst(
-              "/storage/",
-              "/storage/app/public/", // استبدل بالمسار الصحيح
-            );
+    // لو مفيش لا فيديو ولا صور
+    if (mediaItems.isEmpty) {
+      mediaItems.add(Image.asset("assets/images/Logo.png", fit: BoxFit.cover));
+    }
 
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                child: Image.network(
-                  fixedUrl,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xFF002E70),
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    // print('Error loading image: $error');
-                    return Image.asset(
-                      "assets/images/Logo.png",
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.25,
-                    );
+    return Column(
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: mediaItems.length,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: mediaItems[index],
+                  );
+                },
+              ),
+            ),
+            // سهم الشمال
+            if (mediaItems.length > 1)
+              Positioned(
+                left: -13,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.lightBlueAccent,
+                  ),
+                  onPressed: () {
+                    if (_currentPage > 0) {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    }
                   },
                 ),
               ),
-            );
-          },
-          //   catch (e) {
-          //     print('Error processing image: $e');
-          //   }
-          // }
+            // سهم اليمين
+            if (mediaItems.length > 1)
+              Positioned(
+                right: -15,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.lightBlueAccent,
+                  ),
+                  onPressed: () {
+                    if (_currentPage < mediaItems.length - 1) {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                ),
+              ),
+          ],
         ),
-      );
-    }
-    // لو مفيش صورة هيعرض الصورة اللي انا مختارها
-    return Image.asset(
-      "assets/images/Logo.png",
-      fit: BoxFit.cover,
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.25,
+        const SizedBox(height: 8),
+        // النقاط تحت الصور
+        if (mediaItems.length > 1)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              mediaItems.length,
+              (index) => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: _currentPage == index ? 12 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: _currentPage == index ? Colors.blue : Colors.grey,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 
@@ -173,7 +218,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                     horizontal: 20,
                     vertical: 10,
                   ),
-                  child: _buildMediaWidget(
+                  child: _buildMediaSlider(
                     widget.activity.videoUrl,
                     widget.activity.images,
                   ),
@@ -193,7 +238,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                           "${AppLocalizations.of(context)!.destination} : ",
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black,
                           ),
                         ),
@@ -246,7 +291,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         "${AppLocalizations.of(context)!.numberofpeople} :",
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
@@ -322,7 +367,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         "${AppLocalizations.of(context)!.category} :",
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
@@ -357,7 +402,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         "${AppLocalizations.of(context)!.price} :",
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
