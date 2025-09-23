@@ -681,8 +681,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           ),
                           const SizedBox(height:2),
 
-                            const Text(
-                              "Search\nby date",
+                             Text(
+                               AppLocalizations.of(context)!.searchByDate,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
@@ -795,7 +795,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                             children: [
                               SizedBox(width: 20,),
                               Text(
-                                "Price info: includes a tour leader",
+                                AppLocalizations.of(context)!.priceInfo,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,

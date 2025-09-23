@@ -1198,4 +1198,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get themedate => 'تغيير المظهر';
+
+  @override
+  String get priceInfo => 'السعر يشمل مرشدًا سياحيًا';
+
+  @override
+  String get searchByDate => 'البحث\nبالتاريخ';
+
+  @override
+  String get infoHotel => 'معلومات\nالفندق';
 }

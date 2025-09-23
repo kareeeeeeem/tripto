@@ -353,7 +353,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(32),
                                         ),
-                                          backgroundColor: Colors.blueGrey,
+                                          backgroundColor: const Color.fromARGB(255, 209, 222, 152),
 
                                         minimumSize: const Size(35, 35), // أبعاد ثابتة للزر
                                       ),
@@ -372,15 +372,11 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: const [
-                                          // Icon(
-                                          //   Icons.hotel,
-                                          //   size: 20, // حجم الأيقونة
-                                          //   color: Colors.white,
-                                          // ),
+                                        children:  [
+                                         
                                           SizedBox(height: 2),
                                           Text(
-                                            "Info\nHotel", // نص على سطرين
+                                            AppLocalizations.of(context)!.infoHotel, // المفتاح في ملف ARB
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontSize: 12, // حجم أصغر للنص

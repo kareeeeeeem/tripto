@@ -385,5 +385,10 @@
   "bookTrip": "Click here to book the trip",
   "tripSoundControl": "The trip sound",
   "searchDestination": "Search for your favorite destination",
-  "themedate": "Change mode"
+  "themedate": "Change mode",
+  "priceInfo": "Price includes a tour leader",
+  "searchByDate": "search\by Date",
+  "infoHotel": "Info\nHotel"
+
+
 }

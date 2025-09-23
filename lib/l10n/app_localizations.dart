@@ -2257,6 +2257,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change mode'**
   String get themedate;
+
+  /// No description provided for @priceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Price includes a tour leader'**
+  String get priceInfo;
+
+  /// No description provided for @searchByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'search\by Date'**
+  String get searchByDate;
+
+  /// No description provided for @infoHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Info\nHotel'**
+  String get infoHotel;
 }
 
 class _AppLocalizationsDelegate

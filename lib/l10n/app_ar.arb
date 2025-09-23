@@ -385,5 +385,10 @@
   "bookTrip": "اضغط هنا لحجز الرحلة",
   "tripSoundControl": "التحكم بصوت الرحلة",
   "searchDestination": "ابحث عن الوجهة اللي تحبها",
-  "themedate": "تغيير المظهر"
+  "themedate": "تغيير المظهر",
+  "priceInfo": "السعر يشمل مرشدًا سياحيًا",
+  "searchByDate": "البحث\nبالتاريخ",
+   "infoHotel": "معلومات\nالفندق"
+
+
 }

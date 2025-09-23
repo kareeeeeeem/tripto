@@ -1211,4 +1211,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themedate => 'Change mode';
+
+  @override
+  String get priceInfo => 'Price includes a tour leader';
+
+  @override
+  String get searchByDate => 'search\by Date';
+
+  @override
+  String get infoHotel => 'Info\nHotel';
 }

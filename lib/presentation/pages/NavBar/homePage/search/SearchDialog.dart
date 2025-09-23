@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +83,7 @@ void _showDatePicker(BuildContext context) async {
     final size = MediaQuery.of(context).size;
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
-    return Scaffold(
+   return Scaffold(
       backgroundColor:  Colors.white,
       appBar: AppBar(
       backgroundColor:  Colors.white,
@@ -131,16 +130,6 @@ void _showDatePicker(BuildContext context) async {
 
             TextField(
               controller: _subDestinationController,
-              readOnly: true,
-              onTap: (){
-                showCountryPicker(
-                  context: context,
-                   showPhoneCode: false, // لو عايز كود الدولة خليه true
-                      onSelect: (Country country) {
-                        _subDestinationController.text = country.name;
-                   },
-                );
-              },
               decoration: InputDecoration(
                 hintText: isArabic ? "الدوله (مثال: الرياض)" : "Sub-destination (example: Riyadh)",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.lightBlue)),
