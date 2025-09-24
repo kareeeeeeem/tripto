@@ -284,8 +284,8 @@ class _HotelsDialogState extends State<HotelsDialog> {
                       return GestureDetector(
                         onTap: () => setState(() => selectedIndex = index),
                         child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.symmetric(vertical:15 ),
+                          padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: isSelected ? Colors.blue[50] : Colors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -300,7 +300,7 @@ class _HotelsDialogState extends State<HotelsDialog> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(8),
                                 child: SizedBox(
                                   height: 100,
                                   width: 100,
@@ -347,48 +347,9 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                             fontSize: 16,
                                           ),
                                         ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6), // تقليل الحواف
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(32),
-                                        ),
-                                          backgroundColor: const Color.fromARGB(255, 209, 222, 152),
-
-                                        minimumSize: const Size(35, 35), // أبعاد ثابتة للزر
-                                      ),
-                                      onPressed: () {
-                                        final videoPlayerState = videoPlayerScreenKey.currentState;
-                                        videoPlayerState?.pauseCurrentVideo();
-
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => HotelAdelPage(hotel: hotel),
-                                          ),
-                                        ).then((_) {
-                                          videoPlayerState?.playCurrentVideo();
-                                        });
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children:  [
-                                         
-                                          SizedBox(height: 2),
-                                          Text(
-                                            AppLocalizations.of(context)!.infoHotel, // المفتاح في ملف ARB
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 12, // حجم أصغر للنص
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                     ],
                                     ),
+                                    
                                     const SizedBox(height: 4),
                                     Text(
                                       Localizations.localeOf(context)
@@ -425,6 +386,46 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                             0.035,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.green[700],
+                                      ),
+                                    ),
+                                     ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), // تقليل الحواف
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(32),
+                                        ),
+                                            backgroundColor: const Color(0xFF002E70),
+
+                                        minimumSize: const Size(122, 22), // أبعاد ثابتة للزر
+                                      ),
+                                      onPressed: () {
+                                        final videoPlayerState = videoPlayerScreenKey.currentState;
+                                        videoPlayerState?.pauseCurrentVideo();
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => HotelAdelPage(hotel: hotel),
+                                          ),
+                                        ).then((_) {
+                                          videoPlayerState?.playCurrentVideo();
+                                        });
+                                      },
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children:  [
+                                         
+                                          SizedBox(height: 2),
+                                          Text(
+                                            AppLocalizations.of(context)!.infoHotel, // المفتاح في ملف ARB
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 12, // حجم أصغر للنص
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],

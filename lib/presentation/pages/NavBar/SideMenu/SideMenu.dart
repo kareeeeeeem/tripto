@@ -91,7 +91,7 @@ class _SideMenuState extends State<SideMenu> {
                       SnackBar(
                         content: Text(
                             AppLocalizations.of(context)!.pleaseLoginFirst),
-                        backgroundColor: theme.colorScheme.primary,
+                        backgroundColor: Color(0xFF002E70),
                         duration: const Duration(seconds: 5),
                       ),
                     );

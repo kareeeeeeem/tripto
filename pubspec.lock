@@ -241,22 +241,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  country_picker:
+  country_state_city_picker:
     dependency: "direct main"
     description:
-      name: country_picker
-      sha256: "9b14c04f9a35e99f6de6bcbc453a556bb98345aecb481c7a0e843c94c2bee1f8"
+      name: country_state_city_picker
+      sha256: "509c282165df329ee5a29babb28e13dce3bc32166cea21b202a49c44d20cfef3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.27"
-  country_state_city_pro:
-    dependency: "direct main"
-    description:
-      name: country_state_city_pro
-      sha256: "22a53349836f8ddb016e1e0f45b26b61f3546ae5257a818b0935a9222ed4b20b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
+    version: "1.2.8"
   crypto:
     dependency: transitive
     description:
@@ -1258,14 +1250,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  universal_io:
-    dependency: transitive
-    description:
-      name: universal_io
-      sha256: "1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.2"
   url_launcher:
     dependency: "direct main"
     description:

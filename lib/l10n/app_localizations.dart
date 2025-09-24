@@ -2021,7 +2021,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorConnection.
   ///
   /// In en, this message translates to:
-  /// **'Failed to connect to server Check your internet connection and try again.'**
+  /// **'Check your internet connection'**
   String get errorConnection;
 
   /// No description provided for @noTrips.
@@ -2264,17 +2264,23 @@ abstract class AppLocalizations {
   /// **'Price includes a tour leader'**
   String get priceInfo;
 
-  /// No description provided for @searchByDate.
-  ///
-  /// In en, this message translates to:
-  /// **'search\by Date'**
-  String get searchByDate;
-
   /// No description provided for @infoHotel.
   ///
   /// In en, this message translates to:
-  /// **'Info\nHotel'**
+  /// **'view Hotel'**
   String get infoHotel;
+
+  /// No description provided for @searchByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'choose Date'**
+  String get searchByDate;
+
+  /// No description provided for @priceperperson.
+  ///
+  /// In en, this message translates to:
+  /// **' Price per person'**
+  String get priceperperson;
 }
 
 class _AppLocalizationsDelegate

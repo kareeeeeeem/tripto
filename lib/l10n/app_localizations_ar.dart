@@ -1203,8 +1203,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get priceInfo => 'السعر يشمل مرشدًا سياحيًا';
 
   @override
-  String get searchByDate => 'البحث\nبالتاريخ';
+  String get infoHotel => 'عرض الفندق';
 
   @override
-  String get infoHotel => 'معلومات\nالفندق';
+  String get searchByDate => 'اختار التاريخ';
+
+  @override
+  String get priceperperson => 'السعر للفرد';
 }

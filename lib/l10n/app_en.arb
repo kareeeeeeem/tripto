@@ -339,12 +339,12 @@
   "issue": "Description issue",
   "noInternetMessage": "Make sure you are connected to the internet and try again.",
   "tryagain": "Try again",
-  "errorConnection": "Failed to connect to server Check your internet connection and try again.",
+  "errorConnection": "Check your internet connection",
   "noTrips": "No trips available",
   "backToAllTrips": "Back to all trips",
   "issue": "Description issue",
   "mytrips": "My Trips",
-  "showcaseCategoryDescription": "preferred trip category.",  
+  "showcaseCategoryDescription": "preferred trip category.",
   "showcaseDateDescription": "Choose your trip dates.",
   "showcaseHotelDescription": "Select your hotel from the available list.",
   "showcaseCarDescription": "Choose your car for easy travel during the trip.",
@@ -387,8 +387,7 @@
   "searchDestination": "Search for your favorite destination",
   "themedate": "Change mode",
   "priceInfo": "Price includes a tour leader",
-  "searchByDate": "search\by Date",
-  "infoHotel": "Info\nHotel"
-
-
+  "infoHotel": "view Hotel",
+  "searchByDate": "choose Date",
+  "priceperperson": " Price per person"
 }

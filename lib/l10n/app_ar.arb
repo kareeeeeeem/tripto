@@ -387,8 +387,7 @@
   "searchDestination": "ابحث عن الوجهة اللي تحبها",
   "themedate": "تغيير المظهر",
   "priceInfo": "السعر يشمل مرشدًا سياحيًا",
-  "searchByDate": "البحث\nبالتاريخ",
-   "infoHotel": "معلومات\nالفندق"
-
-
+  "infoHotel": "عرض الفندق",
+  "searchByDate": "اختار التاريخ",
+  "priceperperson": "السعر للفرد"
 }

@@ -1085,8 +1085,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryagain => 'Try again';
 
   @override
-  String get errorConnection =>
-      'Failed to connect to server Check your internet connection and try again.';
+  String get errorConnection => 'Check your internet connection';
 
   @override
   String get noTrips => 'we didn\'t find any trips';
@@ -1216,8 +1215,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get priceInfo => 'Price includes a tour leader';
 
   @override
-  String get searchByDate => 'search\by Date';
+  String get infoHotel => 'view Hotel';
 
   @override
-  String get infoHotel => 'Info\nHotel';
+  String get searchByDate => 'choose Date';
+
+  @override
+  String get priceperperson => ' Price per person';
 }

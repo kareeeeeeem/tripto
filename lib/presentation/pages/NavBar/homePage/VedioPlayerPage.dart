@@ -15,7 +15,7 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchDialog.dart';
+import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchPage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
@@ -438,81 +438,82 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
 
 
+// زر العودة لكل الرحلات
+ElevatedButton(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+    foregroundColor: Colors.white, // لون النص أبيض
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+  onPressed: () {
+    setState(() {
+      _trips = _allTrips.take(_perPage).toList();
+      _personCounterKeys = List.generate(
+        _trips.length,
+        (index) => GlobalKey<PersonCounterWithPriceState>(),
+      );
+      _currentPage = 0;
+      _currentIndex = 0;
+      _initialErrorMessage = "";
+      _hasMoreData = _allTrips.length > _perPage;
+    });
+    if (_trips.isNotEmpty) {
+      _initializeAndPreloadVideo(0, autoPlay: true);
+    }
+  },
+  child: Text(
+    AppLocalizations.of(context)!.backToAllTrips,
+    style: const TextStyle(
+      color: Colors.white, // النص (foreground)
+    ),
+  ),
+),
 
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF002E70), // خلفية كحلي
-                foregroundColor: Colors.white, // لون النص أبيض
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-                onPressed: () {
-                  setState(() {
-                    _trips = _allTrips.take(_perPage).toList();
-                    _personCounterKeys = List.generate(
-                      _trips.length,
-                      (index) => GlobalKey<PersonCounterWithPriceState>(),
-                    );
-                    _currentPage = 0;
-                    _currentIndex = 0;
-                    _initialErrorMessage = "";
-                    _hasMoreData = _allTrips.length > _perPage;
-                  });
-                  if (_trips.isNotEmpty) {
-                    _initializeAndPreloadVideo(0, autoPlay: true);
-                  }
-                },
-                  child: Text(AppLocalizations.of(context)!.backToAllTrips,
-                    style: TextStyle(
-                      color: Colors.white, // النص (foreground)
-                    ),
-                  ),
-              ),
+const SizedBox(height: 20),
 
+// زر رسالة واتساب
+ElevatedButton(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+    foregroundColor: Colors.white, // لون النص أبيض
+    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+  onPressed: () async {
+    const phoneNumber = '201028476944';
+    final message = Uri.encodeComponent(
+      AppLocalizations.of(context)!.customTripMessage,
+    );
+    final url = 'https://wa.me/$phoneNumber?text=$message';
 
-              const SizedBox(height: 20),
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)!.cannotOpenWhatsapp,
+          ),
+        ),
+      );
+    }
+  },
+  child: Text(
+    AppLocalizations.of(context)!.customtrip,
+    style: const TextStyle(
+      color: Colors.white, // النص (foreground)
+    ),
+  ),
+),
 
-                ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF002E70), // خلفية كحلي
-                foregroundColor: Colors.white, // لون النص أبيض
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-  
-                onPressed: () async {
-                  const phoneNumber = '201028476944';
-                  final message = Uri.encodeComponent(
-                    AppLocalizations.of(context)!.customTripMessage,
-                  );
-                  final url = 'https://wa.me/$phoneNumber?text=$message';
-
-                  if (await canLaunchUrl(Uri.parse(url))) {
-                    await launchUrl(
-                      Uri.parse(url),
-                      mode: LaunchMode.externalApplication,
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!.cannotOpenWhatsapp,
-                        ),
-                      ),
-                    );
-                  }
-                },
-
-                  child: Text(AppLocalizations.of(context)!.customtrip,
-                    style: TextStyle(
-                      color: Colors.white, // النص (foreground)
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -681,12 +682,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
                           ),
                           const SizedBox(height:2),
 
-                             Text(
-                               AppLocalizations.of(context)!.searchByDate,
+                              Text(
+                              AppLocalizations.of(context)!.searchByDate,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal
                               ),
                             )
 
@@ -970,6 +972,29 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       ),
     );
   }
+  // ويدجت للزر الموحد
+Widget customElevatedButton({
+  required String text,
+  required VoidCallback onPressed,
+}) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFF002E70), // خلفية كحلي
+      foregroundColor: Colors.white, // لون النص
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      textStyle: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    onPressed: onPressed,
+    child: Text(text),
+  );
+}
+
 
   String _getLocalizedDestinationName(
     Map<String, dynamic> trip,
