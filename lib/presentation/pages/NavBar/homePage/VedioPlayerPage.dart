@@ -441,9 +441,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 // زر العودة لكل الرحلات
 ElevatedButton(
   style: ElevatedButton.styleFrom(
-    backgroundColor: const Color(0xFF002E70), // خلفية كحلي
-    foregroundColor: Colors.white, // لون النص أبيض
-    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    backgroundColor: Colors.lightBlue,
+    foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
     ),

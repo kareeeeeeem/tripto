@@ -1206,7 +1206,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get infoHotel => 'عرض الفندق';
 
   @override
-  String get searchByDate => 'اختار التاريخ';
+  String get searchByDate => 'اختار تاريخ';
 
   @override
   String get priceperperson => 'السعر للفرد';
