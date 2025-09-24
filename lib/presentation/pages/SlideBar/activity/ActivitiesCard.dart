@@ -98,9 +98,9 @@ class ActivityCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.info_outline),
-                                    onPressed: () {
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(50),
+                                    onTap: () {
                                       final videoPlayerState =
                                           videoPlayerScreenKey.currentState;
                                       videoPlayerState?.pauseCurrentVideo();
@@ -116,6 +116,33 @@ class ActivityCard extends StatelessWidget {
                                         videoPlayerState?.playCurrentVideo();
                                       });
                                     },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(
+                                        5,
+                                      ), // يتحكم في حجم الزرار
+                                      decoration: BoxDecoration(
+                                        color: const Color(
+                                          0xFF002E70,
+                                        ), // اللون الكحلي بتاعك
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(
+                                              0.1,
+                                            ),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Icon(
+                                        Icons.info_outline,
+                                        color:
+                                            Colors
+                                                .white, // لون الأيقونة أبيض عشان يظهر على الكحلي
+                                        size: 16, // حجم الأيقونة
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

@@ -184,6 +184,8 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        scrolledUnderElevation: 0,
+
         title: Text(
           widget.activity.activitynameen,
           style: const TextStyle(
@@ -422,11 +424,14 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                       // icon transportation
                       SizedBox(width: MediaQuery.of(context).size.width * 0.34),
                       Icon(
-                        widget.activity.transportation == true
-                            ? Icons.directions_car_filled_sharp
-                            : Icons.directions_walk_sharp,
-                        color: Colors.grey[800],
-                        size: 20,
+                        Icons
+                            .directions_car_filled_sharp, // في الحالتين نفس الأيقونة
+                        color:
+                            widget.activity.transportation == true
+                                ? Colors
+                                    .blue // لو الشرط true → أزرق
+                                : Colors.grey[800], // لو false → رمادي
+                        size: 30,
                       ),
                     ],
                   ),
