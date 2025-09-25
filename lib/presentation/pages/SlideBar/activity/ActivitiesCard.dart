@@ -98,52 +98,52 @@ class ActivityCard extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(50),
-                                    onTap: () {
-                                      final videoPlayerState =
-                                          videoPlayerScreenKey.currentState;
-                                      videoPlayerState?.pauseCurrentVideo();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (_) => ActivityDetailsPage(
-                                                activity: activity,
-                                              ),
-                                        ),
-                                      ).then((_) {
-                                        videoPlayerState?.playCurrentVideo();
-                                      });
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(
-                                        5,
-                                      ), // يتحكم في حجم الزرار
-                                      decoration: BoxDecoration(
-                                        color: const Color(
-                                          0xFF002E70,
-                                        ), // اللون الكحلي بتاعك
-                                        shape: BoxShape.circle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(
-                                              0.1,
-                                            ),
-                                            blurRadius: 4,
-                                            offset: const Offset(0, 2),
-                                          ),
-                                        ],
-                                      ),
-                                      child: const Icon(
-                                        Icons.info_outline,
-                                        color:
-                                            Colors
-                                                .white, // لون الأيقونة أبيض عشان يظهر على الكحلي
-                                        size: 16, // حجم الأيقونة
-                                      ),
-                                    ),
-                                  ),
+                                  // InkWell(
+                                  //   borderRadius: BorderRadius.circular(50),
+                                  //   onTap: () {
+                                  //     final videoPlayerState =
+                                  //         videoPlayerScreenKey.currentState;
+                                  //     videoPlayerState?.pauseCurrentVideo();
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder:
+                                  //             (_) => ActivityDetailsPage(
+                                  //               activity: activity,
+                                  //             ),
+                                  //       ),
+                                  //     ).then((_) {
+                                  //       videoPlayerState?.playCurrentVideo();
+                                  //     });
+                                  //   },
+                                  //   child: Container(
+                                  //     padding: const EdgeInsets.all(
+                                  //       5,
+                                  //     ), // يتحكم في حجم الزرار
+                                  //     decoration: BoxDecoration(
+                                  //       color: const Color(
+                                  //         0xFF002E70,
+                                  //       ), // اللون الكحلي بتاعك
+                                  //       shape: BoxShape.circle,
+                                  //       boxShadow: [
+                                  //         BoxShadow(
+                                  //           color: Colors.black.withOpacity(
+                                  //             0.1,
+                                  //           ),
+                                  //           blurRadius: 4,
+                                  //           offset: const Offset(0, 2),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //     child: const Icon(
+                                  //       Icons.info_outline,
+                                  //       color:
+                                  //           Colors
+                                  //               .white, // لون الأيقونة أبيض عشان يظهر على الكحلي
+                                  //       size: 16, // حجم الأيقونة
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               const SizedBox(height: 4),
@@ -184,6 +184,61 @@ class ActivityCard extends StatelessWidget {
                                     : Icons.directions_walk_sharp,
                                 color: Colors.grey[800],
                                 size: 20,
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.001,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ), // تقليل الحواف
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  backgroundColor: const Color(0xFF002E70),
+
+                                  minimumSize: const Size(
+                                    122,
+                                    22,
+                                  ), // أبعاد ثابتة للزر
+                                ),
+                                onPressed: () {
+                                  final videoPlayerState =
+                                      videoPlayerScreenKey.currentState;
+                                  videoPlayerState?.pauseCurrentVideo();
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (_) => ActivityDetailsPage(
+                                            activity: activity,
+                                          ),
+                                    ),
+                                  ).then((_) {
+                                    videoPlayerState?.playCurrentVideo();
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(height: 2),
+                                    Text(
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.viewactivity, // المفتاح في ملف ARB
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 12, // حجم أصغر للنص
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

@@ -2281,6 +2281,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **' Price per person'**
   String get priceperperson;
+
+  /// No description provided for @viewactivity.
+  ///
+  /// In en, this message translates to:
+  /// **'View activity'**
+  String get viewactivity;
 }
 
 class _AppLocalizationsDelegate

@@ -1210,4 +1210,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get priceperperson => 'السعر للفرد';
+
+  @override
+  String get viewactivity => 'عرض النشاط';
 }

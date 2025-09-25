@@ -1222,4 +1222,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get priceperperson => ' Price per person';
+
+  @override
+  String get viewactivity => 'View activity';
 }
