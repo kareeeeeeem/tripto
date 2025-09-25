@@ -386,7 +386,13 @@
   "tripSoundControl": "التحكم بصوت الرحلة",
   "searchDestination": "ابحث عن الوجهة اللي تحبها",
   "themedate": "تغيير المظهر",
-  "priceInfo": "السعر يشمل مرشدًا سياحيًا",
+  "priceInfoDefault": "تتضمن هذه الرحله مرشدًا لمساعدتكم,",
+  "priceInfo": "تشمل الرحلة : مرشدًا لمساعدتكم ,{items}", 
+  "@priceInfo": {
+      "placeholders": {
+          "items": {}
+      }
+  },
   "infoHotel": "عرض الفندق",
   "searchByDate": "اختار تاريخ",
   "priceperperson": "السعر للفرد"

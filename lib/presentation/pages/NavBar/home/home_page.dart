@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/main.dart'; // ⚠️ هذا السطر مهم جداً لاستيراد المفتاح
 
 class HomePage extends StatelessWidget {

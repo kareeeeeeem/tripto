@@ -22,9 +22,31 @@ import 'package:tripto/presentation/pages/SlideBar/info/InfoCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/hotel/HotelsCard.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
-
 import 'package:showcaseview/showcaseview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+  
+String? buildTripSummary(
+  BuildContext context,
+  bool showHotel,
+  bool showCar,
+  bool showActivity,
+) {
+  // 💡 الحصول على ملف الترجمة
+  final loc = AppLocalizations.of(context)!;
+  // 💡 تجميع أسماء العناصر الموجودة في قائمة
+  List<String> parts = [];
+  if (showHotel) parts.add(loc.hotel);
+  if (showCar) parts.add(loc.car);
+  if (showActivity) parts.add(loc.activities);
+  // 💡 إذا لم يتم اختيار أي شيء، نرجع null
+  if (parts.isEmpty) return null;
+  // 💡 تجميع العناصر بفاصلة "، "
+  final itemsList = parts.join("، "); 
+  // 💡 دمج القائمة في النص الأساسي
+  // نفترض أن loc.tripIncludes هو "هذه الرحلة تحتوي على {items}"
+  return loc.priceInfo(itemsList);
+
+}
 
 enum CategoryType { none, gold, diamond, platinum }
 
@@ -69,6 +91,9 @@ class RightButtons extends StatefulWidget {
   final int? selectedActivityId;
   final int? selectedFlightId;
 
+  final Function(String?)? onSummaryReady; // 🌟 إضافة الـ Callback الجديد
+
+
 
   
 
@@ -88,6 +113,9 @@ class RightButtons extends StatefulWidget {
     this.selectedCarId,
     this.selectedActivityId,
     this.selectedFlightId,
+
+    this.onSummaryReady, // 🌟 يجب إضافته هنا أيضاً
+
   });
   @override
   State<RightButtons> createState() => _RightButtonsState();
@@ -135,27 +163,27 @@ class _RightButtonsState extends State<RightButtons> {
     
 
      WidgetsBinding.instance.addPostFrameCallback((_) {
-      startRightButtonsShowcase();
+      _startShowcase();
     });
   }
-  void startRightButtonsShowcase() async {
-  final prefs = await SharedPreferences.getInstance();
-  final bool showcaseShown = prefs.getBool('showcase_shown') ?? false;
 
-  if (!showcaseShown) {
-    ShowCaseWidget.of(context).startShowCase([
-      _categoryKey,
-      _dateKey,
-      _hotelKey,
-      _carKey,
-      _activitiesKey,
-      _saveKey,
-      _infoKey,
-    ]);
-    prefs.setBool('showcase_shown', true);
+  void _startShowcase() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool showcaseShown = prefs.getBool('showcase_shown') ?? false;
+
+    if (!showcaseShown) {
+      ShowCaseWidget.of(context).startShowCase([
+        _categoryKey,
+        _dateKey,
+        _hotelKey,
+        _carKey,
+        _activitiesKey,
+        _saveKey,
+        _infoKey,
+      ]);
+      prefs.setBool('showcase_shown', true);
+    }
   }
-}
-
 
   @override
   void dispose() {
@@ -179,15 +207,21 @@ class _RightButtonsState extends State<RightButtons> {
         orElse: () => tripState.trips.first,
       );
 
-
-
     final int categoryValue                     = int.tryParse(trip.category.toString()) ?? 0;
 
     final bool showHotel = trip.hasHotel       == true || trip.hasHotel == 1;
     final bool showCar = trip.hasCar           == true || trip.hasCar == 1;
     final bool showActivity = trip.hasActivity == true || trip.hasActivity == 1;
-
-
+  
+   
+     debugPrint('Trip Features: Hotel=$showHotel, Car=$showCar, Activity=$showActivity');
+      // 🌟 هذا الاستدعاء صحيح الآن لأن الدالة في نطاق الملف العام
+     final String? tripSummary = buildTripSummary(context, showHotel, showCar, showActivity);
+    // 🌟🌟 استدعاء الـ Callback هنا ليعود النص للشاشة الأب
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onSummaryReady?.call(tripSummary);
+    }); 
+      debugPrint('RightButtons Callback Fired. Summary: $tripSummary'); 
 
 
 

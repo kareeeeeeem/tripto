@@ -386,7 +386,13 @@
   "tripSoundControl": "The trip sound",
   "searchDestination": "Search for your favorite destination",
   "themedate": "Change mode",
-  "priceInfo": "Price includes a tour leader",
+  "priceInfoDefault": "trip includes guide to assist you,",
+  "priceInfo": "trip includes :guide assist you, {items}", 
+  "@priceInfo": {
+      "placeholders": {
+          "items": {}
+      }
+  },
   "infoHotel": "view Hotel",
   "searchByDate": "choose Date",
   "priceperperson": " Price per person"

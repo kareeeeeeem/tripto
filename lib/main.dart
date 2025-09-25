@@ -24,7 +24,7 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/theme.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/VedioPlayerPage.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
 import 'l10n/app_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';

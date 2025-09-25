@@ -2258,11 +2258,17 @@ abstract class AppLocalizations {
   /// **'Change mode'**
   String get themedate;
 
+  /// No description provided for @priceInfoDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'trip includes guide to assist you,'**
+  String get priceInfoDefault;
+
   /// No description provided for @priceInfo.
   ///
   /// In en, this message translates to:
-  /// **'Price includes a tour leader'**
-  String get priceInfo;
+  /// **'trip includes :guide assist you, {items}'**
+  String priceInfo(Object items);
 
   /// No description provided for @infoHotel.
   ///

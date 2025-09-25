@@ -1200,7 +1200,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get themedate => 'تغيير المظهر';
 
   @override
-  String get priceInfo => 'السعر يشمل مرشدًا سياحيًا';
+  String get priceInfoDefault => 'تتضمن هذه الرحله مرشدًا لمساعدتكم,';
+
+  @override
+  String priceInfo(Object items) {
+    return 'تشمل الرحلة : مرشدًا لمساعدتكم ,$items';
+  }
 
   @override
   String get infoHotel => 'عرض الفندق';

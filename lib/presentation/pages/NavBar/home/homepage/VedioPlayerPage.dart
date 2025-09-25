@@ -15,7 +15,7 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_State.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/search/SearchPage.dart';
+import 'package:tripto/presentation/pages/NavBar/home/search/SearchPage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
@@ -40,10 +40,10 @@ class VideoPlayerScreen extends StatefulWidget {
 class VideoPlayerScreenState extends State<VideoPlayerScreen>
     with WidgetsBindingObserver, RouteAware {
 
-    Future<void> _refresh() async {
-    // هنا تحط اللوجيك بتاع جلب كل الرحلات من الـ API
-    print("🔄 Refreshing all trips...");
-    await Future.delayed(const Duration(seconds: 2));
+  Future<void> _refresh() async {
+  // هنا تحط اللوجيك بتاع جلب كل الرحلات من الـ API
+  print("🔄 Refreshing all trips...");
+  await Future.delayed(const Duration(seconds: 2));
   }
 
   final _storage = const FlutterSecureStorage();
@@ -87,9 +87,10 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   final GlobalKey<PersonCounterWithPriceState> personCounterKey =
       GlobalKey<PersonCounterWithPriceState>();
 
+  String? _tripSummaryText; // 🌟 متغير لحفظ النص
 
 
-
+      
  // 🆕 ضع الدوال هنا
     void onDateRangeSelected(DateTime? start, DateTime? end) {
       setState(() {
@@ -730,6 +731,18 @@ ElevatedButton(
                           currentTripCategory: currentTrip['category'] ?? -1,
                           personCounterKey: _personCounterKeys[index],
 
+                           // 🌟 2. استقبال الـ Callback وتحديث الحالة (State)
+                        onSummaryReady: (summary) {
+                          // نتحقق من أن النص تغير قبل التحديث لتجنب إعادة البناء غير الضرورية
+                          if (summary != _tripSummaryText) {
+                            setState(() {
+                              _tripSummaryText = summary;
+                            });
+                            print("✅ Summary received in VideoPlayerScreen: $_tripSummaryText");
+                          }
+                        },
+                      
+
 
                         onDateRangeSelected: (start, end) {
                           setState(() {
@@ -744,8 +757,6 @@ ElevatedButton(
                         ),
                       ),
                     ),
-
-
                     
                     Positioned(
                       bottom: screenHeight * 0.18,
@@ -796,9 +807,9 @@ ElevatedButton(
                             children: [
                               SizedBox(width: 20,),
                               Text(
-                                AppLocalizations.of(context)!.priceInfo,
+                                 _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault, 
                                 style: const TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
                                 ),
@@ -971,29 +982,6 @@ ElevatedButton(
       ),
     );
   }
-  // ويدجت للزر الموحد
-Widget customElevatedButton({
-  required String text,
-  required VoidCallback onPressed,
-}) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xFF002E70), // خلفية كحلي
-      foregroundColor: Colors.white, // لون النص
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-    onPressed: onPressed,
-    child: Text(text),
-  );
-}
-
 
   String _getLocalizedDestinationName(
     Map<String, dynamic> trip,

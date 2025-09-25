@@ -1212,7 +1212,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themedate => 'Change mode';
 
   @override
-  String get priceInfo => 'Price includes a tour leader';
+  String get priceInfoDefault => 'trip includes guide to assist you,';
+
+  @override
+  String priceInfo(Object items) {
+    return 'trip includes :guide assist you, $items';
+  }
 
   @override
   String get infoHotel => 'view Hotel';

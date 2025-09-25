@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/core/constants/NavBar.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
-import 'package:tripto/presentation/pages/NavBar/homePage/home_page.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/home_page.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 import '../pages/NavBar/ActivityPage/activities_page.dart';
