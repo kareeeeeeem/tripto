@@ -2287,6 +2287,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **' Price per person'**
   String get priceperperson;
+
+  /// No description provided for @viewactivity.
+  ///
+  /// In en, this message translates to:
+  /// **'View activity'**
+  String get viewactivity;
+
+  /// No description provided for @videoNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Video not available'**
+  String get videoNotAvailable;
+
+  /// No description provided for @tripAvailablePeriods.
+  ///
+  /// In en, this message translates to:
+  /// **'The trip is available during the following periods:'**
+  String get tripAvailablePeriods;
+
+  /// No description provided for @tripNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The trip is currently unavailable.'**
+  String get tripNotAvailable;
+
+  /// No description provided for @from.
+  ///
+  /// In en, this message translates to:
+  /// **'from'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'to'**
+  String get to;
+
+  /// No description provided for @rangeNotContained.
+  ///
+  /// In en, this message translates to:
+  /// **'The booking period must be contained entirely within a single available period.'**
+  String get rangeNotContained;
 }
 
 class _AppLocalizationsDelegate

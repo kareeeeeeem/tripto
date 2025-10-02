@@ -422,7 +422,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                         ),
                       ),
                       // icon transportation
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.34),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.30),
                       Icon(
                         Icons
                             .directions_car_filled_sharp, // في الحالتين نفس الأيقونة

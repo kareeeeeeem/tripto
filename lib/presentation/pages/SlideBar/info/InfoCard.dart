@@ -56,6 +56,17 @@ class InfoCard extends StatelessWidget {
                           : trip.companyDesEn ?? '',
                   maxLines: 5, // زوّد عدد السطور عشان النص يظهر كامل
                 ),
+               
+              //  const SizedBox(height: 6),
+              //  Text(
+              //             _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault, 
+              //           style: const TextStyle(
+              //             fontSize: 14,
+              //             fontWeight: FontWeight.w500,
+              //             color: Colors.white,
+              //           ),
+              //         ),
+
               ],
             ),
           ),

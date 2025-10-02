@@ -1227,4 +1227,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get priceperperson => ' Price per person';
+
+  @override
+  String get viewactivity => 'View activity';
+
+  @override
+  String get videoNotAvailable => 'Video not available';
+
+  @override
+  String get tripAvailablePeriods =>
+      'The trip is available during the following periods:';
+
+  @override
+  String get tripNotAvailable => 'The trip is currently unavailable.';
+
+  @override
+  String get from => 'from';
+
+  @override
+  String get to => 'to';
+
+  @override
+  String get rangeNotContained =>
+      'The booking period must be contained entirely within a single available period.';
 }

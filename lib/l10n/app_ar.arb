@@ -135,7 +135,7 @@
   "roomService": "خدمة الغرف",
   "petFriendly": "مسموح باصطحاب الحيوانات",
   "roomType": "نوع الغرفة",
-  "services": "الخدمات",
+  "services": "الخدمات :",
   "forNight": "الليله:",
   "pricePerNight": "${price}/لليلة",
   "totalTrip": "إجمالي الرحلة ({nights} ليالي): ${totalPrice}",
@@ -395,5 +395,14 @@
   },
   "infoHotel": "عرض الفندق",
   "searchByDate": "اختار تاريخ",
-  "priceperperson": "السعر للفرد"
+  "priceperperson": "السعر للفرد",
+  "viewactivity": "عرض النشاط",
+  "videoNotAvailable": " الفيديو غير متاح",
+  "tripAvailablePeriods": "الرحلة متاحة في الفترات التالية:",
+  "tripNotAvailable": "الرحلة غير متاحة حاليًا.",  
+  "from": "من",
+  "to": "إلى",
+  "rangeNotContained": "يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط."
+
+
 }

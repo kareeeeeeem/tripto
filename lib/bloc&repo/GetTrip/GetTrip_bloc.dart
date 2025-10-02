@@ -15,8 +15,11 @@ class TripBloc extends Bloc<TripEvent, TripState> {
     on<FetchTrips>(_onFetchTrips);
     on<ChangeCurrentTripEvent>(_onChangeCurrentTrip);
     on<FilterTripsByCategoryEvent>(_onFilterByCategory);
-    on<FilterTripsByDateEvent>(_onFilterByDate);
-    on<FilterTripsByDateRangeEvent>(_onFilterByDateRange);
+    // ✅ تعيين المعالج الصحيح لفلترة التاريخ المفرد
+    on<FilterTripsByDateEvent>(_onFilterByDate); 
+    
+    // ✅ تعيين المعالج الصحيح لفلترة نطاق التاريخ
+    on<FilterTripsByDateRangeEvent>(_onFilterByDateRange); 
     on<SelectHotelForTrip>((event, emit) {
   if (state is TripLoaded) {
     final s = state as TripLoaded;
@@ -160,12 +163,11 @@ on<SelectCategoryForTrip>((event, emit) {
     Emitter<TripState> emit,
   ) {
     final filtered = allTrips.where((trip) {
-      final start = DateTime.parse(trip.fromDate);
-      final end = DateTime.parse(trip.toDate);
-      return event.selectedDate.isAfter(
-            start.subtract(const Duration(days: 1)),
-          ) &&
-          event.selectedDate.isBefore(end.add(const Duration(days: 1)));
+      return _isDateAvailable(
+        event.selectedDate,
+        trip.fromDate, // قائمة تواريخ البداية
+        trip.toDate,   // قائمة تواريخ النهاية
+      );
     }).toList();
 
     currentTrips = filtered;
@@ -192,10 +194,12 @@ on<SelectCategoryForTrip>((event, emit) {
     Emitter<TripState> emit,
   ) {
     final filtered = allTrips.where((trip) {
-      final start = DateTime.parse(trip.fromDate);
-      final end = DateTime.parse(trip.toDate);
-      return start.isBefore(event.endDate.add(const Duration(days: 1))) &&
-          end.isAfter(event.startDate.subtract(const Duration(days: 1)));
+    return _isRangeOverlapping(
+        event.startDate,
+        event.endDate,
+        trip.fromDate,
+        trip.toDate,
+      );
     }).toList();
 
     currentTrips = filtered;
@@ -243,4 +247,63 @@ class TripSelections {
       categoryValue: categoryValue ?? this.categoryValue,
     );
   }
+
+
+
+}// 🆕 دالة مساعدة للتحقق من توفر تاريخ معين
+bool _isDateAvailable(
+  DateTime selectedDate,
+  List<String> fromDates,
+  List<String> toDates,
+) {
+  for (int i = 0; i < fromDates.length; i++) {
+    try {
+      final start = DateTime.parse(fromDates[i]);
+      final end = DateTime.parse(toDates[i]);
+      
+      // نستخدم isAfter و isBefore لضمان شمولية اليوم المختار
+      if (selectedDate.isAfter(start.subtract(const Duration(days: 1))) &&
+          selectedDate.isBefore(end.add(const Duration(days: 1)))) {
+        return true;
+      }
+    } catch (e) {
+      // تجاهل التاريخ غير الصالح
+      continue;
+    }
+  }
+  return false;
+}
+
+
+
+
+// 🆕 دالة مساعدة للتحقق من تداخل نطاق التواريخ
+bool _isRangeOverlapping(
+  DateTime selectedStart,
+  DateTime selectedEnd,
+  List<String> fromDates,
+  List<String> toDates,
+) {
+  // نطاق المستخدم (M)
+  final M_start = selectedStart;
+  final M_end = selectedEnd;
+
+  for (int i = 0; i < fromDates.length; i++) {
+    try {
+      // نطاق الرحلة المتاح (A)
+      final A_start = DateTime.parse(fromDates[i]);
+      final A_end = DateTime.parse(toDates[i]);
+
+      // شرط عدم التداخل: A ينتهي قبل M يبدأ، أو A يبدأ بعد M ينتهي.
+      // وبالتالي شرط التداخل هو:
+      if (A_end.isAfter(M_start.subtract(const Duration(days: 1))) &&
+          A_start.isBefore(M_end.add(const Duration(days: 1)))) {
+        return true;
+      }
+    } catch (e) {
+      // تجاهل التاريخ غير الصالح
+      continue;
+    }
+  }
+  return false;
 }

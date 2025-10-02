@@ -136,6 +136,11 @@ void _showDatePicker(BuildContext context) async {
 
             SizedBox(height: size.height * 0.05),
 
+
+
+
+
+
             // اختيار الواجهه
 TypeAheadField(
   controller: _subDestinationController,
@@ -144,10 +149,16 @@ TypeAheadField(
   suggestionsCallback: (pattern) async {
     // جلب البيانات لو ما تم جلبها بعد
     if (allSubDestinations == null) {
+
       final response = await http
           .get(Uri.parse("https://tripto.blueboxpet.com/api/sub-destinations"));
+                 CircularProgressIndicator(color: Color(0xFF002E70));
+
       if (response.statusCode == 200) {
+        
         final List data = json.decode(response.body);
+               CircularProgressIndicator(color: Color(0xFF002E70));
+
         setState(() {
           allSubDestinations = data;
         });

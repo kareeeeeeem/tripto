@@ -5,6 +5,16 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
+// تعريف نوع بيانات للتعامل مع الصور والفيديوهات
+class MediaItem {
+  final String url;
+  final bool isVideo;
+  VideoPlayerController? videoController;
+  ChewieController? chewieController; 
+
+  MediaItem({required this.url, required this.isVideo});
+}
+
 class HotelAdelPage extends StatefulWidget {
   final HotelModel hotel;
 
@@ -15,16 +25,117 @@ class HotelAdelPage extends StatefulWidget {
 }
 
 class _HotelAdelPageState extends State<HotelAdelPage> {
-  final PageController _pageController = PageController(viewportFraction: 0.9);
+  final PageController _pageController = PageController(viewportFraction: 1.0); 
   int _currentPage = 0;
+  List<MediaItem> _mediaList = []; 
+  bool _isInitializing = true; 
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeMediaList();
+    
+    _pageController.addListener(() {
+      if (_pageController.page != null) {
+        final newPageIndex = _pageController.page!.round();
+        if (_currentPage != newPageIndex) {
+           _onPageChanged(newPageIndex);
+        }
+        setState(() {
+          _currentPage = newPageIndex;
+        });
+      }
+    });
+  }
+
+  void _initializeMediaList() async {
+    // 1. دمج الصور
+    _mediaList.addAll(widget.hotel.images.map((url) => MediaItem(url: url, isVideo: false)));
+    
+    // 2. دمج الفيديو المفرد وتهيئة المتحكمات
+    if (widget.hotel.videoUrl.isNotEmpty) {
+      String originalUrl = widget.hotel.videoUrl;
+      
+      // 💡 منطق تحويل رابط جوجل درايف: تحويل رابط المعاينة إلى رابط مباشر
+      if (originalUrl.contains('drive.google.com') && originalUrl.contains('/view')) {
+          final fileIdMatch = RegExp(r'/d/([^/]+)/view').firstMatch(originalUrl);
+          if (fileIdMatch != null) {
+              final fileId = fileIdMatch.group(1);
+              originalUrl = 'https://drive.google.com/uc?export=download&id=$fileId';
+              print("🔗 Converted Google Drive URL to Direct Link: $originalUrl");
+          } else {
+              print("🛑 Could not extract File ID from Google Drive URL.");
+          }
+      }
+      
+      final item = MediaItem(url: originalUrl, isVideo: true);
+      
+      item.videoController = VideoPlayerController.networkUrl(Uri.parse(originalUrl));
+      
+      try {
+        await item.videoController!.initialize();
+        item.chewieController = ChewieController(
+          videoPlayerController: item.videoController!,
+          autoPlay: false, 
+          looping: true,
+          showControls: true, 
+          showControlsOnInitialize: true,
+          allowFullScreen: true,
+          
+          // نستخدم أبعاد الفيديو الأصلية للمتحكم
+          aspectRatio: item.videoController!.value.aspectRatio, 
+          
+          errorBuilder: (context, errorMessage) {
+            return Center(
+              child: Text(
+                AppLocalizations.of(context)?.videoNotAvailable ?? 'Video failed to load.',
+                style: const TextStyle(color: Colors.white),
+              ),
+            );
+          },
+        );
+        // تم التهيئة بنجاح، أضف العنصر إلى القائمة
+        _mediaList.add(item);
+        print("✅ Video initialized successfully: ${item.url}");
+
+      } catch (error) {
+        // إذا فشلت التهيئة
+        print("🛑 Video Initialization FAILED for URL: ${item.url}");
+        print("🛑 Error: $error");
+      }
+    }
+    
+    // بعد الانتهاء من تهيئة كل شيء، نقوم بتحديث الـ State
+    if (mounted) {
+      setState(() {
+        _isInitializing = false; 
+        _currentPage = 0; 
+      });
+    }
+  }
+  
+  void _onPageChanged(int newPageIndex) {
+    final previousPage = _mediaList[_currentPage];
+    if (previousPage.isVideo) {
+        previousPage.chewieController?.pause();
+        previousPage.videoController?.seekTo(Duration.zero);
+    }
+  }
+
 
   @override
   void dispose() {
     _pageController.dispose();
-    // _videoController?.dispose();
+    for (var item in _mediaList) {
+      if (item.isVideo) {
+        item.chewieController?.dispose();
+        item.videoController?.dispose();
+      }
+    }
     super.dispose();
   }
 
+  // الدوال المساعدة الأخرى (getRoomType و _buildServiceIcon) كما هي...
   String getRoomType(BuildContext context, int type) {
     switch (type) {
       case 1:
@@ -49,7 +160,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
         Text(
           label,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.03, // 5% من العرض
+            fontSize: MediaQuery.of(context).size.width * 0.03,
             color: available ? Colors.black : Colors.grey,
           ),
         ),
@@ -61,29 +172,13 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
   Widget build(BuildContext context) {
     final hotel = widget.hotel;
 
-    final mediaItems = [
-  ...hotel.images.map(
-    (img) => Image.network(
-      img,
-      fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) =>
-          Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
-    ),
-  ),
-  ...hotel.images.map(
-    (vid) {
-      final videoController = VideoPlayerController.network(vid);
-      final chewieController = ChewieController(
-        videoPlayerController: videoController,
-        autoPlay: false,
-        looping: true,
-        
-      );
-
-      return Chewie(controller: chewieController);
-    },
-  ),
-];
+    if (_isInitializing) {
+        return const Scaffold(
+            body: Center(
+                child: CircularProgressIndicator(),
+            ),
+        );
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
@@ -97,68 +192,76 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   children: [
                     // Image/Video slider
                     SizedBox(
-                      height:
-                          MediaQuery.of(context).size.height *
-                          0.55, // 35% من ارتفاع الشاشة
-                      width:
-                          MediaQuery.of(context).size.width ,
+                      height: MediaQuery.of(context).size.height * 0.55, 
+                      width: MediaQuery.of(context).size.width,
                         
                       child: PageView.builder(
                         controller: _pageController,
-                        itemCount: mediaItems.length,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
+                        itemCount: _mediaList.length,
                         itemBuilder: (context, index) {
-                          return AnimatedBuilder(
-                            animation: _pageController,
-                            builder: (context, child) {
-                              double value = 1.0;
-                              if (_pageController.position.haveDimensions) {
-                                value = _pageController.page! - index;
-                                value = (1 - (value.abs() * 0.3)).clamp(
-                                  0.0,
-                                  1.0,
-                                );
-                              }
-                              return Transform.scale(
-                                scale: value,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 16,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 8, // خفيف زيادة
-                                        offset: Offset(
-                                          0,
-                                          6,
-                                        ), // الظل ييجي من تحت
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: mediaItems[index],
-                                  ),
+                          final item = _mediaList[index];
+                          Widget child;
+
+                          if (item.isVideo) {
+                            // التحقق من أن المتحكم قد تمت تهيئته بنجاح
+                            if (item.chewieController != null && item.chewieController!.videoPlayerController.value.isInitialized) {
+                              
+                              // 💡 استخدام FittedBox و SizedBox لملء المنطقة (BoxFit.cover)
+                              child = FittedBox(
+                                fit: BoxFit.cover, // يضمن ملء الـ SizedBox الخارجي (55% من الشاشة)
+                                child: SizedBox(
+                                  // نحدد أبعاد الفيديو لجعله يملأ الـ FittedBox
+                                  width: item.videoController!.value.size.width,
+                                  height: item.videoController!.value.size.height,
+                                  child: Chewie(controller: item.chewieController!),
                                 ),
                               );
-                            },
+
+                            } else {
+                              // إذا لم يتم تهيئته لأي سبب بعد المحاولة
+                              child = Center(
+                                child: Text(
+                                  AppLocalizations.of(context)?.videoNotAvailable ?? 'Video failed to load.',
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              );
+                            }
+                          } else {
+                            // الصور
+                            child = Image.network(
+                              item.url,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) =>
+                                  Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
+                            );
+                          }
+
+                          return Container(
+                            margin: EdgeInsets.zero, 
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(0), 
+                              child: child,
+                            ),
                           );
                         },
                       ),
                     ),
+                              const SizedBox(height: 16), // يمكنك تغيير القيمة 16 حسب حاجتك
+
                     // Indicators
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                        mediaItems.length,
+                        _mediaList.length,
                         (index) => Container(
                           margin: const EdgeInsets.symmetric(horizontal: 4),
                           width: _currentPage == index ? 12 : 8,
@@ -174,7 +277,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Hotel name
+                    // Hotel name and description
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
@@ -219,6 +322,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   ],
                 ),
               ),
+              // بقية محتوى الصفحة
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -266,7 +370,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Hotel description
+                      // Hotel location and map link
                       Row(
                         children: [
                           const Icon(
@@ -299,11 +403,15 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                           Expanded(
                             child: GestureDetector(
                               onTap: () async {
-                                final Uri url = Uri.parse(hotel.mapLocation); // ده اللينك اللي جاي من الـ API
+                                final Uri url = Uri.parse(hotel.mapLocation);
                                 if (await canLaunchUrl(url)) {
                                   await launchUrl(url, mode: LaunchMode.externalApplication);
                                 } else {
-                                  throw 'Could not launch $url';
+                                  if (mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('Could not launch ${hotel.mapLocation}')),
+                                      );
+                                  }
                                 }
                               },
                               child: Text(
@@ -311,7 +419,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blue, // يخليها باين إنها لينك
+                                  color: Colors.blue,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
@@ -321,6 +429,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                         ],
                       ),
                       const SizedBox(height: 10),
+                      // Room type
                       Row(
                         children: [
                           const Icon(
@@ -342,7 +451,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                       // Services
                       Text(
                         AppLocalizations.of(context)!.services,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -404,13 +513,21 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
           ),
           // Back button
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.05, // 5% من الارتفاع
-            left: MediaQuery.of(context).size.width * 0.04, // 4% من العرض
-
+            top: MediaQuery.of(context).size.height * 0.05, 
+            left: Localizations.localeOf(context).languageCode == 'ar'
+                ? null
+                : MediaQuery.of(context).size.width * 0.04,
+            right: Localizations.localeOf(context).languageCode == 'ar'
+                ? MediaQuery.of(context).size.width * 0.04
+                : null,
             child: CircleAvatar(
               backgroundColor: Colors.black45,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(
+                    Localizations.localeOf(context).languageCode == 'ar'
+                        ? Icons.arrow_forward
+                        : Icons.arrow_back,
+                    color: Colors.white),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),

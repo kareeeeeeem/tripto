@@ -395,5 +395,15 @@
   },
   "infoHotel": "view Hotel",
   "searchByDate": "choose Date",
-  "priceperperson": " Price per person"
+  "priceperperson": " Price per person",
+  "viewactivity": "View activity",
+  "videoNotAvailable": "Video not available",
+  "tripAvailablePeriods": "The trip is available during the following periods:",
+  "tripNotAvailable": "The trip is currently unavailable.",
+  "from": "from",
+  "to": "to",
+  "rangeNotContained": "The booking period must be contained entirely within a single available period."
+
+
+
 }

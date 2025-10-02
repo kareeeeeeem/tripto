@@ -10,8 +10,13 @@ import 'package:table_calendar/table_calendar.dart';
 class DateCard extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
+  final List<String> availableFromDates; // 🆕 لإدارة الفواصل الزمنية
+  final List<String> availableToDates;   // 🆕 لإدارة الفواصل الزمنية
+
   final DateTime? initialRangeStart;
   final DateTime? initialRangeEnd;
+
+  
 
   const DateCard({
     super.key,
@@ -19,6 +24,8 @@ class DateCard extends StatefulWidget {
     required this.lastDate,
     this.initialRangeStart,
     this.initialRangeEnd,
+     required this.availableFromDates,
+      required this.availableToDates,
   });
 
   DateTime getLastDatePlusOneDay() {
@@ -34,11 +41,12 @@ class _DateCardState extends State<DateCard> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
   CalendarFormat _calendarFormat = CalendarFormat.month;
+  
 
   @override
   void initState() {
     super.initState();
-    _focusedDay = widget.initialRangeEnd ?? widget.lastDate;
+    _focusedDay = widget.initialRangeEnd ?? widget.firstDate;
     _focusedDay = _clampDate(_focusedDay);
     _rangeStart = widget.initialRangeStart != null ? _clampDate(widget.initialRangeStart!) : null;
     _rangeEnd = widget.initialRangeEnd != null ? _clampDate(widget.initialRangeEnd!) : null;
@@ -53,13 +61,76 @@ class _DateCardState extends State<DateCard> {
     return date;
   }
 
-  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+  // داخل class _DateCardState
+void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+  
+  final clampedStart = start != null ? _clampDate(start) : null;
+  final clampedEnd = end != null ? _clampDate(end) : null;
+
+  // 1. التحقق من اكتمال النطاق (تاريخ بداية ونهاية محددين)
+  if (clampedStart != null && clampedEnd != null) {
+    // 2. التحقق من صحة النطاق: يجب أن يقع ضمن فترة واحدة متاحة
+    if (_isRangeContainedInOnePeriod(clampedStart, clampedEnd)) {
+      // ✅ النطاق صحيح، قم بتحديث الحالة
+      setState(() {
+        _rangeStart = clampedStart;
+        _rangeEnd = clampedEnd;
+        _focusedDay = _clampDate(focusedDay);
+      });
+    } else {
+      // ❌ النطاق يمر بفترة مغلقة أو يمتد على فترتين، قم بإلغاء الاختيار
+      setState(() {
+        _rangeStart = null;
+        _rangeEnd = null;
+        _focusedDay = _clampDate(focusedDay);
+      });
+      // 🔔 (اختياري) يمكنك إضافة SnackBar هنا لتنبيه المستخدم
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.rangeNotContained)),
+      );
+    }
+  } else {
+    // حالة تحديد تاريخ واحد (البداية أو النهاية) فقط
     setState(() {
-      _rangeStart = start != null ? _clampDate(start) : null;
-      _rangeEnd = end != null ? _clampDate(end) : null;
+      _rangeStart = clampedStart;
+      _rangeEnd = clampedEnd;
       _focusedDay = _clampDate(focusedDay);
     });
   }
+}
+
+// 🆕 دالة جديدة للتحقق من أن النطاق يقع ضمن فترة متاحة واحدة
+bool _isRangeContainedInOnePeriod(DateTime start, DateTime end) {
+  // يجب أن يكون تاريخ البداية قبل تاريخ النهاية
+  if (start.isAfter(end)) return false; 
+  
+  // التكرار على جميع الفترات المتاحة للرحلة
+  for (int i = 0; i < widget.availableFromDates.length; i++) {
+    try {
+      final periodStart = DateTime.parse(widget.availableFromDates[i]);
+      final periodEnd = DateTime.parse(widget.availableToDates[i]);
+
+      // نقوم بتجاهل الوقت (TimeOfDay) للتأكد من المقارنة باليوم
+      final dayStart = DateTime(start.year, start.month, start.day);
+      final dayEnd = DateTime(end.year, end.month, end.day);
+      
+      // هل تاريخ بداية النطاق >= تاريخ بداية الفترة المتاحة
+      final isStartValid = dayStart.isAfter(periodStart.subtract(const Duration(days: 1))) || dayStart.isAtSameMomentAs(periodStart);
+      
+      // وهل تاريخ نهاية النطاق <= تاريخ نهاية الفترة المتاحة
+      final isEndValid = dayEnd.isBefore(periodEnd.add(const Duration(days: 1))) || dayEnd.isAtSameMomentAs(periodEnd);
+
+      // إذا كان النطاق بأكمله (البداية والنهاية) يقع ضمن هذه الفترة الواحدة
+      if (isStartValid && isEndValid) {
+        return true; // ✅ النطاق يقع بالكامل ضمن فترة واحدة
+      }
+    } catch (e) {
+      continue;
+    }
+  }
+
+  return false; // ❌ النطاق لا يقع بالكامل ضمن أي فترة متاحة واحدة
+}
 
   // يحول كل الأرقام داخل string لأرقام عربية
   String _arabicDigits(String input) {
@@ -114,26 +185,20 @@ class _DateCardState extends State<DateCard> {
               // النصوص فوق الكاليندر
               Column(
                 children: [
-                  Text(
-                    loc.tripAvailableFrom(_formatDateForText(context, widget.firstDate)),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    loc.tripAvailableTo(_formatDateForText(context, widget.lastDate)),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+               Text(
+                _buildAvailabilityText(), // ✅ استخدام الدالة الجديدة
+                style: const TextStyle(
+                  color: Colors.brown,
+                    fontWeight: FontWeight.bold, fontSize: 16), // قلل الحجم قليلاً إذا لزم
+                textAlign: TextAlign.center,
               ),
 
               const SizedBox(height: 12),
 
               // الكاليندر — مع CalendarBuilders لتعريب أرقام الأيام والـ header & dow
               TableCalendar(
+                enabledDayPredicate: _isDayAvailable, 
+
                 key: ValueKey('${widget.firstDate}-${widget.getLastDatePlusOneDay()}'),
                 firstDay: widget.firstDate,
                 lastDay: widget.getLastDatePlusOneDay(),
@@ -144,9 +209,9 @@ class _DateCardState extends State<DateCard> {
                 calendarFormat: _calendarFormat,
                 onFormatChanged: (format) => setState(() => _calendarFormat = format),
                 onRangeSelected: _onRangeSelected,
-                enabledDayPredicate: (day) =>
-                    !day.isBefore(widget.firstDate) && !day.isAfter(widget.getLastDatePlusOneDay()),
-                calendarStyle: CalendarStyle(
+                // enabledDayPredicate: (day) =>
+                //     !day.isBefore(widget.firstDate) && !day.isAfter(widget.getLastDatePlusOneDay()),
+                 calendarStyle: CalendarStyle(
                   disabledTextStyle: const TextStyle(color: Colors.grey),
                   outsideTextStyle: const TextStyle(color: Colors.grey),
                   outsideDaysVisible: true,
@@ -319,8 +384,73 @@ withinRangeBuilder: (context, day, focusedDay) {
               ),
             ],
           ),
-        ),
+        ],
       ),
-    );
+     ),
+    )
+  );
+    
   }
+  // 🆕 دالة جديدة للتحقق من أن اليوم يقع ضمن أي فترة متاحة في القوائم
+bool _isDayAvailable(DateTime day) {
+  // التحقق من أن اليوم يقع ضمن النطاق الكلي (firstDate إلى lastDate)
+  if (day.isBefore(widget.firstDate) || day.isAfter(widget.lastDate.add(const Duration(days: 1)))) {
+    return false;
+  }
+
+  // التكرار على جميع الفترات المتاحة للرحلة
+  for (int i = 0; i < widget.availableFromDates.length; i++) {
+    try {
+      final periodStart = DateTime.parse(widget.availableFromDates[i]);
+      final periodEnd = DateTime.parse(widget.availableToDates[i]);
+
+      // شرط التحقق من أن اليوم يقع بالضبط بين تاريخ البداية وتاريخ النهاية للفترة
+      if (day.isAfter(periodStart.subtract(const Duration(days: 1))) &&
+          day.isBefore(periodEnd.add(const Duration(days: 1)))) {
+        return true; // إذا وقع اليوم ضمن فترة واحدة على الأقل، فهو متاح
+      }
+    } catch (e) {
+      // تجاهل التاريخ غير الصالح والمتابعة للفترة التالية
+      continue;
+    }
+  }
+
+  return false; // إذا لم يقع اليوم ضمن أي فترة متاحة
+}
+
+
+// 🆕 دالة جديدة لإنشاء نص التوفر المتعدد الأسطر (بتطبيق الترجمة)
+String _buildAvailabilityText() {
+  final loc = AppLocalizations.of(context)!;
+  final locale = Localizations.localeOf(context).languageCode;
+  final isArabic = locale == 'ar';
+  
+  if (widget.availableFromDates.isEmpty) {
+    return loc.tripNotAvailable; // استخدام نص عدم التوفر
+  }
+
+  final StringBuffer buffer = StringBuffer();
+  
+  buffer.writeln(loc.tripAvailablePeriods); // استخدام عنوان الفترات
+
+  for (int i = 0; i < widget.availableFromDates.length; i++) {
+    try {
+      final start = DateTime.parse(widget.availableFromDates[i]);
+      final end = DateTime.parse(widget.availableToDates[i]);
+      
+      final startFormatted = _formatDateForText(context, start);
+      final endFormatted = _formatDateForText(context, end);
+
+      // هنا نستخدم loc.from و loc.to إذا قمت بإضافتهما للملفات
+      buffer.writeln(
+        '• ${loc.from} $startFormatted ${loc.to} $endFormatted'
+      );
+      
+    } catch (e) {
+      continue;
+    }
+  }
+
+  return buffer.toString().trim();
+}
 }

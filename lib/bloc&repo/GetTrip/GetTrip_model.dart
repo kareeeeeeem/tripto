@@ -6,11 +6,15 @@ class GetTripModel {
   final bool hasHotel;
   final bool hasCar;
   final bool hasFly;
-  final bool hasActivity;
-  final double price;
-  final double pricePerPerson;
-  final String fromDate;
-  final String toDate;
+  final bool hasActivity; 
+  
+  final List<double> price;          // 🆕 سعر الرحلة الكلي (جمع prices)
+  final List<double> pricePerPerson; // 🆕 سعر الفرد (جمع price_per_person)
+
+  final List<String> fromDate; // 🆕 أصبح List<String>
+  final List<String> toDate;   // 🆕 أصبح List<String>
+
+
   final String? companyNameAr;
   final String? companyNameEn;
   final String? companyDesAr;
@@ -21,6 +25,9 @@ class GetTripModel {
   final DateTime? updatedAt;
   final Map<String, dynamic>? destination;
   final Map<String, dynamic>? subDestination;
+
+
+
 
   GetTripModel({
     required this.id,
@@ -96,10 +103,18 @@ class GetTripModel {
       hasCar: parseBool(json['has_car']),
       hasFly: parseBool(json['has_fly']),
       hasActivity: parseBool(json['has_activity']),
-      price: parseDouble(json['price']),
-      pricePerPerson: parseDouble(json['price_per_person']),
-      fromDate: json['from_date']?.toString() ?? '',
-      toDate: json['to_date']?.toString() ?? '',
+      price: (json['price'] as List<dynamic>?)
+            ?.map((e) => parseDouble(e))
+            .toList() ??
+        [],
+      pricePerPerson: (json['price_per_person'] as List<dynamic>?)
+            ?.map((e) => parseDouble(e))
+            .toList() ??
+        [],
+
+      fromDate: List<String>.from(json['from_date'] as List<dynamic>), // 🆕 تحويل القائمة
+      toDate: List<String>.from(json['to_date'] as List<dynamic>),     // 🆕 تحويل القائمة
+  
       companyNameAr: json['company_name_ar']?.toString(),
       companyNameEn: json['company_name_en']?.toString(),
       companyDesAr: json['company_des_ar']?.toString(),
@@ -119,26 +134,64 @@ class GetTripModel {
     );
   }
 
-  // Getters للتعامل مع القيم الفارغة
-  DateTime get safeFromDate {
+  // أضف هذا الكود داخل class GetTripModel في GetTrip_model.dart
+
+// 🆕 لإرجاع تاريخ بداية أول فترة (القيمة المفقودة)
+DateTime get safeFromDate {
     try {
-      return DateTime.parse(fromDate).toLocal();
+      return DateTime.parse(fromDate.isNotEmpty ? fromDate.first : '').toLocal();
     } catch (e) {
       return DateTime.now();
     }
-  }
+}
 
-  DateTime get safeToDate {
+// 🆕 لإرجاع تاريخ نهاية أول فترة (القيمة المفقودة)
+DateTime get safeToDate {
     try {
-      return DateTime.parse(toDate).toLocal();
+      return DateTime.parse(toDate.isNotEmpty ? toDate.first : '').toLocal();
     } catch (e) {
       return DateTime.now().add(const Duration(days: 7));
     }
+}
+
+
+// داخل class GetTripModel في GetTrip_model.dart
+
+// 🆕 دالة جالبة لحساب أقدم تاريخ بداية
+DateTime get overallMinFromDate {
+  DateTime minDate = DateTime(3000);
+  for (var dateString in fromDate) {
+    try {
+      final date = DateTime.parse(dateString);
+      if (date.isBefore(minDate)) {
+        minDate = date;
+      }
+    } catch (_) {}
   }
+  return minDate.year == 3000 ? DateTime.now() : minDate.toLocal();
+}
+
+// 🆕 دالة جالبة لحساب أحدث تاريخ نهاية (ستعطينا 2025-11-01)
+DateTime get overallMaxToDate {
+  DateTime maxDate = DateTime(1900);
+  for (var dateString in toDate) {
+    try {
+      final date = DateTime.parse(dateString);
+      if (date.isAfter(maxDate)) {
+        maxDate = date;
+      }
+    } catch (_) {}
+  }
+  return maxDate.year == 1900 ? DateTime.now().add(const Duration(days: 7)) : maxDate.toLocal();
+}
+  
 
   bool get hasValidDates =>
       safeFromDate.isBefore(safeToDate) ||
       safeFromDate.isAtSameMomentAs(safeToDate);
+
+
+
 
   String get destinationNameAr => destination?['name_ar']?.toString() ?? '';
   String get destinationNameEn => destination?['name_en']?.toString() ?? '';

@@ -67,20 +67,15 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   bool _hasMoreData = true;
   final int _perPage = 5;
 
-  // 📅 التواريخ
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-  // ✈️ الطيران
   int? selectedFlyId;
   double selectedFlightPrice = 0.0;
   bool? _hasFly;
-    // 🏨 الفندق
   int? selectedHotelId;
   double selectedHotelPrice = 0.0;
-  // 🚗 العربية
   int? selectedCarId;
   double selectedCarPrice = 0.0;
-  // 🎟 الأنشطة
   int? selectedActivityId;
   double selectedActivityPrice = 0.0;  
   // 👥 Person Counter (عشان عدد الأشخاص + السعر)
@@ -813,6 +808,10 @@ ElevatedButton(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white,
                                 ),
+                                 maxLines: 2,       // أقصى عدد أسطر
+                                overflow: TextOverflow.ellipsis, // يحط "..." لو النص أطول
+
+                                
                               ),
                             ],
                           ),

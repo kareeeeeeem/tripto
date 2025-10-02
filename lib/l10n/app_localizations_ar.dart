@@ -397,7 +397,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get roomType => 'نوع الغرفة';
 
   @override
-  String get services => 'الخدمات';
+  String get services => 'الخدمات :';
 
   @override
   String get forNight => 'الليله:';
@@ -1215,4 +1215,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get priceperperson => 'السعر للفرد';
+
+  @override
+  String get viewactivity => 'عرض النشاط';
+
+  @override
+  String get videoNotAvailable => ' الفيديو غير متاح';
+
+  @override
+  String get tripAvailablePeriods => 'الرحلة متاحة في الفترات التالية:';
+
+  @override
+  String get tripNotAvailable => 'الرحلة غير متاحة حاليًا.';
+
+  @override
+  String get from => 'من';
+
+  @override
+  String get to => 'إلى';
+
+  @override
+  String get rangeNotContained =>
+      'يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط.';
 }

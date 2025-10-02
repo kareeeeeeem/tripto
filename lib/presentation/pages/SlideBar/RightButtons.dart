@@ -25,25 +25,21 @@ import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPric
 import 'package:showcaseview/showcaseview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
   
+
+
 String? buildTripSummary(
   BuildContext context,
   bool showHotel,
   bool showCar,
   bool showActivity,
 ) {
-  // 💡 الحصول على ملف الترجمة
   final loc = AppLocalizations.of(context)!;
-  // 💡 تجميع أسماء العناصر الموجودة في قائمة
   List<String> parts = [];
   if (showHotel) parts.add(loc.hotel);
   if (showCar) parts.add(loc.car);
   if (showActivity) parts.add(loc.activities);
-  // 💡 إذا لم يتم اختيار أي شيء، نرجع null
   if (parts.isEmpty) return null;
-  // 💡 تجميع العناصر بفاصلة "، "
-  final itemsList = parts.join("، "); 
-  // 💡 دمج القائمة في النص الأساسي
-  // نفترض أن loc.tripIncludes هو "هذه الرحلة تحتوي على {items}"
+  final itemsList = parts.join(", "); 
   return loc.priceInfo(itemsList);
 
 }
@@ -140,7 +136,7 @@ class _RightButtonsState extends State<RightButtons> {
 
 
 
-    // ✅ مفاتيح ShowcaseView
+  // ✅ مفاتيح ShowcaseView
   final GlobalKey _categoryKey = GlobalKey();
   final GlobalKey _dateKey = GlobalKey();
   final GlobalKey _hotelKey = GlobalKey();
@@ -270,7 +266,7 @@ class _RightButtonsState extends State<RightButtons> {
     ///////////////////////////////////////////////
     /// Date Button
     /// 
-   if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
+    if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) { 
       buttons.add(
         _ButtonData(
          iconWidget: Showcase( 
@@ -309,8 +305,13 @@ class _RightButtonsState extends State<RightButtons> {
               : AppLocalizations.of(context)!.date,
           onPressed: () async {
             try {
-              final firstDate = DateTime.parse(trip.fromDate);
-              final lastDate = DateTime.parse(trip.toDate);
+                // 🆕 نأخذ أول تاريخ من المصفوفة كنطاق بداية متاح
+                final firstDateStr = trip.fromDate.first; 
+                // 🆕 نأخذ آخر تاريخ من المصفوفة كنطاق نهاية متاح
+                final lastDateStr = trip.toDate.last;      
+
+                final firstDate = DateTime.parse(firstDateStr);
+                final lastDate = DateTime.parse(lastDateStr);
 
               if (firstDate.isAfter(lastDate)) {
                 if (!mounted) return;
@@ -325,10 +326,15 @@ class _RightButtonsState extends State<RightButtons> {
                 builder: (context) => BlocProvider(
                       create: (context) => DateSelectionBloc(),
                       child: DateCard(
-                        firstDate: firstDate,
-                        lastDate: lastDate,
+                        firstDate: trip.overallMinFromDate,
+                        lastDate: trip.overallMaxToDate,
+
                         initialRangeStart: _rangeStart,
                         initialRangeEnd: _rangeEnd,
+                        
+                         availableFromDates: trip.fromDate, // 🆕 تمرير القوائم الجديدة
+                        availableToDates: trip.toDate,     // 🆕 تمرير القوائم الجديدة
+                     
                       ),
                     ),
               );
