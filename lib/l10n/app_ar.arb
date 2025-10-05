@@ -387,11 +387,11 @@
   "searchDestination": "ابحث عن الوجهة اللي تحبها",
   "themedate": "تغيير المظهر",
   "priceInfoDefault": "تتضمن هذه الرحله مرشدًا لمساعدتكم,",
-  "priceInfo": "تشمل الرحلة : مرشدًا لمساعدتكم ,{items}", 
+  "priceInfo": "تشمل الرحلة : مرشدًا لمساعدتكم ,{items}",
   "@priceInfo": {
-      "placeholders": {
-          "items": {}
-      }
+    "placeholders": {
+      "items": {}
+    }
   },
   "infoHotel": "عرض الفندق",
   "searchByDate": "اختار تاريخ",
@@ -399,10 +399,9 @@
   "viewactivity": "عرض النشاط",
   "videoNotAvailable": " الفيديو غير متاح",
   "tripAvailablePeriods": "الرحلة متاحة في الفترات التالية:",
-  "tripNotAvailable": "الرحلة غير متاحة حاليًا.",  
+  "tripNotAvailable": "الرحلة غير متاحة حاليًا.",
   "from": "من",
   "to": "إلى",
-  "rangeNotContained": "يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط."
-
-
+  "rangeNotContained": "يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط.",
+  "pricepernight": "سعر الليله "
 }

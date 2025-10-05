@@ -24,8 +24,6 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-  
-
 
 String? buildTripSummary(
   BuildContext context,
@@ -39,9 +37,8 @@ String? buildTripSummary(
   if (showCar) parts.add(loc.car);
   if (showActivity) parts.add(loc.activities);
   if (parts.isEmpty) return null;
-  final itemsList = parts.join(", "); 
+  final itemsList = parts.join(", ");
   return loc.priceInfo(itemsList);
-
 }
 
 enum CategoryType { none, gold, diamond, platinum }
@@ -58,7 +55,6 @@ Color _getColorForCategory(int categoryValue) {
       return Colors.white;
   }
 }
-
 
 class _ButtonData {
   final Widget iconWidget;
@@ -89,10 +85,6 @@ class RightButtons extends StatefulWidget {
 
   final Function(String?)? onSummaryReady; // 🌟 إضافة الـ Callback الجديد
 
-
-
-  
-
   const RightButtons({
     super.key,
     required this.tripId,
@@ -111,7 +103,6 @@ class RightButtons extends StatefulWidget {
     this.selectedFlightId,
 
     this.onSummaryReady, // 🌟 يجب إضافته هنا أيضاً
-
   });
   @override
   State<RightButtons> createState() => _RightButtonsState();
@@ -127,14 +118,12 @@ class _RightButtonsState extends State<RightButtons> {
 
   int? selectedHotelId;
   int? selectedCarId;
-  int? selectedActivityId; 
+  int? selectedActivityId;
   double selectedHotelPrice = 0.0;
   double selectedCarPrice = 0.0;
   double selectedActivityPrice = 0.0;
   int? selectedFlightId;
   double selectedFlightPrice = 0.0;
-
-
 
   // ✅ مفاتيح ShowcaseView
   final GlobalKey _categoryKey = GlobalKey();
@@ -144,7 +133,6 @@ class _RightButtonsState extends State<RightButtons> {
   final GlobalKey _activitiesKey = GlobalKey();
   final GlobalKey _saveKey = GlobalKey();
   final GlobalKey _infoKey = GlobalKey();
-
 
   @override
   void initState() {
@@ -156,9 +144,8 @@ class _RightButtonsState extends State<RightButtons> {
       }
     });
     context.read<TripBloc>().add(FetchTrips());
-    
 
-     WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _startShowcase();
     });
   }
@@ -198,37 +185,43 @@ class _RightButtonsState extends State<RightButtons> {
     if (tripState is! TripLoaded || tripState.trips.isEmpty) {
       return const SizedBox();
     }
-      final trip = tripState.trips.firstWhere(
-        (t) => t.id == widget.tripId,
-        orElse: () => tripState.trips.first,
-      );
+    final trip = tripState.trips.firstWhere(
+      (t) => t.id == widget.tripId,
+      orElse: () => tripState.trips.first,
+    );
 
-    final int categoryValue                     = int.tryParse(trip.category.toString()) ?? 0;
+    final int categoryValue = int.tryParse(trip.category.toString()) ?? 0;
 
-    final bool showHotel = trip.hasHotel       == true || trip.hasHotel == 1;
-    final bool showCar = trip.hasCar           == true || trip.hasCar == 1;
+    final bool showHotel = trip.hasHotel == true || trip.hasHotel == 1;
+    final bool showCar = trip.hasCar == true || trip.hasCar == 1;
     final bool showActivity = trip.hasActivity == true || trip.hasActivity == 1;
-  
-   
-     debugPrint('Trip Features: Hotel=$showHotel, Car=$showCar, Activity=$showActivity');
-      // 🌟 هذا الاستدعاء صحيح الآن لأن الدالة في نطاق الملف العام
-     final String? tripSummary = buildTripSummary(context, showHotel, showCar, showActivity);
+
+    debugPrint(
+      'Trip Features: Hotel=$showHotel, Car=$showCar, Activity=$showActivity',
+    );
+    // 🌟 هذا الاستدعاء صحيح الآن لأن الدالة في نطاق الملف العام
+    final String? tripSummary = buildTripSummary(
+      context,
+      showHotel,
+      showCar,
+      showActivity,
+    );
     // 🌟🌟 استدعاء الـ Callback هنا ليعود النص للشاشة الأب
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onSummaryReady?.call(tripSummary);
-    }); 
-      debugPrint('RightButtons Callback Fired. Summary: $tripSummary'); 
-
-
+    });
+    debugPrint('RightButtons Callback Fired. Summary: $tripSummary');
 
     ///////////////////////////////////////////////
     /// Category Button
-    /// 
+    ///
     buttons.add(
       _ButtonData(
-       iconWidget: Showcase( // ✅ إضافة Showcase هنا
-        key: _categoryKey,
-            description: AppLocalizations.of(context)!.showcaseCategoryDescription, 
+        iconWidget: Showcase(
+          // ✅ إضافة Showcase هنا
+          key: _categoryKey,
+          description:
+              AppLocalizations.of(context)!.showcaseCategoryDescription,
           child: Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()..scale(-1.0, 1.0),
@@ -260,19 +253,16 @@ class _RightButtonsState extends State<RightButtons> {
       ),
     );
 
-
-
-
     ///////////////////////////////////////////////
     /// Date Button
-    /// 
-    if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) { 
+    ///
+    if (trip.fromDate.isNotEmpty && trip.toDate.isNotEmpty) {
       buttons.add(
         _ButtonData(
-         iconWidget: Showcase( 
-          key: _dateKey,
-            description: AppLocalizations.of(context)!.showcaseDateDescription, 
-                      child: Stack(
+          iconWidget: Showcase(
+            key: _dateKey,
+            description: AppLocalizations.of(context)!.showcaseDateDescription,
+            child: Stack(
               alignment: Alignment.center,
               children: [
                 Icon(
@@ -280,7 +270,10 @@ class _RightButtonsState extends State<RightButtons> {
                       ? Icons.flight
                       : Icons.calendar_today,
                   size: 30,
-                  color: selectedIndex == buttons.length ? Colors.white : Colors.white,
+                  color:
+                      selectedIndex == buttons.length
+                          ? Colors.white
+                          : Colors.white,
                 ),
                 if (trip.hasFly == true || trip.hasFly == 1)
                   Positioned(
@@ -300,18 +293,19 @@ class _RightButtonsState extends State<RightButtons> {
               ],
             ),
           ),
-          label: (trip.hasFly == true || trip.hasFly == 1)
-              ? AppLocalizations.of(context)!.fly
-              : AppLocalizations.of(context)!.date,
+          label:
+              (trip.hasFly == true || trip.hasFly == 1)
+                  ? AppLocalizations.of(context)!.fly
+                  : AppLocalizations.of(context)!.date,
           onPressed: () async {
             try {
-                // 🆕 نأخذ أول تاريخ من المصفوفة كنطاق بداية متاح
-                final firstDateStr = trip.fromDate.first; 
-                // 🆕 نأخذ آخر تاريخ من المصفوفة كنطاق نهاية متاح
-                final lastDateStr = trip.toDate.last;      
+              // 🆕 نأخذ أول تاريخ من المصفوفة كنطاق بداية متاح
+              final firstDateStr = trip.fromDate.first;
+              // 🆕 نأخذ آخر تاريخ من المصفوفة كنطاق نهاية متاح
+              final lastDateStr = trip.toDate.last;
 
-                final firstDate = DateTime.parse(firstDateStr);
-                final lastDate = DateTime.parse(lastDateStr);
+              final firstDate = DateTime.parse(firstDateStr);
+              final lastDate = DateTime.parse(lastDateStr);
 
               if (firstDate.isAfter(lastDate)) {
                 if (!mounted) return;
@@ -323,7 +317,8 @@ class _RightButtonsState extends State<RightButtons> {
 
               final result = await showDialog<Map<String, DateTime>?>(
                 context: context,
-                builder: (context) => BlocProvider(
+                builder:
+                    (context) => BlocProvider(
                       create: (context) => DateSelectionBloc(),
                       child: DateCard(
                         firstDate: trip.overallMinFromDate,
@@ -331,10 +326,11 @@ class _RightButtonsState extends State<RightButtons> {
 
                         initialRangeStart: _rangeStart,
                         initialRangeEnd: _rangeEnd,
-                        
-                         availableFromDates: trip.fromDate, // 🆕 تمرير القوائم الجديدة
-                        availableToDates: trip.toDate,     // 🆕 تمرير القوائم الجديدة
-                     
+
+                        availableFromDates:
+                            trip.fromDate, // 🆕 تمرير القوائم الجديدة
+                        availableToDates:
+                            trip.toDate, // 🆕 تمرير القوائم الجديدة
                       ),
                     ),
               );
@@ -347,19 +343,21 @@ class _RightButtonsState extends State<RightButtons> {
                   _rangeStart = newRangeStart;
                   _rangeEnd = newRangeEnd;
                 });
-                
+
                 // 🆕 استدعاء الـ callback لتمرير البيانات إلى VideoPlayerScreen
                 if (_rangeStart != null && _rangeEnd != null) {
-                      final fromDate = DateFormat('yyyy-MM-dd').format(_rangeStart!);
-                      final toDate = DateFormat('yyyy-MM-dd').format(_rangeEnd!);
+                  final fromDate = DateFormat(
+                    'yyyy-MM-dd',
+                  ).format(_rangeStart!);
+                  final toDate = DateFormat('yyyy-MM-dd').format(_rangeEnd!);
 
-                      widget.onDateRangeSelected?.call(
-                        DateTime.parse(fromDate),
-                        DateTime.parse(toDate),
-                      );
+                  widget.onDateRangeSelected?.call(
+                    DateTime.parse(fromDate),
+                    DateTime.parse(toDate),
+                  );
 
-                      print("✅ Date selected: from=$fromDate to=$toDate");
-                    }
+                  print("✅ Date selected: from=$fromDate to=$toDate");
+                }
                 // 🆕 يمكنك هنا استدعاء Bloc لتصفية الرحلات إذا لزم الأمر
 
                 // 🆕 افتح أول زر بعد التاريخ
@@ -392,102 +390,105 @@ class _RightButtonsState extends State<RightButtons> {
         ),
       );
     }
-    
 
-///////////////////////////
-//////////////////
-      /// Hotel Button ///  
-      if (showHotel) {
-        buttons.add(
-          _ButtonData(
-            iconWidget: Showcase(
-              key: _hotelKey,
-              description: AppLocalizations.of(context)!.showcaseHotelDescription,
-              child: Icon(
-                Icons.hotel,
-                color: selectedIndex == buttons.length
-                    ? selectedIconColor
-                    : defaultIconColor,
-              ),
+    ///////////////////////////
+    //////////////////
+    /// Hotel Button ///
+    if (showHotel) {
+      buttons.add(
+        _ButtonData(
+          iconWidget: Showcase(
+            key: _hotelKey,
+            description: AppLocalizations.of(context)!.showcaseHotelDescription,
+            child: Icon(
+              Icons.hotel,
+              color:
+                  selectedIndex == buttons.length
+                      ? selectedIconColor
+                      : defaultIconColor,
             ),
-            label: AppLocalizations.of(context)!.hotel,
-            onPressed: () async {
-              final selectedHotel = await showDialog(
-                context: context,
-                builder: (context) => BlocProvider(
-                  create: (_) => HotelsBloc(
-                    hotelsRepository: HotelsRepository(),
-                  )..add(
-                      FetchHotels(subDestinationId: trip.subDestinationId!),
+          ),
+          label: AppLocalizations.of(context)!.hotel,
+          onPressed: () async {
+            final selectedHotel = await showDialog(
+              context: context,
+              builder:
+                  (context) => BlocProvider(
+                    create:
+                        (_) => HotelsBloc(
+                          hotelsRepository: HotelsRepository(),
+                          // repository: HotelsRepository(),
+                        )..add(
+                          FetchHotels(subDestinationId: trip.subDestinationId!),
+                        ),
+                    child: HotelsDialog(
+                      subDestinationId: trip.subDestinationId!,
+                      personCounterKey: widget.personCounterKey,
+                      startDate: _rangeStart,
+                      endDate: _rangeEnd,
+                      nextSteps: [],
+                      selectedHotelId: selectedHotelId,
                     ),
-                  child: HotelsDialog(
-                    subDestinationId: trip.subDestinationId!,
-                    personCounterKey: widget.personCounterKey,
-                    startDate: _rangeStart,
-                    endDate: _rangeEnd,
-                    nextSteps: [],
-                    selectedHotelId: selectedHotelId,
                   ),
-                ),
+            );
+
+            // ✅ اعمل check الأول
+            if (selectedHotel != null) {
+              final int nights =
+                  _rangeStart != null && _rangeEnd != null
+                      ? _rangeEnd!.difference(_rangeStart!).inDays
+                      : 1;
+
+              // 🆕 استدعاء الـ callback بعد التأكد إنه مش null
+              widget.onHotelSelected?.call(
+                selectedHotel.id,
+                selectedHotel.pricePerNight * nights,
               );
 
-              // ✅ اعمل check الأول
-              if (selectedHotel != null) {
-                final int nights =
-                    _rangeStart != null && _rangeEnd != null
-                        ? _rangeEnd!.difference(_rangeStart!).inDays
-                        : 1;
+              widget.personCounterKey?.currentState?.setSelectedHotelPrice(
+                selectedHotel.pricePerNight,
+                nights,
+              );
 
-                // 🆕 استدعاء الـ callback بعد التأكد إنه مش null
-                widget.onHotelSelected?.call(
-                  selectedHotel.id,
-                  selectedHotel.pricePerNight * nights,
-                );
+              setState(() {
+                selectedHotelId = selectedHotel.id;
+                selectedHotelPrice = selectedHotel.pricePerNight * nights;
+              });
 
-                widget.personCounterKey?.currentState?.setSelectedHotelPrice(
-                  selectedHotel.pricePerNight,
-                  nights,
-                );
+              print(
+                "✅ Hotel Selected: id=$selectedHotelId, price=$selectedHotelPrice",
+              );
 
+              // 🔹 تحديد الزر الحالي للـ Hotel
+              final currentIndex = buttons.indexWhere(
+                (b) => b.label == AppLocalizations.of(context)!.hotel,
+              );
+              final nextButtonIndex = currentIndex + 1;
+
+              if (nextButtonIndex < buttons.length) {
                 setState(() {
-                  selectedHotelId = selectedHotel.id;
-                  selectedHotelPrice = selectedHotel.pricePerNight * nights;
+                  selectedIndex = nextButtonIndex;
                 });
-
-                print("✅ Hotel Selected: id=$selectedHotelId, price=$selectedHotelPrice");
-
-                // 🔹 تحديد الزر الحالي للـ Hotel
-                final currentIndex = buttons.indexWhere(
-                  (b) => b.label == AppLocalizations.of(context)!.hotel,
-                );
-                final nextButtonIndex = currentIndex + 1;
-
-                if (nextButtonIndex < buttons.length) {
-                  setState(() {
-                    selectedIndex = nextButtonIndex;
-                  });
-                  buttons[nextButtonIndex].onPressed?.call();
-                }
+                buttons[nextButtonIndex].onPressed?.call();
               }
-            },
-          ),
-        );
-      }
+            }
+          },
+        ),
+      );
+    }
 
-
-
-
-    /////////////////////////////////////////////// 
+    ///////////////////////////////////////////////
     ///Car Button
     ///
 
     if (showCar) {
       buttons.add(
         _ButtonData(
-         iconWidget: Showcase( // ✅ إضافة Showcase هنا
-          key: _carKey,
-                      description: AppLocalizations.of(context)!.showcaseCarDescription, 
-                      child: Icon(
+          iconWidget: Showcase(
+            // ✅ إضافة Showcase هنا
+            key: _carKey,
+            description: AppLocalizations.of(context)!.showcaseCarDescription,
+            child: Icon(
               Icons.directions_car,
               color:
                   selectedIndex == buttons.length
@@ -517,15 +518,13 @@ class _RightButtonsState extends State<RightButtons> {
                   ],
                   child: CarSelectionPage(
                     selectedCarId: selectedCarId,
-                      personCounterKey: widget.personCounterKey, // ✅ ده المهم
-                    ),
+                    personCounterKey: widget.personCounterKey, // ✅ ده المهم
+                  ),
                 );
-                
               },
             );
 
             if (selectedCarFromDialog != null) {
-
               // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
               widget.onCarSelected?.call(
                 selectedCarFromDialog.id,
@@ -535,10 +534,11 @@ class _RightButtonsState extends State<RightButtons> {
               setState(() {
                 selectedCarId = selectedCarFromDialog.id;
                 selectedCar = selectedCarFromDialog;
-                    selectedCarPrice = selectedCarFromDialog.price; // ✅
-
+                selectedCarPrice = selectedCarFromDialog.price; // ✅
               });
-              print("✅ Car Selected: id=$selectedCarId, price=$selectedCarPrice");
+              print(
+                "✅ Car Selected: id=$selectedCarId, price=$selectedCarPrice",
+              );
 
               widget.personCounterKey?.currentState?.setSelectedCarPrice(
                 selectedCarFromDialog.price,
@@ -550,10 +550,10 @@ class _RightButtonsState extends State<RightButtons> {
                       builder:
                           (context) => ActivitiesListDialog(
                             initialSelectedActivityId: selectedActivityId,
-                            personCounterKey: widget.personCounterKey, 
+                            personCounterKey: widget.personCounterKey,
                           ),
                     );
-                    
+
                 if (selectedActivityFromDialog != null) {
                   final price =
                       double.tryParse(
@@ -563,23 +563,21 @@ class _RightButtonsState extends State<RightButtons> {
                   setState(() {
                     selectedActivityId =
                         selectedActivityFromDialog.id; // ✅ تم حفظ المعرف هنا
-                          selectedActivityPrice = price;
-
+                    selectedActivityPrice = price;
                   });
-                  print("✅ Activity Selected: id=$selectedActivityId, price=$selectedActivityPrice");
-                
-                      // 🆕 هنا تضيف الكولباك عشان يوصل للـ VideoPlayerScreen
-                          widget.onActivitySelected?.call(
-                            selectedActivityFromDialog.id,
-                            price,
-                          );
+                  print(
+                    "✅ Activity Selected: id=$selectedActivityId, price=$selectedActivityPrice",
+                  );
 
-
+                  // 🆕 هنا تضيف الكولباك عشان يوصل للـ VideoPlayerScreen
+                  widget.onActivitySelected?.call(
+                    selectedActivityFromDialog.id,
+                    price,
+                  );
 
                   widget.personCounterKey?.currentState
                       ?.setSelectedActivityPrice(price);
                 }
-              
               }
             }
           },
@@ -587,19 +585,19 @@ class _RightButtonsState extends State<RightButtons> {
       );
     }
 
-
-
     ///////////////////////////////////////////
     //// Activities Button
     ///
-    
+
     if (trip.hasActivity) {
       buttons.add(
         _ButtonData(
-         iconWidget: Showcase( // ✅ إضافة Showcase هنا
-          key: _activitiesKey,
-                      description: AppLocalizations.of(context)!.showcaseActivitiesDescription, 
-                      child: Icon(
+          iconWidget: Showcase(
+            // ✅ إضافة Showcase هنا
+            key: _activitiesKey,
+            description:
+                AppLocalizations.of(context)!.showcaseActivitiesDescription,
+            child: Icon(
               Icons.category_outlined,
               color:
                   selectedIndex == buttons.length
@@ -627,21 +625,21 @@ class _RightButtonsState extends State<RightButtons> {
                     selectedActivityFromDialog.price.toString(),
                   ) ??
                   0.0;
-            // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
+              // 🆕 استدعاء الـ callback لتمرير البيانات للـ VideoPlayerScreen
               widget.onActivitySelected?.call(
                 selectedActivityFromDialog.id,
                 price,
               );
-              
+
               setState(() {
                 selectedActivityId =
                     selectedActivityId = selectedActivityFromDialog.id;
-                     selectedActivityPrice = price; // ✅
+                selectedActivityPrice = price; // ✅
               });
               widget.personCounterKey?.currentState?.setSelectedActivityPrice(
                 price,
               );
-            } 
+            }
           },
         ),
       );
@@ -649,14 +647,15 @@ class _RightButtonsState extends State<RightButtons> {
 
     /////////////////////////////////////////
     /// Save Button
-    /// 
-    
+    ///
+
     buttons.add(
       _ButtonData(
-       iconWidget: Showcase( // ✅ إضافة Showcase هنا
-        key: _saveKey,
-                    description: AppLocalizations.of(context)!.showcaseSaveDescription, 
-                  child: Icon(
+        iconWidget: Showcase(
+          // ✅ إضافة Showcase هنا
+          key: _saveKey,
+          description: AppLocalizations.of(context)!.showcaseSaveDescription,
+          child: Icon(
             Icons.bookmark_border,
             color:
                 selectedIndex == buttons.length
@@ -669,22 +668,16 @@ class _RightButtonsState extends State<RightButtons> {
       ),
     );
 
-
-
-
-
-
-
-
     ///////////////////////////////
     /// Info Button
-    /// 
+    ///
     buttons.add(
       _ButtonData(
-       iconWidget: Showcase( // ✅ إضافة Showcase هنا
-        key: _infoKey,
-                    description: AppLocalizations.of(context)!.showcaseInfoDescription, 
-                  child: Icon(
+        iconWidget: Showcase(
+          // ✅ إضافة Showcase هنا
+          key: _infoKey,
+          description: AppLocalizations.of(context)!.showcaseInfoDescription,
+          child: Icon(
             Icons.info_outline,
             color:
                 selectedIndex == buttons.length
@@ -707,8 +700,6 @@ class _RightButtonsState extends State<RightButtons> {
         },
       ),
     );
-
-
 
     return FocusScope(
       node: _focusScopeNode,

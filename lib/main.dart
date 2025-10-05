@@ -8,6 +8,8 @@ import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
 import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripRepository.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_bloc.dart';
 import 'package:tripto/bloc&repo/ContactUs/ContactUs_repository.dart';
+import 'package:tripto/bloc&repo/Hotel/hotelBloc.dart';
+import 'package:tripto/bloc&repo/Hotel/hotelRep.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/logout/LogoutBloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
@@ -55,7 +57,7 @@ class TripToApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 
-static void toggleTheme(BuildContext context) {
+  static void toggleTheme(BuildContext context) {
     final _TripToAppState? state =
         context.findAncestorStateOfType<_TripToAppState>();
     if (state != null) {
@@ -65,21 +67,20 @@ static void toggleTheme(BuildContext context) {
       );
     }
   }
+
   @override
   State<TripToApp> createState() => _TripToAppState();
 }
 
 class _TripToAppState extends State<TripToApp> {
   Locale _locale = const Locale('en'); //lan
-    ThemeMode _themeMode = ThemeMode.system; // theme
-
+  ThemeMode _themeMode = ThemeMode.system; // theme
 
   @override
   void initState() {
     super.initState();
     _loadSavedLocale();
-      _loadSavedTheme(); 
-
+    _loadSavedTheme();
   }
 
   Future<void> _loadSavedLocale() async {
@@ -99,8 +100,6 @@ class _TripToAppState extends State<TripToApp> {
   }
   //////////////////////////
 
-
-
   Future<void> _loadSavedTheme() async {
     final prefs = await SharedPreferences.getInstance();
     final themeIndex = prefs.getInt('theme_mode') ?? 0;
@@ -115,11 +114,7 @@ class _TripToAppState extends State<TripToApp> {
     await prefs.setInt('theme_mode', mode.index);
   }
   ////////////////////////////
-  
-  
-  
-  
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -129,100 +124,127 @@ class _TripToAppState extends State<TripToApp> {
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
         RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
         RepositoryProvider<ContactusRepository>(
-            create: (_) => ContactusRepository()),
+          create: (_) => ContactusRepository(),
+        ),
         RepositoryProvider<SearchTripByDateRepository>(
-            create: (_) => SearchTripByDateRepository()),
+          create: (_) => SearchTripByDateRepository(),
+        ),
         RepositoryProvider<SearchTripByCategoryRepository>(
-            create: (_) => SearchTripByCategoryRepository()),
+          create: (_) => SearchTripByCategoryRepository(),
+        ),
         RepositoryProvider<SearchTripBySubDestinationRepository>(
-            create: (_) => SearchTripBySubDestinationRepository()),
+          create: (_) => SearchTripBySubDestinationRepository(),
+        ),
         RepositoryProvider<OrderTripRepository>(
-            create: (_) => OrderTripRepository()),
+          create: (_) => OrderTripRepository(),
+        ),
+        RepositoryProvider<HotelsRepository>(create: (_) => HotelsRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (context) => AuthBloc(
-              authRepository: RepositoryProvider.of<AuthRepository>(context),
-            ),
+            create:
+                (context) => AuthBloc(
+                  authRepository: RepositoryProvider.of<AuthRepository>(
+                    context,
+                  ),
+                ),
           ),
           BlocProvider<TripBloc>(
-            create: (context) => TripBloc(
-              RepositoryProvider.of<TripRepository>(context),
-            )..add(FetchTrips()),
+            create:
+                (context) =>
+                    TripBloc(RepositoryProvider.of<TripRepository>(context))
+                      ..add(FetchTrips()),
           ),
           BlocProvider<UpdateUserBloc>(
-            create: (context) => UpdateUserBloc(
-              userRepository: RepositoryProvider.of<UserRepository>(context),
-            ),
+            create:
+                (context) => UpdateUserBloc(
+                  userRepository: RepositoryProvider.of<UserRepository>(
+                    context,
+                  ),
+                ),
           ),
           BlocProvider<LogoutBloc>(
-            create: (context) => LogoutBloc(
-              repository: RepositoryProvider.of<AuthRepository>(context),
-            ),
+            create:
+                (context) => LogoutBloc(
+                  repository: RepositoryProvider.of<AuthRepository>(context),
+                ),
           ),
           BlocProvider<ContactusBloc>(
-            create: (context) => ContactusBloc(
-              contactusRepository:
-                  RepositoryProvider.of<ContactusRepository>(context),
-            ),
+            create:
+                (context) => ContactusBloc(
+                  contactusRepository:
+                      RepositoryProvider.of<ContactusRepository>(context),
+                ),
           ),
           BlocProvider<SearchTripByDateBloc>(
-            create: (context) => SearchTripByDateBloc(
-              repository:
-                  RepositoryProvider.of<SearchTripByDateRepository>(context),
-            ),
+            create:
+                (context) => SearchTripByDateBloc(
+                  repository: RepositoryProvider.of<SearchTripByDateRepository>(
+                    context,
+                  ),
+                ),
           ),
           BlocProvider<OrderTripBloc>(
-            create: (context) => OrderTripBloc(
-              RepositoryProvider.of<OrderTripRepository>(context),
-            ),
+            create:
+                (context) => OrderTripBloc(
+                  RepositoryProvider.of<OrderTripRepository>(context),
+                ),
           ),
           BlocProvider<SearchTripByCategoryBloc>(
-            create: (context) => SearchTripByCategoryBloc(
-              repository:
-                  RepositoryProvider.of<SearchTripByCategoryRepository>(context),
-            ),
+            create:
+                (context) => SearchTripByCategoryBloc(
+                  repository:
+                      RepositoryProvider.of<SearchTripByCategoryRepository>(
+                        context,
+                      ),
+                ),
           ),
           BlocProvider<SearchTripBySubDestinationBloc>(
-            create: (context) => SearchTripBySubDestinationBloc(
-              repository: RepositoryProvider.of<
-                  SearchTripBySubDestinationRepository>(context),
-            ),
+            create:
+                (context) => SearchTripBySubDestinationBloc(
+                  repository: RepositoryProvider.of<
+                    SearchTripBySubDestinationRepository
+                  >(context),
+                ),
+          ),
+
+          BlocProvider<HotelsBloc>(
+            create:
+                (context) => HotelsBloc(
+                  // repository: RepositoryProvider.of<HotelsRepository>(context),
+                  hotelsRepository: RepositoryProvider.of<HotelsRepository>(
+                    context,
+                  ),
+                ),
           ),
         ],
         child: ShowCaseWidget(
-          builder: (context) => MaterialApp(
-            navigatorObservers: [routeObserver],
-            locale: _locale,
-            supportedLocales: const [Locale('en'), Locale('ar')],
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
+          builder:
+              (context) => MaterialApp(
+                navigatorObservers: [routeObserver],
+                locale: _locale,
+                supportedLocales: const [Locale('en'), Locale('ar')],
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
 
+                //  theme قي ملف core=>theme
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
+                themeMode: _themeMode,
 
-
-             //  theme قي ملف core=>theme
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: _themeMode,
-
-
-
-
-
-
-            title: 'TripTo',
-            debugShowCheckedModeBanner: false,
-            routes: AppRoutes.routes,
-            initialRoute: AppRoutes.splash,
-            builder: (context, child) {
-              return Wrapper(child: child ?? const SizedBox());
-            },
-          ),
+                title: 'TripTo',
+                debugShowCheckedModeBanner: false,
+                routes: AppRoutes.routes,
+                initialRoute: AppRoutes.splash,
+                builder: (context, child) {
+                  return Wrapper(child: child ?? const SizedBox());
+                },
+              ),
         ),
       ),
     );

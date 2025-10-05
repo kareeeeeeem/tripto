@@ -1237,4 +1237,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get rangeNotContained =>
       'يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط.';
+
+  @override
+  String get pricepernight => 'سعر الليله ';
 }

@@ -15,3 +15,10 @@ class FetchHotels extends HotelsEvent {
   @override
   List<Object?> get props => [subDestinationId];
 }
+
+class FetchAllHotels extends HotelsEvent {
+  const FetchAllHotels();
+
+  @override
+  List<Object?> get props => [];
+}

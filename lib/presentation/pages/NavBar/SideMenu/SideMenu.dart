@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tripto/core/constants/HotelCard.dart';
 import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
@@ -84,13 +85,15 @@ class _SideMenuState extends State<SideMenu> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MyTripsPage()),
+                        builder: (context) => const MyTripsPage(),
+                      ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                            AppLocalizations.of(context)!.pleaseLoginFirst),
+                          AppLocalizations.of(context)!.pleaseLoginFirst,
+                        ),
                         backgroundColor: Color(0xFF002E70),
                         duration: const Duration(seconds: 5),
                       ),
@@ -99,7 +102,8 @@ class _SideMenuState extends State<SideMenu> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Signuporlogin()),
+                          builder: (context) => const Signuporlogin(),
+                        ),
                       );
                     });
                   }
@@ -111,10 +115,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.favorite,
                 label: AppLocalizations.of(context)!.favourite,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FavoritePage()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FavoritePage(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -122,10 +129,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.info,
                 label: AppLocalizations.of(context)!.aboutus,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AboutUs()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Hotelcard(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -133,18 +143,24 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.autorenew,
                 label: AppLocalizations.of(context)!.cancellation1,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Cancellattion()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Cancellattion(),
+                      ),
+                    ),
               ),
               _divider(),
 
               // 🌐 تغيير اللغة
               ListTile(
-                leading: const Icon(Icons.language, color: Color(0xFF002E70), size: 30),
-                 title: Row(
+                leading: const Icon(
+                  Icons.language,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -163,9 +179,10 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale = currentLocale == 'ar'
-                                ? const Locale('en')
-                                : const Locale('ar');
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
@@ -184,9 +201,10 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale = currentLocale == 'ar'
-                                ? const Locale('en')
-                                : const Locale('ar');
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
@@ -207,7 +225,11 @@ class _SideMenuState extends State<SideMenu> {
 
               // 🌙 تغيير الثيم
               ListTile(
-               leading: const Icon(Icons.brightness_4, color: Color(0xFF002E70), size: 30),
+                leading: const Icon(
+                  Icons.brightness_4,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -228,9 +250,10 @@ class _SideMenuState extends State<SideMenu> {
                             ? Icons.dark_mode
                             : Icons.light_mode,
                         size: 35,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.yellow
-                            : Colors.black,
+                        color:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.yellow
+                                : Colors.black,
                       ),
                     ),
                   ],
@@ -242,11 +265,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.lock,
                 label: AppLocalizations.of(context)!.privacypolicy,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Privacypolicy()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Privacypolicy(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -254,11 +279,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.book,
                 label: AppLocalizations.of(context)!.termsandcondations,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Termsandcondations()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Termsandcondations(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -266,10 +293,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.call,
                 label: AppLocalizations.of(context)!.contactus,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ContactUs()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ContactUs(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -277,10 +307,11 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.description,
                 label: AppLocalizations.of(context)!.report,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Report()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Report()),
+                    ),
               ),
             ],
           ),
@@ -290,13 +321,15 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   // 🔹 عنصر قائمة موحد
-  Widget _buildMenuItem(BuildContext context,
-      {required IconData icon,
-      required String label,
-      required VoidCallback onTap}) {
+  Widget _buildMenuItem(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     final theme = Theme.of(context);
     return ListTile(
-leading: Icon(icon, color: const Color(0xFF002E70), size: 30),
+      leading: Icon(icon, color: const Color(0xFF002E70), size: 30),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

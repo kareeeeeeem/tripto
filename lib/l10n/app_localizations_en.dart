@@ -1250,4 +1250,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get rangeNotContained =>
       'The booking period must be contained entirely within a single available period.';
+
+  @override
+  String get pricepernight => 'Price per night';
 }

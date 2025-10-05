@@ -387,11 +387,11 @@
   "searchDestination": "Search for your favorite destination",
   "themedate": "Change mode",
   "priceInfoDefault": "trip includes guide to assist you,",
-  "priceInfo": "trip includes :guide assist you, {items}", 
+  "priceInfo": "trip includes :guide assist you, {items}",
   "@priceInfo": {
-      "placeholders": {
-          "items": {}
-      }
+    "placeholders": {
+      "items": {}
+    }
   },
   "infoHotel": "view Hotel",
   "searchByDate": "choose Date",
@@ -402,8 +402,6 @@
   "tripNotAvailable": "The trip is currently unavailable.",
   "from": "from",
   "to": "to",
-  "rangeNotContained": "The booking period must be contained entirely within a single available period."
-
-
-
+  "rangeNotContained": "The booking period must be contained entirely within a single available period.",
+  "pricepernight": "Price per night"
 }
