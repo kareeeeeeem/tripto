@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart';
 import 'package:tripto/core/constants/NavBar.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/home_page.dart';
@@ -47,6 +48,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       const HomePage(), // index 0
+      const Hotelcard(),
       const ActivityPage(), // index 1
       hasToken ? const ProfilePage() : const Signuporlogin(), // index 2
       // const FavoritePage(), // index 3

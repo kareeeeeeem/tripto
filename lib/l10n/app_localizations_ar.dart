@@ -1240,4 +1240,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pricepernight => 'سعر الليله ';
+
+  @override
+  String get rate => 'التقييم';
 }

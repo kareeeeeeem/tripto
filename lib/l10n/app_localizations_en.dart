@@ -1253,4 +1253,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pricepernight => 'Price per night';
+
+  @override
+  String get rate => 'Rate';
 }

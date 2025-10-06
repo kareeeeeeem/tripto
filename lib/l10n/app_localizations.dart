@@ -2335,6 +2335,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price per night'**
   String get pricepernight;
+
+  /// No description provided for @rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rate;
 }
 
 class _AppLocalizationsDelegate

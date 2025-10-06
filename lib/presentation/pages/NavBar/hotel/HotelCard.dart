@@ -9,14 +9,15 @@ import 'package:tripto/core/models/HotelModel.dart';
 import 'package:tripto/core/models/Hotels%D9%80model.dart';
 // import 'package:tripto/core/models/ActivityCardModel.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
+import 'package:tripto/presentation/pages/SlideBar/hotel/HoteleDetailsPage.dart';
 // import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
 // import 'package:http/http.dart' as http;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../bloc&repo/ِAuth/AuthState.dart';
-import '../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
-import '../../../../core/routes/app_routes.dart';
-import '../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
+import '../../../../../../bloc&repo/ِAuth/AuthState.dart';
+import '../../../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
+import '../../../../../../core/routes/app_routes.dart';
+import '../../../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
 
 class Hotelcard extends StatefulWidget {
   const Hotelcard({
@@ -78,52 +79,52 @@ class _HotelcardState extends State<Hotelcard> {
     );
   }
 
-  Widget _buildMediaWidget(String videoUrl, List<String> images) {
+  Widget _buildMediaWidget(List<String> images) {
     // 1. التحقق من فيديوهات يوتيوب
-    if (videoUrl.isNotEmpty &&
-        (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be'))) {
-      final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
-      return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.13,
-        width: MediaQuery.of(context).size.width * 0.25,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            YoutubePlayer(
-              controller: YoutubePlayerController(
-                initialVideoId: videoId,
-                flags: const YoutubePlayerFlags(
-                  autoPlay: true,
-                  mute: false,
-                  disableDragSeek: false,
-                  loop: false,
-                  isLive: false,
-                  forceHD: false,
-                  enableCaption: true,
-                ),
-              ),
+    // if (videoUrl.isNotEmpty &&
+    //     (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be'))) {
+    //   final videoId = YoutubePlayer.convertUrlToId(videoUrl) ?? '';
+    //   // return SizedBox(
+    //   //   height: MediaQuery.of(context).size.height * 0.13,
+    //   //   width: MediaQuery.of(context).size.width * 0.25,
+    //   //   child: Stack(
+    //   //     alignment: Alignment.center,
+    //   //     children: [
+    //   //       YoutubePlayer(
+    //   //         controller: YoutubePlayerController(
+    //   //           initialVideoId: videoId,
+    //   //           flags: const YoutubePlayerFlags(
+    //   //             autoPlay: true,
+    //   //             mute: false,
+    //   //             disableDragSeek: false,
+    //   //             loop: false,
+    //   //             isLive: false,
+    //   //             forceHD: false,
+    //   //             enableCaption: true,
+    //   //           ),
+    //   //         ),
 
-              // showVideoProgressIndicator: true,
-              // progressIndicatorColor: Colors.white,
-            ),
-          ],
-        ),
-      );
-    }
+    //   //         // showVideoProgressIndicator: true,
+    //   //         // progressIndicatorColor: Colors.white,
+    //   //       ),
+    //   //     ],
+    //   //   ),
+    //   // );
+    // }
 
     // 2. التحقق من الفيديوهات العادية
-    if (videoUrl.isNotEmpty) {
-      final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
-      final extension = videoUrl.split('.').last.toLowerCase();
+    // if (videoUrl.isNotEmpty) {
+    //   final videoExtensions = ['mp4', 'mov', 'avi', 'webm'];
+    //   final extension = videoUrl.split('.').last.toLowerCase();
 
-      if (videoExtensions.contains(extension)) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.13,
-          width: MediaQuery.of(context).size.width * 0.25,
-          child: VideoplayerWidget(Url: videoUrl),
-        );
-      }
-    }
+    //   if (videoExtensions.contains(extension)) {
+    //     return SizedBox(
+    //       height: MediaQuery.of(context).size.height * 0.13,
+    //       width: MediaQuery.of(context).size.width * 0.25,
+    //       child: VideoplayerWidget(Url: videoUrl),
+    //     );
+    //   }
+    // }
 
     // 3. التحقق من الصور
     if (images.isNotEmpty && images[0].isNotEmpty) {
@@ -157,13 +158,12 @@ class _HotelcardState extends State<Hotelcard> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        // onTap: () {
-        //   Navigator.pushNamed(
-        //     context,
-        //     AppRoutes.activityDetailsPageRoute,
-        //     arguments: activity,
-        //   );
-        // },
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => HotelAdelPage(hotel: hotel)),
+          );
+        },
         child: Card(
           color: const Color.fromARGB(183, 255, 255, 255),
           shape: RoundedRectangleBorder(
@@ -178,14 +178,32 @@ class _HotelcardState extends State<Hotelcard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                     child: SizedBox(
                       height: double.infinity,
                       width: 100,
-                      child: _buildMediaWidget(
-                        hotel.videoUrl ?? '',
-                        hotel.images ?? [],
-                      ),
+                      child:
+                          (hotel.images.isNotEmpty &&
+                                  hotel.images[0].isNotEmpty)
+                              ? Image.network(
+                                hotel.images[0],
+                                fit: BoxFit.cover,
+                                errorBuilder:
+                                    (context, error, stackTrace) =>
+                                        Image.asset("assets/images/Logo.png"),
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) return child;
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xFF002E70),
+                                    ),
+                                  );
+                                },
+                              )
+                              : Image.asset(
+                                "assets/images/Logo.png",
+                                fit: BoxFit.cover,
+                              ),
                     ),
                   ),
 
@@ -220,7 +238,7 @@ class _HotelcardState extends State<Hotelcard> {
                                 text:
                                     '${AppLocalizations.of(context)!.pricepernight} :',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   color: Colors.grey[600],
                                 ),
                               ),
@@ -264,14 +282,14 @@ class _HotelcardState extends State<Hotelcard> {
                                         'ar'
                                     ? [
                                       Text(
-                                        "${AppLocalizations.of(context)!.duration}: ",
+                                        "${AppLocalizations.of(context)!.rate}: ",
                                       ),
                                       Text("${hotel.rate} "),
                                       // Text(AppLocalizations.of(context)!.min),
                                     ]
                                     : [
                                       Text(
-                                        "${AppLocalizations.of(context)!.duration}: ",
+                                        "${AppLocalizations.of(context)!.rate}: ",
                                       ),
                                       Text("${hotel.rate} "),
                                       // Text(AppLocalizations.of(context)!.min),

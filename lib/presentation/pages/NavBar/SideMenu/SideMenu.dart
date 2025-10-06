@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/core/constants/HotelCard.dart';
-import 'package:tripto/core/routes/app_routes.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Contact-Us.dart';
@@ -14,7 +12,6 @@ import 'package:tripto/presentation/pages/NavBar/SideMenu/Cancellattion.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
-import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -132,9 +129,7 @@ class _SideMenuState extends State<SideMenu> {
                 onTap:
                     () => Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const Hotelcard(),
-                      ),
+                      MaterialPageRoute(builder: (context) => const AboutUs()),
                     ),
               ),
               _divider(),
