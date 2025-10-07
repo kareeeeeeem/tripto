@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripto/core/constants/CustomButton.dart';
@@ -12,110 +13,139 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  bool _isSaving = false;
+
+  Future<void> _saveAndNavigate() async {
+    setState(() => _isSaving = true);
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isFirstTime', false);
+
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, AppRoutes.app);
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error saving preferences: $e");
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  Future<void> _toggleLanguage() async {
+    final currentLocale = Localizations.localeOf(context).languageCode;
+    final newLocale =
+        currentLocale == 'en' ? const Locale('ar') : const Locale('en');
+
+    TripToApp.setLocale(context, newLocale);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('savedLocale', newLocale.languageCode);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
+    final screenSize = MediaQuery.of(context).size;
     final currentLocale = Localizations.localeOf(context).languageCode;
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // الصورة
-                Flexible(
-                  flex: 12,
-                  child: Image.asset(
-                    'assets/images/welcome.png',
-                    width: width * 0.8,
-                    fit: BoxFit.contain,
-                  ),
-                ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.08),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 600, 
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  double imageWidth;
+                  double buttonHeight;
+                  double iconSize;
+                  double textFontSize;
+                  double verticalSpacing;
 
-                SizedBox(height: height * 0.12),
+                  if (constraints.maxWidth < 600) {
+                    // موبايل
+                    imageWidth = constraints.maxWidth * 0.8;
+                    buttonHeight = screenSize.height * 0.06;
+                    iconSize = constraints.maxWidth * 0.12;
+                    textFontSize = constraints.maxWidth * 0.035;
+                    verticalSpacing = screenSize.height * 0.08;
+                  } else if (constraints.maxWidth < 1024) {
+                    // تاب
+                    imageWidth = constraints.maxWidth * 0.6;
+                    buttonHeight = screenSize.height * 0.06;
+                    iconSize = constraints.maxWidth * 0.1;
+                    textFontSize = constraints.maxWidth * 0.03;
+                    verticalSpacing = screenSize.height * 0.07;
+                  } else {
+                    // لابتوب أو ويب كبير
+                    imageWidth = constraints.maxWidth * 0.5;
+                    buttonHeight = screenSize.height * 0.06;
+                    iconSize = constraints.maxWidth * 0.08;
+                    textFontSize = constraints.maxWidth * 0.025;
+                    verticalSpacing = screenSize.height * 0.06;
+                  }
 
-                // زر Let's Go
-                Flexible(
-                  flex: 5,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: height * 0.06,
-                    child: CustomButton(
-                      text: currentLocale == "ar"
-                          ? "إبدا رحلتك 🚀"
-                          : "Let's Go 🚀",
-                      onPressed: () async {
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('isFirstTime', false);
-                        Navigator.pushReplacementNamed(context, AppRoutes.app);
-                      },
-                    ),
-                  ),
-                ),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // 🖼️ الصورة
+                      Image.asset(
+                        'assets/images/welcome.png',
+                        width: imageWidth,
+                        fit: BoxFit.contain,
+                      ),
 
-                SizedBox(height: height * 0.01),
+                      SizedBox(height: verticalSpacing),
 
-                // اختيار اللغة
-                Flexible(
-                  flex: 3,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            final newLocale = currentLocale == 'en'
-                                ? const Locale('ar')
-                                : const Locale('en');
-                            TripToApp.setLocale(context, newLocale);
+                      // 🚀 الزر
+                      SizedBox(
+                        width: double.infinity,
+                        height: buttonHeight,
+                        child: _isSaving
+                            ? const Center(child: CircularProgressIndicator())
+                            : CustomButton(
+                                text: currentLocale == "ar"
+                                    ? "إبدا رحلتك 🚀"
+                                    : "Let's Go 🚀",
+                                onPressed: _saveAndNavigate,
+                              ),
+                      ),
 
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                                'savedLocale', newLocale.languageCode);
-                          },
-                          child: Icon(
-                            Icons.language,
-                            color: const Color(0xFF002E70),
-                            size: width * 0.12,
-                          ),
-                        ),
-                        SizedBox(height: height * 0.015),
-                        GestureDetector(
-                          onTap: () async {
-                            final newLocale = currentLocale == 'en'
-                                ? const Locale('ar')
-                                : const Locale('en');
-                            TripToApp.setLocale(context, newLocale);
+                      SizedBox(height: verticalSpacing * 0.25),
 
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                                'savedLocale', newLocale.languageCode);
-                          },
-                          child: Text(
-                            currentLocale == "en"
-                                ? "تغيير اللغة إلى العربية"
-                                : "Change language to English",
-                            style: TextStyle(
-                              fontSize: width * 0.035,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                      // 🌍 اختيار اللغة
+                      GestureDetector(
+                        onTap: _toggleLanguage,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.language,
+                              color: const Color(0xFF002E70),
+                              size: iconSize,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
+                            SizedBox(height: verticalSpacing * 0.02),
+                            Text(
+                              currentLocale == "en"
+                                  ? "تغيير اللغة إلى العربية"
+                                  : "Change language to English",
+                              style: TextStyle(
+                                fontSize: textFontSize,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

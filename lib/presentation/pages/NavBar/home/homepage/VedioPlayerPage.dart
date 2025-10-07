@@ -736,6 +736,8 @@ ElevatedButton(
                             print("✅ Summary received in VideoPlayerScreen: $_tripSummaryText");
                           }
                         },
+                           selectedTripSummary: _tripSummaryText,
+
                       
 
 
@@ -801,18 +803,40 @@ ElevatedButton(
                           Row(
                             children: [
                               SizedBox(width: 20,),
-                              Text(
-                                 _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault, 
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                                 maxLines: 2,       // أقصى عدد أسطر
-                                overflow: TextOverflow.ellipsis, // يحط "..." لو النص أطول
+                             SizedBox(
+                          // حساب الارتفاع: (حجم الخط * ارتفاع السطر) * 2 سطر
+                          // إذا افترضنا أن ارتفاع السطر هو 1.2 (قيمة افتراضية جيدة)
+                          // 14 * 1.2 * 2 = 33.6
+                          height: 34.0, 
+                          width: 250,
+                          child: Text(
+                            _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              // يمكنك تحديد ارتفاع السطر هنا أيضاً لضمان الدقة
+                              height: 1.2, 
+                            ),
+                            // إجبار الكود على قراءة سطرين، حتى لو كان هناك سطر واحد فقط
+                            maxLines: 2, 
+                            // وضع "..." إذا كان النص أطول من سطرين
+                            overflow: TextOverflow.ellipsis, 
+                          ),
+                        ),
+
+
+                              //  Text(
+                              //    _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault, 
+                              //   style: const TextStyle(
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: Colors.white,
+                              //   ),
+                              //   overflow: TextOverflow.ellipsis, // يحط "..." لو النص أطول
 
                                 
-                              ),
+                              // ),
                             ],
                           ),
 

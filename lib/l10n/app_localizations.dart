@@ -2329,6 +2329,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The booking period must be contained entirely within a single available period.'**
   String get rangeNotContained;
+
+  /// No description provided for @price_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Details'**
+  String get price_details;
 }
 
 class _AppLocalizationsDelegate

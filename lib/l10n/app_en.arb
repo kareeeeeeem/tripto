@@ -402,7 +402,9 @@
   "tripNotAvailable": "The trip is currently unavailable.",
   "from": "from",
   "to": "to",
-  "rangeNotContained": "The booking period must be contained entirely within a single available period."
+  "rangeNotContained": "The booking period must be contained entirely within a single available period.",
+  "price_details": "Price Details"
+
 
 
 

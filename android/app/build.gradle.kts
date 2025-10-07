@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
     applicationId = "com.example.tripto"
-    minSdk = 23              // ✨ أضفها يدويًا بدل flutter.minSdkVersion
+    minSdk = flutter.minSdkVersion              // ✨ أضفها يدويًا بدل flutter.minSdkVersion
     targetSdk = flutter.targetSdkVersion
     versionCode = flutter.versionCode
     versionName = flutter.versionName
