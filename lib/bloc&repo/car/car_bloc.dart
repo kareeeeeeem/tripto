@@ -19,5 +19,16 @@ class CarBloc extends Bloc<CarEvent, CarState> {
         emit(CarError('No Internet connection'));
       }
     });
+
+    on<LoadAllCars>((event, emit) async {
+      emit(CarLoading());
+      try {
+        final allCars =
+            await repo.fetchAllCars(); // لازم تكون موجودة في الـ repo
+        emit(GetAllCarsSuccess(allCars));
+      } catch (e) {
+        emit(CarError('No Internet connection'));
+      }
+    });
   }
 }

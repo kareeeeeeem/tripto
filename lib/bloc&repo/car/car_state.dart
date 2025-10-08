@@ -15,3 +15,13 @@ class CarError extends CarState {
   final String message;
   CarError(this.message);
 }
+
+class GetAllCarsSuccess extends CarState {
+  final List<Carmodel> allcars;
+
+  GetAllCarsSuccess(this.allcars);
+
+  // لو حابب تستخدم equatable بعدين
+  // @override
+  // List<Object?> get props => [allcars];
+}

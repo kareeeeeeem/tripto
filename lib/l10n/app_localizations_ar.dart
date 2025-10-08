@@ -1243,4 +1243,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get rate => 'التقييم';
+
+  @override
+  String get model => 'موديل';
+
+  @override
+  String get cars => 'السيارات';
 }

@@ -53,4 +53,28 @@ class CarRepository {
       rethrow;
     }
   }
+
+  Future<List<Carmodel>> fetchAllCars() async {
+    final url = Uri.parse('${ApiConstants.baseUrl}cars');
+    print("🚗 Fetching cars from: $url");
+
+    final response = await http.get(url);
+
+    print("📡 Status Code: ${response.statusCode}");
+    print("📦 Response Body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      try {
+        final List data = json.decode(response.body);
+        print("✅ Number of cars fetched: ${data.length}");
+        return data.map((json) => Carmodel.fromJson(json)).toList();
+      } catch (e) {
+        print("❌ JSON Decode Error: $e");
+        throw Exception("Error decoding car data");
+      }
+    } else {
+      print("❌ Failed to load cars. Status: ${response.statusCode}");
+      throw Exception("Failed to load cars (status ${response.statusCode})");
+    }
+  }
 }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
+// import 'package:tripto/bloc&repo/%D9%90Auth/AuthBloc.dart';
 import 'package:tripto/bloc&repo/Hotel/hotelBloc.dart';
 import 'package:tripto/bloc&repo/Hotel/hotelEvents.dart';
 import 'package:tripto/bloc&repo/Hotel/hotelStates.dart';
-import 'package:tripto/core/constants/videoplayer_widget.dart';
-import 'package:tripto/core/models/HotelModel.dart';
+// import 'package:tripto/core/constants/videoplayer_widget.dart';
+// import 'package:tripto/core/models/HotelModel.dart';
 import 'package:tripto/core/models/Hotels%D9%80model.dart';
 // import 'package:tripto/core/models/ActivityCardModel.dart';
-import 'package:tripto/core/models/activityPageModel.dart';
+// import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/presentation/pages/SlideBar/hotel/HoteleDetailsPage.dart';
 // import 'package:tripto/presentation/app/app.dart'; // تأكد من المسار الصحيح لـ App
 // import 'package:http/http.dart' as http;
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../../../bloc&repo/ِAuth/AuthState.dart';
+// import '../../../../../../bloc&repo/ِAuth/AuthState.dart';
 import '../../../../../../core/constants/Colors_Fonts_Icons.dart'; // تأكد من المسار الصحيح لـ colors
-import '../../../../../../core/routes/app_routes.dart';
-import '../../../../../../l10n/app_localizations.dart'; // تأكد من المسار الصحيح لـ routes
+// import '../../../../../../core/routes/app_routes.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 class Hotelcard extends StatefulWidget {
   const Hotelcard({
@@ -317,7 +317,12 @@ class _HotelcardState extends State<Hotelcard> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.paymentOption);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => HotelAdelPage(hotel: hotel),
+                            ),
+                          );
                         },
                         child: Text(
                           AppLocalizations.of(context)!.book,

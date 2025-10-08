@@ -1256,4 +1256,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rate => 'Rate';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get cars => 'Cars';
 }

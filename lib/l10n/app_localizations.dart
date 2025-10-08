@@ -2341,6 +2341,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rate'**
   String get rate;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// No description provided for @cars.
+  ///
+  /// In en, this message translates to:
+  /// **'Cars'**
+  String get cars;
 }
 
 class _AppLocalizationsDelegate

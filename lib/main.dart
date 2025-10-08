@@ -20,6 +20,7 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_repository.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_repository.dart';
+import 'package:tripto/bloc&repo/car/car_bloc.dart';
 import 'package:tripto/bloc&repo/car/car_repository.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_bloc.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
@@ -216,6 +217,13 @@ class _TripToAppState extends State<TripToApp> {
                   hotelsRepository: RepositoryProvider.of<HotelsRepository>(
                     context,
                   ),
+                ),
+          ),
+          BlocProvider<CarBloc>(
+            create:
+                (context) => CarBloc(
+                  // repository: RepositoryProvider.of<HotelsRepository>(context),
+                  RepositoryProvider.of<CarRepository>(context),
                 ),
           ),
         ],

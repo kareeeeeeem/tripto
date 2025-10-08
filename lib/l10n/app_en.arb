@@ -404,5 +404,7 @@
   "to": "to",
   "rangeNotContained": "The booking period must be contained entirely within a single available period.",
   "pricepernight": "Price per night",
-  "rate": "Rate"
+  "rate": "Rate",
+  "model": "Model",
+  "cars": "Cars"
 }

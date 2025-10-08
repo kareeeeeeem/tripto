@@ -13,6 +13,8 @@ import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
 
+import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
+
 final storage = FlutterSecureStorage();
 
 class SideMenu extends StatefulWidget {
@@ -122,6 +124,17 @@ class _SideMenuState extends State<SideMenu> {
               ),
               _divider(),
 
+              _buildMenuItem(
+                context,
+                icon: Icons.car_rental_sharp,
+                label: AppLocalizations.of(context)!.cars,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CarCard()),
+                    ),
+              ),
+              _divider(),
               _buildMenuItem(
                 context,
                 icon: Icons.info,
