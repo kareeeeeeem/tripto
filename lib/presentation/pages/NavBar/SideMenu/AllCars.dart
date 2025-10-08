@@ -30,6 +30,8 @@ class _CarCardState extends State<CarCard> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
+
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -42,6 +44,16 @@ class _CarCardState extends State<CarCard> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            locale == 'ar'
+                ? Icons.keyboard_arrow_right_outlined
+                : Icons.keyboard_arrow_left_outlined,
+            size: 35,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: BlocBuilder<CarBloc, CarState>(
         builder: (context, state) {
@@ -247,13 +259,12 @@ class _CarCardState extends State<CarCard> {
                               children: [
                                 TextSpan(
                                   text:
-                                      '${AppLocalizations.of(context)!.year} :',
+                                      '${AppLocalizations.of(context)!.year} : ',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[600],
                                   ),
                                 ),
-
                                 TextSpan(
                                   text: "${allCars.year}",
                                   style: const TextStyle(
@@ -280,7 +291,7 @@ class _CarCardState extends State<CarCard> {
                                   ),
                                 ),
                                 const TextSpan(
-                                  text: ' \$',
+                                  text: ' \$ ',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -306,7 +317,7 @@ class _CarCardState extends State<CarCard> {
                               children: [
                                 TextSpan(
                                   text:
-                                      '${AppLocalizations.of(context)!.color} :',
+                                      '${AppLocalizations.of(context)!.color} : ',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[600],
@@ -336,23 +347,36 @@ class _CarCardState extends State<CarCard> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.09,
+                            left:
+                                Localizations.localeOf(context).languageCode ==
+                                        'en'
+                                    ? MediaQuery.of(context).size.width * 0.09
+                                    : 0,
+                            right:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? MediaQuery.of(context).size.width * 0.09
+                                    : 0,
                           ),
                           child: Text(
                             '${allCars.numberOfSeats}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
                               color: Colors.black,
                             ),
                           ),
                         ),
-                        Icon(Icons.person, color: Color(0xFF002E70), size: 20),
+                        const Icon(
+                          Icons.person,
+                          color: Color(0xFF002E70),
+                          size: 20,
+                        ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.02,
                         ),
                         if (allCars.withGuide)
-                          Tooltip(
+                          const Tooltip(
                             message: 'مرشد سياحي متوفر',
                             child: Icon(
                               Icons.person_pin,
