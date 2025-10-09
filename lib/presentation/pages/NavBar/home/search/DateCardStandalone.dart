@@ -8,10 +8,10 @@ class ArabicDateRangePicker extends StatefulWidget {
   final DateTime lastDate;
 
   const ArabicDateRangePicker({
-    Key? key,
+    super.key,
     required this.firstDate,
     required this.lastDate,
-  }) : super(key: key);
+  });
 
   @override
   State<ArabicDateRangePicker> createState() => _ArabicDateRangePickerState();

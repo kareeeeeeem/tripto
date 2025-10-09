@@ -44,7 +44,7 @@ class ChangeCurrentTripEvent extends TripEvent {
 
 class SetTripsEvent extends TripEvent {
   final List<GetTripModel> trips;
-  SetTripsEvent(this.trips);
+  const SetTripsEvent(this.trips);
 }
 
 

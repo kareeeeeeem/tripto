@@ -27,7 +27,7 @@ class HotelAdelPage extends StatefulWidget {
 class _HotelAdelPageState extends State<HotelAdelPage> {
   final PageController _pageController = PageController(viewportFraction: 1.0); 
   int _currentPage = 0;
-  List<MediaItem> _mediaList = []; 
+  final List<MediaItem> _mediaList = []; 
   bool _isInitializing = true; 
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
 import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
@@ -211,6 +210,7 @@ class _TripToAppState extends State<TripToApp> {
             routes: AppRoutes.routes,
             initialRoute: AppRoutes.splash,
             builder: (context, child) {
+              
               return Wrapper(child: child ?? const SizedBox());
             },
           ),

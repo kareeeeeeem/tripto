@@ -134,16 +134,23 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
 
+    final double responsiveWidth = screenWidth > 400 ? 400 : screenWidth; 
+
+    // استخدام responsiveWidth في حسابات الحجم بدلاً من screenWidth
     final double responsiveRadius =
-        screenWidth * 0.035; // نصف قطر دائرة الأيقونات
+        responsiveWidth * 0.04; // نصف قطر دائرة الأيقونات (تم تعديل النسبة قليلاً)
     final double responsiveIconSize =
-        screenWidth * 0.04; // حجم الأيقونات (الزائد والناقص والشخص)
-    final double responsiveFontSize = screenWidth * 0.055; // حجم الخطوط
+        responsiveWidth * 0.05; // حجم الأيقونات 
+    final double responsiveFontSize = responsiveWidth * 0.06; // حجم الخطوط
 
     return Container(
-      // تحديد المسافة الأفقية كنسبة مئوية من عرض الشاشة
+      // ⚠️ إضافة قيود العرض القصوى هنا (مهم لتحديد عرض الـ Row)
+      constraints: const BoxConstraints(maxWidth: 400),
+      
+      // تحديد المسافة الأفقية كنسبة مئوية من العرض المقيد
       padding: EdgeInsets.symmetric(
-        horizontal: screenWidth * 0.03, // مسافة أفقية متجاوبة
+        // استخدام responsiveWidth في الـ Padding أيضاً
+        horizontal: responsiveWidth * 0.03, // مسافة أفقية متجاوبة
         vertical: 15, // مسافة رأسية ثابتة
       ),
       decoration: BoxDecoration(
@@ -157,13 +164,13 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
           GestureDetector(
             onTap: _incrementPeople,
             child: CircleAvatar(
-              radius: responsiveRadius, // استخدام نصف قطر متجاوب
+              radius: responsiveRadius, // ✅ استخدام القيمة الجديدة
               backgroundColor: widget.backgroundColor.withOpacity(0.7),
               child: Icon(
                 Icons.add,
                 color: widget.iconColor,
-                size: responsiveIconSize,
-              ), // استخدام حجم أيقونة متجاوب
+                size: responsiveIconSize, // ✅ استخدام القيمة الجديدة
+              ),
             ),
           ),
 
@@ -172,7 +179,7 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
           Text(
             '$_numberOfPeople',
             style: TextStyle(
-              fontSize: responsiveFontSize, // استخدام حجم خط متجاوب
+              fontSize: responsiveFontSize, // ✅ استخدام القيمة الجديدة
               fontWeight: FontWeight.bold,
               color: widget.textColor,
               shadows: [
@@ -190,13 +197,13 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
           GestureDetector(
             onTap: _decrementPeople,
             child: CircleAvatar(
-              radius: responsiveRadius, // استخدام نصف قطر متجاوب
+              radius: responsiveRadius, // ✅ استخدام القيمة الجديدة
               backgroundColor: widget.backgroundColor.withOpacity(0.7),
               child: Icon(
                 Icons.remove,
                 color: widget.iconColor,
-                size: responsiveIconSize,
-              ), // استخدام حجم أيقونة متجاوب
+                size: responsiveIconSize, // ✅ استخدام القيمة الجديدة
+              ),
             ),
           ),
 
@@ -205,15 +212,15 @@ class PersonCounterWithPriceState extends State<PersonCounterWithPrice> {
           Icon(
             Icons.person,
             color: widget.textColor,
-            size: responsiveIconSize,
-          ), // استخدام حجم أيقونة متجاوب
+            size: responsiveIconSize, // ✅ استخدام القيمة الجديدة
+          ),
 
           const SizedBox(width: 2), // مسافة ثابتة
           // 5. السعر
           Text(
             '${_totalPrice.toStringAsFixed(0)}\$', // عرض السعر بدون كسور
             style: TextStyle(
-              fontSize: responsiveFontSize, // استخدام حجم خط متجاوب
+              fontSize: responsiveFontSize, // ✅ استخدام القيمة الجديدة
               fontWeight: FontWeight.bold,
               color: widget.textColor,
               shadows: [
