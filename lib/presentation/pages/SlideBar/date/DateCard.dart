@@ -41,6 +41,9 @@ class _DateCardState extends State<DateCard> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
   CalendarFormat _calendarFormat = CalendarFormat.month;
+
+  bool _hasSelectionError = false; 
+
   
 
   @override
@@ -76,6 +79,8 @@ void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
         _rangeStart = clampedStart;
         _rangeEnd = clampedEnd;
         _focusedDay = _clampDate(focusedDay);
+        _hasSelectionError = false; // 🆕 لا يوجد خطأ
+
       });
     } else {
       // ❌ النطاق يمر بفترة مغلقة أو يمتد على فترتين، قم بإلغاء الاختيار
@@ -83,6 +88,9 @@ void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
         _rangeStart = null;
         _rangeEnd = null;
         _focusedDay = _clampDate(focusedDay);
+        _hasSelectionError = true; // 🆕 لا يوجد خطأ
+
+        
       });
       // 🔔 (اختياري) يمكنك إضافة SnackBar هنا لتنبيه المستخدم
       ScaffoldMessenger.of(context).showSnackBar(
@@ -95,6 +103,8 @@ void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
       _rangeStart = clampedStart;
       _rangeEnd = clampedEnd;
       _focusedDay = _clampDate(focusedDay);
+      _hasSelectionError = false; // 🆕 تم اكتشاف خطأ!
+
     });
   }
 }
@@ -185,6 +195,7 @@ bool _isRangeContainedInOnePeriod(DateTime start, DateTime end) {
               // النصوص فوق الكاليندر
               Column(
                 children: [
+                  if(_hasSelectionError)
                Text(
                 _buildAvailabilityText(), // ✅ استخدام الدالة الجديدة
                 style: const TextStyle(
@@ -192,6 +203,9 @@ bool _isRangeContainedInOnePeriod(DateTime start, DateTime end) {
                     fontWeight: FontWeight.bold, fontSize: 16), // قلل الحجم قليلاً إذا لزم
                 textAlign: TextAlign.center,
               ),
+               if (_hasSelectionError)
+                    const SizedBox(height: 12),
+
 
               const SizedBox(height: 12),
 

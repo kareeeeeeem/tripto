@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tripto/bloc&repo/Hotel/hotelEvents.dart';
 import 'package:tripto/core/services/api.dart';
 import '../../../core/models/Hotelsـmodel.dart';
 

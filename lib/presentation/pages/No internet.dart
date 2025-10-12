@@ -4,7 +4,7 @@ import 'package:tripto/l10n/app_localizations.dart';
 class NoInternetPage extends StatelessWidget {
   final VoidCallback? onRetry;
 
-  const NoInternetPage({Key? key, this.onRetry}) : super(key: key);
+  const NoInternetPage({super.key, this.onRetry});
 
   @override
   Widget build(BuildContext context) {

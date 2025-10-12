@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
 import 'package:tripto/bloc&repo/BookNow_OrderTrip/OrderTripBloc.dart';
@@ -75,7 +74,8 @@ class TripToApp extends StatefulWidget {
 
 class _TripToAppState extends State<TripToApp> {
   Locale _locale = const Locale('en'); //lan
-  ThemeMode _themeMode = ThemeMode.system; // theme
+  ThemeMode _themeMode =
+      ThemeMode.light; // **تغيير: الإعداد الافتراضي هو الوضع الفاتح**
 
   @override
   void initState() {
@@ -103,7 +103,8 @@ class _TripToAppState extends State<TripToApp> {
 
   Future<void> _loadSavedTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final themeIndex = prefs.getInt('theme_mode') ?? 0;
+    // **تغيير: القيمة الافتراضية الآن هي 1 (ThemeMode.light) بدلاً من 0 (ThemeMode.system)**
+    final themeIndex = prefs.getInt('theme_mode') ?? 1;
     setState(() {
       _themeMode = ThemeMode.values[themeIndex];
     });
@@ -114,7 +115,6 @@ class _TripToAppState extends State<TripToApp> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('theme_mode', mode.index);
   }
-  ////////////////////////////
 
   @override
   Widget build(BuildContext context) {
@@ -239,12 +239,9 @@ class _TripToAppState extends State<TripToApp> {
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-
-                //  theme قي ملف core=>theme
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
                 themeMode: _themeMode,
-
                 title: 'TripTo',
                 debugShowCheckedModeBanner: false,
                 routes: AppRoutes.routes,

@@ -285,19 +285,19 @@ bool _isRangeOverlapping(
   List<String> toDates,
 ) {
   // نطاق المستخدم (M)
-  final M_start = selectedStart;
-  final M_end = selectedEnd;
+  final mStart = selectedStart;
+  final mEnd = selectedEnd;
 
   for (int i = 0; i < fromDates.length; i++) {
     try {
       // نطاق الرحلة المتاح (A)
-      final A_start = DateTime.parse(fromDates[i]);
-      final A_end = DateTime.parse(toDates[i]);
+      final aStart = DateTime.parse(fromDates[i]);
+      final aEnd = DateTime.parse(toDates[i]);
 
       // شرط عدم التداخل: A ينتهي قبل M يبدأ، أو A يبدأ بعد M ينتهي.
       // وبالتالي شرط التداخل هو:
-      if (A_end.isAfter(M_start.subtract(const Duration(days: 1))) &&
-          A_start.isBefore(M_end.add(const Duration(days: 1)))) {
+      if (aEnd.isAfter(mStart.subtract(const Duration(days: 1))) &&
+          aStart.isBefore(mEnd.add(const Duration(days: 1)))) {
         return true;
       }
     } catch (e) {

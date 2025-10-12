@@ -53,18 +53,16 @@ class _CancellattionState extends State<Cancellattion> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    20,
-                  ), // هنا بتتحكم في النعومة
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  20,
+                ), // هنا بتتحكم في النعومة
 
-                  child: Image.asset(
-                    "assets/images/cancellation.png",
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.20,
-                    fit: BoxFit.fill,
-                  ),
+                child: Image.asset(
+                  "assets/images/cancellation.png",
+                  width: screenWidth,
+                  height: screenHeight * 0.20,
+                  fit: BoxFit.cover,
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),

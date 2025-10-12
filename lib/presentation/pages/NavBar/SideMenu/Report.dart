@@ -114,39 +114,42 @@ class _ReportState extends State<Report> {
                 //     buildLabel(AppLocalizations.of(context)!.report),
                 //   ],
                 // ),
-                TextFormField(
-                  controller: reportController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 100, // هنا حددت 6 أسطر
-                  minLines: 6, // أقل حاجة 3 أسطر
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.issue,
-                    hintStyle: GoogleFonts.markaziText(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black45,
-                    ),
-                    // labelText: AppLocalizations.of(context)!.report,
-                    // labelStyle: TextStyle(color: Color(0xFF002E70)),
-                    // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.878,
+                  child: TextFormField(
+                    controller: reportController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 100, // هنا حددت 6 أسطر
+                    minLines: 6, // أقل حاجة 3 أسطر
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.issue,
+                      hintStyle: GoogleFonts.markaziText(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black45,
-                        width: 1,
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF002E70),
-                        width: 2,
+                      // labelText: AppLocalizations.of(context)!.report,
+                      // labelStyle: TextStyle(color: Color(0xFF002E70)),
+                      // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black45,
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF002E70),
+                          width: 2,
+                        ),
+                      ),
+                      // prefixIcon: Icon(Icons.message),
                     ),
-                    // prefixIcon: Icon(Icons.message),
                   ),
                 ),
 

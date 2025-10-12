@@ -219,7 +219,7 @@
   "quad": "Quad",
   "unknown": "Unknown",
   "privacypolicy": "Privacy policy",
-  "privacypolicy1": "Privacy policy for [Trip To]",
+  "privacypolicy1": "Privacy policy ",
   "introduction": "1. Introduction",
   "privacypolicy2": "At [TripTo], we are committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, share, and safeguard your personal information when you use our application and related services.",
   "privacypolicy3": "By accessing or using the TripTo application, you consent to the practices described in this Privacy Policy.",
@@ -278,7 +278,7 @@
   "privacypolicy54": "Email: [Support Email]",
   "privacypolicy55": " Phone: [Support Phone Number]",
   "termsandcondations": "Terms and Condations",
-  "termsandcondations1": "Terms and Condations for [Trip To]",
+  "termsandcondations1": "Terms and Condations",
   "termsandcondations2": "Welcome to [TripTo], an application that provides online booking services for flights, hotels, holiday packages, tours, and recreational activities (collectively referred to as the Services). By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions (the Terms). If you do not agree with these Terms, you must discontinue use of the application immediately.",
   "termsandcondations3": "2. Definitions",
   "termsandcondations4": "Application ('App'): Refers to the TripTo mobile and web-based application.",
@@ -406,5 +406,6 @@
   "pricepernight": "Price per night",
   "rate": "Rate",
   "model": "Model",
-  "cars": "Cars"
+  "cars": "Cars",
+  "price_details": "Price Details"
 }

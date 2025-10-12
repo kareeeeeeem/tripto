@@ -1349,7 +1349,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacypolicy1.
   ///
   /// In en, this message translates to:
-  /// **'Privacy policy for [Trip To]'**
+  /// **'Privacy policy '**
   String get privacypolicy1;
 
   /// No description provided for @introduction.
@@ -1691,7 +1691,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsandcondations1.
   ///
   /// In en, this message translates to:
-  /// **'Terms and Condations for [Trip To]'**
+  /// **'Terms and Condations'**
   String get termsandcondations1;
 
   /// No description provided for @termsandcondations2.
@@ -2353,6 +2353,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cars'**
   String get cars;
+
+  /// No description provided for @price_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Details'**
+  String get price_details;
 }
 
 class _AppLocalizationsDelegate

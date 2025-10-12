@@ -82,8 +82,9 @@ class RightButtons extends StatefulWidget {
   final int? selectedCarId;
   final int? selectedActivityId;
   final int? selectedFlightId;
-
   final Function(String?)? onSummaryReady; // 🌟 إضافة الـ Callback الجديد
+
+  final String? selectedTripSummary; // 🆕 لإضافة النص من الأب
 
   const RightButtons({
     super.key,
@@ -101,8 +102,9 @@ class RightButtons extends StatefulWidget {
     this.selectedCarId,
     this.selectedActivityId,
     this.selectedFlightId,
-
     this.onSummaryReady, // 🌟 يجب إضافته هنا أيضاً
+
+    this.selectedTripSummary, // 🆕 إضافته هنا أيضاً
   });
   @override
   State<RightButtons> createState() => _RightButtonsState();
@@ -694,7 +696,11 @@ class _RightButtonsState extends State<RightButtons> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: InfoCard(trip: trip),
+                  child: InfoCard(
+                    trip: trip,
+                    tripSummaryText:
+                        widget.selectedTripSummary, // 🆕 تمرير النص
+                  ),
                 ),
           );
         },

@@ -267,8 +267,40 @@ class _SideMenuState extends State<SideMenu> {
                   ],
                 ),
               ),
-              _divider(),
 
+              // _divider(),
+              // // 🌙 تغيير الثيم
+              // ListTile(
+              //  leading: const Icon(Icons.brightness_4, color: Color(0xFF002E70), size: 30),
+              //   title: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         AppLocalizations.of(context)!.themedate,
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.bold,
+              //           color: theme.textTheme.bodyLarge?.color,
+              //         ),
+              //       ),
+              //       IconButton(
+              //         onPressed: () {
+              //           TripToApp.toggleTheme(context);
+              //         },
+              //         icon: Icon(
+              //           Theme.of(context).brightness == Brightness.dark
+              //               ? Icons.dark_mode
+              //               : Icons.light_mode,
+              //           size: 35,
+              //           color: Theme.of(context).brightness == Brightness.dark
+              //               ? Colors.yellow
+              //               : Colors.black,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // _divider(),
               _buildMenuItem(
                 context,
                 icon: Icons.lock,

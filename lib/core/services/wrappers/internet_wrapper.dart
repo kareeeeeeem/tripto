@@ -4,7 +4,7 @@ import 'package:tripto/presentation/pages/No%20internet.dart';
 
 class Wrapper extends StatefulWidget {
   final Widget child;
-  const Wrapper({required this.child, Key? key}) : super(key: key);
+  const Wrapper({required this.child, super.key});
 
   @override
   State<Wrapper> createState() => _WrapperState();

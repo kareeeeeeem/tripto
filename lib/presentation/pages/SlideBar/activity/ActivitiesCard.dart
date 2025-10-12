@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/ActivityPage/activity_details_page.dart';
-import 'package:tripto/presentation/pages/SlideBar/activity/ActivityDetailsPage.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ActivityCard extends StatelessWidget {
