@@ -25,51 +25,55 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   void initState() {
     super.initState();
-    // تهيئة _selectedCategoryIndex بالقيمة الأولية القادمة من RightButtons (الـ API)
     _selectedCategoryIndex = widget.initialSelectedCategory;
   }
 
+  // 💡 الويدجت الجذري (الـ Root Widget) تم تغييره من Dialog إلى Padding
+  // وتمت إزالة Transform.translate
   @override
   Widget build(BuildContext context) {
-    final bool isRTL = Directionality.of(context) == TextDirection.rtl;
+    // تحديد عرض أقصى للحاوية على الويب لجعلها تبدو منظمة في الوسط (مثل 500 بكسل)
+    final double maxWidth = MediaQuery.of(context).size.width > 600 ? 500.0 : double.infinity;
 
-    return Transform.translate(
-      offset: Offset(isRTL ? 30 : -30, 0),
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
+    return Center(
+      // تحديد عرض أقصى لـ Column على الويب
+      child: SizedBox(
+        width: maxWidth,
         child: Padding(
-          padding: const EdgeInsets.all(6.0),
+          // يمكنك تعديل الهوامش الجانبية لتكون متجاوبة (مثلاً 16.0)
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
           child: Column(
+            // يجب أن يكون mainAxisSize.min إذا كان سيتم وضعه داخل Center أو Column
             mainAxisSize: MainAxisSize.min,
             children: [
+              // 1. بطاقات الفئات (Gold, Diamond, Platinum)
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    // ✅ تم إزالة GestureDetector لمنع النقر
                     child: GoldCategory(
                       isSelected: _selectedCategoryIndex == 0,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    // ✅ تم إزالة GestureDetector لمنع النقر
                     child: DiamondCategory(
                       isSelected: _selectedCategoryIndex == 1,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    // ✅ تم إزالة GestureDetector لمنع النقر
                     child: PlatinumCategory(
                       isSelected: _selectedCategoryIndex == 2,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.023),
+              
+              // 2. تباعد ثابت بدلاً من استخدام نسبة مئوية من ارتفاع الشاشة
+              const SizedBox(height: 20), 
+              
+              // 3. زر Custom Trip
               ElevatedButton(
                 onPressed: () async {
                   const phoneNumber = '201028476944';
@@ -94,30 +98,32 @@ class _CategoryCardState extends State<CategoryCard> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: const Color(0xFF002E70),
-                  backgroundColor: const Color(0xFF002E70),
+                  // 💡 يجب إزالة foregroundColor وتحديد color في TextStyle
+                  backgroundColor: const Color(0xFF002E70), 
                   shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: EdgeInsets.zero,
+                  // تحديد ارتفاع الزر بشكل ثابت
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0), 
                   elevation: 0,
+                  minimumSize: const Size(double.infinity, 50), // لضمان أخذ أقصى عرض متاح
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),
-                    Text(
-                      AppLocalizations.of(context)!.customtrip,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
+                child: Center( // 💡 Center لتوسيط المحتوى
+  child: ConstrainedBox( // 💡 ConstrainedBox لتحديد أقصى عرض (200 بكسل)
+    constraints: const BoxConstraints(
+      maxWidth: 200, 
+    ),
+    child: Text( // 💡 الـ Widget النصي الفعلي
+      AppLocalizations.of(context)!.customtrip,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  ),
+),
               ),
             ],
           ),

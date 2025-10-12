@@ -205,7 +205,7 @@ class _RightButtonsState extends State<RightButtons> {
         orElse: () => tripState.trips.first,
       );
 
-    final int categoryValue                     = int.tryParse(trip.category.toString()) ?? 0;
+    final int categoryValue                    = int.tryParse(trip.category.toString()) ?? 0;
 
     final bool showHotel = trip.hasHotel       == true || trip.hasHotel == 1;
     final bool showCar = trip.hasCar           == true || trip.hasCar == 1;
@@ -261,8 +261,6 @@ class _RightButtonsState extends State<RightButtons> {
         },
       ),
     );
-
-
 
 
     ///////////////////////////////////////////////
@@ -325,20 +323,27 @@ class _RightButtonsState extends State<RightButtons> {
 
               final result = await showDialog<Map<String, DateTime>?>(
                 context: context,
-                builder: (context) => BlocProvider(
-                      create: (context) => DateSelectionBloc(),
-                      child: DateCard(
-                        firstDate: trip.overallMinFromDate,
-                        lastDate: trip.overallMaxToDate,
-
-                        initialRangeStart: _rangeStart,
-                        initialRangeEnd: _rangeEnd,
-                        
-                         availableFromDates: trip.fromDate, // 🆕 تمرير القوائم الجديدة
-                        availableToDates: trip.toDate,     // 🆕 تمرير القوائم الجديدة
-                     
+                builder: (context) => Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 650, // 💡 يمكنك اختيار حجم مختلف هنا
                       ),
-                    ),
+                  child: BlocProvider(
+                        create: (context) => DateSelectionBloc(),
+                        child: DateCard(
+                          firstDate: trip.overallMinFromDate,
+                          lastDate: trip.overallMaxToDate,
+                  
+                          initialRangeStart: _rangeStart,
+                          initialRangeEnd: _rangeEnd,
+                          
+                           availableFromDates: trip.fromDate, // 🆕 تمرير القوائم الجديدة
+                          availableToDates: trip.toDate,     // 🆕 تمرير القوائم الجديدة
+                       
+                        ),
+                      ),
+                ),
+                ),
               );
 
               if (result != null) {
@@ -396,6 +401,8 @@ class _RightButtonsState extends State<RightButtons> {
     }
     
 
+    
+
 ///////////////////////////
 //////////////////
       /// Hotel Button ///  
@@ -416,25 +423,33 @@ class _RightButtonsState extends State<RightButtons> {
             onPressed: () async {
               final selectedHotel = await showDialog(
                 context: context,
-                builder: (context) => BlocProvider(
-                  create: (_) => HotelsBloc(
-                    hotelsRepository: HotelsRepository(),
-                  )..add(
-                      FetchHotels(subDestinationId: trip.subDestinationId!),
+                builder: (context) {
+                    return Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 750, // 💡 يمكنك اختيار حجم مختلف هنا
+                      ),
+                  child: BlocProvider(
+                    
+                    create: (_) => HotelsBloc(
+                      hotelsRepository: HotelsRepository(),
+                    )..add(
+                        FetchHotels(subDestinationId: trip.subDestinationId!),
+                      ),
+                    child: HotelsDialog(
+                      subDestinationId: trip.subDestinationId!,
+                      personCounterKey: widget.personCounterKey,
+                      startDate: _rangeStart,
+                      endDate: _rangeEnd,
+                      nextSteps: [],
+                      selectedHotelId: selectedHotelId,
+                     ),
+                      ),
                     ),
-                  child: HotelsDialog(
-                    subDestinationId: trip.subDestinationId!,
-                    personCounterKey: widget.personCounterKey,
-                    startDate: _rangeStart,
-                    endDate: _rangeEnd,
-                    nextSteps: [],
-                    selectedHotelId: selectedHotelId,
-                  ),
-                ),
-              );
-
-              // ✅ اعمل check الأول
-              if (selectedHotel != null) {
+                  );
+              }, // 
+            );
+                if (selectedHotel != null) {
                 final int nights =
                     _rangeStart != null && _rangeEnd != null
                         ? _rangeEnd!.difference(_rangeStart!).inDays
@@ -502,25 +517,33 @@ class _RightButtonsState extends State<RightButtons> {
             final Carmodel? selectedCarFromDialog = await showDialog<Carmodel>(
               context: context,
               builder: (dialogContext) {
-                return MultiBlocProvider(
-                  providers: [
-                    BlocProvider.value(
-                      value: BlocProvider.of<TripBloc>(context),
+
+                return Center(
+                 child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      maxWidth: 600,
                     ),
-                    BlocProvider(
-                      create:
-                          (_) => CarBloc(CarRepository())..add(
-                            LoadCars(
-                              subDestinationId: trip.subDestinationId!,
-                              category: trip.category,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: BlocProvider.of<TripBloc>(context),
+                      ),
+                      BlocProvider(
+                        create:
+                            (_) => CarBloc(CarRepository())..add(
+                              LoadCars(
+                                subDestinationId: trip.subDestinationId!,
+                                category: trip.category,
+                              ),
                             ),
-                          ),
-                    ),
-                  ],
-                  child: CarSelectionPage(
-                    selectedCarId: selectedCarId,
-                      personCounterKey: widget.personCounterKey, // ✅ ده المهم
-                    ),
+                      ),
+                    ],
+                    child: CarSelectionPage(
+                      selectedCarId: selectedCarId,
+                        personCounterKey: widget.personCounterKey, // ✅ ده المهم
+                      ),
+                  ),
+                 ),
                 );
                 
               },
@@ -575,9 +598,6 @@ class _RightButtonsState extends State<RightButtons> {
                             selectedActivityFromDialog.id,
                             price,
                           );
-
-
-
                   widget.personCounterKey?.currentState
                       ?.setSelectedActivityPrice(price);
                 }
@@ -609,18 +629,25 @@ class _RightButtonsState extends State<RightButtons> {
                       : defaultIconColor,
             ),
           ),
-          label: AppLocalizations.of(context)!.activities,
+        label: AppLocalizations.of(context)!.activities,
           onPressed: () async {
             final selectedActivityFromDialog =
+
                 await showDialog<GetActivityModel>(
                   context: context,
-                  builder:
-                      (context) => ActivitiesListDialog(
-                        initialSelectedActivityId: selectedActivityId,
-                        personCounterKey:
-                            widget.personCounterKey, // ✅ لازم يبقى موجود
-                        // ✅ تم إضافة هذا السطر
-                      ),
+                  builder: (context) { 
+                     return Center( 
+                        child: ConstrainedBox(
+                           constraints: const BoxConstraints(
+                            maxWidth: 750, 
+                          ),
+                          child: ActivitiesListDialog(
+                            initialSelectedActivityId: selectedActivityId,
+                            personCounterKey: widget.personCounterKey,
+                          ),
+                        ),
+                      );
+                    }, 
                 );
 
             if (selectedActivityFromDialog != null) {
@@ -698,16 +725,24 @@ class _RightButtonsState extends State<RightButtons> {
         onPressed: () async {
           await showDialog(
             context: context,
-            builder:
-                (context) => Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+              builder: (context) {
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 500, // 💡 تحديد أقصى عرض للويب
                   ),
-                  child: InfoCard(
-                    trip: trip,
-                   tripSummaryText: widget.selectedTripSummary, // 🆕 تمرير النص
+                  child: Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: InfoCard(
+                      trip: trip,
+                     tripSummaryText: widget.selectedTripSummary, 
+                   ),
                   ),
                 ),
+              );
+            }, 
           );
         },
       ),

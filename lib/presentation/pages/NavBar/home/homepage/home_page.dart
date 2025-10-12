@@ -5,21 +5,23 @@ import 'package:tripto/main.dart'; // نحتاج لـ videoPlayerScreenKey
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+
+
+
+
+
   void _scrollToNextPage() {
     try {
       final state = videoPlayerScreenKey.currentState;
       if (state != null && (state as dynamic).nextPage != null) {
         (state as dynamic).nextPage(); 
       } else {
-        // يمكنك هنا عرض رسالة (مثل SnackBar) إذا أردت
         debugPrint('ERROR: nextPage() function not found or key state is null. Please ensure it exists in VideoPlayerScreenState.');
       }
     } catch (e) {
       debugPrint('Error calling nextPage(): $e');
     }
   }
-
-
 
   void _scrollToPreviousPage() {
     try {
@@ -69,7 +71,7 @@ class HomePage extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.keyboard_arrow_up, size: 40, color: Colors.white70),
                             onPressed: _scrollToPreviousPage,
-                            tooltip: 'الفيديو السابق',
+                           // tooltip: 'الفيديو السابق',
                             style: IconButton.styleFrom(
                               backgroundColor: Colors.white10,
                             ),
@@ -78,7 +80,7 @@ class HomePage extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.keyboard_arrow_down, size: 40, color: Colors.white70),
                             onPressed: _scrollToNextPage,
-                            tooltip: 'الفيديو التالي',
+                           // tooltip: 'الفيديو التالي',
                             style: IconButton.styleFrom(
                               backgroundColor: Colors.white10,
                             ),

@@ -152,6 +152,10 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
   }
 
   Widget _buildServiceIcon(bool available, IconData icon, String label) {
+    final baseFontSize= MediaQuery.of(context).size.width*0.3;
+    final finalFontSize = baseFontSize > 14.0 ? 14.0 : baseFontSize;
+
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -160,7 +164,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
         Text(
           label,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.03,
+          fontSize: finalFontSize, 
             color: available ? Colors.black : Colors.grey,
           ),
         ),
@@ -449,6 +453,9 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                       ),
                       const SizedBox(height: 30),
                       // Services
+                      // ... (ما قبل الخدمات)
+
+                      // Services
                       Text(
                         AppLocalizations.of(context)!.services,
                         style: const TextStyle(
@@ -457,52 +464,70 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                         ),
                       ),
                       const SizedBox(height: 1),
-                      GridView.count(
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          _buildServiceIcon(
-                            hotel.wifiAvailable,
-                            Icons.wifi,
-                            AppLocalizations.of(context)!.wifi,
-                          ),
-                          _buildServiceIcon(
-                            hotel.parkingAvailable,
-                            Icons.local_parking,
-                            AppLocalizations.of(context)!.parking,
-                          ),
-                          _buildServiceIcon(
-                            hotel.poolAvailable,
-                            Icons.pool,
-                            AppLocalizations.of(context)!.pool,
-                          ),
-                          _buildServiceIcon(
-                            hotel.gymAvailable,
-                            Icons.fitness_center,
-                            AppLocalizations.of(context)!.gym,
-                          ),
-                          _buildServiceIcon(
-                            hotel.spaAvailable,
-                            Icons.spa,
-                            AppLocalizations.of(context)!.spa,
-                          ),
-                          _buildServiceIcon(
-                            hotel.restaurantAvailable,
-                            Icons.restaurant,
-                            AppLocalizations.of(context)!.restaurant,
-                          ),
-                          _buildServiceIcon(
-                            hotel.roomServiceAvailable,
-                            Icons.room_service,
-                            AppLocalizations.of(context)!.roomService,
-                          ),
-                          _buildServiceIcon(
-                            hotel.petFriendly,
-                            Icons.pets,
-                            AppLocalizations.of(context)!.petFriendly,
-                          ),
-                        ],
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final availableWidth = constraints.maxWidth;
+                          
+                          const minItemWidth = 100.0; 
+                          
+                          int crossAxisCount = (availableWidth / minItemWidth).floor();
+                          
+                          crossAxisCount = crossAxisCount > 4 ? crossAxisCount : 4; 
+                          
+                          if (crossAxisCount > 8) {
+                              crossAxisCount = 8;
+                          }
+
+                          return GridView.count(
+                            crossAxisCount: crossAxisCount, // الآن ديناميكي
+                            crossAxisSpacing: 8, // إضافة تباعد أفقي
+                            mainAxisSpacing: 16, // إضافة تباعد رأسي لتحسين المظهر
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              _buildServiceIcon(
+                                hotel.wifiAvailable,
+                                Icons.wifi,
+                                AppLocalizations.of(context)!.wifi,
+                              ),
+                              _buildServiceIcon(
+                                hotel.parkingAvailable,
+                                Icons.local_parking,
+                                AppLocalizations.of(context)!.parking,
+                              ),
+                              _buildServiceIcon(
+                                hotel.poolAvailable,
+                                Icons.pool,
+                                AppLocalizations.of(context)!.pool,
+                              ),
+                              _buildServiceIcon(
+                                hotel.gymAvailable,
+                                Icons.fitness_center,
+                                AppLocalizations.of(context)!.gym,
+                              ),
+                              _buildServiceIcon(
+                                hotel.spaAvailable,
+                                Icons.spa,
+                                AppLocalizations.of(context)!.spa,
+                              ),
+                              _buildServiceIcon(
+                                hotel.restaurantAvailable,
+                                Icons.restaurant,
+                                AppLocalizations.of(context)!.restaurant,
+                              ),
+                              _buildServiceIcon(
+                                hotel.roomServiceAvailable,
+                                Icons.room_service,
+                                AppLocalizations.of(context)!.roomService,
+                              ),
+                              _buildServiceIcon(
+                                hotel.petFriendly,
+                                Icons.pets,
+                                AppLocalizations.of(context)!.petFriendly,
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       const SizedBox(height: 40),
                     ],

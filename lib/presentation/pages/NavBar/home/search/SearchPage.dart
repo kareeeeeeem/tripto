@@ -110,29 +110,35 @@ void _showDatePicker(BuildContext context) async {
             
             // Text(isArabic ? "البحث عن رحله" : "Search on trip", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: size.height * 0.10),
-
-
-
             // اختيار التاريخ
-              ElevatedButton.icon(
-                onPressed: () => _showDatePicker(context),
-                icon: const Icon(Icons.date_range, color: Colors.white),
-                label: Text(
-                  (_startDate == null || _endDate == null)
-                      ? (isArabic ? "اختر التاريخ" : "Select Date")
-                      : "${DateFormat('yyyy-MM-dd', 'ar').format(_startDate!)} → ${DateFormat('yyyy-MM-dd', 'ar').format(_endDate!)}",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 4,
-                  shadowColor: Colors.black45,
-                ),
+       
+                        // ✅ قم بتغليف الزر بأكمله بـ ConstrainedBox
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 650, // 💡 القيد المطلوب تطبيقه
+            ),
+            // 💡 هذا هو الزر الذي أصبح الـ child لـ ConstrainedBox
+            child: ElevatedButton.icon( 
+              onPressed: () => _showDatePicker(context),
+              
+              icon: const Icon(Icons.date_range, color: Colors.white),
+              label: Text(
+                (_startDate == null || _endDate == null)
+                    ? (isArabic ? "اختر التاريخ" : "Select Date")
+                    : "${DateFormat('yyyy-MM-dd', 'ar').format(_startDate!)} → ${DateFormat('yyyy-MM-dd', 'ar').format(_endDate!)}",
+                style: const TextStyle(color: Colors.white),
               ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 4,
+                shadowColor: Colors.black45,
+              ),
+            ),
+          ),
 
             SizedBox(height: size.height * 0.05),
 
@@ -184,80 +190,121 @@ TypeAheadField(
     selectedSubDestinationId = suggestion['id'];
   },
   builder: (context, controller, focusNode) {
-    return TextField(
-      controller: controller,
-      focusNode: focusNode,
-      decoration: InputDecoration(
-        hintText: isArabic
-            ? "اختر الوجهة الفرعية (مثال: شرم الشيخ)"
-            : "Select sub-destination (example: sharm El-shyk)",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.lightBlue),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.lightBlue),
+    return Center(child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 750, 
+                    ),
+      child: TextField(
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          hintText: isArabic
+              ? "اختر الوجهة الفرعية (مثال: شرم الشيخ)"
+              : "Select sub-destination (example: sharm El-shyk)",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.lightBlue),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.lightBlue),
+          ),
         ),
       ),
+            ),
+
     );
   },
 ),
             SizedBox(height: size.height * 0.05),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildCategory(isArabic ? "ذهبي" : "Gold", Icons.diamond, Colors.amber, 0),
-                _buildCategory(isArabic ? "الماسي" : "Diamond", Icons.diamond_outlined, Colors.blueAccent, 1),
-                _buildCategory(isArabic ? "بلاتيني" : 'Platinum', Icons.diamond_outlined, Colors.grey, 2),
-              ],
-            ),
+            Center(
+              child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      maxWidth: 600,
+                    ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildCategory(isArabic ? "ذهبي" : "Gold", Icons.diamond, Colors.amber, 0),
+                  _buildCategory(isArabic ? "الماسي" : "Diamond", Icons.diamond_outlined, Colors.blueAccent, 1),
+                  _buildCategory(isArabic ? "بلاتيني" : 'Platinum', Icons.diamond_outlined, Colors.grey, 2),
+                ],
+              ),
+            ),),
             SizedBox(height: size.height * 0.05),
 
             Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
 
+              children: [
                 
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_startDate != null && _endDate != null) {
-                        context.read<SearchTripByDateBloc>().add(FetchTripsByDate(from: _startDate!, to: _endDate!));
-                      }
-                      if (selectedCategoryIndex != -1) {
-                        context.read<SearchTripByCategoryBloc>().add(FetchTripsByCategory(category: selectedCategoryIndex));
-                      }
-                      if (_subDestinationController.text.isNotEmpty) {
-                        context.read<SearchTripBySubDestinationBloc>().add(FetchTripsBySubDestination(subDestination: _subDestinationController.text.trim()));
-                      }
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF002E70)),
-                    child: Text(isArabic ? 'حسناً' : 'Ok', style: const TextStyle(color: Colors.white)),
+                // 1. زر "حسناً" (مُقيَّد بـ 200 بكسل ومُوسَّط)
+                Center(
+                  child: ConstrainedBox( // 💡 ConstrainedBox لتحديد أقصى عرض (200 بكسل)
+                    constraints: const BoxConstraints(
+                      maxWidth: 500, 
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_startDate != null && _endDate != null) {
+                            context.read<SearchTripByDateBloc>().add(FetchTripsByDate(from: _startDate!, to: _endDate!));
+                          }
+                          if (selectedCategoryIndex != -1) {
+                            context.read<SearchTripByCategoryBloc>().add(FetchTripsByCategory(category: selectedCategoryIndex));
+                          }
+                          if (_subDestinationController.text.isNotEmpty) {
+                            context.read<SearchTripBySubDestinationBloc>().add(FetchTripsBySubDestination(subDestination: _subDestinationController.text.trim()));
+                          }
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF002E70)),
+                        child: Text(isArabic ? 'حسناً' : 'Ok', style: const TextStyle(color: Colors.white)),
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context, null),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
-                    child: Text(isArabic ? 'إلغاء' : 'Cancel', style: const TextStyle(color: Colors.white)),
+
+                const SizedBox(height: 12), // 💡 فاصل
+
+                // 2. زر "إلغاء" (مُقيَّد بـ 200 بكسل ومُوسَّط ليتناسب مع زر "حسناً")
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 500, 
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context, null),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+                        child: Text(isArabic ? 'إلغاء' : 'Cancel', style: const TextStyle(color: Colors.white)),
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 18, 114, 159)),
-                    child: Text(isArabic ? 'كل الرحلات' : 'All trips', style: const TextStyle(color: Colors.white)),
+
+                const SizedBox(height: 12), // 💡 فاصل
+                
+                // 3. زر "كل الرحلات" (مُقيَّد بـ 200 بكسل ومُوسَّط ليتناسب مع زر "حسناً")
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 500, 
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 18, 114, 159)),
+                        child: Text(isArabic ? 'كل الرحلات' : 'All trips', style: const TextStyle(color: Colors.white)),
+                      ),
+                    ),
                   ),
                 ),
-              ],
+              ], // نهاية Children
             ),
           ],
         ),

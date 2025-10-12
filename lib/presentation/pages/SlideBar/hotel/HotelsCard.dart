@@ -103,13 +103,8 @@ class _HotelsDialogState extends State<HotelsDialog> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  const Spacer(), // يخلي المسافة قبل النص
-                      const Spacer(), // يخلي المسافة قبل النص
-
+              child: Stack(
+                children: [
                   Center(
                     child: Text(
                       AppLocalizations.of(context)!.hotel,
@@ -119,82 +114,84 @@ class _HotelsDialogState extends State<HotelsDialog> {
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    tooltip: "Search Hotels",
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          String searchQuery = "";
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            title: Text(AppLocalizations.of(context)!.search),
-                            content: TextField(
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                hintText: AppLocalizations.of(context)!
-                                    .enterHotelName,
-                              ),
-                              onChanged: (value) => searchQuery = value,
-                              onSubmitted: (value) {
-                                if (value.isNotEmpty) {
-                                  searchBloc.add(SearchHotelsByName(
-                                    query: value,
-                                    subDestinationId: widget.subDestinationId,
-                                  ));
-                                  Navigator.pop(context);
-                                }
-                              },
-                            ),
-                            actions: [
-                                TextButton(
-                                onPressed: () {
-                                  if (searchQuery.isNotEmpty) {
-                                    searchBloc.add(
-                                      SearchHotelsByName(
-                                        query: searchQuery,
-                                        subDestinationId: widget.subDestinationId,
-                                      ),
-                                    );
+                  Positioned( 
+                    right: 0, 
+                    child: IconButton(
+                      icon: const Icon(Icons.search),
+                      tooltip: "Search Hotels",
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            String searchQuery = "";
+                            return AlertDialog(
+                              backgroundColor: Colors.white,
+                              title: Text(AppLocalizations.of(context)!.search),
+                              content: TextField(
+                                autofocus: true,
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .enterHotelName,
+                                ),
+                                onChanged: (value) => searchQuery = value,
+                                onSubmitted: (value) {
+                                  if (value.isNotEmpty) {
+                                    searchBloc.add(SearchHotelsByName(
+                                      query: value,
+                                      subDestinationId: widget.subDestinationId,
+                                    ));
+                                    Navigator.pop(context);
                                   }
-                                  Navigator.pop(context);
                                 },
-                                style: TextButton.styleFrom(
-                                  backgroundColor: const Color(0xFF002E70), // أزرق داكن للخلفية
-                                  foregroundColor: Colors.white, // لون النص أبيض
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!.search,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                ),
                               ),
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
+                              actions: [
+                                  TextButton(
+                                  onPressed: () {
+                                    if (searchQuery.isNotEmpty) {
+                                      searchBloc.add(
+                                        SearchHotelsByName(
+                                          query: searchQuery,
+                                          subDestinationId: widget.subDestinationId,
+                                        ),
+                                      );
+                                    }
+                                    Navigator.pop(context);
+                                  },
                                   style: TextButton.styleFrom(
-                                    backgroundColor: Colors.grey.shade300, // خلفية رمادية فاتحة
-                                    foregroundColor: Colors.black, // نص أسود
+                                    backgroundColor: const Color(0xFF002E70), // أزرق داكن للخلفية
+                                    foregroundColor: Colors.white, // لون النص أبيض
                                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
                                   child: Text(
-                                    AppLocalizations.of(context)!.cancel,
+                                    AppLocalizations.of(context)!.search,
                                     style: const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                              ],
-
-                          );
-                        },
-                      );
-                    },
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.grey.shade300, // خلفية رمادية فاتحة
+                                      foregroundColor: Colors.black, // نص أسود
+                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.cancel,
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                    
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -381,9 +378,10 @@ class _HotelsDialogState extends State<HotelsDialog> {
                                         totalPrice.toStringAsFixed(2),
                                       ),
                                       style: TextStyle(
-                                        fontSize: MediaQuery.of(context)
-                                                .size.width *
-                                            0.035,
+                                        fontSize: 15,
+                                        
+                                        //MediaQuery.of(context) .size.width *  0.035,
+                                      
                                         fontWeight: FontWeight.bold,
                                         color: Colors.green[700],
                                       ),

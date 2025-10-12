@@ -90,7 +90,7 @@ class InfoCard extends StatelessWidget {
                       Text(
                         tripSummaryText!,
                         style: const TextStyle(
-                          color: Color.fromARGB(255, 5, 55, 142),
+                          color: Color.fromARGB(255, 2, 27, 70),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),

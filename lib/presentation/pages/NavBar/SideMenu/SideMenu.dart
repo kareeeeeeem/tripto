@@ -105,16 +105,16 @@ class _SideMenuState extends State<SideMenu> {
               ),
               _divider(),
 
-              _buildMenuItem(
-                context,
-                icon: Icons.favorite,
-                label: AppLocalizations.of(context)!.favourite,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FavoritePage()),
-                ),
-              ),
-              _divider(),
+              // _buildMenuItem(
+              //   context,
+              //   icon: Icons.favorite,
+              //   label: AppLocalizations.of(context)!.favourite,
+              //   onTap: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => const FavoritePage()),
+              //   ),
+              // ),
+              // _divider(),
 
               _buildMenuItem(
                 context,
