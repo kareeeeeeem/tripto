@@ -332,12 +332,17 @@ class _TermsandcondationsState extends State<Termsandcondations> {
                 AppLocalizations.of(context)!.termsandcondations41,
                 style: const TextStyle(fontSize: 16),
               ),
-              Container(
-                width: 400,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Logo.png"),
+              Padding(
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.06, // 10% من عرض الشاشة
+                ),
+                child: Container(
+                  width: 400,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Logo.png"),
+                    ),
                   ),
                 ),
               ),
