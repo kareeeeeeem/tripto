@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 // import 'package:tripto/main.dart';
@@ -53,20 +54,23 @@ class _CancellattionState extends State<Cancellattion> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    20,
-                  ), // هنا بتتحكم في النعومة
-
-                  child: Image.asset(
-                    "assets/images/cancellation.png",
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.20,
-                    fit: BoxFit.fill,
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20), // نعومة الحواف
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 450, // أقصى عرض للويب
+                      ),
+                      child: Image.asset(
+                        "assets/images/cancellation.png",
+                        width: double.infinity, // يعتمد على عرض الـ ConstrainedBox
+                        height: screenHeight * 0.20,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
                 AppLocalizations.of(context)!.cancellation2,
@@ -499,15 +503,20 @@ class _CancellattionState extends State<Cancellattion> {
                 AppLocalizations.of(context)!.cancellation48,
                 style: const TextStyle(fontSize: 16),
               ),
-              Container(
-                width: 400,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Logo.png"),
-                  ),
-                ),
-              ),
+            Center(
+  child: Container(
+    width: 400,
+    height: 100,
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage("assets/images/Logo.png"),
+        fit: BoxFit.contain,
+      ),
+    ),
+  ),
+),
+
+
             ],
           ),
         ),

@@ -13,6 +13,8 @@ import 'package:tripto/presentation/pages/NavBar/SideMenu/Favorite_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
 
+import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
+
 final storage = FlutterSecureStorage();
 
 class SideMenu extends StatefulWidget {
@@ -82,13 +84,15 @@ class _SideMenuState extends State<SideMenu> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MyTripsPage()),
+                        builder: (context) => const MyTripsPage(),
+                      ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                            AppLocalizations.of(context)!.pleaseLoginFirst),
+                          AppLocalizations.of(context)!.pleaseLoginFirst,
+                        ),
                         backgroundColor: Color(0xFF002E70),
                         duration: const Duration(seconds: 5),
                       ),
@@ -97,7 +101,8 @@ class _SideMenuState extends State<SideMenu> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Signuporlogin()),
+                          builder: (context) => const Signuporlogin(),
+                        ),
                       );
                     });
                   }
@@ -105,7 +110,7 @@ class _SideMenuState extends State<SideMenu> {
               ),
               _divider(),
 
-              // _buildMenuItem(
+               // _buildMenuItem(
               //   context,
               //   icon: Icons.favorite,
               //   label: AppLocalizations.of(context)!.favourite,
@@ -116,14 +121,42 @@ class _SideMenuState extends State<SideMenu> {
               // ),
               // _divider(),
 
+
+
+              //  _buildMenuItem(
+              //   context,
+              //   icon: Icons.favorite,
+              //   label: AppLocalizations.of(context)!.favourite,
+              //   onTap:
+              //       () => Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const FavoritePage(),
+              //         ),
+              //       ),
+              // ),
+              // _divider(),
+ 
+              _buildMenuItem(
+                context,
+                icon: Icons.car_rental_sharp,
+                label: AppLocalizations.of(context)!.cars,
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CarCard()),
+                    ),
+              ),
+              _divider(),
               _buildMenuItem(
                 context,
                 icon: Icons.info,
                 label: AppLocalizations.of(context)!.aboutus,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AboutUs()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AboutUs()),
+                    ),
               ),
               _divider(),
 
@@ -131,18 +164,24 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.autorenew,
                 label: AppLocalizations.of(context)!.cancellation1,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Cancellattion()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Cancellattion(),
+                      ),
+                    ),
               ),
               _divider(),
 
               // 🌐 تغيير اللغة
               ListTile(
-                leading: const Icon(Icons.language, color: Color(0xFF002E70), size: 30),
-                 title: Row(
+                leading: const Icon(
+                  Icons.language,
+                  color: Color(0xFF002E70),
+                  size: 30,
+                ),
+                title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -161,9 +200,10 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale = currentLocale == 'ar'
-                                ? const Locale('en')
-                                : const Locale('ar');
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
@@ -182,9 +222,10 @@ class _SideMenuState extends State<SideMenu> {
                           onPressed: () {
                             final currentLocale =
                                 Localizations.localeOf(context).languageCode;
-                            final newLocale = currentLocale == 'ar'
-                                ? const Locale('en')
-                                : const Locale('ar');
+                            final newLocale =
+                                currentLocale == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
                             TripToApp.setLocale(context, newLocale);
                             setState(() {});
                           },
@@ -203,6 +244,47 @@ class _SideMenuState extends State<SideMenu> {
               ),
               _divider(),
 
+              // // 🌙 تغيير الثيم
+              // ListTile(
+              //   leading: const Icon(
+              //     Icons.brightness_4,
+              //     color: Color(0xFF002E70),
+              //     size: 30,
+              //   ),
+              //   title: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         AppLocalizations.of(context)!.themedate,
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.bold,
+              //           color: theme.textTheme.bodyLarge?.color,
+              //         ),
+              //       ),
+              //       IconButton(
+              //         onPressed: () {
+              //           TripToApp.toggleTheme(context);
+              //         },
+              //         icon: Icon(
+              //           Theme.of(context).brightness == Brightness.dark
+              //               ? Icons.dark_mode
+              //               : Icons.light_mode,
+              //           size: 35,
+              //           color:
+              //               Theme.of(context).brightness == Brightness.dark
+              //                   ? Colors.yellow
+              //                   : Colors.black,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+
+
+
+              // _divider(),
               // // 🌙 تغيير الثيم
               // ListTile(
               //  leading: const Icon(Icons.brightness_4, color: Color(0xFF002E70), size: 30),
@@ -235,16 +317,17 @@ class _SideMenuState extends State<SideMenu> {
               //   ),
               // ),
               // _divider(),
-
               _buildMenuItem(
                 context,
                 icon: Icons.lock,
                 label: AppLocalizations.of(context)!.privacypolicy,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Privacypolicy()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Privacypolicy(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -252,11 +335,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.book,
                 label: AppLocalizations.of(context)!.termsandcondations,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Termsandcondations()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Termsandcondations(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -264,10 +349,13 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.call,
                 label: AppLocalizations.of(context)!.contactus,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ContactUs()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ContactUs(),
+                      ),
+                    ),
               ),
               _divider(),
 
@@ -275,10 +363,11 @@ class _SideMenuState extends State<SideMenu> {
                 context,
                 icon: Icons.description,
                 label: AppLocalizations.of(context)!.report,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Report()),
-                ),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Report()),
+                    ),
               ),
             ],
           ),
@@ -288,13 +377,15 @@ class _SideMenuState extends State<SideMenu> {
   }
 
   // 🔹 عنصر قائمة موحد
-  Widget _buildMenuItem(BuildContext context,
-      {required IconData icon,
-      required String label,
-      required VoidCallback onTap}) {
+  Widget _buildMenuItem(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     final theme = Theme.of(context);
     return ListTile(
-leading: Icon(icon, color: const Color(0xFF002E70), size: 30),
+      leading: Icon(icon, color: const Color(0xFF002E70), size: 30),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

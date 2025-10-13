@@ -6,7 +6,12 @@ import 'package:tripto/bloc&repo/Hotel/hotelStates.dart';
 class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   final HotelsRepository hotelsRepository;
 
-  HotelsBloc({required this.hotelsRepository}) : super(HotelsInitial()) {
+  HotelsBloc({
+    required this.hotelsRepository,
+    // required HotelsRepository repository,
+  }) : super(HotelsInitial()) {
+    on<FetchAllHotels>(_onFetchAllHotels);
+
     on<FetchHotels>((event, emit) async {
       emit(HotelsLoading());
       try {
@@ -24,5 +29,17 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
         emit(HotelsError(message: 'No Internet connection'));
       }
     });
+  }
+  Future<void> _onFetchAllHotels(
+    FetchAllHotels event,
+    Emitter<HotelsState> emit,
+  ) async {
+    emit(HotelsLoading());
+    try {
+      final Hotel = await hotelsRepository.FetchAllHotels();
+      emit(GetAllHotelsSuccess(hotels: Hotel));
+    } catch (e) {
+      emit(HotelsError(message: 'No Internet connection'));
+    }
   }
 }

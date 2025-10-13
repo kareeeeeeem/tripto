@@ -6,7 +6,7 @@ import 'package:tripto/core/models/activityPageModel.dart';
 import 'package:tripto/core/services/api.dart';
 
 class AuthRepository {
-  final storage = const FlutterSecureStorage();
+  static final storage = const FlutterSecureStorage();
 
   // تسجيل مستخدم جديد
   Future<Map<String, dynamic>> register(
@@ -71,6 +71,7 @@ class AuthRepository {
       final token = data['token'];
       if (token != null) {
         await storage.write(key: 'token', value: token);
+        debugPrint('🔑 Saved token: $token'); // 👈 اطبع التوكن بعد التخزين
       }
 
       // لو في يوزر جوا الريسبونس
@@ -83,10 +84,8 @@ class AuthRepository {
 
         await storage.write(key: 'userId', value: user['userId'] ?? '');
 
-
         // خزن نسخة كاملة من بيانات اليوزر
         await storage.write(key: 'userId', value: user['id'].toString());
-
       }
 
       return data;
@@ -129,11 +128,10 @@ class AuthRepository {
     await storage.delete(key: 'user_data');
 
     await storage.delete(key: 'userId'); // ✨ مهم عشان الـ MyTrips
-
   }
 
   // جلب التوكن
-  Future<String?> getToken() async {
+  static Future<String?> getToken() async {
     return await storage.read(key: 'token');
   }
 
@@ -165,6 +163,39 @@ class AuthRepository {
           .toList();
     } else {
       throw Exception('Failed to load activities');
+    }
+  }
+
+  Future<void> deleteAccount(String token) async {
+    try {
+      final token = await storage.read(key: 'token');
+
+      if (token == null) {
+        debugPrint('❌ No token found, user may not be logged in.');
+        throw Exception('No token found');
+      }
+      final response = await http.put(
+        Uri.parse('${ApiConstants.baseUrl}users/delete'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      debugPrint('Delete account status: ${response.statusCode}');
+      debugPrint('Delete account response: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await clearUserData(); // 🧹 امسح البيانات المحلية بعد الحذف
+        debugPrint("✅ Account deleted successfully");
+      } else {
+        // اطبع الخطأ الحقيقي من السيرفر
+        debugPrint("❌ Delete account failed: ${response.body}");
+        throw Exception('Delete account failed: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('❌ Delete account request failed: $e');
+      rethrow;
     }
   }
 }

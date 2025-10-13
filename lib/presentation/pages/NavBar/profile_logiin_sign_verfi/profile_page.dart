@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/bloc&repo/%D9%90Auth/AuthRepository.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditBloc.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditEvent.dart';
 import 'package:tripto/bloc&repo/ProfileUserDate/Edit/EditModel.dart';
@@ -156,17 +157,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   content: Text(
                     "${AppLocalizations.of(context)!.profile} updated successfully",
                   ),
-                    backgroundColor: Colors.green,
-
+                  backgroundColor: Colors.green,
                 ),
               );
             } else if (state is UpdateUserFailure) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.message), 
-                backgroundColor: Colors.red,
-
-              ));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           },
         ),
@@ -359,15 +359,48 @@ class _ProfilePageState extends State<ProfilePage> {
                         FocusScope.of(context).unfocus();
 
                         // ✅ مسح كل بيانات المستخدم
-                          final storage = SecureStorageService();
-                          await storage.clearUserData();
+                        final storage = SecureStorageService();
+                        await storage.clearUserData();
 
-                           // ✅ إرسال حدث Logout
+                        // ✅ إرسال حدث Logout
 
                         context.read<LogoutBloc>().add(LogoutRequested());
                       },
                       child: Text(
                         AppLocalizations.of(context)!.logout,
+                        style: GoogleFonts.markaziText(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // delete my account button
+                  SizedBox(height: height * 0.025),
+                  SizedBox(
+                    width: width,
+                    height: height * 0.06,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 167, 198, 240),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
+
+                        // ✅ مسح كل بيانات المستخدم
+                        final storage = SecureStorageService();
+                        await storage.clearUserData();
+
+                        // ✅ إرسال حدث Logout
+
+                        context.read<LogoutBloc>().add(LogoutRequested());
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.deletmyaccount,
                         style: GoogleFonts.markaziText(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -393,12 +426,8 @@ class SecureStorageService {
 
   Future<void> saveUser(String userJson) async {
     await _storage.write(key: 'user_data', value: userJson);
-   // await _storage.write(key: 'jwt_token', value: response['token']);
-          
+    // await _storage.write(key: 'jwt_token', value: response['token']);
   }
-
-
-
 
   Future<Map<String, dynamic>?> getUser() async {
     final userData = await _storage.read(key: 'user_data');
@@ -407,7 +436,6 @@ class SecureStorageService {
     }
     return null;
   }
-
 
   // ✅ دالة جديدة لمسح كل بيانات المستخدم
   Future<void> clearUserData() async {

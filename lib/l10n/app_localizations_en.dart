@@ -690,7 +690,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacypolicy => 'Privacy policy';
 
   @override
-  String get privacypolicy1 => 'Privacy policy for [Trip To]';
+  String get privacypolicy1 => 'Privacy policy ';
 
   @override
   String get introduction => '1. Introduction';
@@ -894,7 +894,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsandcondations => 'Terms and Condations';
 
   @override
-  String get termsandcondations1 => 'Terms and Condations for [Trip To]';
+  String get termsandcondations1 => 'Terms and Condations';
 
   @override
   String get termsandcondations2 =>
@@ -1250,6 +1250,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get rangeNotContained =>
       'The booking period must be contained entirely within a single available period.';
+
+  @override
+  String get pricepernight => 'Price per night';
+
+  @override
+  String get rate => 'Rate';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get cars => 'Cars';
 
   @override
   String get price_details => 'Price Details';

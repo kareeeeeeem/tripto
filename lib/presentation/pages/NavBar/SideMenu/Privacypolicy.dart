@@ -53,12 +53,14 @@ class _PrivacypolicyState extends State<Privacypolicy> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                child: Image.asset(
-                  "assets/images/privacy.png",
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.20,
-                  fit: BoxFit.fitHeight,
+              Center(
+                child: ClipRRect(
+                  child: Image.asset(
+                    "assets/images/privacy.png",
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.20,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
               ),
               Text(
@@ -380,12 +382,14 @@ class _PrivacypolicyState extends State<Privacypolicy> {
                 AppLocalizations.of(context)!.privacypolicy55,
                 style: const TextStyle(fontSize: 16),
               ),
-              Container(
-                width: 400,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Logo.png"),
+              Center(
+                child: Container(
+                  width: 400,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Logo.png"),
+                    ),
                   ),
                 ),
               ),

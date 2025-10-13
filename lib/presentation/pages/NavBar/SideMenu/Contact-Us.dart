@@ -280,7 +280,7 @@ class _ContactUsState extends State<ContactUs> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.878,
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.05875,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

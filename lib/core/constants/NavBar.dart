@@ -21,6 +21,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   final List<IconData> _icons = const [
     Icons.home,
+    Icons.hotel,
     Icons.extension,
     Icons.person_2_outlined,
     Icons.menu,

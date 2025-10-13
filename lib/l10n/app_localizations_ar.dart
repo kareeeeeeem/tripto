@@ -688,7 +688,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get privacypolicy => 'سياسة الخصوصية';
 
   @override
-  String get privacypolicy1 => 'سياسة الخصوصية [ترب تو]';
+  String get privacypolicy1 => 'سياسة الخصوصية ';
 
   @override
   String get introduction => '1. المقدمة.';
@@ -887,7 +887,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get termsandcondations => 'الشروط و الاحكام';
 
   @override
-  String get termsandcondations1 => ' الشروط و الاحكام[ترب تو]';
+  String get termsandcondations1 => ' الشروط و الاحكام';
 
   @override
   String get termsandcondations2 =>
@@ -1237,6 +1237,18 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get rangeNotContained =>
       'يجب أن تكون فترة الحجز بالكامل ضمن فترة متاحة واحدة فقط.';
+
+  @override
+  String get pricepernight => 'سعر الليله ';
+
+  @override
+  String get rate => 'التقييم';
+
+  @override
+  String get model => 'موديل';
+
+  @override
+  String get cars => 'السيارات';
 
   @override
   String get price_details => 'تفاصيل السعر';

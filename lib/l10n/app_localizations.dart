@@ -1349,7 +1349,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacypolicy1.
   ///
   /// In en, this message translates to:
-  /// **'Privacy policy for [Trip To]'**
+  /// **'Privacy policy '**
   String get privacypolicy1;
 
   /// No description provided for @introduction.
@@ -1691,7 +1691,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsandcondations1.
   ///
   /// In en, this message translates to:
-  /// **'Terms and Condations for [Trip To]'**
+  /// **'Terms and Condations'**
   String get termsandcondations1;
 
   /// No description provided for @termsandcondations2.
@@ -2329,6 +2329,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The booking period must be contained entirely within a single available period.'**
   String get rangeNotContained;
+
+  /// No description provided for @pricepernight.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per night'**
+  String get pricepernight;
+
+  /// No description provided for @rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rate;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// No description provided for @cars.
+  ///
+  /// In en, this message translates to:
+  /// **'Cars'**
+  String get cars;
 
   /// No description provided for @price_details.
   ///

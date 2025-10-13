@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
 // import 'package:tripto/main.dart';
@@ -28,25 +29,7 @@ class _AboutUsState extends State<AboutUs> {
           AppLocalizations.of(context)!.aboutus,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       final currentLocale =
-        //           Localizations.localeOf(context).languageCode;
-        //       final newLocale =
-        //           currentLocale == 'ar'
-        //               ? const Locale('en')
-        //               : const Locale('ar');
-        //       TripToApp.setLocale(context, newLocale);
-        //       setState(() {});
-        //     },
-        //     icon: const Icon(
-        //       Icons.language,
-        //       size: 30,
-        //       color: Color(0xFF002E70),
-        //     ),
-        //   ),
-        // ],
+        
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -138,18 +121,15 @@ class _AboutUsState extends State<AboutUs> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
+
             Padding(
               padding: EdgeInsets.only(
-                left:
-                    Localizations.localeOf(context).languageCode == 'en'
-                        ? MediaQuery.of(context).size.width *
-                            0.1 // 10% من عرض الشاشة
-                        : 0,
-                right:
-                    Localizations.localeOf(context).languageCode == 'ar'
-                        ? MediaQuery.of(context).size.width *
-                            0.1 // 10% من عرض الشاشة
-                        : 0,
+                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
+                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
               ),
               child: Row(
                 children: [
@@ -160,18 +140,18 @@ class _AboutUsState extends State<AboutUs> {
                 ],
               ),
             ),
+
+
+
+
             Padding(
               padding: EdgeInsets.only(
-                left:
-                    Localizations.localeOf(context).languageCode == 'en'
-                        ? MediaQuery.of(context).size.width *
-                            0.1 // 10% من عرض الشاشة
-                        : 0,
-                right:
-                    Localizations.localeOf(context).languageCode == 'ar'
-                        ? MediaQuery.of(context).size.width *
-                            0.11 // 10% من عرض الشاشة
-                        : 0,
+                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
+                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
               ),
               child: Row(
                 children: [
@@ -182,19 +162,22 @@ class _AboutUsState extends State<AboutUs> {
                 ],
               ),
             ),
+
+
+
             Padding(
               padding: EdgeInsets.only(
-                left:
-                    Localizations.localeOf(context).languageCode == 'en'
-                        ? MediaQuery.of(context).size.width *
-                            0.1 // 10% من عرض الشاشة
-                        : 0,
-                right:
-                    Localizations.localeOf(context).languageCode == 'ar'
-                        ? MediaQuery.of(context).size.width *
-                            0.11 // 10% من عرض الشاشة
-                        : 0,
+                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
+                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
+                    ? MediaQuery.of(context).size.width * 0.1
+                    : 1,
               ),
+
+              
+
+
               child: Row(
                 children: [
                   Expanded(

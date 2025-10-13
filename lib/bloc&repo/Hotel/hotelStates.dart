@@ -29,3 +29,11 @@ class HotelsError extends HotelsState {
   @override
   List<Object?> get props => [message];
 }
+
+class GetAllHotelsSuccess extends HotelsState {
+  final List<HotelModel> hotels;
+  const GetAllHotelsSuccess({required this.hotels});
+
+  @override
+  List<Object?> get props => [hotels];
+}

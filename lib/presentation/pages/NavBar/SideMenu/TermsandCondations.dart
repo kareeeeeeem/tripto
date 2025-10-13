@@ -53,12 +53,14 @@ class _TermsandcondationsState extends State<Termsandcondations> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                child: Image.asset(
-                  "assets/images/terms.png",
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.20,
-                  fit: BoxFit.fitHeight,
+              Center(
+                child: ClipRRect(
+                  child: Image.asset(
+                    "assets/images/terms.png",
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.20,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
               ),
               Text(
@@ -332,12 +334,19 @@ class _TermsandcondationsState extends State<Termsandcondations> {
                 AppLocalizations.of(context)!.termsandcondations41,
                 style: const TextStyle(fontSize: 16),
               ),
-              Container(
-                width: 400,
-                height: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Logo.png"),
+              Padding(
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.06, // 10% من عرض الشاشة
+                ),
+                child: Center(
+                  child: Container(
+                    width: 400,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/Logo.png"),
+                      ),
+                    ),
                   ),
                 ),
               ),

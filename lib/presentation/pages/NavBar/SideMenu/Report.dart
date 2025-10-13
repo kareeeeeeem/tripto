@@ -91,123 +91,128 @@ class _ReportState extends State<Report> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // الصورة فوق
-                ClipRRect(
-                  child: Image.asset(
-                    "assets/images/issue.png",
-                    width: screenWidth * 0.9, // 80% من عرض الشاشة
-                    height: screenHeight * 0.20, // 25% من طول الشاشة
-                    fit: BoxFit.fitHeight, // يملأ المساحة مع الحفاظ على النسب
+          child:  Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // الصورة فوق
+                  ClipRRect(
+                    child: Image.asset(
+                      "assets/images/issue.png",
+                      width: screenWidth * 0.9, // 80% من عرض الشاشة
+                      height: screenHeight * 0.20, // 25% من طول الشاشة
+                      fit: BoxFit.fitHeight, // يملأ المساحة مع الحفاظ على النسب
+                    ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                // Row(
-                //   children: [
-                //     Icon(Icons.report, color: const Color(0xFF002E70), size: 12),
-                //     SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-
-                //     buildLabel(AppLocalizations.of(context)!.report),
-                //   ],
-                // ),
-                TextFormField(
-                  controller: reportController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 100, // هنا حددت 6 أسطر
-                  minLines: 6, // أقل حاجة 3 أسطر
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.issue,
-                    hintStyle: GoogleFonts.markaziText(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black45,
-                    ),
-                    // labelText: AppLocalizations.of(context)!.report,
-                    // labelStyle: TextStyle(color: Color(0xFF002E70)),
-                    // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Colors.black45,
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF002E70),
-                        width: 2,
-                      ),
-                    ),
-                    // prefixIcon: Icon(Icons.message),
-                  ),
-                ),
-
-                SizedBox(height: MediaQuery.of(context).size.height * 0.10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.878,
-                  height: MediaQuery.of(context).size.height * 0.05875,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF002E70),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: () {
-                      final model = ContactusModel(
-                        name: "k", // هيتم تجاهلهم في حالة الـ report
-                        email: "k",
-                        phone: "k",
-                        messagebody: reportController.text,
-                        subject: "Report",
-                      );
-
-                      // خلي بالك هنا لازم تكون نفس اسم الباراميتر في الـ Event
-                      context.read<ContactusBloc>().add(
-                        SubmitContactUs(
-                          contactusModel: model,
-                          pagetype: "report", // صح مش pagetype
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.report, color: const Color(0xFF002E70), size: 12),
+                  //     SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+            
+                  //     buildLabel(AppLocalizations.of(context)!.report),
+                  //   ],
+                  // ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.878,
+                    child: TextFormField(
+                      controller: reportController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 100, // هنا حددت 6 أسطر
+                      minLines: 6, // أقل حاجة 3 أسطر
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.issue,
+                        hintStyle: GoogleFonts.markaziText(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black45,
                         ),
-                      );
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.sendreport,
-                      style: GoogleFonts.markaziText(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        // labelText: AppLocalizations.of(context)!.report,
+                        // labelStyle: TextStyle(color: Color(0xFF002E70)),
+                        // fillColor: const Color(0xFFD9D9D9).withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Colors.black45,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Color(0xFF002E70),
+                            width: 2,
+                          ),
+                        ),
+                        // prefixIcon: Icon(Icons.message),
                       ),
                     ),
                   ),
-                ),
-
-                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-
-                // //////////////////////////////////////////////////////////////////////////////////////
-                Padding(
-                  padding: EdgeInsets.all(
-                    MediaQuery.of(context).size.width *
-                        0.2, // 10% من عرض الشاشة
-                  ),
-                  child: Container(
-                    width: 400,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/Logo.png"),
+            
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.10),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.878,
+                    height: MediaQuery.of(context).size.height * 0.05875,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF002E70),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        final model = ContactusModel(
+                          name: "k", // هيتم تجاهلهم في حالة الـ report
+                          email: "k",
+                          phone: "k",
+                          messagebody: reportController.text,
+                          subject: "Report",
+                        );
+            
+                        // خلي بالك هنا لازم تكون نفس اسم الباراميتر في الـ Event
+                        context.read<ContactusBloc>().add(
+                          SubmitContactUs(
+                            contactusModel: model,
+                            pagetype: "report", // صح مش pagetype
+                          ),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.sendreport,
+                        style: GoogleFonts.markaziText(
+                          fontSize: 23,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+            
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            
+                  // //////////////////////////////////////////////////////////////////////////////////////
+                  Padding(
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width *
+                          0.2, // 10% من عرض الشاشة
+                    ),
+                    child: Container(
+                      width: 400,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/Logo.png"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

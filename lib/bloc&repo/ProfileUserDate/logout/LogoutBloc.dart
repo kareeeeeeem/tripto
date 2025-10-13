@@ -8,6 +8,7 @@ class LogoutBloc extends Bloc<LogoutEvent, LogoutState> {
 
   LogoutBloc({required this.repository}) : super(LogoutInitial()) {
     on<LogoutRequested>(_onLogoutRequested);
+    on<DeleteAccountRequested>(_onDeleteAccountRequested);
   }
 
   Future<void> _onLogoutRequested(
@@ -19,6 +20,22 @@ class LogoutBloc extends Bloc<LogoutEvent, LogoutState> {
       await repository.logout();
       emit(LogoutSuccess());
     } catch (e) {
+      emit(LogoutFailure(e.toString()));
+    }
+  }
+
+  Future<void> _onDeleteAccountRequested(
+    DeleteAccountRequested event,
+    Emitter<LogoutState> emit,
+  ) async {
+    emit(LogoutLoading());
+    try {
+      await repository.deleteAccount(event.token);
+      print("✅ account delete successfully");
+      emit(DeleteAccountSuccess(message: "Account Deleted success"));
+    } catch (e) {
+      print("❌ Error while deleting Account : $e");
+
       emit(LogoutFailure(e.toString()));
     }
   }

@@ -403,6 +403,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "${AppLocalizations.of(context)!.priceperperson} :",
@@ -431,7 +432,7 @@ class _ActivityDetailsPageState extends State<ActivityDetailsPage> {
                                 ? Colors
                                     .blue // لو الشرط true → أزرق
                                 : Colors.grey[800], // لو false → رمادي
-                        size: 30,
+                        size: 25,
                       ),
                     ],
                   ),

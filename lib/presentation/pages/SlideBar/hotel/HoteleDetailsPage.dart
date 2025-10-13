@@ -10,7 +10,7 @@ class MediaItem {
   final String url;
   final bool isVideo;
   VideoPlayerController? videoController;
-  ChewieController? chewieController; 
+  ChewieController? chewieController;
 
   MediaItem({required this.url, required this.isVideo});
 }
@@ -25,21 +25,21 @@ class HotelAdelPage extends StatefulWidget {
 }
 
 class _HotelAdelPageState extends State<HotelAdelPage> {
-  final PageController _pageController = PageController(viewportFraction: 1.0); 
+  final PageController _pageController = PageController(viewportFraction: 1.0);
   int _currentPage = 0;
-  final List<MediaItem> _mediaList = []; 
-  bool _isInitializing = true; 
+  List<MediaItem> _mediaList = [];
+  bool _isInitializing = true;
 
   @override
   void initState() {
     super.initState();
     _initializeMediaList();
-    
+
     _pageController.addListener(() {
       if (_pageController.page != null) {
         final newPageIndex = _pageController.page!.round();
         if (_currentPage != newPageIndex) {
-           _onPageChanged(newPageIndex);
+          _onPageChanged(newPageIndex);
         }
         setState(() {
           _currentPage = newPageIndex;
@@ -50,45 +50,52 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
 
   void _initializeMediaList() async {
     // 1. دمج الصور
-    _mediaList.addAll(widget.hotel.images.map((url) => MediaItem(url: url, isVideo: false)));
-    
+    _mediaList.addAll(
+      widget.hotel.images.map((url) => MediaItem(url: url, isVideo: false)),
+    );
+
     // 2. دمج الفيديو المفرد وتهيئة المتحكمات
     if (widget.hotel.videoUrl.isNotEmpty) {
       String originalUrl = widget.hotel.videoUrl;
-      
+
       // 💡 منطق تحويل رابط جوجل درايف: تحويل رابط المعاينة إلى رابط مباشر
-      if (originalUrl.contains('drive.google.com') && originalUrl.contains('/view')) {
-          final fileIdMatch = RegExp(r'/d/([^/]+)/view').firstMatch(originalUrl);
-          if (fileIdMatch != null) {
-              final fileId = fileIdMatch.group(1);
-              originalUrl = 'https://drive.google.com/uc?export=download&id=$fileId';
-              print("🔗 Converted Google Drive URL to Direct Link: $originalUrl");
-          } else {
-              print("🛑 Could not extract File ID from Google Drive URL.");
-          }
+      if (originalUrl.contains('drive.google.com') &&
+          originalUrl.contains('/view')) {
+        final fileIdMatch = RegExp(r'/d/([^/]+)/view').firstMatch(originalUrl);
+        if (fileIdMatch != null) {
+          final fileId = fileIdMatch.group(1);
+          originalUrl =
+              'https://drive.google.com/uc?export=download&id=$fileId';
+          print("🔗 Converted Google Drive URL to Direct Link: $originalUrl");
+        } else {
+          print("🛑 Could not extract File ID from Google Drive URL.");
+        }
       }
-      
+
       final item = MediaItem(url: originalUrl, isVideo: true);
-      
-      item.videoController = VideoPlayerController.networkUrl(Uri.parse(originalUrl));
-      
+
+      item.videoController = VideoPlayerController.networkUrl(
+        Uri.parse(originalUrl),
+      );
+
       try {
         await item.videoController!.initialize();
         item.chewieController = ChewieController(
           videoPlayerController: item.videoController!,
-          autoPlay: false, 
+          autoPlay: false,
           looping: true,
-          showControls: true, 
+          showControls: true,
           showControlsOnInitialize: true,
           allowFullScreen: true,
-          
+
           // نستخدم أبعاد الفيديو الأصلية للمتحكم
-          aspectRatio: item.videoController!.value.aspectRatio, 
-          
+          aspectRatio: item.videoController!.value.aspectRatio,
+
           errorBuilder: (context, errorMessage) {
             return Center(
               child: Text(
-                AppLocalizations.of(context)?.videoNotAvailable ?? 'Video failed to load.',
+                AppLocalizations.of(context)?.videoNotAvailable ??
+                    'Video failed to load.',
                 style: const TextStyle(color: Colors.white),
               ),
             );
@@ -97,31 +104,29 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
         // تم التهيئة بنجاح، أضف العنصر إلى القائمة
         _mediaList.add(item);
         print("✅ Video initialized successfully: ${item.url}");
-
       } catch (error) {
         // إذا فشلت التهيئة
         print("🛑 Video Initialization FAILED for URL: ${item.url}");
         print("🛑 Error: $error");
       }
     }
-    
+
     // بعد الانتهاء من تهيئة كل شيء، نقوم بتحديث الـ State
     if (mounted) {
       setState(() {
-        _isInitializing = false; 
-        _currentPage = 0; 
+        _isInitializing = false;
+        _currentPage = 0;
       });
     }
   }
-  
+
   void _onPageChanged(int newPageIndex) {
     final previousPage = _mediaList[_currentPage];
     if (previousPage.isVideo) {
-        previousPage.chewieController?.pause();
-        previousPage.videoController?.seekTo(Duration.zero);
+      previousPage.chewieController?.pause();
+      previousPage.videoController?.seekTo(Duration.zero);
     }
   }
-
 
   @override
   void dispose() {
@@ -177,11 +182,11 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
     final hotel = widget.hotel;
 
     if (_isInitializing) {
-        return const Scaffold(
-            body: Center(
-                child: CircularProgressIndicator(),
-            ),
-        );
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(color: Color(0xFF002E70)),
+        ),
+      );
     }
 
     return Scaffold(
@@ -196,9 +201,9 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                   children: [
                     // Image/Video slider
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.55, 
+                      height: MediaQuery.of(context).size.height * 0.55,
                       width: MediaQuery.of(context).size.width,
-                        
+
                       child: PageView.builder(
                         controller: _pageController,
                         itemCount: _mediaList.length,
@@ -208,24 +213,35 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
 
                           if (item.isVideo) {
                             // التحقق من أن المتحكم قد تمت تهيئته بنجاح
-                            if (item.chewieController != null && item.chewieController!.videoPlayerController.value.isInitialized) {
-                              
+                            if (item.chewieController != null &&
+                                item
+                                    .chewieController!
+                                    .videoPlayerController
+                                    .value
+                                    .isInitialized) {
                               // 💡 استخدام FittedBox و SizedBox لملء المنطقة (BoxFit.cover)
                               child = FittedBox(
-                                fit: BoxFit.cover, // يضمن ملء الـ SizedBox الخارجي (55% من الشاشة)
+                                fit:
+                                    BoxFit
+                                        .cover, // يضمن ملء الـ SizedBox الخارجي (55% من الشاشة)
                                 child: SizedBox(
                                   // نحدد أبعاد الفيديو لجعله يملأ الـ FittedBox
                                   width: item.videoController!.value.size.width,
-                                  height: item.videoController!.value.size.height,
-                                  child: Chewie(controller: item.chewieController!),
+                                  height:
+                                      item.videoController!.value.size.height,
+                                  child: Chewie(
+                                    controller: item.chewieController!,
+                                  ),
                                 ),
                               );
-
                             } else {
                               // إذا لم يتم تهيئته لأي سبب بعد المحاولة
                               child = Center(
                                 child: Text(
-                                  AppLocalizations.of(context)?.videoNotAvailable ?? 'Video failed to load.',
+                                  AppLocalizations.of(
+                                        context,
+                                      )?.videoNotAvailable ??
+                                      'Video failed to load.',
                                   style: const TextStyle(color: Colors.grey),
                                 ),
                               );
@@ -235,13 +251,16 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                             child = Image.network(
                               item.url,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) =>
-                                  Image.asset("assets/images/Logo.png", fit: BoxFit.cover),
+                              errorBuilder:
+                                  (_, __, ___) => Image.asset(
+                                    "assets/images/Logo.png",
+                                    fit: BoxFit.cover,
+                                  ),
                             );
                           }
 
                           return Container(
-                            margin: EdgeInsets.zero, 
+                            margin: EdgeInsets.zero,
                             decoration: const BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -252,15 +271,16 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                               ],
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(0), 
+                              borderRadius: BorderRadius.circular(0),
                               child: child,
                             ),
                           );
                         },
                       ),
                     ),
-                              const SizedBox(height: 16), // يمكنك تغيير القيمة 16 حسب حاجتك
-
+                    const SizedBox(
+                      height: 16,
+                    ), // يمكنك تغيير القيمة 16 حسب حاجتك
                     // Indicators
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -315,7 +335,6 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                   height: 1.5,
                                 ),
                               ),
-
                             ],
                           ),
                         ],
@@ -409,12 +428,19 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                               onTap: () async {
                                 final Uri url = Uri.parse(hotel.mapLocation);
                                 if (await canLaunchUrl(url)) {
-                                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                                  await launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
                                 } else {
                                   if (mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Could not launch ${hotel.mapLocation}')),
-                                      );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Could not launch ${hotel.mapLocation}',
+                                        ),
+                                      ),
+                                    );
                                   }
                                 }
                               },
@@ -427,8 +453,7 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
-                            )
-
+                            ),
                           ),
                         ],
                       ),
@@ -538,21 +563,24 @@ class _HotelAdelPageState extends State<HotelAdelPage> {
           ),
           // Back button
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.05, 
-            left: Localizations.localeOf(context).languageCode == 'ar'
-                ? null
-                : MediaQuery.of(context).size.width * 0.04,
-            right: Localizations.localeOf(context).languageCode == 'ar'
-                ? MediaQuery.of(context).size.width * 0.04
-                : null,
+            top: MediaQuery.of(context).size.height * 0.05,
+            left:
+                Localizations.localeOf(context).languageCode == 'ar'
+                    ? null
+                    : MediaQuery.of(context).size.width * 0.04,
+            right:
+                Localizations.localeOf(context).languageCode == 'ar'
+                    ? MediaQuery.of(context).size.width * 0.04
+                    : null,
             child: CircleAvatar(
               backgroundColor: Colors.black45,
               child: IconButton(
                 icon: Icon(
-                    Localizations.localeOf(context).languageCode == 'ar'
-                        ? Icons.arrow_forward
-                        : Icons.arrow_back,
-                    color: Colors.white),
+                  Localizations.localeOf(context).languageCode == 'ar'
+                      ? Icons.arrow_forward
+                      : Icons.arrow_back,
+                  color: Colors.white,
+                ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
