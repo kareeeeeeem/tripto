@@ -30,9 +30,27 @@ import 'package:tripto/main.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+typedef TripDetailsCallback = void Function(
+  int tripId,
+  int category,
+  GlobalKey<PersonCounterWithPriceState> personCounterKey,
+  String? tripSummary, 
+  int? selectedHotelId,
+  double selectedHotelPrice,
+  int? selectedCarId,
+  double selectedCarPrice,
+  int? selectedActivityId,
+  double selectedActivityPrice,
+);
+
+
 
 class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({super.key});
+  final TripDetailsCallback? onTripChanged;
+  
+
+  const VideoPlayerScreen({super.key, 
+    this.onTripChanged});
 
   @override
   State<VideoPlayerScreen> createState() => VideoPlayerScreenState();
@@ -306,6 +324,28 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
 
     setState(() => _currentIndex = index);
+
+    final currentTrip = _trips[index];
+    final int tripId = currentTrip['id'];
+    final int category = currentTrip['category'] ?? -1;
+    final GlobalKey<PersonCounterWithPriceState> personKey = _personCounterKeys[index];
+
+    if (widget.onTripChanged != null) {
+      // ⚠️ ملاحظة: _tripSummaryText قد لا يكون مُحدّثاً تماماً في هذه اللحظة،
+      // لكن يمكننا إرساله أو تركه وتحديثه عبر الـ callback الأخرى.
+      widget.onTripChanged!(
+        tripId,
+        category,
+        personKey,
+        _tripSummaryText,
+        selectedHotelId,
+        selectedHotelPrice,
+        selectedCarId,
+        selectedCarPrice,
+        selectedActivityId,
+        selectedActivityPrice,
+      );
+    }
 
     context.read<TripBloc>().add(ChangeCurrentTripEvent(index));
 
@@ -721,6 +761,10 @@ ElevatedButton(
                         onPressed: _toggleMute,
                       ),
                     ),
+
+
+                    
+                    if (!kIsWeb) // الشرط: إذا لم يكن التشغيل على الويب
                     Align(
                       alignment:
                           Directionality.of(context) == TextDirection.rtl
@@ -744,7 +788,6 @@ ElevatedButton(
 
                            // 🌟 2. استقبال الـ Callback وتحديث الحالة (State)
                         onSummaryReady: (summary) {
-                          // نتحقق من أن النص تغير قبل التحديث لتجنب إعادة البناء غير الضرورية
                           if (summary != _tripSummaryText) {
                             setState(() {
                               _tripSummaryText = summary;
@@ -772,164 +815,6 @@ ElevatedButton(
                     ),
                     ///////////////////////////////////////////////////////
                     ///
-                //     ///
-                //  Positioned(
-                //       bottom: screenHeight * 0.18,
-                //       left:
-                //           Directionality.of(context) == TextDirection.rtl
-                //               ? null
-                //               : screenWidth * 0.060,
-                //       right:
-                //           Directionality.of(context) == TextDirection.rtl
-                //               ? screenWidth * 0.060
-                //               : null,
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Padding(
-                //             padding: EdgeInsets.only(
-                //               left:
-                //                   Localizations.localeOf(context).languageCode == 'ar'
-                //                       ? 0
-                //                       : screenWidth * 0.025,
-                //               right:
-                //                   Localizations.localeOf(context).languageCode == 'ar'
-                //                       ? screenWidth * 0.025
-                //                       : 0,
-                //             ),
-                //             child: Countrywithcity(
-                //               countryName: destinationName,
-                //               cityName: subDestination,
-                //             ),
-                //           ),
-
-                //           SizedBox(height: screenHeight * 0.001),
-
-                //           PersonCounterWithPrice(
-                //               key: _personCounterKeys[index],
-                //               basePricePerPerson:
-                //                   double.tryParse(
-                //                     currentTrip['price_per_person']?.toString() ?? '0',
-                //                   ) ??
-                //                   0,
-                //               maxPersons: currentTrip['max_persons'] ?? 30,
-                //               textColor: Colors.white,
-                //               iconColor: Colors.black,
-                //               backgroundColor: Colors.white,
-                //               carPrice: selectedCarPrice,
-                //           ),
-                //               SizedBox(width: 20,),
-
-                //           Row(
-                //             children: [
-                //              SizedBox(
-                //           height: 34.0, 
-                //           width: 250,
-                //           child: Text(
-                //             _tripSummaryText ?? AppLocalizations.of(context)!.priceInfoDefault,
-                //             style: const TextStyle(
-                //               fontSize: 14,
-                //               fontWeight: FontWeight.w500,
-                //               color: Colors.white,
-                //               height: 1.2, 
-                //             ),
-                //             maxLines: 2, 
-                //             overflow: TextOverflow.ellipsis, 
-                //               ),
-                //              ),
-                //             ],
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-
-
-                    
-                //     Positioned(
-                //       bottom: screenHeight * 0.12,
-                //       left: 20,
-                //       right: 20,
-                //       child: Center(
-                //         child: BlocConsumer<OrderTripBloc, OrderTripState>(
-                //           listener: (context, state) {
-                //             if (state is OrderTripSuccess) {
-                //               ScaffoldMessenger.of(context).showSnackBar(
-                //                 const SnackBar(content: Text("Order created successfully ✅")),
-                //               );
-                //             } else if (state is OrderTripFailure) {
-                //               ScaffoldMessenger.of(context).showSnackBar(
-                //                 SnackBar(content: Text("Error: ${state.error}")),
-                //               );
-                //             }
-                //           },
-                //           builder: (context, state) {
-                //             if (state is OrderTripLoading) {
-                //               return const CircularProgressIndicator(color: Colors.white);
-                //             }
-                //             return CustomButton(
-                //               text: AppLocalizations.of(context)!.booknow,
-                //               onPressed: () async {
-                //                 final storage = SecureStorageService();
-                //                 final currentUser = await storage.getUser();
-                //                 final personCounterState = _personCounterKeys[index].currentState;
-
-                //                 final personCounter = _personCounterKeys[index]
-                //                     .currentState
-                //                     ?.currentPersons ?? 1;
-
-                //                 final totalPrice = _personCounterKeys[index]
-                //                     .currentState
-                //                     ?.totalPrice ?? 0;
-
-                //                 final orderData = {
-
-                //                         "trip_id": currentTrip['id'],
-                //                         "user_id": currentUser!['id'], // من Bloc أو storage
-
-                //                         "sub_destination_id": currentTrip['sub_destination']?['id'],
-                //                         "customer_name": currentUser['name'],
-                //                         "customer_email": currentUser['email'],
-                //                         "customer_phone": currentUser['phone'],
-
-                //                         "persons": personCounterState?.currentPersons ?? 1,
-                //                         "total_price": personCounterState?.totalPrice ?? 0.0,
-                                        
-                //                         "status": "pending",
-
-                //                         "note":"", 
-
-                //                         "fly_id": selectedFlyId,
-
-                //                         "from_date": _rangeStart != null ? DateFormat('yyyy-MM-dd').format(_rangeStart!) : null,
-                //                         "to_date": _rangeEnd != null ? DateFormat('yyyy-MM-dd').format(_rangeEnd!) : null,
-
-
-                //                         "hotel_id": selectedHotelId,   
-                //                           "hotel_price": selectedHotelPrice ?? 0.0, 
-
-                //                         "car_id": selectedCarId,
-                //                           "car_price": selectedCarPrice,
-                                      
-                //                         "activity_id": selectedActivityId,
-                //                           "activity_price": selectedActivityPrice,
-
-                //                       };
-
-                //                         // بعد ما تجهز orderData
-                //                         final prettyJson = const JsonEncoder.withIndent('  ').convert(orderData);
-                //                         debugPrint("==== Trip DATA SENT TO API ====\n$prettyJson");
-
-                //                             context.read<OrderTripBloc>().add(SubmitOrderTrip(orderData));
-                //                           },
-                //                           width: screenWidth * 0.80,
-                //                           height: 40,
-                //             );
-                //           },
-                //         ),
-                //       ),
-                //     ),
-
-           ////////////////////////////////////////////////////
 
 
 Positioned(

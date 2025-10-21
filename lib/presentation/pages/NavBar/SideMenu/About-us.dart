@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/l10n/app_localizations.dart';
-// import 'package:tripto/main.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 
 class AboutUs extends StatefulWidget {
@@ -12,17 +11,41 @@ class AboutUs extends StatefulWidget {
 }
 
 class _AboutUsState extends State<AboutUs> {
+  // تعريف قيمة الحشو الأفقي القياسية التي نريد استخدامها
+  static const double horizontalPaddingValue = 16.0;
+
+  Widget _buildPaddedText(BuildContext context, TextSpan textSpan) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start, // لضمان البدء من اليسار/اليمين
+        children: [
+          Expanded(
+            child: RichText(
+              textAlign: Localizations.localeOf(context).languageCode == 'ar'
+                  ? TextAlign.right
+                  : TextAlign.left,
+              text: textSpan,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    // استخدام الـ Localizations.localeOf(context).languageCode لتحديد اتجاه السهم (لغة المستخدم)
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        // elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         title: Text(
@@ -32,6 +55,7 @@ class _AboutUsState extends State<AboutUs> {
         
         leading: IconButton(
           onPressed: () {
+            // Navigator.popAndPush to prevent rebuild loop if SideMenu is same as current route stack base
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const SideMenu()),
@@ -39,11 +63,9 @@ class _AboutUsState extends State<AboutUs> {
             );
           },
           icon: Icon(
-            Localizations.localeOf(context).languageCode == 'ar'
-                ? Icons
-                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
-                : Icons
-                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+            isArabic
+                ? Icons.keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons.keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
           ),
@@ -51,181 +73,140 @@ class _AboutUsState extends State<AboutUs> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          // CrossAxisAlignment.start ensures elements start from the correct side (Start/Left/Right)
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              child: Image.asset(
-                "assets/images/aboutus.png",
-                width: screenWidth * 0.9, // 80% من عرض الشاشة
-                height: screenHeight * 0.20, // 25% من طول الشاشة
-                fit: BoxFit.fitHeight, // يملأ المساحة مع الحفاظ على النسب
+            // IMAGE
+            Center(
+              child: ClipRRect(
+                child: Image.asset(
+                  "assets/images/aboutus.png",
+                  width: screenWidth * 0.9,
+                  height: screenHeight * 0.20,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
+            
+            // --- النص الأول ---
+            _buildPaddedText(
+              context,
+              TextSpan(
+                style: const TextStyle(fontSize: 16, color: Colors.black),
+                children: [
+                  TextSpan(text: AppLocalizations.of(context)!.aboutus1),
+                  TextSpan(
+                    text: AppLocalizations.of(context)!.aboutus2, 
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: AppLocalizations.of(context)!.aboutus3),
+                  TextSpan(
+                    text: AppLocalizations.of(context)!.aboutus4,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(text: AppLocalizations.of(context)!.aboutus5),
+                ],
+              ),
+            ),
+
+            // --- الفاصل بين اول قطعه و تاني قطعه ---
+            _buildPaddedText(
+              context,
+              TextSpan(
+                style: const TextStyle(color: Colors.black, fontSize: 16),
+                children: [
+                  TextSpan(text: AppLocalizations.of(context)!.abutus6),
+                  TextSpan(
+                    text: AppLocalizations.of(context)!.aboutus7,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+            // --- النص الثامن (العنوان) ---
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              child: Text(
+                AppLocalizations.of(context)!.aboutus8,
+                style: const TextStyle(fontSize: 16),
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+            // --- النص التاسع (نقطة) - تم تعديل الـ Padding ---
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              child: Text(
+                AppLocalizations.of(context)!.aboutus9,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
+              ),
+            ),
+
+            // --- النص العاشر (نقطة) - تم تعديل الـ Padding ---
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              child: Text(
+                AppLocalizations.of(context)!.aboutus10,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
+              ),
+            ),
+
+            // --- النص الحادي عشر والثاني عشر (شرح) ---
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
               child: RichText(
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
                 text: TextSpan(
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ), // ستايل أساسي
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
                   children: [
-                    TextSpan(text: AppLocalizations.of(context)!.aboutus1),
                     TextSpan(
-                      text:
-                          AppLocalizations.of(
-                            context,
-                          )!.aboutus2, // الجزء اللي عايزه Bold
+                      text: AppLocalizations.of(context)!.aboutus11,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: AppLocalizations.of(context)!.aboutus3),
                     TextSpan(
-                      text: AppLocalizations.of(context)!.aboutus4,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      text: AppLocalizations.of(context)!.aboutus12,
                     ),
-                    TextSpan(text: AppLocalizations.of(context)!.aboutus5),
                   ],
                 ),
               ),
             ),
-            // الفاصل بين اول قطعه و تاني قطعه
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                  children: [
-                    TextSpan(text: AppLocalizations.of(context)!.abutus6),
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.aboutus7,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
+            // --- النص الثالث عشر ---
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.aboutus8,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-
-            Padding(
-              padding: EdgeInsets.only(
-                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.aboutus9,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-
-
-
-
-            Padding(
-              padding: EdgeInsets.only(
-                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.aboutus10,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-
-
-
-            Padding(
-              padding: EdgeInsets.only(
-                left: !kIsWeb && Localizations.localeOf(context).languageCode == 'en'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-                right: !kIsWeb && Localizations.localeOf(context).languageCode == 'ar'
-                    ? MediaQuery.of(context).size.width * 0.1
-                    : 1,
-              ),
-
-              
-
-
-              child: Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ), // ستايل أساسي
-                        children: [
-                          TextSpan(
-                            text: AppLocalizations.of(context)!.aboutus11,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: AppLocalizations.of(context)!.aboutus12,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
               child: Text(
                 AppLocalizations.of(context)!.aboutus13,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
+            // --- النص الرابع عشر ---
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
               child: Text(
                 AppLocalizations.of(context)!.aboutus14,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
+                textAlign: isArabic ? TextAlign.right : TextAlign.left,
               ),
             ),
-            Container(
-              width: 400,
-              height: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/Logo.png"),
+
+            // LOGO
+            Center(
+              child: Container(
+                width: 400,
+                height: 100,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/Logo.png"),
+                  ),
                 ),
               ),
             ),
