@@ -2359,6 +2359,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price Details'**
   String get price_details;
+
+  /// No description provided for @previousVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'last Vedio '**
+  String get previousVideo;
+
+  /// No description provided for @nextVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'next Video'**
+  String get nextVideo;
 }
 
 class _AppLocalizationsDelegate

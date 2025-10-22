@@ -45,7 +45,6 @@ class AppRoutes {
     splash: (context) => SplashScreen(),
     welcome: (context) => const WelcomePage(),
     app: (context) => App(),
-    videoPlayer: (context) => const VideoPlayerScreen(),
     home: (context) => const HomePage(),
     profile: (context) => ProfilePage(),
     paymentOption: (context) => const PaymentOption(),

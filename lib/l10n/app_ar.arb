@@ -407,5 +407,9 @@
   "rate": "التقييم",
   "model": "موديل",
   "cars": "السيارات",
-  "price_details": "تفاصيل السعر"
+  "price_details": "تفاصيل السعر",
+  "previousVideo": "الفيديو السابق",
+  "@previousVideo": {},
+  "nextVideo": "الفيديو التالي",
+  "@nextVideo": {}
 }

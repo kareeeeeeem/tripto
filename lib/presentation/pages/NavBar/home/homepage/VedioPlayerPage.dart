@@ -104,6 +104,21 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   String? _tripSummaryText; // 🌟 متغير لحفظ النص
 
 
+  //عرض الملخص فالهوم
+  void updateTripSummaryText(String? newSummary) {
+    if (mounted && newSummary != _tripSummaryText) {
+      setState(() {
+        _tripSummaryText = newSummary;
+      });
+      debugPrint("✅ VideoPlayerScreen: Summary updated locally to: $_tripSummaryText");
+    }
+  }
+Map<String, int> getScrollStatus() {
+  return {
+    'currentIndex': _currentIndex,
+    'totalTrips': _trips.length,
+  };
+}
       
  // 🆕 ضع الدوال هنا
     void onDateRangeSelected(DateTime? start, DateTime? end) {

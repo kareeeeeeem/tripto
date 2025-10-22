@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
@@ -56,15 +57,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _updateTripSummary(String? summary) {
-      if (!mounted) return;
-      if (summary != _tripSummaryText) {
+// داخل _HomePageState في homepage.dart
+
+void _updateTripSummary(String? summary) {
+    if (!mounted) return;
+    if (summary != _tripSummaryText) {
         setState(() {
-          _tripSummaryText = summary;
+            _tripSummaryText = summary;
         });
         debugPrint("✅ Summary received in HomePage: $summary");
-      }
+
+        // 🌟 أهم خطوة: استدعاء دالة تحديث الملخص في VideoPlayerScreenState
+        // هذا يعمل لتحديث الشاشة المعروضة على الويب.
+        videoPlayerScreenKey.currentState?.updateTripSummaryText(summary); 
     }
+}
 
 
   void onDateRangeSelected(DateTime? start, DateTime? end) {
@@ -168,31 +175,54 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(width: spacingBetween),
 
                           // ⬆️⬇️ أزرار السحب
-                          SizedBox(
-                            width: scrollButtonsWidth,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.keyboard_arrow_up,
-                                      size: 40, color: Colors.white70),
-                                  onPressed: _scrollToPreviousPage,
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: Colors.white10,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                IconButton(
-                                  icon: const Icon(Icons.keyboard_arrow_down,
-                                      size: 40, color: Colors.white70),
-                                  onPressed: _scrollToNextPage,
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: Colors.white10,
-                                  ),
-                                ),
-                              ],
+                         // داخل _HomePageState في دالة build (في قسم الويب)
+
+// ...
+// ⬆️⬇️ أزرار السحب
+SizedBox(
+    width: scrollButtonsWidth,
+    child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+             // زر الصعود (الفيديو السابق)
+             Builder(
+                builder: (context) {
+                    final status = videoPlayerScreenKey.currentState?.getScrollStatus();
+                    final currentIndex = status?['currentIndex'] ?? 0;
+                    final isFirstVideo = currentIndex == 0;
+                    
+                    return Tooltip( // 🆕 إضافة Tooltip هنا
+                        message: AppLocalizations.of(context)!.previousVideo, // ⬅️ النص الجديد
+                        child: IconButton(
+                            icon: Icon(Icons.keyboard_arrow_up,
+                                size: 40, 
+                                color: isFirstVideo ? Colors.white24 : Colors.white70),
+                            onPressed: isFirstVideo ? null : _scrollToPreviousPage,
+                            style: IconButton.styleFrom(
+                                backgroundColor: Colors.white10,
                             ),
-                          ),
+                        ),
+                    );
+                },
+            ),
+            
+            const SizedBox(height: 20),
+
+            // زر النزول (الفيديو التالي)
+            Tooltip( // 🆕 إضافة Tooltip هنا
+                message: AppLocalizations.of(context)!.nextVideo, // ⬅️ النص الجديد
+                child: IconButton(
+                    icon: const Icon(Icons.keyboard_arrow_down,
+                        size: 40, color: Colors.white70),
+                    onPressed: _scrollToNextPage,
+                    style: IconButton.styleFrom(
+                        backgroundColor: Colors.white10,
+                    ),
+                ),
+            ),
+        ],
+    ),
+),
                         ],
                       ),
                     ),

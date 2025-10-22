@@ -1265,4 +1265,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get price_details => 'Price Details';
+
+  @override
+  String get previousVideo => 'last Vedio ';
+
+  @override
+  String get nextVideo => 'next Video';
 }

@@ -1252,4 +1252,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get price_details => 'تفاصيل السعر';
+
+  @override
+  String get previousVideo => 'الفيديو السابق';
+
+  @override
+  String get nextVideo => 'الفيديو التالي';
 }

@@ -407,5 +407,9 @@
   "rate": "Rate",
   "model": "Model",
   "cars": "Cars",
-  "price_details": "Price Details"
+  "price_details": "Price Details",
+  "previousVideo": "last Vedio ",
+  "@previousVideo": {},
+  "nextVideo": "next Video",
+  "@nextVideo": {}
 }
