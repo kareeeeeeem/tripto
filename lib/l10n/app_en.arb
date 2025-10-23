@@ -412,5 +412,6 @@
   "@previousVideo": {},
   "nextVideo": "next Video",
   "@nextVideo": {},
-  "home": "Home"
+  "home": "Home",
+  "hotels": "Hotels"
 }

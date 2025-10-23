@@ -243,6 +243,7 @@ class _HomePageState extends State<HomePage> {
                       left: isArabic ? null : 20, // 👈 لو إنجليزي يبقى شمال
                       right: isArabic ? 20 : null, // 👈 لو عربي يبقى يمين
                       child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.end,
                         textDirection:
                             isArabic
                                 ? TextDirection.rtl
@@ -260,13 +261,17 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
 
-                          const SizedBox(width: 10),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width *
+                                0.11, // مثال: 2% من عرض الشاشة
+                          ),
 
                           // 🔹 اللوجو
                           Image.asset(
-                            'assets/images/logo2.png',
+                            'assets/images/TRIPTO.png',
                             height: 58,
-                            width: 80,
+                            width: 75,
                           ),
                         ],
                       ),
