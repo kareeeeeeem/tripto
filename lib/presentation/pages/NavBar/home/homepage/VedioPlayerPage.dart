@@ -43,14 +43,20 @@ typedef TripDetailsCallback = void Function(
   double selectedActivityPrice,
 );
 
+typedef SearchCallback = void Function();
 
+typedef ToggleFullscreenCallback= void Function(bool? isFullscreen);
 
 class VideoPlayerScreen extends StatefulWidget {
   final TripDetailsCallback? onTripChanged;
+  final SearchCallback? onSearchPressed; 
+    final ToggleFullscreenCallback? onToggleFullscreen; 
+
   
 
   const VideoPlayerScreen({super.key, 
-    this.onTripChanged});
+    this.onTripChanged, 
+    this.onSearchPressed, this.onToggleFullscreen});
 
   @override
   State<VideoPlayerScreen> createState() => VideoPlayerScreenState();
@@ -103,6 +109,37 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
   String? _tripSummaryText; // 🌟 متغير لحفظ النص
 
+  
+
+
+
+
+
+// 🆕 دالة جديدة للتعامل مع فتح صفحة البحث (تُستخدم في الويب)
+void _handleSearchNavigation() async {
+  final videoState = videoPlayerScreenKey.currentState;
+  
+  // 1. إيقاف الفيديو الحالي مؤقتاً
+  videoState?.pauseCurrentVideo(); 
+
+  // 2. الانتقال لصفحة البحث
+  final result = await Navigator.push<bool>(
+    context,
+    MaterialPageRoute(
+      builder: (ctx) => const SearchPage(), // تأكد من استيراد SearchPage
+    ),
+  );
+
+  // 3. عند العودة:
+  if (result == true) {
+    // إذا كان هناك تحديث للرحلات بعد البحث
+    videoState?.disposeAllVideos(); // (إذا كانت هذه الدالة موجودة وتعمل)
+    videoState?.fetchAllTrips();    // (إذا كانت هذه الدالة موجودة وتعمل)
+  }
+  
+  // 4. إعادة تشغيل الفيديو
+  videoState?.playCurrentVideo();
+}
 
   //عرض الملخص فالهوم
   void updateTripSummaryText(String? newSummary) {
@@ -182,7 +219,7 @@ Map<String, int> getScrollStatus() {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _fetchAllTrips();
+    fetchAllTrips();
 
     
   }
@@ -209,7 +246,7 @@ Map<String, int> getScrollStatus() {
     }
   }
 
-  Future<void> _fetchAllTrips() async {
+  Future<void> fetchAllTrips() async {
     setState(() {
       _isLoadingFirstPage = true;
       _initialErrorMessage = '';
@@ -284,24 +321,39 @@ Map<String, int> getScrollStatus() {
       _hasMoreData = startIndex + _perPage < _allTrips.length;
     });
   }
-
-  Future<void> _initializeAndPreloadVideo(
+// 💡 هذه هي الدالة التي تحتاج إلى تعديل
+Future<void> _initializeAndPreloadVideo(
     int index, {
     bool autoPlay = false,
   }) async {
     if (_videoControllers.containsKey(index) || index >= _trips.length) return;
 
-    final videoUrl = _trips[index]['video_url']?.toString() ?? '';
-    if (videoUrl.isEmpty) {
+    final videoRelativeUrl = _trips[index]['video_url']?.toString() ?? '';
+    if (videoRelativeUrl.isEmpty) {
       if (mounted) setState(() => _videoErrorState[index] = true);
       return;
     }
 
+    // 💡 الرابط الأساسي للسيرفر
+    const String _baseUrl = "https://tripto.blueboxpet.com/"; 
+
+    // 1. إضافة الرابط الأساسي أولاً
+    String fullVideoUrl = _baseUrl + videoRelativeUrl;
+
+    // 2. 🌟 تطبيق نفس منطق تعديل المسار الذي نجح مع الصور 🌟
+    // تحويل الرابط من: https://.../storage/videos/...
+    // إلى: https://.../storage/app/public/videos/...
+    if (fullVideoUrl.contains('/storage/')) {
+        fullVideoUrl = fullVideoUrl.replaceFirst("/storage/", "/storage/app/public/");
+    }
+
+    // يمكنك طباعة الرابط النهائي للتأكد
+    debugPrint("Final Internal Video URL: $fullVideoUrl");
+
     try {
-      final directLink = _isDriveUrl(videoUrl)
-          ? await _getDirectDriveLink(videoUrl)
-          : videoUrl;
-      final controller = VideoPlayerController.network(directLink);
+      // 🎥 استخدام الرابط المعدل لتشغيل الفيديو
+      final controller = VideoPlayerController.networkUrl(Uri.parse(fullVideoUrl));
+
       _videoControllers[index] = controller;
       await controller.initialize();
 
@@ -324,7 +376,6 @@ Map<String, int> getScrollStatus() {
       if (mounted) setState(() => _videoErrorState[index] = true);
     }
   }
-
   void _onPageChanged(int index) {
     if (_chewieControllers.containsKey(_currentIndex)) {
       _chewieControllers[_currentIndex]?.pause();
@@ -417,6 +468,12 @@ Map<String, int> getScrollStatus() {
     });
   }
 
+  void _enterFullscreen(){
+
+        widget.onToggleFullscreen?.call(true);
+
+  }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -448,7 +505,7 @@ Map<String, int> getScrollStatus() {
     _chewieControllers[_currentIndex]?.play();
   }
 
-  void _disposeAllVideos() {
+  void disposeAllVideos() {
     _videoControllers.forEach((_, c) => c.dispose());
     _chewieControllers.forEach((_, c) => c.dispose());
     _videoControllers.clear();
@@ -629,7 +686,7 @@ ElevatedButton(
           onNotification: (overscroll) {
             if (overscroll.overscroll < 0) {
               // المستخدم بيسحب لتحت
-              _fetchAllTrips();
+              fetchAllTrips();
             }
             return false;
           },
@@ -637,7 +694,7 @@ ElevatedButton(
           child: RefreshIndicator(
             color: const Color(0xFF002E70),
             onRefresh: () async{
-                await _fetchAllTrips();
+                await fetchAllTrips();
             },
           
             child: PageView.builder(
@@ -716,6 +773,10 @@ ElevatedButton(
                         ),
                       ),
                     ),
+
+
+
+                    if(!kIsWeb)
                     Positioned(
                       top: MediaQuery.of(context).padding.top + 10,
                       left:
@@ -731,18 +792,20 @@ ElevatedButton(
                               color: Colors.white,
                             ),
                             onPressed: () async {
+                              
                               final result = await Navigator.push<bool>(
                                 context,
                                 MaterialPageRoute(
                                   builder: (ctx) => const SearchPage(),
                                 ),
                               );
+                              widget.onSearchPressed?.call();
                           
                               if(result == true){
                                 
-                                 _disposeAllVideos(); // وقف كل الفيديوهات القديمة
+                                 disposeAllVideos(); // وقف كل الفيديوهات القديمة
                           
-                                _fetchAllTrips();
+                                fetchAllTrips();
                               }
                             },
                           ),
@@ -761,6 +824,28 @@ ElevatedButton(
                         ],
                       ),
                     ),
+
+                     if (kIsWeb && widget.onToggleFullscreen != null)
+                      Positioned(
+                       top: MediaQuery.of(context).padding.top + 10,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                      right:
+                          Directionality.of(context) == TextDirection.rtl ? null : 10,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.fullscreen, 
+                            color: Colors.white, 
+                            size: 30
+                          ),
+                          onPressed: _enterFullscreen,
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.black.withOpacity(0.4),
+                          ),
+                        ),
+                      ),
+                    // -----
+                    // -----
                     Positioned(
                       top: MediaQuery.of(context).padding.top + 10,
                       left:
@@ -769,11 +854,16 @@ ElevatedButton(
                           Directionality.of(context) == TextDirection.rtl ? 10 : null,
                       child: IconButton(
                         icon: Icon(
-                          _isMuted ? Icons.volume_off : Icons.volume_up,
+                          _isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
                           color: Colors.white,
                           size: 30,
                         ),
                         onPressed: _toggleMute,
+                        style: IconButton.styleFrom(
+                                          backgroundColor: Colors.white10,
+                                          padding: const EdgeInsets.all(12),
+                                        ),
+                        
                       ),
                     ),
 
@@ -976,7 +1066,7 @@ Positioned(
   void _updateTripsList(List<GetTripModel> trips) {
     if (!mounted) return;
     // أول حاجة: اقفل كل الفيديوهات القديمة
-    _disposeAllVideos();
+    disposeAllVideos();
 
     final newTrips = trips.map((tripModel) => tripModel.toVideoPlayerJson()).toList();
 
