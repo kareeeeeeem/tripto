@@ -131,13 +131,13 @@ class _WebDrawerState extends State<WebDrawer> {
                 ),
               ),
 
-              Icon(
-                Localizations.localeOf(context).languageCode == 'ar'
-                    ? Icons.keyboard_arrow_left_outlined
-                    : Icons.keyboard_arrow_right_outlined,
-                size: 35,
-                color: Colors.white,
-              ),
+              // Icon(
+              //   Localizations.localeOf(context).languageCode == 'ar'
+              //       ? Icons.keyboard_arrow_left_outlined
+              //       : Icons.keyboard_arrow_right_outlined,
+              //   size: 35,
+              //   color: Colors.white,
+              // ),
             ],
           );
         },
@@ -244,7 +244,6 @@ class _WebDrawerState extends State<WebDrawer> {
                   drawerItems[i]['trailing'] != null
                       ? drawerItems[i]['trailing']!(context)
                       : null,
-
               onTap: () async {
                 // ✅ أول حاجة نحدث العنصر المحدد
                 setState(() {
