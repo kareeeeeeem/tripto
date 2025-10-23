@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart';
@@ -60,15 +61,16 @@ class _AppState extends State<App> {
       body: Stack(
         children: [
           pages[_currentIndex],
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CustomBottomNavBar(
-              currentIndex: _currentIndex,
-              onTap: _changePage,
+          if (!kIsWeb)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CustomBottomNavBar(
+                currentIndex: _currentIndex,
+                onTap: _changePage,
+              ),
             ),
-          ),
         ],
       ),
     );
