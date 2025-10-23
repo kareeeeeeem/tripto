@@ -92,11 +92,12 @@ class _FavoritePageState extends State<FavoritePage>
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SideMenu()),
-              (route) => false,
-            );
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SideMenu()),
+            //   (route) => false,
+            // );
+            Navigator.pop(context);
           },
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'

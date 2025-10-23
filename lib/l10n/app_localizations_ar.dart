@@ -1258,4 +1258,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nextVideo => 'الفيديو التالي';
+
+  @override
+  String get home => 'الصفحة الرئيسية';
 }

@@ -2371,6 +2371,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'next Video'**
   String get nextVideo;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
 }
 
 class _AppLocalizationsDelegate

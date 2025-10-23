@@ -30,11 +30,12 @@ class _PrivacypolicyState extends State<Privacypolicy> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SideMenu()),
-              (route) => false,
-            );
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SideMenu()),
+            //   (route) => false,
+            // );
+            Navigator.pop(context);
           },
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'

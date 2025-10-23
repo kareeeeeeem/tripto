@@ -73,11 +73,12 @@ class _ReportState extends State<Report> {
           ),
           leading: IconButton(
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const SideMenu()),
-                (route) => false,
-              );
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const SideMenu()),
+              //   (route) => false,
+              // );
+              Navigator.pop(context);
             },
             icon: Icon(
               Localizations.localeOf(context).languageCode == 'ar'
@@ -91,7 +92,7 @@ class _ReportState extends State<Report> {
           ),
         ),
         body: SingleChildScrollView(
-          child:  Center(
+          child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -111,7 +112,7 @@ class _ReportState extends State<Report> {
                   //   children: [
                   //     Icon(Icons.report, color: const Color(0xFF002E70), size: 12),
                   //     SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-            
+
                   //     buildLabel(AppLocalizations.of(context)!.report),
                   //   ],
                   // ),
@@ -153,7 +154,7 @@ class _ReportState extends State<Report> {
                       ),
                     ),
                   ),
-            
+
                   SizedBox(height: MediaQuery.of(context).size.height * 0.10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.878,
@@ -173,7 +174,7 @@ class _ReportState extends State<Report> {
                           messagebody: reportController.text,
                           subject: "Report",
                         );
-            
+
                         // خلي بالك هنا لازم تكون نفس اسم الباراميتر في الـ Event
                         context.read<ContactusBloc>().add(
                           SubmitContactUs(
@@ -192,9 +193,9 @@ class _ReportState extends State<Report> {
                       ),
                     ),
                   ),
-            
+
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-            
+
                   // //////////////////////////////////////////////////////////////////////////////////////
                   Padding(
                     padding: EdgeInsets.all(

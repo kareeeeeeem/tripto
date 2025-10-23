@@ -31,11 +31,12 @@ class _CancellattionState extends State<Cancellattion> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SideMenu()),
-              (route) => false,
-            );
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SideMenu()),
+            //   (route) => false,
+            // );
+            Navigator.pop(context);
           },
           icon: Icon(
             Localizations.localeOf(context).languageCode == 'ar'
@@ -55,21 +56,22 @@ class _CancellattionState extends State<Cancellattion> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.circular(20), // نعومة الحواف
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 450, // أقصى عرض للويب
-                      ),
-                      child: Image.asset(
-                        "assets/images/cancellation.png",
-                        width: double.infinity, // يعتمد على عرض الـ ConstrainedBox
-                        height: screenHeight * 0.20,
-                        fit: BoxFit.cover,
-                      ),
+                borderRadius: BorderRadius.circular(20), // نعومة الحواف
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 450, // أقصى عرض للويب
+                    ),
+                    child: Image.asset(
+                      "assets/images/cancellation.png",
+                      width:
+                          double.infinity, // يعتمد على عرض الـ ConstrainedBox
+                      height: screenHeight * 0.20,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
+              ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Text(
@@ -503,20 +505,18 @@ class _CancellattionState extends State<Cancellattion> {
                 AppLocalizations.of(context)!.cancellation48,
                 style: const TextStyle(fontSize: 16),
               ),
-            Center(
-  child: Container(
-    width: 400,
-    height: 100,
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage("assets/images/Logo.png"),
-        fit: BoxFit.contain,
-      ),
-    ),
-  ),
-),
-
-
+              Center(
+                child: Container(
+                  width: 400,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/Logo.png"),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

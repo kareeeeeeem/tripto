@@ -411,5 +411,6 @@
   "previousVideo": "الفيديو السابق",
   "@previousVideo": {},
   "nextVideo": "الفيديو التالي",
-  "@nextVideo": {}
+  "@nextVideo": {},
+  "home": "الصفحة الرئيسية"
 }

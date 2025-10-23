@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
@@ -18,7 +17,9 @@ class _HomePageState extends State<HomePage> {
 
   int _currentTripId = 1; // قيمة افتراضية
   int _currentTripCategory = 0; // قيمة افتراضية
-  GlobalKey<PersonCounterWithPriceState> _currentPersonCounterKey = GlobalKey(); // مفتاح افتراضي
+  GlobalKey<PersonCounterWithPriceState> _currentPersonCounterKey =
+      GlobalKey(); // مفتاح افتراضي
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
@@ -57,22 +58,27 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-// داخل _HomePageState في homepage.dart
-
-void _updateTripSummary(String? summary) {
+  void _updateTripSummary(String? summary) {
     if (!mounted) return;
     if (summary != _tripSummaryText) {
-        setState(() {
-            _tripSummaryText = summary;
-        });
-        debugPrint("✅ Summary received in HomePage: $summary");
-
-        // 🌟 أهم خطوة: استدعاء دالة تحديث الملخص في VideoPlayerScreenState
-        // هذا يعمل لتحديث الشاشة المعروضة على الويب.
-        videoPlayerScreenKey.currentState?.updateTripSummaryText(summary); 
+      setState(() {
+        _tripSummaryText = summary;
+      });
+      debugPrint("✅ Summary received in HomePage: $summary");
     }
-}
+  }
 
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(milliseconds: 0));
+      if (mounted && kIsWeb) {
+        _scaffoldKey.currentState?.openDrawer();
+      }
+    });
+  }
 
   void onDateRangeSelected(DateTime? start, DateTime? end) {
     setState(() {
@@ -109,7 +115,8 @@ void _updateTripSummary(String? summary) {
           const double spacingBetween = 40;
 
           final screenWidth = constraints.maxWidth;
-          final remainingSpace = (screenWidth -
+          final remainingSpace =
+              (screenWidth -
                   (videoWidth +
                       rightButtonsWidth +
                       scrollButtonsWidth +
@@ -117,11 +124,19 @@ void _updateTripSummary(String? summary) {
               2;
 
           return Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Colors.black,
-            drawer: const WebDrawer(), // 💡 1. إضافة الـ Drawer
-            body: Builder( // 💡 2. استخدام Builder للحصول على context الـ Scaffold
+            drawer: Padding(
+              padding: const EdgeInsets.only(top: 70),
+              child: const WebDrawer(),
+            ),
+            drawerScrimColor: Colors.transparent,
+
+            body: Builder(
+              // 💡 2. استخدام Builder للحصول على context الـ Scaffold
               builder: (context) {
-                return Stack( // 💡 3. استخدام Stack لوضع زر القائمة فوق المحتوى
+                return Stack(
+                  // 💡 3. استخدام Stack لوضع زر القائمة فوق المحتوى
                   children: [
                     // المحتوى الرئيسي (الـ Row الممركز)
                     Center(
@@ -138,8 +153,8 @@ void _updateTripSummary(String? summary) {
                             ),
                             child: VideoPlayerScreen(
                               key: videoPlayerScreenKey,
-                              onTripChanged: _updateCurrentTripDetails, 
-                              ),
+                              onTripChanged: _updateCurrentTripDetails,
+                            ),
                           ),
 
                           const SizedBox(width: spacingBetween),
@@ -150,24 +165,33 @@ void _updateTripSummary(String? summary) {
                             child: RightButtons(
                               tripId: _currentTripId,
                               currentTripCategory: _currentTripCategory,
-                              personCounterKey: _currentPersonCounterKey, 
+                              personCounterKey: _currentPersonCounterKey,
                               selectedTripSummary: _tripSummaryText,
 
-                              onHotelSelected: (id, price) { 
+                              onHotelSelected: (id, price) {
                                 if (!mounted) return;
-                                setState(() { _selectedHotelId = id; _selectedHotelPrice = price; });
+                                setState(() {
+                                  _selectedHotelId = id;
+                                  _selectedHotelPrice = price;
+                                });
                               },
-                              onCarSelected: (id, price) { 
+                              onCarSelected: (id, price) {
                                 if (!mounted) return;
-                                setState(() { _selectedCarId = id; _selectedCarPrice = price; });
+                                setState(() {
+                                  _selectedCarId = id;
+                                  _selectedCarPrice = price;
+                                });
                               },
-                              onActivitySelected: (id, price) { 
+                              onActivitySelected: (id, price) {
                                 if (!mounted) return;
-                                setState(() { _selectedActivityId = id; _selectedActivityPrice = price; });
+                                setState(() {
+                                  _selectedActivityId = id;
+                                  _selectedActivityPrice = price;
+                                });
                               },
-                              onFlightSelected: (id, price) {}, 
+                              onFlightSelected: (id, price) {},
 
-                              onSummaryReady: _updateTripSummary, 
+                              onSummaryReady: _updateTripSummary,
                               onDateRangeSelected: onDateRangeSelected,
                             ),
                           ),
@@ -175,73 +199,89 @@ void _updateTripSummary(String? summary) {
                           const SizedBox(width: spacingBetween),
 
                           // ⬆️⬇️ أزرار السحب
-                         // داخل _HomePageState في دالة build (في قسم الويب)
-
-// ...
-// ⬆️⬇️ أزرار السحب
-SizedBox(
-    width: scrollButtonsWidth,
-    child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-             // زر الصعود (الفيديو السابق)
-             Builder(
-                builder: (context) {
-                    final status = videoPlayerScreenKey.currentState?.getScrollStatus();
-                    final currentIndex = status?['currentIndex'] ?? 0;
-                    final isFirstVideo = currentIndex == 0;
-                    
-                    return Tooltip( // 🆕 إضافة Tooltip هنا
-                        message: AppLocalizations.of(context)!.previousVideo, // ⬅️ النص الجديد
-                        child: IconButton(
-                            icon: Icon(Icons.keyboard_arrow_up,
-                                size: 40, 
-                                color: isFirstVideo ? Colors.white24 : Colors.white70),
-                            onPressed: isFirstVideo ? null : _scrollToPreviousPage,
-                            style: IconButton.styleFrom(
-                                backgroundColor: Colors.white10,
+                          SizedBox(
+                            width: scrollButtonsWidth,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_up,
+                                    size: 40,
+                                    color: Colors.white70,
+                                  ),
+                                  onPressed: _scrollToPreviousPage,
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.white10,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 40,
+                                    color: Colors.white70,
+                                  ),
+                                  onPressed: _scrollToNextPage,
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.white10,
+                                  ),
+                                ),
+                              ],
                             ),
-                        ),
-                    );
-                },
-            ),
-            
-            const SizedBox(height: 20),
-
-            // زر النزول (الفيديو التالي)
-            Tooltip( // 🆕 إضافة Tooltip هنا
-                message: AppLocalizations.of(context)!.nextVideo, // ⬅️ النص الجديد
-                child: IconButton(
-                    icon: const Icon(Icons.keyboard_arrow_down,
-                        size: 40, color: Colors.white70),
-                    onPressed: _scrollToNextPage,
-                    style: IconButton.styleFrom(
-                        backgroundColor: Colors.white10,
-                    ),
-                ),
-            ),
-        ],
-    ),
-),
+                          ),
                         ],
                       ),
                     ),
 
                     // 💡 4. زر القائمة في الزاوية العلوية اليسرى
+                    // 💡 الجزء الجديد اللي بيجمع الزرار واللوجو زي YouTube
                     Positioned(
                       top: 20,
                       left: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white, size: 30),
-                        onPressed: () {
-                          // استدعاء openDrawer من الـ Scaffold
-                          Scaffold.of(context).openDrawer(); 
-                        },
+                      child: Row(
+                        children: [
+                          // 🔹 زرار القائمة
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+
+                          const SizedBox(width: 10),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/logo2.png',
+                                height: 58,
+                                width: 80,
+                              ),
+
+                              const SizedBox(width: 6),
+
+                              //   // أو تكتب الاسم بدل الصورة
+                              //   const Text(
+                              //     'TripTo',
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontSize: 22,
+                              //       fontWeight: FontWeight.bold,
+                              //       letterSpacing: 1.2,
+                              //     ),
+                              //   ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 );
-              }
+              },
             ),
           );
         } else {

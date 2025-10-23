@@ -16,15 +16,20 @@ class _AboutUsState extends State<AboutUs> {
 
   Widget _buildPaddedText(BuildContext context, TextSpan textSpan) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: horizontalPaddingValue,
+        vertical: 4.0,
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start, // لضمان البدء من اليسار/اليمين
+        mainAxisAlignment:
+            MainAxisAlignment.start, // لضمان البدء من اليسار/اليمين
         children: [
           Expanded(
             child: RichText(
-              textAlign: Localizations.localeOf(context).languageCode == 'ar'
-                  ? TextAlign.right
-                  : TextAlign.left,
+              textAlign:
+                  Localizations.localeOf(context).languageCode == 'ar'
+                      ? TextAlign.right
+                      : TextAlign.left,
               text: textSpan,
             ),
           ),
@@ -52,20 +57,23 @@ class _AboutUsState extends State<AboutUs> {
           AppLocalizations.of(context)!.aboutus,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        
+
         leading: IconButton(
           onPressed: () {
             // Navigator.popAndPush to prevent rebuild loop if SideMenu is same as current route stack base
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SideMenu()),
-              (route) => false,
-            );
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SideMenu()),
+            //   (route) => false,
+            // );
+            Navigator.pop(context);
           },
           icon: Icon(
             isArabic
-                ? Icons.keyboard_arrow_right_outlined // في العربي: سهم لليمين
-                : Icons.keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
+                ? Icons
+                    .keyboard_arrow_right_outlined // في العربي: سهم لليمين
+                : Icons
+                    .keyboard_arrow_left_outlined, // في الإنجليزي: سهم لليسار
             size: 35,
             color: Colors.black,
           ),
@@ -87,7 +95,7 @@ class _AboutUsState extends State<AboutUs> {
                 ),
               ),
             ),
-            
+
             // --- النص الأول ---
             _buildPaddedText(
               context,
@@ -96,7 +104,7 @@ class _AboutUsState extends State<AboutUs> {
                 children: [
                   TextSpan(text: AppLocalizations.of(context)!.aboutus1),
                   TextSpan(
-                    text: AppLocalizations.of(context)!.aboutus2, 
+                    text: AppLocalizations.of(context)!.aboutus2,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   TextSpan(text: AppLocalizations.of(context)!.aboutus3),
@@ -127,7 +135,10 @@ class _AboutUsState extends State<AboutUs> {
 
             // --- النص الثامن (العنوان) ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.aboutus8,
                 style: const TextStyle(fontSize: 16),
@@ -138,27 +149,42 @@ class _AboutUsState extends State<AboutUs> {
 
             // --- النص التاسع (نقطة) - تم تعديل الـ Padding ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.aboutus9,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: isArabic ? TextAlign.right : TextAlign.left,
               ),
             ),
 
             // --- النص العاشر (نقطة) - تم تعديل الـ Padding ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.aboutus10,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: isArabic ? TextAlign.right : TextAlign.left,
               ),
             ),
 
             // --- النص الحادي عشر والثاني عشر (شرح) ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: RichText(
                 textAlign: isArabic ? TextAlign.right : TextAlign.left,
                 text: TextSpan(
@@ -168,9 +194,7 @@ class _AboutUsState extends State<AboutUs> {
                       text: AppLocalizations.of(context)!.aboutus11,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.aboutus12,
-                    ),
+                    TextSpan(text: AppLocalizations.of(context)!.aboutus12),
                   ],
                 ),
               ),
@@ -179,7 +203,10 @@ class _AboutUsState extends State<AboutUs> {
 
             // --- النص الثالث عشر ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.aboutus13,
                 style: const TextStyle(fontSize: 16),
@@ -190,7 +217,10 @@ class _AboutUsState extends State<AboutUs> {
 
             // --- النص الرابع عشر ---
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingValue, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingValue,
+                vertical: 4.0,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.aboutus14,
                 style: const TextStyle(fontSize: 16),

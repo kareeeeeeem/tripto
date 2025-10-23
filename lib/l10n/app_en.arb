@@ -411,5 +411,6 @@
   "previousVideo": "last Vedio ",
   "@previousVideo": {},
   "nextVideo": "next Video",
-  "@nextVideo": {}
+  "@nextVideo": {},
+  "home": "Home"
 }

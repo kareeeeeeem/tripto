@@ -1271,4 +1271,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nextVideo => 'next Video';
+
+  @override
+  String get home => 'Home';
 }
