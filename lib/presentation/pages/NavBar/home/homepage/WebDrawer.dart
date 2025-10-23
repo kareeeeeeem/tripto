@@ -27,6 +27,8 @@ class WebDrawer extends StatefulWidget {
 }
 
 class _WebDrawerState extends State<WebDrawer> {
+  int? selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     // ✅ دي الليست اللي فيها كل العناصر (icon + title + page)
@@ -220,19 +222,46 @@ class _WebDrawerState extends State<WebDrawer> {
               leading: Icon(drawerItems[i]['icon'], color: Colors.white),
               title: Text(
                 drawerItems[i]['title'],
-                style: const TextStyle(fontSize: 18, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 18,
+                  color:
+                      selectedIndex == i
+                          ? const Color(0xFF00AEEF)
+                          : Colors.white, // ✅ لون مميز لو العنصر متعلم
+                  fontWeight:
+                      selectedIndex == i ? FontWeight.bold : FontWeight.normal,
+                ),
               ),
               trailing:
                   drawerItems[i]['trailing'] != null
                       ? drawerItems[i]['trailing']!(context)
                       : null,
-              onTap:
-                  drawerItems[i]['action'] != null
-                      ? () => drawerItems[i]['action']!(
-                        context,
-                        () => setState(() {}),
-                      )
-                      : null,
+              onTap: () async {
+                // ✅ أول حاجة نحدث العنصر المحدد
+                setState(() {
+                  selectedIndex = i;
+                });
+
+                // ✅ نقفل الدروار
+                Navigator.pop(context);
+
+                // ✅ لو في صفحة نروحها
+                if (drawerItems[i]['page'] != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => drawerItems[i]['page'],
+                    ),
+                  );
+                }
+                // ✅ لو في أكشن (زي تغيير اللغة)
+                else if (drawerItems[i]['action'] != null) {
+                  await drawerItems[i]['action']!(
+                    context,
+                    () => setState(() {}),
+                  );
+                }
+              },
             ),
 
             if (i == 3 || i == 6)

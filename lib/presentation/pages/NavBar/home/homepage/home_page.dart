@@ -104,6 +104,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
     return LayoutBuilder(
       builder: (context, constraints) {
         const double tabletBreakpoint = 600;
@@ -238,8 +240,13 @@ class _HomePageState extends State<HomePage> {
                     // 💡 الجزء الجديد اللي بيجمع الزرار واللوجو زي YouTube
                     Positioned(
                       top: 20,
-                      left: 20,
+                      left: isArabic ? null : 20, // 👈 لو إنجليزي يبقى شمال
+                      right: isArabic ? 20 : null, // 👈 لو عربي يبقى يمين
                       child: Row(
+                        textDirection:
+                            isArabic
+                                ? TextDirection.rtl
+                                : TextDirection.ltr, // 🔁 اتجاه المحتوى
                         children: [
                           // 🔹 زرار القائمة
                           IconButton(
@@ -254,27 +261,12 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           const SizedBox(width: 10),
-                          Row(
-                            children: [
-                              Image.asset(
-                                'assets/images/logo2.png',
-                                height: 58,
-                                width: 80,
-                              ),
 
-                              const SizedBox(width: 6),
-
-                              //   // أو تكتب الاسم بدل الصورة
-                              //   const Text(
-                              //     'TripTo',
-                              //     style: TextStyle(
-                              //       color: Colors.white,
-                              //       fontSize: 22,
-                              //       fontWeight: FontWeight.bold,
-                              //       letterSpacing: 1.2,
-                              //     ),
-                              //   ),
-                            ],
+                          // 🔹 اللوجو
+                          Image.asset(
+                            'assets/images/logo2.png',
+                            height: 58,
+                            width: 80,
                           ),
                         ],
                       ),
