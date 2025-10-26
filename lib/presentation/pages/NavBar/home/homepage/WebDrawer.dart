@@ -119,15 +119,27 @@ class _WebDrawerState extends State<WebDrawer> {
                   TripToApp.setLocale(context, newLocale);
                 },
 
-                child: Text(
-                  Localizations.localeOf(context).languageCode == "en"
-                      ? "العربية"
-                      : "English",
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      Localizations.localeOf(context).languageCode == "en"
+                          ? "العربية"
+                          : "English",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Icon(
+                      Localizations.localeOf(context).languageCode == 'ar'
+                          ? Icons.keyboard_arrow_left_outlined
+                          : Icons.keyboard_arrow_right_outlined,
+                      size: 35,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
               ),
 
@@ -280,61 +292,62 @@ class _WebDrawerState extends State<WebDrawer> {
             //     width: MediaQuery.of(context).size.width * 0.03,
             //   ), // 👈 برضو هنا
             if (i == 3)
-              Column(
-                children: [
-                  Text(
-                    "Developed by Eng.Amr Hassan",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                  Center(
-                    child: Text(
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      "Developed by Eng.Amr Hassan",
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                    Text(
                       "© 2025 Google ",
                       style: TextStyle(color: Colors.white54, fontSize: 12),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueAccent, // لون الخلفية
-                        foregroundColor: Colors.white, // لون النص
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
+                    const SizedBox(height: 10),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent, // لون الخلفية
+                          foregroundColor: Colors.white, // لون النص
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: () async {
-                        const phoneNumber = '201028476944';
-                        final message = Uri.encodeComponent(
-                          AppLocalizations.of(context)!.customTripMessage,
-                        );
-                        final url = 'https://wa.me/$phoneNumber?text=$message';
+                        onPressed: () async {
+                          const phoneNumber = '201028476944';
+                          final message = Uri.encodeComponent(
+                            AppLocalizations.of(context)!.customTripMessage,
+                          );
+                          final url =
+                              'https://wa.me/$phoneNumber?text=$message';
 
-                        if (await canLaunchUrl(Uri.parse(url))) {
-                          await launchUrl(
-                            Uri.parse(url),
-                            mode: LaunchMode.externalApplication,
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!.cannotOpenWhatsapp,
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(
+                              Uri.parse(url),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.cannotOpenWhatsapp,
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text(AppLocalizations.of(context)!.customtrip),
+                            );
+                          }
+                        },
+                        child: Text(AppLocalizations.of(context)!.customtrip),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
             // const Divider(color: Colors.white30, thickness: 1),
