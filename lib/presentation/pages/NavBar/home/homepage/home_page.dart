@@ -1,9 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/presentation/pages/NavBar/ActivityPage/activities_page.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
+import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
+
+import '../../../../../main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,8 +18,9 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with RouteAware {
   final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey = GlobalKey();
+  bool _isDrawerOpen = false;
 
   int _currentTripId = 1; // قيمة افتراضية
   int _currentTripCategory = 0; // قيمة افتراضية
@@ -80,6 +87,31 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route is PageRoute) {
+      routeObserver.subscribe(this, route);
+    }
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  // بيتنادى لما الصفحة ترجع تاني بعد ما كنت فاتح صفحة تانية
+  @override
+  void didPopNext() {
+    if (mounted && kIsWeb) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scaffoldKey.currentState?.openDrawer();
+      });
+    }
+  }
+
   void onDateRangeSelected(DateTime? start, DateTime? end) {
     setState(() {
       _rangeStart = start;
@@ -129,10 +161,185 @@ class _HomePageState extends State<HomePage> {
             key: _scaffoldKey,
             backgroundColor: Colors.black,
             drawer: Padding(
-              padding: const EdgeInsets.only(top: 70),
-              child: const WebDrawer(),
+              padding: const EdgeInsets.only(top: 10),
+              child: Stack(
+                children: [
+                  if (_isDrawerOpen)
+                    Positioned(
+                      top: 70,
+                      left: isArabic ? null : 20,
+                      right: isArabic ? 20 : null,
+                      bottom: 0,
+                      child: SizedBox(width: 300, child: const WebDrawer()),
+                    ),
+
+                  if (_isDrawerOpen)
+                    Positioned(
+                      top: 70,
+                      left: isArabic ? 0 : 300,
+                      right: isArabic ? 300 : 0,
+                      bottom: 0,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {},
+                        child: const SizedBox(),
+                      ),
+                    ),
+
+                  Positioned(
+                    left: isArabic ? null : 20,
+                    right: isArabic ? 20 : null,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isDrawerOpen = !_isDrawerOpen;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.11,
+                        ),
+
+                        // 🔹 اللوجو
+                        Image.asset(
+                          'assets/images/TRIPTO.png',
+                          height: 58,
+                          width: 75,
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (!_isDrawerOpen)
+                    Positioned(
+                      left: isArabic ? null : 20,
+                      right: isArabic ? 20 : null,
+                      top: 80,
+                      child: AnimatedOpacity(
+                        opacity: _isDrawerOpen ? 0 : 1,
+                        duration: const Duration(milliseconds: 300),
+                        child: Column(
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.home,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.home,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.hotel,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Hotelcard(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.hotels,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.extension,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ActivityPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.activities,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.car_rental_sharp,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CarCard(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.cars,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
             drawerScrimColor: Colors.transparent,
+            onDrawerChanged: (isOpened) {
+              setState(() {
+                _isDrawerOpen = isOpened;
+              });
+            },
 
             body: Builder(
               // 💡 2. استخدام Builder للحصول على context الـ Scaffold
@@ -161,7 +368,7 @@ class _HomePageState extends State<HomePage> {
 
                           const SizedBox(width: spacingBetween),
 
-                          // 🎛️ RightButtons
+                          // 🎛 RightButtons
                           SizedBox(
                             width: rightButtonsWidth,
                             child: RightButtons(
@@ -200,7 +407,7 @@ class _HomePageState extends State<HomePage> {
 
                           const SizedBox(width: spacingBetween),
 
-                          // ⬆️⬇️ أزرار السحب
+                          // ⬆⬇ أزرار السحب
                           SizedBox(
                             width: scrollButtonsWidth,
                             child: Column(
@@ -235,47 +442,14 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
-                    // 💡 4. زر القائمة في الزاوية العلوية اليسرى
-                    // 💡 الجزء الجديد اللي بيجمع الزرار واللوجو زي YouTube
-                    Positioned(
-                      top: 20,
-                      left: isArabic ? null : 20, // 👈 لو إنجليزي يبقى شمال
-                      right: isArabic ? 20 : null, // 👈 لو عربي يبقى يمين
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        textDirection:
-                            isArabic
-                                ? TextDirection.rtl
-                                : TextDirection.ltr, // 🔁 اتجاه المحتوى
-                        children: [
-                          // 🔹 زرار القائمة
-                          IconButton(
-                            icon: const Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          ),
-
-                          SizedBox(
-                            width:
-                                MediaQuery.of(context).size.width *
-                                0.11, // مثال: 2% من عرض الشاشة
-                          ),
-
-                          // 🔹 اللوجو
-                          Image.asset(
-                            'assets/images/TRIPTO.png',
-                            height: 58,
-                            width: 75,
-                          ),
-                        ],
+                    if (_isDrawerOpen)
+                      Positioned.fill(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {},
+                          child: const SizedBox(),
+                        ),
                       ),
-                    ),
                   ],
                 );
               },
