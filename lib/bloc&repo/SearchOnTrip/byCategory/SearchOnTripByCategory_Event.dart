@@ -24,3 +24,10 @@ class FetchTripsByCategory extends SearchTripByCategoryEvent {
   @override
   List<Object?> get props => [category];
 }
+// // 💡 هذا هو الصنف المفقود الذي يسبب خطأ التشغيل
+// class FetchAllTrips extends SearchTripByCategoryEvent {
+//   const FetchAllTrips();
+//   @override
+//   List<Object?> get props => [];
+// }
+// >>>>>>> Stashed changes

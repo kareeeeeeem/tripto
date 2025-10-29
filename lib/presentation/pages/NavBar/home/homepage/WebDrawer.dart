@@ -11,7 +11,7 @@ import 'package:tripto/presentation/pages/NavBar/SideMenu/Privacypolicy.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/Report.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/SideMenu.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/TermsandCondations.dart';
-import 'package:tripto/presentation/pages/NavBar/home/homepage/home_page.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/home_page.dart' hide AppLocalizations;
 import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
@@ -156,6 +156,25 @@ class _WebDrawerState extends State<WebDrawer> {
                   ],
                 ),
               ),
+                 Text(
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? "العربية"
+                      : "English",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              
+
+              // Icon(
+              //   Localizations.localeOf(context).languageCode == 'ar'
+              //       ? Icons.keyboard_arrow_left_outlined
+              //       : Icons.keyboard_arrow_right_outlined,
+              //   size: 35,
+              //   color: Colors.white,
+              // ),
             ],
           );
         },
@@ -216,6 +235,56 @@ class _WebDrawerState extends State<WebDrawer> {
         ),
         child: Scrollbar(
           thumbVisibility: true,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          // DrawerHeader(
+          //   decoration: BoxDecoration(color: Colors.black),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       // Container(
+          //       //   child: const Text(
+          //       //     'TripTo',
+          //       //     style: TextStyle(color: Colors.white, fontSize: 24),
+          //       //   ),
+          //       // ),
+          //       // Image(
+          //       //   image: const AssetImage('assets/images/Logo.png'),
+          //       //   height: 50,
+          //       //   width: 70,
+          //       // ),
+          //     ],
+          //   ),
+          // ),
+          for (int i = 0; i < drawerItems.length; i++) ...[
+            ListTile(
+              leading: Icon(
+                drawerItems[i]['icon'],
+                color: Colors.white,
+                size: 22,
+              ),
+              title: Text(
+                drawerItems[i]['title'],
+                style: TextStyle(
+                  fontSize: 15,
+                  color:
+                      selectedIndex == i
+                          ? const Color(0xFF00AEEF)
+                          : Colors.white, // ✅ لون مميز لو العنصر متعلم
+                  fontWeight:
+                      selectedIndex == i ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              trailing:
+                  drawerItems[i]['trailing'] != null
+                      ? drawerItems[i]['trailing']!(context)
+                      : null,
+              onTap: () async {
+                // ✅ أول حاجة نحدث العنصر المحدد
+                setState(() {
+                  selectedIndex = i;
+                });
 
           child: ListView(
             padding: EdgeInsets.zero,
@@ -355,13 +424,82 @@ class _WebDrawerState extends State<WebDrawer> {
                       ],
                     ),
                   ),
+            if (i == 3 || i == 6)
+              const Divider(color: Colors.white30, thickness: 0.5),
+
+            // if (i == 6)
+            //   SizedBox(
+            //     width: MediaQuery.of(context).size.width * 0.03,
+            //   ), // 👈 برضو هنا
+            if (i == 3)
+              Column(
+                children: [
+                  Text(
+                    "Developed by Eng.Amr Hassan",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                  Center(
+                    child: Text(
+                      "© 2025 Google ",
+                      style: TextStyle(color: Colors.white54, fontSize: 12),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent, // لون الخلفية
+                        foregroundColor: Colors.white, // لون النص
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      onPressed: () async {
+                        const phoneNumber = '201028476944';
+                        final message = Uri.encodeComponent(
+                          AppLocalizations.of(context)!.customTripMessage,
+                        );
+                        final url = 'https://wa.me/$phoneNumber?text=$message';
+
+                        if (await canLaunchUrl(Uri.parse(url))) {
+                          await launchUrl(
+                            Uri.parse(url),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.cannotOpenWhatsapp,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text(AppLocalizations.of(context)!.customtrip),
+                    ),
+                  ),
+                ],
+              ),
 
                 // const Divider(color: Colors.white30, thickness: 1),
+                ],
               ],
-            ],
+            );
+            }
           ),
-        ),
-      ),
-    );
-  }
-}
+          ]
+        ]
+          ),
+        )
+        )
+      );
+    }
+    }

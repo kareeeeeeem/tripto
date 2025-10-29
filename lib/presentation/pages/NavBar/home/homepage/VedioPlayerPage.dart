@@ -849,6 +849,25 @@ ElevatedButton(
     ),
   ),
 
+                     if (kIsWeb && widget.onToggleFullscreen != null && !widget.isCurrentlyFullscreen!) // 👈 التعديل الجديد
+                      Positioned(
+                       top: MediaQuery.of(context).padding.top + 10,
+                      left:
+                          Directionality.of(context) == TextDirection.rtl ? 10 : null,
+                      right:
+                          Directionality.of(context) == TextDirection.rtl ? null : 10,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.fullscreen, 
+                            color: Colors.white, 
+                            size: 30
+                          ),
+                          onPressed: _enterFullscreen,
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.black.withOpacity(0.4),
+                          ),
+                        ),
+                      ),
                     // -----
                     // -----
                     Positioned(

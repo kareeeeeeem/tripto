@@ -2,10 +2,12 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/CategoryButtonsRow.dart'; 
+import 'package:tripto/core/CategoryButtonsRow%D8%B2.dart' hide CategoryButtonsRow;
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
 import 'package:tripto/presentation/pages/NavBar/home/search/SearchPage.dart';
+import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart'; 
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -20,8 +22,14 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dar
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart'; // 💡 تأكد من استيراد FetchTripsByDate
 import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart'; 
 
-
-// ❌ تم حذف التعريف المؤقت FetchTripsByDateRange من هنا
+class FetchTripsByDateRange extends SearchTripByCategoryEvent {
+  final DateTime startDate;
+  final DateTime endDate;
+  const FetchTripsByDateRange({required this.startDate, required this.endDate});
+  
+  @override
+  List<Object> get props => [startDate, endDate];
+}
 
 
 class HomePage extends StatefulWidget {
@@ -33,6 +41,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey = GlobalKey();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentTripId = 1; 
   int _currentTripCategory = 0; 
@@ -68,6 +77,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+
   Future<void> _fetchSubDestinations() async {
     try {
       final response = await http
@@ -91,31 +102,60 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // 1. دالة تنفيذ البحث حسب الفئة
+//   // 1. دالة تنفيذ البحث حسب الفئة
+//  void _executeCategorySearch(int categoryIndex) {
+//   final videoState = videoPlayerScreenKey.currentState;
+//   videoState?.pauseCurrentVideo(); 
+//   videoState?.disposeAllVideos();
+  
+//   // إعادة تعيين باقي فلاتر البحث
+//   _subDestinationController.clear();
+//   selectedSubDestinationId = null;
+//   _rangeStart = null;
+//   _rangeEnd = null;
+
+//   if (categoryIndex == -1) {
+//     videoState?.fetchAllTrips(); 
+//   } else {
+//     context.read<SearchTripByCategoryBloc>().add(
+//         FetchTripsByCategory(category: categoryIndex));
+//     setState(() {
+//       _currentTripCategory = categoryIndex;
+//       _currentPersonCounterKey = GlobalKey(); 
+//     });
+//   }
+//  }
+
+
+// دالة تنفيذ البحث حسب الفئة (معتمدة على VideoPlayerScreen لإرسال التفاصيل)
  void _executeCategorySearch(int categoryIndex) {
   final videoState = videoPlayerScreenKey.currentState;
   videoState?.pauseCurrentVideo(); 
   videoState?.disposeAllVideos();
   
-  // إعادة تعيين باقي فلاتر البحث
+  // ⭐️ التعديل هنا: إعادة تعيين التاريخ والوجهة الفرعية ⭐️
   _subDestinationController.clear();
   selectedSubDestinationId = null;
   _rangeStart = null;
   _rangeEnd = null;
 
+  // 💡 إذا كانت الفئة -1 (إلغاء التحديد)، قم بطلب إعادة تحميل الفيديو بلاير للحالة الافتراضية
   if (categoryIndex == -1) {
     videoState?.fetchAllTrips(); 
+    // يتم تحديث _currentTripId بواسطة الكولباك onTripChanged من VideoPlayerScreen
   } else {
-    context.read<SearchTripByCategoryBloc>().add(
-        FetchTripsByCategory(category: categoryIndex));
+    // 💡 عند البحث بنجاح، يتم تحديث تفاصيل الرحلة من خلال VideoPlayerScreenState.
     setState(() {
       _currentTripCategory = categoryIndex;
+      // تحديث مفتاح العداد لضمان إعادة رسمه/تهيئته
       _currentPersonCounterKey = GlobalKey(); 
     });
   }
  }
 
+
   // 💡 دالة تنفيذ البحث حسب الوجهة الفرعية
+  // دالة تنفيذ البحث حسب الوجهة الفرعية
 void _executeSubDestinationSearch(String destinationName) {
   if (destinationName.isNotEmpty) {
     final videoState = videoPlayerScreenKey.currentState;
@@ -132,6 +172,7 @@ void _executeSubDestinationSearch(String destinationName) {
 }
 
 // 2. دالة تنفيذ البحث حسب نطاق التاريخ (مُعدَّلة لاستخدام FetchTripsByDate)
+// 🆕 دالة تنفيذ البحث حسب نطاق التاريخ
 void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
   final videoState = videoPlayerScreenKey.currentState;
   videoState?.pauseCurrentVideo();
@@ -146,6 +187,8 @@ void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
   context.read<SearchTripByDateBloc>().add(
       FetchTripsByDate(from: startDate, to: endDate)); // ✅ تم التعديل
 }
+
+
 
   void _updateCurrentTripDetails(
     int tripId,
@@ -171,6 +214,7 @@ void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
       _selectedActivityId = activityId;
       _selectedActivityPrice = activityPrice;
     });
+    // هذه الدالة يتم استدعاؤها من VideoPlayerScreen بعد تحميل كل فيديو جديد
   }
 
   void _updateTripSummary(String? summary) {
@@ -205,11 +249,12 @@ void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
     if (result == true) {
       videoState?.disposeAllVideos(); 
       videoState?.fetchAllTrips();    
+      // الاعتماد على onTripChanged من VideoPlayerScreen لتحديث الحالة
     }
     videoState?.playCurrentVideo();
   }
 
-// 3. الدالة الموحدة لفتح ديالوج التاريخ المخصص
+// ⭐️ الدالة الموحدة لفتح ديالوج التاريخ المخصص (منقولة من SearchPage) ⭐️
 void _showArabicDateRangePicker(BuildContext context) async {
   final result = await showDialog(
     context: context,
@@ -224,7 +269,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
         content: SizedBox(
           width: dialogWidth, 
           height: isWeb ? 500 : null, 
-          child: ArabicDateRangePicker( 
+          child: ArabicDateRangePicker(
             firstDate: DateTime.now(),
             lastDate: DateTime.now().add(const Duration(days: 365)),
           ),
@@ -237,13 +282,18 @@ void _showArabicDateRangePicker(BuildContext context) async {
     final DateTime startDate = result['range_start'];
     final DateTime endDate = result['range_end'];
 
-    onDateRangeSelected(startDate, endDate); 
+    // 1. تحديث الحالة في HomePage
+    // onDateRangeSelected(startDate, endDate); 
+    
+    // 2. تنفيذ البحث باستخدام الـ Bloc
     _executeDateRangeSearch(startDate, endDate);
   }
 }
 
 // 4. دالة استدعاء ديالوج التاريخ من زر الـ UI
+// 🆕 دالة لإظهار منتقي نطاق التاريخ (تستدعي الدالة الموحدة)
   void _selectDateRange() async {
+    // ⭐️ استدعاء الدالة الموحدة بدلاً من showDateRangePicker ⭐️
     _showArabicDateRangePicker(context);
   }
 
@@ -256,10 +306,10 @@ void _showArabicDateRangePicker(BuildContext context) async {
     debugPrint("📅 Date Range Updated -> From: $start, To: $end");
   }
 
-
   void _scrollToNextPage() {
     videoPlayerScreenKey.currentState?.nextPage();
   }
+
 
   void _scrollToPreviousPage() {
     videoPlayerScreenKey.currentState?.previousPage();
@@ -289,10 +339,10 @@ void _showArabicDateRangePicker(BuildContext context) async {
     );
   }
 
-  // 5. مكون بناء شريط البحث والـ Chips المحدَّث
+  // 🆕 مكون بناء شريط البحث والـ Chips
   Widget _buildSearchBarAndChips(BuildContext context, bool isArabic) {
       
-      // زر البحث بالتاريخ 
+      // زر البحث بالتاريخ (الجديد)
       final dateSearchButton = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
@@ -316,8 +366,9 @@ void _showArabicDateRangePicker(BuildContext context) async {
       );
       
       // 🚨 الاستخدام الصحيح لـ CategoryButtonsRow كودجت
+      // الـ CategoryButtonsRow
       final categoryButtons = CategoryButtonsRow(
-        onCategorySearch: _executeCategorySearch, 
+        onCategorySearch: _executeCategorySearch,
       );
       
       // شريط البحث (TypeAheadField)
@@ -380,7 +431,6 @@ void _showArabicDateRangePicker(BuildContext context) async {
         ),
       );
       
-      // بناء الصف بترتيب شرطي
       final children = <Widget>[];
       if (isArabic) {
         // RTL: زر التاريخ، أزرار الفئات، شريط البحث
@@ -408,7 +458,6 @@ void _showArabicDateRangePicker(BuildContext context) async {
           mainAxisSize: MainAxisSize.min,
           children: [
             
-            // شريط البحث وأزرار الفئات في صف واحد (مرتبة حسب اللغة)
             Center(child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 900 ), 
               child: Padding(
@@ -460,8 +509,9 @@ void _showArabicDateRangePicker(BuildContext context) async {
           const double videoWidth = 450;
           const double rightButtonsWidth = 520;
           const double spacingBetween = 80;
-          
           const double searchBarHeightPadding = 130.0; 
+          
+          
           
           const double rightEdgePadding = 40.0; 
           
@@ -484,7 +534,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         onTripChanged: _updateCurrentTripDetails,
                         onSearchPressed: _handleSearchNavigation, 
                         onToggleFullscreen: _toggleFullscreen, 
-                        isCurrentlyFullscreen: _isFullscreen,
+                        isCurrentlyFullscreen: _isFullscreen, // 🆕 التعديل هنا
                       ),
                       
                       // زر الخروج من ملء الشاشة
@@ -568,7 +618,6 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       right: 0,
                       child: _buildSearchBarAndChips(context, isArabic), 
                     ),
-
 
                     Padding(
                       padding: EdgeInsets.only(top: searchBarHeightPadding), 
