@@ -484,6 +484,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         onTripChanged: _updateCurrentTripDetails,
                         onSearchPressed: _handleSearchNavigation, 
                         onToggleFullscreen: _toggleFullscreen, 
+                        isCurrentlyFullscreen: _isFullscreen,
                       ),
                       
                       // زر الخروج من ملء الشاشة
@@ -589,6 +590,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                 onTripChanged: _updateCurrentTripDetails,
                                 onSearchPressed: _handleSearchNavigation, 
                                 onToggleFullscreen: _toggleFullscreen, 
+                                isCurrentlyFullscreen: _isFullscreen,
                                 ),
                             ),
 
