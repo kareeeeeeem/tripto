@@ -1261,4 +1261,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get home => 'الصفحة الرئيسية';
+
+  @override
+  String get hotels => 'الفنادق';
 }

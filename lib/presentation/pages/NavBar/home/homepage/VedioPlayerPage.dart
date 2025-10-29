@@ -52,11 +52,14 @@ class VideoPlayerScreen extends StatefulWidget {
   final SearchCallback? onSearchPressed; 
     final ToggleFullscreenCallback? onToggleFullscreen; 
 
+    final bool? isCurrentlyFullscreen; // 🆕 الخاصية الجديدة
+    
+
   
 
   const VideoPlayerScreen({super.key, 
     this.onTripChanged, 
-    this.onSearchPressed, this.onToggleFullscreen});
+    this.onSearchPressed, this.onToggleFullscreen, this.isCurrentlyFullscreen=false});
 
   @override
   State<VideoPlayerScreen> createState() => VideoPlayerScreenState();
@@ -825,7 +828,8 @@ ElevatedButton(
                       ),
                     ),
 
-                     if (kIsWeb && widget.onToggleFullscreen != null)
+
+                     if (kIsWeb && widget.onToggleFullscreen != null && !widget.isCurrentlyFullscreen!) // 👈 التعديل الجديد
                       Positioned(
                        top: MediaQuery.of(context).padding.top + 10,
                       left:

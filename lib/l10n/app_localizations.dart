@@ -2377,6 +2377,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
+
+  /// No description provided for @hotels.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotels'**
+  String get hotels;
 }
 
 class _AppLocalizationsDelegate

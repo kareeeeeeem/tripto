@@ -40,15 +40,14 @@ class _MyTripsPageState extends State<MyTripsPage> {
   @override
   Widget build(BuildContext context) {
     if (userId == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return BlocProvider(
-      create: (context) =>
-          OrderTripSearcMyTripsBloc(OrderTripSearcMyTripsRepository())
-            ..add(FetchUserTrips(userId!)),
+      create:
+          (context) =>
+              OrderTripSearcMyTripsBloc(OrderTripSearcMyTripsRepository())
+                ..add(FetchUserTrips(userId!)),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -63,11 +62,7 @@ class _MyTripsPageState extends State<MyTripsPage> {
           ),
           leading: IconButton(
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const SideMenu()),
-                (route) => false,
-              );
+              Navigator.pop(context);
             },
             icon: Icon(
               Localizations.localeOf(context).languageCode == 'ar'
@@ -78,10 +73,15 @@ class _MyTripsPageState extends State<MyTripsPage> {
             ),
           ),
         ),
-        body: BlocBuilder<OrderTripSearcMyTripsBloc, OrderTripSearcMyTripsState>(
+        body: BlocBuilder<
+          OrderTripSearcMyTripsBloc,
+          OrderTripSearcMyTripsState
+        >(
           builder: (context, state) {
             if (state is OrderTripSearcMyTripsLoading) {
-              return const Center(child: CircularProgressIndicator(color: Color(0xFF002E70)),);
+              return const Center(
+                child: CircularProgressIndicator(color: Color(0xFF002E70)),
+              );
             } else if (state is OrderTripSearcMyTripsLoaded) {
               final trips = state.trips;
 
@@ -123,32 +123,32 @@ class _MyTripsPageState extends State<MyTripsPage> {
                           ),
                           title: Text(
                             "${AppLocalizations.of(context)!.tripNumber} ${trip.tripId}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Text("${AppLocalizations.of(context)!.name}: ${trip.customerName ?? '-'}"),                           
-                              Text("${AppLocalizations.of(context)!.fromDate}: ${trip.fromDate ?? '-'}"),
+                              // Text("${AppLocalizations.of(context)!.name}: ${trip.customerName ?? '-'}"),
+                              Text(
+                                "${AppLocalizations.of(context)!.fromDate}: ${trip.fromDate ?? '-'}",
+                              ),
                               //Text("${AppLocalizations.of(context)!.persons}: ${trip.persons ?? '-'}"),
-                              Text("${AppLocalizations.of(context)!.toDate}: ${trip.toDate ?? '-'}"),                          
-                              Text("${AppLocalizations.of(context)!.totalPrice}: ${trip.totalPrice ?? '-'}"),
+                              Text(
+                                "${AppLocalizations.of(context)!.toDate}: ${trip.toDate ?? '-'}",
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context)!.totalPrice}: ${trip.totalPrice ?? '-'}",
+                              ),
                               Text(
                                 "${AppLocalizations.of(context)!.status}: ${getStatusLabel(trip.status, context)}",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: getStatusColor(trip.status), // ✅ هنا بنستعمل الألوان
+                                  color: getStatusColor(
+                                    trip.status,
+                                  ), // ✅ هنا بنستعمل الألوان
                                 ),
                               ),
-
-
-
-
-
-
                             ],
                           ),
                           trailing: Icon(
@@ -157,14 +157,14 @@ class _MyTripsPageState extends State<MyTripsPage> {
                                 : Icons.keyboard_arrow_right,
                           ),
                           onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TripDetailsPage(trip: trip),
-                                ),
-                              );
-                            },
-
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => TripDetailsPage(trip: trip),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
@@ -172,7 +172,11 @@ class _MyTripsPageState extends State<MyTripsPage> {
                 ),
               );
             } else if (state is OrderTripSearcMyTripsError) {
-              return Center(child: Text("${AppLocalizations.of(context)!.error}: ${state.message}"));
+              return Center(
+                child: Text(
+                  "${AppLocalizations.of(context)!.error}: ${state.message}",
+                ),
+              );
             } else {
               return const SizedBox.shrink();
             }
@@ -180,31 +184,31 @@ class _MyTripsPageState extends State<MyTripsPage> {
         ),
       ),
     );
-  }// خارج الـ Widget:
-String getStatusLabel(String? status, BuildContext context) {
-  switch (status) {
-    case 'pending':
-      return AppLocalizations.of(context)!.pending;
-    case 'confirmed':
-      return AppLocalizations.of(context)!.confirmed;
-    case 'canceled':
-      return AppLocalizations.of(context)!.canceled;
-    default:
-      return "-";
-  }
-}
+  } // خارج الـ Widget:
 
-Color getStatusColor(String? status) {
-  switch (status) {
-    case 'pending':
-      return Colors.orange;   // انتظار
-    case 'confirmed':
-      return Colors.green;    // مؤكد
-    case 'canceled':
-      return Colors.red;      // ملغي
-    default:
-      return Colors.black;    // في حالة غير معروف
+  String getStatusLabel(String? status, BuildContext context) {
+    switch (status) {
+      case 'pending':
+        return AppLocalizations.of(context)!.pending;
+      case 'confirmed':
+        return AppLocalizations.of(context)!.confirmed;
+      case 'canceled':
+        return AppLocalizations.of(context)!.canceled;
+      default:
+        return "-";
+    }
   }
-}
 
+  Color getStatusColor(String? status) {
+    switch (status) {
+      case 'pending':
+        return Colors.orange; // انتظار
+      case 'confirmed':
+        return Colors.green; // مؤكد
+      case 'canceled':
+        return Colors.red; // ملغي
+      default:
+        return Colors.black; // في حالة غير معروف
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:math' as math; 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tripto/core/CategoryButtonsRow.dart'; 
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
@@ -13,6 +14,14 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Event.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
+import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart'; // 💡 تأكد من استيراد FetchTripsByDate
+import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart'; 
+
+
+// ❌ تم حذف التعريف المؤقت FetchTripsByDateRange من هنا
 
 
 class HomePage extends StatefulWidget {
@@ -24,8 +33,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey = GlobalKey();
-
-  // 🗑️ تم دمج المتغيرات المتكررة وإبقائها كالتالي
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentTripId = 1; 
   int _currentTripCategory = 0; 
@@ -53,7 +60,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _fetchSubDestinations(); 
 
-    // 💡 تم نقل منطق فتح الـ Drawer إلى هنا لـ initState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(milliseconds: 0));
       if (mounted && kIsWeb) {
@@ -85,18 +91,60 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // 1. دالة تنفيذ البحث حسب الفئة
+ void _executeCategorySearch(int categoryIndex) {
+  final videoState = videoPlayerScreenKey.currentState;
+  videoState?.pauseCurrentVideo(); 
+  videoState?.disposeAllVideos();
+  
+  // إعادة تعيين باقي فلاتر البحث
+  _subDestinationController.clear();
+  selectedSubDestinationId = null;
+  _rangeStart = null;
+  _rangeEnd = null;
+
+  if (categoryIndex == -1) {
+    videoState?.fetchAllTrips(); 
+  } else {
+    context.read<SearchTripByCategoryBloc>().add(
+        FetchTripsByCategory(category: categoryIndex));
+    setState(() {
+      _currentTripCategory = categoryIndex;
+      _currentPersonCounterKey = GlobalKey(); 
+    });
+  }
+ }
+
   // 💡 دالة تنفيذ البحث حسب الوجهة الفرعية
 void _executeSubDestinationSearch(String destinationName) {
   if (destinationName.isNotEmpty) {
-    // 1. إيقاف وإلغاء تهيئة الفيديوهات القديمة
     final videoState = videoPlayerScreenKey.currentState;
     videoState?.pauseCurrentVideo(); 
     videoState?.disposeAllVideos(); 
     
-    // 2. إرسال حدث البحث إلى البلوك.
+    // إعادة تعيين التاريخ عند البحث بالوجهة الفرعية
+    _rangeStart = null;
+    _rangeEnd = null;
+
     context.read<SearchTripBySubDestinationBloc>().add(
         FetchTripsBySubDestination(subDestination: destinationName.trim()));
   }
+}
+
+// 2. دالة تنفيذ البحث حسب نطاق التاريخ (مُعدَّلة لاستخدام FetchTripsByDate)
+void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
+  final videoState = videoPlayerScreenKey.currentState;
+  videoState?.pauseCurrentVideo();
+  videoState?.disposeAllVideos();
+  
+  // إعادة تعيين الوجهة الفرعية والفئة
+  _subDestinationController.clear();
+  selectedSubDestinationId = null;
+  setState(() { _currentTripCategory = -1; }); 
+
+  // 🚨 استخدام الحدث FetchTripsByDate الذي يعمل لديك في SearchPage
+  context.read<SearchTripByDateBloc>().add(
+      FetchTripsByDate(from: startDate, to: endDate)); // ✅ تم التعديل
 }
 
   void _updateCurrentTripDetails(
@@ -142,8 +190,6 @@ void _executeSubDestinationSearch(String destinationName) {
     });
   }
 
-
-
   void _handleSearchNavigation() async {
     final videoState = videoPlayerScreenKey.currentState;
     
@@ -163,7 +209,43 @@ void _executeSubDestinationSearch(String destinationName) {
     videoState?.playCurrentVideo();
   }
 
+// 3. الدالة الموحدة لفتح ديالوج التاريخ المخصص
+void _showArabicDateRangePicker(BuildContext context) async {
+  final result = await showDialog(
+    context: context,
+    builder: (context) {
+      final isWeb = MediaQuery.of(context).size.width > 600; 
+      final dialogWidth = isWeb ? 500.0 : double.infinity;   
 
+      return AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        content: SizedBox(
+          width: dialogWidth, 
+          height: isWeb ? 500 : null, 
+          child: ArabicDateRangePicker( 
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 365)),
+          ),
+        ),
+      );
+    },
+  );
+
+  if (result != null) {
+    final DateTime startDate = result['range_start'];
+    final DateTime endDate = result['range_end'];
+
+    onDateRangeSelected(startDate, endDate); 
+    _executeDateRangeSearch(startDate, endDate);
+  }
+}
+
+// 4. دالة استدعاء ديالوج التاريخ من زر الـ UI
+  void _selectDateRange() async {
+    _showArabicDateRangePicker(context);
+  }
 
 
   void onDateRangeSelected(DateTime? start, DateTime? end) {
@@ -175,7 +257,6 @@ void _executeSubDestinationSearch(String destinationName) {
   }
 
 
-
   void _scrollToNextPage() {
     videoPlayerScreenKey.currentState?.nextPage();
   }
@@ -184,7 +265,7 @@ void _executeSubDestinationSearch(String destinationName) {
     videoPlayerScreenKey.currentState?.previousPage();
   }
 
-  // 🆕 مكون بناء لزر الوجهة الفرعية (Sub-Destination Button)
+  // مكون بناء لزر الوجهة الفرعية (Sub-Destination Button)
   Widget _buildSubDestinationChip(Map subDestination, bool isArabic) {
     final name = isArabic ? subDestination['name_ar'] : subDestination['name_en'];
     final id = subDestination['id'];
@@ -195,9 +276,9 @@ void _executeSubDestinationSearch(String destinationName) {
         label: Text(name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
         onPressed: () {
           
-          _subDestinationController.text = name; // 1. ملء شريط البحث
-          selectedSubDestinationId = id;          // 2. تعيين الـ ID
-          _executeSubDestinationSearch(name);     // 3. تنفيذ البحث
+          _subDestinationController.text = name; 
+          selectedSubDestinationId = id;          
+          _executeSubDestinationSearch(name);     
         },
        backgroundColor: Colors.grey.shade600, 
         shape: RoundedRectangleBorder(
@@ -208,86 +289,140 @@ void _executeSubDestinationSearch(String destinationName) {
     );
   }
 
-  // 🆕 مكون بناء شريط البحث والـ Chips (يُستخدم في وضع ملء الشاشة والوضع العادي)
+  // 5. مكون بناء شريط البحث والـ Chips المحدَّث
   Widget _buildSearchBarAndChips(BuildContext context, bool isArabic) {
+      
+      // زر البحث بالتاريخ 
+      final dateSearchButton = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white10,
+            border: Border.all(color: Colors.white24, width: 1),
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.calendar_month, size: 20, color: Colors.white70),
+            onPressed: _selectDateRange, 
+            padding: EdgeInsets.zero,
+            style: IconButton.styleFrom(
+              minimumSize: Size.zero, 
+              padding: EdgeInsets.zero,
+            ),
+          ),
+        ),
+      );
+      
+      // 🚨 الاستخدام الصحيح لـ CategoryButtonsRow كودجت
+      final categoryButtons = CategoryButtonsRow(
+        onCategorySearch: _executeCategorySearch, 
+      );
+      
+      // شريط البحث (TypeAheadField)
+      final searchBar = Expanded(
+        child: TypeAheadField(
+          controller: _subDestinationController,
+          focusNode: FocusNode(),
+          showOnFocus: true,
+          suggestionsCallback: (pattern) async {
+            if (allSubDestinations == null) return [];
+            if (pattern.isEmpty) return allSubDestinations!;
+            return (allSubDestinations!).where((sub) {
+              final name = isArabic ? sub['name_ar'] : sub['name_en'];
+              return name.toLowerCase().contains(pattern.toLowerCase());
+            }).toList();
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(
+              title: Text(isArabic ? suggestion['name_ar'] : suggestion['name_en'], style: const TextStyle(color: Colors.black)),
+            );
+          },
+          onSelected: (suggestion) {
+            _subDestinationController.text = isArabic ? suggestion['name_ar'] : suggestion['name_en'];
+            selectedSubDestinationId = suggestion['id'];
+            _executeSubDestinationSearch(_subDestinationController.text);
+          },
+          builder: (context, controller, focusNode) {
+            return TextField(
+              controller: controller,
+              focusNode: focusNode,
+              onSubmitted: (value) { 
+                _executeSubDestinationSearch(value);
+                focusNode.unfocus(); 
+              },
+              style: const TextStyle(color: Colors.white), 
+              decoration: InputDecoration(
+                hintText: isArabic ? "ابحث عن وجهة فرعية..." : "Search for sub-destination...",
+                hintStyle: const TextStyle(color: Colors.white54),
+                filled: true,
+                fillColor: Colors.white10, 
+                prefixIcon: IconButton(
+                  icon: const Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    _executeSubDestinationSearch(_subDestinationController.text);
+                    focusNode.unfocus(); 
+                  },
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder( 
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              ),
+            );
+          },
+        ),
+      );
+      
+      // بناء الصف بترتيب شرطي
+      final children = <Widget>[];
+      if (isArabic) {
+        // RTL: زر التاريخ، أزرار الفئات، شريط البحث
+        children.addAll([
+          dateSearchButton,
+          categoryButtons,
+          const SizedBox(width: 15),
+          searchBar,
+        ]);
+      } else {
+        // LTR: شريط البحث، زر التاريخ، أزرار الفئات
+        children.addAll([
+          searchBar,
+          const SizedBox(width: 15),
+          dateSearchButton,
+          categoryButtons,
+        ]);
+      }
+
+
       return Container(
         color: Colors.black.withOpacity(0.6), 
         padding: const EdgeInsets.only(top: 10, bottom: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // 🔍 شريط البحث
+            
+            // شريط البحث وأزرار الفئات في صف واحد (مرتبة حسب اللغة)
             Center(child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 750 ),
+              constraints: const BoxConstraints(maxWidth: 900 ), 
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: TypeAheadField(
-                  controller: _subDestinationController,
-                  focusNode: FocusNode(),
-                  showOnFocus: true,
-                  suggestionsCallback: (pattern) async {
-                    if (allSubDestinations == null) return [];
-                    if (pattern.isEmpty) return allSubDestinations!;
-                    return (allSubDestinations!).where((sub) {
-                      final name = isArabic ? sub['name_ar'] : sub['name_en'];
-                      return name.toLowerCase().contains(pattern.toLowerCase());
-                    }).toList();
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(isArabic ? suggestion['name_ar'] : suggestion['name_en'], style: const TextStyle(color: Colors.black)),
-                    );
-                  },
-                  onSelected: (suggestion) {
-                    _subDestinationController.text = isArabic ? suggestion['name_ar'] : suggestion['name_en'];
-                    selectedSubDestinationId = suggestion['id'];
-                    // 💡 تفعيل البحث عند الاختيار من القائمة
-                    _executeSubDestinationSearch(_subDestinationController.text);
-                  },
-                  builder: (context, controller, focusNode) {
-                    return TextField(
-                      controller: controller,
-                      focusNode: focusNode,
-                      // 💡 الخاصية الجديدة: تشغيل البحث عند الضغط على Enter
-                      onSubmitted: (value) { 
-                        _executeSubDestinationSearch(value);
-                        // إخفاء لوحة المفاتيح بعد البحث
-                        focusNode.unfocus(); 
-                      },
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        hintText: isArabic ? "ابحث عن وجهة فرعية..." : "Search for sub-destination...",
-                        hintStyle: const TextStyle(color: Colors.white54),
-                        filled: true,
-                        fillColor: Colors.white10,
-                        // 💡 تعديل أيقونة البحث لجعلها قابلة للضغط
-                        prefixIcon: IconButton(
-                          icon: const Icon(Icons.search, color: Colors.white),
-                          onPressed: () {
-                            // 💡 تفعيل البحث عند الضغط على الأيقونة
-                            _executeSubDestinationSearch(_subDestinationController.text);
-                            focusNode.unfocus(); // إخفاء لوحة المفاتيح
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: OutlineInputBorder( // 💡 يجب تطبيق نفس الـ borderRadius على الـ enabledBorder أيضاً
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                      ),
-                    );
-                  },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children, // 💡 استخدام القائمة المرتبة
                 ),
               ),
             )),
             
             const SizedBox(height: 10),
 
-            // ➡️ شريط الوجهات الفرعية القابل للتمرير
+            // شريط الوجهات الفرعية القابل للتمرير
             if (allSubDestinations != null)
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -304,7 +439,7 @@ void _executeSubDestinationSearch(String destinationName) {
                 child: SizedBox(
                   width: 20, 
                   height: 20,
-                  child: CircularProgressIndicator(color: Colors.white70, strokeWidth: 2),
+                  child: CircularProgressIndicator(color: Colors.white70, strokeWidth: 2), 
                 ),
               ), 
           ],
@@ -324,19 +459,17 @@ void _executeSubDestinationSearch(String destinationName) {
         if (constraints.maxWidth > tabletBreakpoint && kIsWeb) {
           const double videoWidth = 450;
           const double rightButtonsWidth = 520;
-          const double scrollButtonsWidth = 100; // تم الإبقاء عليها كتعريف
           const double spacingBetween = 80;
+          
           const double searchBarHeightPadding = 130.0; 
           
-          // 💡 المسافة من الحافة اليمنى لأزرار السكرول في الوضع العادي و ملء الشاشة
           const double rightEdgePadding = 40.0; 
           
-          // 💡 إعادة حساب totalFixedWidth بدون أزرار السكرول ومسافتها الفاصلة الأخيرة
           const double totalFixedWidth = videoWidth + rightButtonsWidth + spacingBetween; 
 
           return Scaffold(
             key: _scaffoldKey,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.black, 
             drawer: const WebDrawer(), 
             drawerScrimColor: Colors.transparent,
 
@@ -353,9 +486,7 @@ void _executeSubDestinationSearch(String destinationName) {
                         onToggleFullscreen: _toggleFullscreen, 
                       ),
                       
-                      // 🗑️ تم إخفاء شريط البحث والـ Chips من هنا
-
-                      // 💡 زر الخروج من ملء الشاشة
+                      // زر الخروج من ملء الشاشة
                       Positioned(
                         top: 20,
                         right: 20,
@@ -369,7 +500,7 @@ void _executeSubDestinationSearch(String destinationName) {
                         ),
                       ),
                       
-                      // 💡 أزرار السكرول في أقصى اليمين (وضع ملء الشاشة)
+                      // أزرار السكرول في أقصى اليمين (وضع ملء الشاشة)
                       Positioned(
                         right: rightEdgePadding, 
                         top: 0,
@@ -429,7 +560,7 @@ void _executeSubDestinationSearch(String destinationName) {
                 return Stack( 
                   children: [
                     
-                    // 💡 شريط البحث والـ Chips (الوضع العادي)
+                    // شريط البحث والـ Chips (الوضع العادي)
                     Positioned(
                       top: 0,
                       left: 0,
@@ -439,7 +570,7 @@ void _executeSubDestinationSearch(String destinationName) {
 
 
                     Padding(
-                      padding: const EdgeInsets.only(top: searchBarHeightPadding), 
+                      padding: EdgeInsets.only(top: searchBarHeightPadding), 
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -448,11 +579,12 @@ void _executeSubDestinationSearch(String destinationName) {
                             
                             // 🎬 الفيديو
                             ConstrainedBox(
-                              constraints: const BoxConstraints(
+                              constraints: BoxConstraints(
                                 maxWidth: videoWidth,
-                                maxHeight: 950 - searchBarHeightPadding, 
+                                maxHeight: constraints.maxHeight - searchBarHeightPadding, 
                               ),
                               child: VideoPlayerScreen(
+                                
                                 key: videoPlayerScreenKey,
                                 onTripChanged: _updateCurrentTripDetails,
                                 onSearchPressed: _handleSearchNavigation, 
@@ -464,9 +596,9 @@ void _executeSubDestinationSearch(String destinationName) {
 
                             // 🎛️ RightButtons
                             ConstrainedBox( 
-                              constraints: const BoxConstraints(
+                              constraints: BoxConstraints(
                                 maxWidth: rightButtonsWidth,
-                                maxHeight: 850 - searchBarHeightPadding, 
+                                maxHeight: constraints.maxHeight - searchBarHeightPadding, 
                               ),
                              child: Column(
                                 children: [
@@ -499,28 +631,52 @@ void _executeSubDestinationSearch(String destinationName) {
                               ),
                             ),
                             
-                            // 🗑️ تم حذف مسافة spacingBetween وأزرار السكرول من هنا
                           ],
                         ),
                       ),
                     ),
                     
-                    // 💡 زرار القائمة
+                    // الجزء اللي بيجمع الزرار واللوجو
                     Positioned(
-                      top: 40, 
-                      left: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.menu_outlined, color: Colors.white, size: 30),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer(); 
-                        },style: IconButton.styleFrom(
-                                          backgroundColor: Colors.white10,
+                      top: 20,
+                      left: isArabic ? null : 20, 
+                      right: isArabic ? 20 : null, 
+                      child: Row(
+                        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr, 
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // 🔹 زرار القائمة
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white, 
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                            style: IconButton.styleFrom(
+                                          backgroundColor: Colors.white10, 
                                           padding: const EdgeInsets.all(12),
                                         ),
+                          ),
+
+                          // 🔹 المسافة بين الزر واللوجو (2% من عرض الشاشة)
+                          SizedBox(
+                            width: constraints.maxWidth * 0.02, 
+                          ),
+
+                          // 🔹 اللوجو
+                          Image.asset(
+                            'assets/images/TRIPTO.png',
+                            height: 58,
+                            width: 75,
+                          ),
+                        ],
                       ),
                     ),
                     
-                    // 💡 أزرار السكرول في أقصى اليمين (الوضع العادي)
+                    // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
                       right: rightEdgePadding, 
                       top: 0,
