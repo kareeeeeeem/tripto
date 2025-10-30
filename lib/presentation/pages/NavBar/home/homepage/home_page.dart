@@ -259,7 +259,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           const ActivityPage(),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
+                          height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         _buildIcon(
                           context,
