@@ -259,7 +259,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           const ActivityPage(),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
                         _buildIcon(
                           context,
@@ -275,6 +275,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   left: isArabic ? null : 20,
                   right: isArabic ? 20 : null,
                   top: 20,
+
                   child: Row(
                     children: [
                       IconButton(
