@@ -484,11 +484,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
           const double rightButtonsWidth = 520;
           const double spacingBetween = 80;
           const double searchBarHeightPadding = 130.0; 
-          
-          
-          
           const double rightEdgePadding = 40.0; 
-          
           const double totalFixedWidth = videoWidth + rightButtonsWidth + spacingBetween; 
 
           return Scaffold(
@@ -565,15 +561,12 @@ void _showArabicDateRangePicker(BuildContext context) async {
                     ],
                   );
                 }
-
                 
                 final screenWidth = constraints.maxWidth;
-                
                 final remainingSpace = math.max(
                     0.0,
                     (screenWidth - totalFixedWidth) / 2,
                 );
-
                 return Stack( 
                   children: [
                     
