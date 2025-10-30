@@ -645,6 +645,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         ),
                       ),
                     ),
+<<<<<<< HEAD
                     
                     // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
@@ -687,6 +688,24 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                   ),
                               ),
                           ],
+=======
+                  ),
+
+                Positioned(
+                  left: isArabic ? null : 20,
+                  right: isArabic ? 20 : null,
+                  top: 20,
+
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: toggleDrawer,
+>>>>>>> b43ae28ac88b8e096e6e81dbb3c480c23d7389a6
                       ),
                     ),
                   ],
