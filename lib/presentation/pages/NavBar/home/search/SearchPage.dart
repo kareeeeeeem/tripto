@@ -46,24 +46,10 @@ class _SearchPageState extends State<SearchPage> {
 void _showDatePicker(BuildContext context) async {
   final result = await showDialog(
     context: context,
-    builder: (context) {
-      final isWeb = MediaQuery.of(context).size.width > 600; // 👈 نكشف لو Web
-      final dialogWidth = isWeb ? 500.0 : double.infinity;   // 👈 حجم مخصص للويب
-
-      return AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: SizedBox(
-          width: dialogWidth, // 👈 هنا بنحدد الحجم
-          height: isWeb ? 500 : null, // 👈 تصغير الارتفاع للويب
-          child: ArabicDateRangePicker(
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 365)),
-          ),
-        ),
-      );
-    },
+    builder: (context) => ArabicDateRangePicker(
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    ),
   );
 
   if (result != null) {
@@ -73,7 +59,6 @@ void _showDatePicker(BuildContext context) async {
     });
   }
 }
-
 
 
 

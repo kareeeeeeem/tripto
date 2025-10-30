@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:tripto/core/CategoryButtonsRow.dart'; 
 import 'package:tripto/core/CategoryButtonsRow%D8%B2.dart' hide CategoryButtonsRow;
 import 'package:tripto/l10n/app_localizations.dart';
+import 'package:tripto/presentation/pages/NavBar/ActivityPage/activities_page.dart';
+import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
 import 'package:tripto/presentation/pages/NavBar/home/search/SearchPage.dart';
-import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart'; 
+import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart';
+import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart'; 
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/PersonCounterWithPrice.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -58,6 +61,8 @@ class _HomePageState extends State<HomePage> {
   double _selectedActivityPrice = 0.0;
 
   bool _isFullscreen = false;
+    bool _isDrawerOpen = false;
+
   
   final TextEditingController _subDestinationController = TextEditingController();
   List? allSubDestinations;
@@ -520,8 +525,192 @@ void _showArabicDateRangePicker(BuildContext context) async {
           return Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.black, 
-            drawer: const WebDrawer(), 
+drawer: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Stack(
+                children: [
+                  if (_isDrawerOpen)
+                    Positioned(
+                      top: 70,
+                      left: isArabic ? null : 20,
+                      right: isArabic ? 20 : null,
+                      bottom: 0,
+                      child: SizedBox(width: 300, child: const WebDrawer()),
+                    ),
+
+                  if (_isDrawerOpen)
+                    Positioned(
+                      top: 70,
+                      left: isArabic ? 0 : 300,
+                      right: isArabic ? 300 : 0,
+                      bottom: 0,
+                      child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        if (mounted) {
+          setState(() {
+            _isDrawerOpen = false; // 👈 قم بتغيير الحالة هنا
+          });
+        }
+      },
+      child: const SizedBox(),
+    ),
+                    ),
+
+                  Positioned(
+                    left: isArabic ? null : 20,
+                    right: isArabic ? 20 : null,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isDrawerOpen = !_isDrawerOpen;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.11,
+                        ),
+
+                        // 🔹 اللوجو
+                        Image.asset(
+                          'assets/images/TRIPTO.png',
+                          height: 58,
+                          width: 75,
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (!_isDrawerOpen)
+                    Positioned(
+                      left: isArabic ? null : 20,
+                      right: isArabic ? 20 : null,
+                      top: 80,
+                      child: AnimatedOpacity(
+                        opacity: _isDrawerOpen ? 0 : 1,
+                        duration: const Duration(milliseconds: 300),
+                        child: Column(
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.home,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.home,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.hotel,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Hotelcard(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.hotels,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.extension,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ActivityPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.activities,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.car_rental_sharp,
+                                color: Colors.white,
+                                size: 22,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CarCard(),
+                                  ),
+                                );
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.cars,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.015,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
             drawerScrimColor: Colors.transparent,
+            onDrawerChanged: (isOpened) {
+              setState(() {
+                _isDrawerOpen = isOpened;
+              });
+            }  ,          
 
             body: Builder( 
               builder: (context) {
@@ -529,13 +718,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                 if (_isFullscreen) {
                   return Stack(
                     children: [
-                      VideoPlayerScreen(
-                        key: videoPlayerScreenKey,
-                        onTripChanged: _updateCurrentTripDetails,
-                        onSearchPressed: _handleSearchNavigation, 
-                        onToggleFullscreen: _toggleFullscreen, 
-                        isCurrentlyFullscreen: _isFullscreen, // 🆕 التعديل هنا
-                      ),
+                     
                       
                       // زر الخروج من ملء الشاشة
                       Positioned(
@@ -640,6 +823,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                 onSearchPressed: _handleSearchNavigation, 
                                 onToggleFullscreen: _toggleFullscreen, 
                                 isCurrentlyFullscreen: _isFullscreen,
+                                
                                 ),
                             ),
 
@@ -681,49 +865,8 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                 ],
                               ),
                             ),
-                            
                           ],
                         ),
-                      ),
-                    ),
-                    
-                    // الجزء اللي بيجمع الزرار واللوجو
-                    Positioned(
-                      top: 20,
-                      left: isArabic ? null : 20, 
-                      right: isArabic ? 20 : null, 
-                      child: Row(
-                        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr, 
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // 🔹 زرار القائمة
-                          IconButton(
-                            icon: const Icon(
-                              Icons.menu,
-                              color: Colors.white, 
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                            style: IconButton.styleFrom(
-                                          backgroundColor: Colors.white10, 
-                                          padding: const EdgeInsets.all(12),
-                                        ),
-                          ),
-
-                          // 🔹 المسافة بين الزر واللوجو (2% من عرض الشاشة)
-                          SizedBox(
-                            width: constraints.maxWidth * 0.02, 
-                          ),
-
-                          // 🔹 اللوجو
-                          Image.asset(
-                            'assets/images/TRIPTO.png',
-                            height: 58,
-                            width: 75,
-                          ),
-                        ],
                       ),
                     ),
                     
@@ -755,9 +898,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                       );
                                   },
                               ),
-                              
-                              const SizedBox(height: 20),
-
+                            
                               Tooltip( 
                                   message: loc.nextVideo, 
                                   child: IconButton(
