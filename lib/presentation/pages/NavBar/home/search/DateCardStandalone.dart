@@ -53,166 +53,168 @@ class _ArabicDateRangePickerState extends State<ArabicDateRangePicker> {
     return AlertDialog(
       backgroundColor: Colors.white,
       contentPadding: EdgeInsets.zero,
-      content: Container(
-        width: double.maxFinite,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TableCalendar(
-              locale: locale,
-              firstDay: widget.firstDate,
-              lastDay: widget.lastDate,
-              focusedDay: _rangeStart ?? DateTime.now(),
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextFormatter: (date, locale) {
-                  final formatted = DateFormat.yMMMM(locale).format(date);
-                  return locale == 'ar' ? _arabicDigits(formatted) : formatted;
+      content: SingleChildScrollView(
+        child: Container(
+          width: double.maxFinite,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TableCalendar(
+                locale: locale,
+                firstDay: widget.firstDate,
+                lastDay: widget.lastDate,
+                focusedDay: _rangeStart ?? DateTime.now(),
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextFormatter: (date, locale) {
+                    final formatted = DateFormat.yMMMM(locale).format(date);
+                    return locale == 'ar' ? _arabicDigits(formatted) : formatted;
+                  },
+                ),
+                calendarFormat: _calendarFormat,
+                onFormatChanged: (format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
                 },
-              ),
-              calendarFormat: _calendarFormat,
-              onFormatChanged: (format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              },
-              selectedDayPredicate: (day) {
-                if (_rangeStart != null && _rangeEnd != null) {
-                  return day.isAfter(_rangeStart!.subtract(const Duration(days: 1))) &&
-                      day.isBefore(_rangeEnd!.add(const Duration(days: 1)));
-                }
-                if (_rangeStart != null && _rangeEnd == null) {
-                  return isSameDay(day, _rangeStart);
-                }
-                return false;
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  if (_rangeStart == null || (_rangeStart != null && _rangeEnd != null)) {
-                    _rangeStart = selectedDay;
-                    _rangeEnd = null;
-                  } else if (_rangeStart != null && _rangeEnd == null) {
-                    if (selectedDay.isBefore(_rangeStart!)) {
-                      _rangeEnd = _rangeStart;
-                      _rangeStart = selectedDay;
-                    } else {
-                      _rangeEnd = selectedDay;
-                    }
+                selectedDayPredicate: (day) {
+                  if (_rangeStart != null && _rangeEnd != null) {
+                    return day.isAfter(_rangeStart!.subtract(const Duration(days: 1))) &&
+                        day.isBefore(_rangeEnd!.add(const Duration(days: 1)));
                   }
-                });
-              },
-              calendarBuilders: CalendarBuilders(
-                defaultBuilder: (context, day, focusedDay) {
-                  final text =
-                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
-                  return Center(
-                    child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  );
+                  if (_rangeStart != null && _rangeEnd == null) {
+                    return isSameDay(day, _rangeStart);
+                  }
+                  return false;
                 },
-                todayBuilder: (context, day, focusedDay) {
-                  final text =
-                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
-                  return Center(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    if (_rangeStart == null || (_rangeStart != null && _rangeEnd != null)) {
+                      _rangeStart = selectedDay;
+                      _rangeEnd = null;
+                    } else if (_rangeStart != null && _rangeEnd == null) {
+                      if (selectedDay.isBefore(_rangeStart!)) {
+                        _rangeEnd = _rangeStart;
+                        _rangeStart = selectedDay;
+                      } else {
+                        _rangeEnd = selectedDay;
+                      }
+                    }
+                  });
+                },
+                calendarBuilders: CalendarBuilders(
+                  defaultBuilder: (context, day, focusedDay) {
+                    final text =
+                        locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                    return Center(
+                      child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    );
+                  },
+                  todayBuilder: (context, day, focusedDay) {
+                    final text =
+                        locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                    return Center(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      padding: const EdgeInsets.all(8),
+                    );
+                  },
+                  selectedBuilder: (context, day, focusedDay) {
+                    final text =
+                        locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                    return Center(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    );
+                  },
+                  outsideBuilder: (context, day, focusedDay) {
+                    final text =
+                        locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                    return Center(
                       child: Text(
                         text,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Colors.grey),
                       ),
-                    ),
-                  );
-                },
-                selectedBuilder: (context, day, focusedDay) {
-                  final text =
-                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
-                  return Center(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(8),
+                    );
+                  },
+                  disabledBuilder: (context, day, focusedDay) {
+                    final text =
+                        locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
+                    return Center(
                       child: Text(
                         text,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Colors.grey),
                       ),
-                    ),
-                  );
-                },
-                outsideBuilder: (context, day, focusedDay) {
-                  final text =
-                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
-                  return Center(
-                    child: Text(
-                      text,
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                  );
-                },
-                disabledBuilder: (context, day, focusedDay) {
-                  final text =
-                      locale == 'ar' ? _arabicDigits(day.day.toString()) : day.day.toString();
-                  return Center(
-                    child: Text(
-                      text,
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-
-            
-
-
-            const SizedBox(height: 16),
-            if (_rangeStart != null && _rangeEnd != null)
-              Column(
+        
+              
+        
+        
+              const SizedBox(height: 16),
+              if (_rangeStart != null && _rangeEnd != null)
+                Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.youChoseFrom(
+                        _formatDate(context, _rangeStart!),
+                      ),
+                      style: const TextStyle(fontSize: 14, color: Colors.black87),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      AppLocalizations.of(context)!.youChoseTo(
+                        _formatDate(context, _rangeEnd!),
+                      ),
+                      style: const TextStyle(fontSize: 14, color: Colors.black87),
+                    ),
+                  ],
+                ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.youChoseFrom(
-                      _formatDate(context, _rangeStart!),
-                    ),
-                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, null),
+                    child: Text(loc.cancel),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    AppLocalizations.of(context)!.youChoseTo(
-                      _formatDate(context, _rangeEnd!),
-                    ),
-                    style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: (_rangeStart != null && _rangeEnd != null)
+                        ? () {
+                            Navigator.pop(context, {
+                              'range_start': _rangeStart!,
+                              'range_end': _rangeEnd!,
+                            });
+                          }
+                        : null,
+                    child: Text(loc.ok),
                   ),
                 ],
               ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, null),
-                  child: Text(loc.cancel),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: (_rangeStart != null && _rangeEnd != null)
-                      ? () {
-                          Navigator.pop(context, {
-                            'range_start': _rangeStart!,
-                            'range_end': _rangeEnd!,
-                          });
-                        }
-                      : null,
-                  child: Text(loc.ok),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

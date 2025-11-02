@@ -1,4 +1,4 @@
-import 'dart:math' as math; 
+ 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/CategoryButtonsRow.dart'; 
@@ -7,6 +7,7 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/ActivityPage/activities_page.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
 import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/WebDrawer.dart';
 import 'package:tripto/presentation/pages/NavBar/home/search/SearchPage.dart';
 import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart';
 import 'package:tripto/presentation/pages/NavBar/hotel/HotelCard.dart'; 
@@ -45,6 +46,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<VideoPlayerScreenState> videoPlayerScreenKey = GlobalKey();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    bool _isDrawerOpen = false; 
+
   int _currentTripId = 1; 
   int _currentTripCategory = 0; 
   GlobalKey<PersonCounterWithPriceState> _currentPersonCounterKey = GlobalKey(); 
@@ -74,7 +77,11 @@ class _HomePageState extends State<HomePage> {
 
    
   }
-
+void toggleDrawer() {
+    setState(() {
+      _isDrawerOpen = !_isDrawerOpen;
+    });
+  }
 
 
   Future<void> _fetchSubDestinations() async {
@@ -128,7 +135,6 @@ class _HomePageState extends State<HomePage> {
  }
 
 
-  // 💡 دالة تنفيذ البحث حسب الوجهة الفرعية
   // دالة تنفيذ البحث حسب الوجهة الفرعية
 void _executeSubDestinationSearch(String destinationName) {
   if (destinationName.isNotEmpty) {
@@ -145,7 +151,6 @@ void _executeSubDestinationSearch(String destinationName) {
   }
 }
 
-// 2. دالة تنفيذ البحث حسب نطاق التاريخ (مُعدَّلة لاستخدام FetchTripsByDate)
 // 🆕 دالة تنفيذ البحث حسب نطاق التاريخ
 void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
   final videoState = videoPlayerScreenKey.currentState;
@@ -490,14 +495,25 @@ void _showArabicDateRangePicker(BuildContext context) async {
           return Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.black, 
-
+            drawerScrimColor: Colors.transparent,
+            drawerEnableOpenDragGesture: false,
+            endDrawerEnableOpenDragGesture: false,
             body: Builder( 
               builder: (context) {
 
                 if (_isFullscreen) {
                   return Stack(
                     children: [
-                     
+                     Positioned.fill(
+                        child: VideoPlayerScreen(
+                          key: videoPlayerScreenKey,
+                          onTripChanged: _updateCurrentTripDetails,
+                          onSearchPressed: _handleSearchNavigation,
+                          onToggleFullscreen: _toggleFullscreen,
+                          isCurrentlyFullscreen: _isFullscreen, // مهم لإخبار الودجت بأنه في وضع ملء الشاشة
+                        ),
+                      ),
+                      
                       
                       // زر الخروج من ملء الشاشة
                       Positioned(
@@ -562,11 +578,12 @@ void _showArabicDateRangePicker(BuildContext context) async {
                   );
                 }
                 
-                final screenWidth = constraints.maxWidth;
-                final remainingSpace = math.max(
-                    0.0,
-                    (screenWidth - totalFixedWidth) / 2,
-                );
+             final screenWidth = constraints.maxWidth;
+                
+                // ⭐️ التعديل هنا: استبدال math.max بالعملية الشرطية ⭐️
+                final calculatedSpace = (screenWidth - totalFixedWidth) / 2;
+                final remainingSpace = calculatedSpace > 0.0 ? calculatedSpace : 0.0;
+                // ⭐️ نهاية ال
                 return Stack( 
                   children: [
                     
@@ -590,7 +607,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                             ConstrainedBox(
                               constraints: BoxConstraints(
                                 maxWidth: videoWidth,
-                                maxHeight: constraints.maxHeight - searchBarHeightPadding, 
+                                maxHeight: constraints.maxHeight - searchBarHeightPadding-30, 
                               ),
                               child: VideoPlayerScreen(
                                 
@@ -645,7 +662,6 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         ),
                       ),
                     ),
-<<<<<<< HEAD
                     
                     // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
@@ -688,7 +704,63 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                   ),
                               ),
                           ],
-=======
+                      ),
+                    ),
+
+
+                  // 🟢 التعديل 1: يظهر الدرج عندما يكون مفتوحاً (_isDrawerOpen = true)
+                  if (_isDrawerOpen) 
+                  Positioned(
+                    top: 70,
+                    left: isArabic ? null : 20,
+                    right: isArabic ? 20 : null,
+                    bottom: 0,
+                    child: SizedBox(width: 300, child: const WebDrawer()),
+                  ),
+
+                // 🟢 التعديل 2: تظهر الأيقونات عندما يكون الدرج مغلقاً (_isDrawerOpen = false)
+                  if (!_isDrawerOpen)
+                  Positioned(
+                    left: isArabic ? null : 20,
+                    right: isArabic ? 20 : null,
+                    top: 90,
+                    child: Column(
+                      children: [
+                        _buildIcon(
+                          context,
+                          Icons.home,
+                          AppLocalizations.of(context)!.home,
+                          const HomePage(),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        _buildIcon(
+                          context,
+                          Icons.hotel,
+                          AppLocalizations.of(context)!.hotels,
+                          const Hotelcard(),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        _buildIcon(
+                          context,
+                          Icons.extension,
+                          AppLocalizations.of(context)!.activities,
+                          const ActivityPage(),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        _buildIcon(
+                          context,
+                          Icons.car_rental,
+                          AppLocalizations.of(context)!.cars,
+                          const CarCard(),
+                        ),
+                      ],
+                    ),
                   ),
 
                 Positioned(
@@ -705,14 +777,22 @@ void _showArabicDateRangePicker(BuildContext context) async {
                           size: 30,
                         ),
                         onPressed: toggleDrawer,
->>>>>>> b43ae28ac88b8e096e6e81dbb3c480c23d7389a6
                       ),
-                    ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.12),
+                      Image.asset(
+                        'assets/images/TRIPTO.png',
+                        height: 58,
+                        width: 75,
+                      ),
+                    ],
+                  ),
+                ),
                   ],
                 );
               },
             ),
-          );
+            );
+          
         } else {
           // 📱 للموبايل 
           return const Scaffold(
@@ -721,6 +801,28 @@ void _showArabicDateRangePicker(BuildContext context) async {
           );
         }
       },
+    );
+  }
+
+  Widget _buildIcon(
+    BuildContext context,
+    IconData icon,
+    String label,
+    Widget page,
+  ) {
+    return Column(
+      children: [
+        IconButton(
+          icon: Icon(icon, color: Colors.white, size: 22),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => page),
+            );
+          },
+        ),
+        Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+      ],
     );
   }
 }

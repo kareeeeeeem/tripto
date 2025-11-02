@@ -29,6 +29,7 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:html' as html;
 
 typedef TripDetailsCallback = void Function(
   int tripId,
@@ -565,38 +566,45 @@ Future<void> _initializeAndPreloadVideo(
 
 
 
-// زر العودة لكل الرحلات
+// ...
+
 ElevatedButton(
   style: ElevatedButton.styleFrom(
     backgroundColor: Colors.lightBlue,
-    foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    foregroundColor: Colors.white,
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
     ),
   ),
   onPressed: () {
-    setState(() {
-      _trips = _allTrips.take(_perPage).toList();
-      _personCounterKeys = List.generate(
-        _trips.length,
-        (index) => GlobalKey<PersonCounterWithPriceState>(),
-      );
-      _currentPage = 0;
-      _currentIndex = 0;
-      _initialErrorMessage = "";
-      _hasMoreData = _allTrips.length > _perPage;
-    });
-    if (_trips.isNotEmpty) {
-      _initializeAndPreloadVideo(0, autoPlay: true);
+    if (kIsWeb) {
+      // 🔹 فقط في الويب: عمل Refresh للصفحة
+      html.window.location.reload();
+    } else {
+      // 🔹 في الموبايل: الحل الحالي
+      setState(() {
+        _trips = _allTrips.take(_perPage).toList();
+        _personCounterKeys = List.generate(
+          _trips.length,
+          (index) => GlobalKey<PersonCounterWithPriceState>(),
+        );
+        _currentPage = 0;
+        _currentIndex = 0;
+        _initialErrorMessage = "";
+        _hasMoreData = _allTrips.length > _perPage;
+      });
+      if (_trips.isNotEmpty) {
+        _initializeAndPreloadVideo(0, autoPlay: true);
+      }
     }
   },
   child: Text(
     AppLocalizations.of(context)!.backToAllTrips,
-    style: const TextStyle(
-      color: Colors.white, // النص (foreground)
-    ),
+    style: const TextStyle(color: Colors.white),
   ),
 ),
+
 
 const SizedBox(height: 20),
 

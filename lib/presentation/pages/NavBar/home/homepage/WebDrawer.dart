@@ -299,12 +299,12 @@ class _WebDrawerState extends State<WebDrawer> {
                   Center(
                     child: Column(
                       children: [
+                        // Text(
+                        //   "Developed by Eng.Amr Hassan",
+                        //   style: TextStyle(color: Colors.white, fontSize: 15),
+                        // ),
                         Text(
-                          "Developed by Eng.Amr Hassan",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        Text(
-                          "© 2025 Google ",
+                          "TripTo ",
                           style: TextStyle(color: Colors.white54, fontSize: 12),
                         ),
                         const SizedBox(height: 10),
