@@ -1,8 +1,9 @@
- 
+// 💡 استورد الملف الجديد
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tripto/core/CategoryButtonsRow.dart'; 
-import 'package:tripto/core/CategoryButtonsRow%D8%B2.dart' hide CategoryButtonsRow;
 import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/presentation/pages/NavBar/ActivityPage/activities_page.dart';
 import 'package:tripto/presentation/pages/NavBar/SideMenu/AllCars.dart';
@@ -19,11 +20,9 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/SearchOnTripBySUB/SearchOnTripBySubDestination_Event.dart';
-import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_Event.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Event.dart'; // 💡 تأكد من استيراد FetchTripsByDate
-import 'package:tripto/presentation/pages/NavBar/home/search/DateCardStandalone.dart'; 
 
 class FetchTripsByDateRange extends SearchTripByCategoryEvent {
   final DateTime startDate;
@@ -482,10 +481,18 @@ void _showArabicDateRangePicker(BuildContext context) async {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        const double tabletBreakpoint = 600;
+        const double webBreakpoint = 1200;     // شاشات كبيرة (كمبيوتر / لابتوب)
+        const double tabletBreakpoint = 800;   // التابلت أو الآيباد
+        const double mobileBreakpoint = 480;   // الموبايل
 
-        if (constraints.maxWidth > tabletBreakpoint && kIsWeb) {
-          const double videoWidth = 450;
+
+          final bool isWebLayout = constraints.maxWidth >= webBreakpoint;
+          final bool isTabletLayout = constraints.maxWidth >= tabletBreakpoint && constraints.maxWidth < webBreakpoint;
+          final bool isMobileLayout = constraints.maxWidth < tabletBreakpoint;
+
+         if (kIsWeb) { 
+  
+           const double videoWidth = 450;
           const double rightButtonsWidth = 520;
           const double spacingBetween = 80;
           const double searchBarHeightPadding = 130.0; 
@@ -514,8 +521,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         ),
                       ),
                       
-                      
-                      // زر الخروج من ملء الشاشة
+                    // زر الخروج من ملء الشاشة
                       Positioned(
                         top: 20,
                         right: 20,
@@ -528,7 +534,9 @@ void _showArabicDateRangePicker(BuildContext context) async {
                                         ),
                         ),
                       ),
-                      
+              
+               if (constraints.maxWidth > tabletBreakpoint) 
+
                       // أزرار السكرول في أقصى اليمين (وضع ملء الشاشة)
                       Positioned(
                         right: rightEdgePadding, 
@@ -578,15 +586,13 @@ void _showArabicDateRangePicker(BuildContext context) async {
                   );
                 }
                 
-             final screenWidth = constraints.maxWidth;
-                
-                // ⭐️ التعديل هنا: استبدال math.max بالعملية الشرطية ⭐️
+                 final screenWidth = constraints.maxWidth;               
                 final calculatedSpace = (screenWidth - totalFixedWidth) / 2;
                 final remainingSpace = calculatedSpace > 0.0 ? calculatedSpace : 0.0;
-                // ⭐️ نهاية ال
                 return Stack( 
                   children: [
-                    
+                                      
+          if ( constraints.maxWidth > tabletBreakpoint) 
                     // شريط البحث والـ Chips (الوضع العادي)
                     Positioned(
                       top: 0,
@@ -663,7 +669,8 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       ),
                     ),
                     
-                    // أزرار السكرول في أقصى اليمين (الوضع العادي)
+        if (constraints.maxWidth > tabletBreakpoint) 
+               // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
                       right: rightEdgePadding, 
                       top: 0,
@@ -709,7 +716,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
 
 
                   // 🟢 التعديل 1: يظهر الدرج عندما يكون مفتوحاً (_isDrawerOpen = true)
-                  if (_isDrawerOpen) 
+                  if (_isDrawerOpen &&  constraints.maxWidth > tabletBreakpoint) 
                   Positioned(
                     top: 70,
                     left: isArabic ? null : 20,
@@ -719,7 +726,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                   ),
 
                 // 🟢 التعديل 2: تظهر الأيقونات عندما يكون الدرج مغلقاً (_isDrawerOpen = false)
-                  if (!_isDrawerOpen)
+        if (constraints.maxWidth > tabletBreakpoint) 
                   Positioned(
                     left: isArabic ? null : 20,
                     right: isArabic ? 20 : null,
@@ -762,6 +769,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       ],
                     ),
                   ),
+        if (constraints.maxWidth > tabletBreakpoint) 
 
                 Positioned(
                   left: isArabic ? null : 20,
@@ -779,6 +787,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         onPressed: toggleDrawer,
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.12),
+                      
                       Image.asset(
                         'assets/images/TRIPTO.png',
                         height: 58,

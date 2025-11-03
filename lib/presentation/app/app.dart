@@ -47,6 +47,14 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    const double mobileBreakpoint = 600; // نقطة الفصل بين الموبايل والويب/التابلت
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final bool isMobileLayout = screenWidth < mobileBreakpoint;
+
+
+
+    
     final List<Widget> pages = [
       const HomePage(), // index 0
       const Hotelcard(),
@@ -61,7 +69,7 @@ class _AppState extends State<App> {
       body: Stack(
         children: [
           pages[_currentIndex],
-          if (!kIsWeb)
+          if (isMobileLayout)
             Positioned(
               bottom: 0,
               left: 0,

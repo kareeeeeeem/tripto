@@ -1,4 +1,6 @@
-import 'dart:async';
+// 💡 استورد الملف الجديد
+import 'package:tripto/core/web_reloader.dart';import 'dart:async';
+import 'package:flutter/foundation.dart'; // لتوفير kIsWeb
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,7 @@ import 'package:tripto/bloc&repo/SearchOnTrip/byCategory/SearchOnTripByCategory_
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_Bloc.dart';
 import 'package:tripto/bloc&repo/SearchOnTrip/byDate/SearchOnTripByDate_State.dart';
 import 'package:tripto/presentation/pages/NavBar/home/search/SearchPage.dart';
+import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/SignupOrLogin.dart';
 import 'package:tripto/presentation/pages/NavBar/profile_logiin_sign_verfi/profile_page.dart';
 import 'package:tripto/presentation/pages/SlideBar/RightButtons.dart';
 import 'package:tripto/presentation/pages/screens/leftSide/CountryWithCity.dart';
@@ -29,7 +32,6 @@ import 'package:tripto/l10n/app_localizations.dart';
 import 'package:tripto/main.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:html' as html;
 
 typedef TripDetailsCallback = void Function(
   int tripId,
@@ -579,8 +581,7 @@ ElevatedButton(
   ),
   onPressed: () {
     if (kIsWeb) {
-      // 🔹 فقط في الويب: عمل Refresh للصفحة
-      html.window.location.reload();
+      getReloader().reload();
     } else {
       // 🔹 في الموبايل: الحل الحالي
       setState(() {
@@ -1045,6 +1046,12 @@ Positioned(
           child: CustomButton(
             text: AppLocalizations.of(context)!.booknow,
             onPressed: () async {
+              const storage = FlutterSecureStorage(); // 💡 تأكد من تعريف هذه الخدمة في النطاق (Scope) أو استيرادها
+              final storedUserId = await storage.read(key: 'userId');
+
+              if (storedUserId != null && storedUserId.isNotEmpty) {
+              
+              final secureStorage = SecureStorageService(); // 💡 قد تحتاج إلى تعريفها
               final storage = SecureStorageService();
               final currentUser = await storage.getUser();
               final personCounterState = _personCounterKeys[index].currentState;
@@ -1077,7 +1084,28 @@ Positioned(
 
               debugPrint("==== Trip DATA SENT TO API ====\n${const JsonEncoder.withIndent('  ').convert(orderData)}");
               context.read<OrderTripBloc>().add(SubmitOrderTrip(orderData));
-            },
+            
+            }
+            else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.pleaseLoginFirst,
+                        ),
+                        backgroundColor: Color(0xFF002E70),
+                        duration: const Duration(seconds: 5),
+                      ),
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Signuporlogin(),
+                        ),
+                      );
+                    });
+                  }
+                },       
           ),
         );
       },
