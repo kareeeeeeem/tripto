@@ -482,23 +482,26 @@ void _showArabicDateRangePicker(BuildContext context) async {
     return LayoutBuilder(
       builder: (context, constraints) {
         const double webBreakpoint = 1200;     // شاشات كبيرة (كمبيوتر / لابتوب)
-        const double tabletBreakpoint = 800;   // التابلت أو الآيباد
-        const double mobileBreakpoint = 480;   // الموبايل
+        // const double tabletBreakpoint = 1000;   // التابلت أو الآيباد
+        // const double mobileBreakpoint = 480;   // الموبايل
 
 
           final bool isWebLayout = constraints.maxWidth >= webBreakpoint;
-          final bool isTabletLayout = constraints.maxWidth >= tabletBreakpoint && constraints.maxWidth < webBreakpoint;
-          final bool isMobileLayout = constraints.maxWidth < tabletBreakpoint;
+          final bool isTabletLayout = constraints.maxWidth >= 1000 && constraints.maxWidth < webBreakpoint;
+          final bool isMobileLayout = constraints.maxWidth < 1000;
 
          if (kIsWeb) { 
   
            const double videoWidth = 450;
-          const double rightButtonsWidth = 520;
-          const double spacingBetween = 80;
+          //const double rightButtonsWidth = 520;
+         // const double spacingBetween = 80;
           const double searchBarHeightPadding = 130.0; 
-          const double rightEdgePadding = 40.0; 
-          const double totalFixedWidth = videoWidth + rightButtonsWidth + spacingBetween; 
+          const double searchBarbottomPadding = 55.0; 
 
+          const double rightEdgePadding = 40.0; 
+          const double totalFixedWidth = videoWidth + 20 + 450;
+          
+          
           return Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.black, 
@@ -535,65 +538,15 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         ),
                       ),
               
-               if (constraints.maxWidth > tabletBreakpoint) 
-
-                      // أزرار السكرول في أقصى اليمين (وضع ملء الشاشة)
-                      Positioned(
-                        right: rightEdgePadding, 
-                        top: 0,
-                        bottom: 0,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                  Builder(
-                                      builder: (context) {
-                                          final status = videoPlayerScreenKey.currentState?.getScrollStatus();
-                                          final currentIndex = status?['currentIndex'] ?? 0;
-                                          final isFirstVideo = currentIndex == 0;
-                                          
-                                          return Tooltip( 
-                                              message: loc.previousVideo, 
-                                              child: IconButton(
-                                                  icon: Icon(Icons.keyboard_arrow_up,
-                                                      size: 40, 
-                                                      color: isFirstVideo ? Colors.white24 : Colors.white70),
-                                                  onPressed: isFirstVideo ? null : _scrollToPreviousPage,
-                                                  style: IconButton.styleFrom(
-                                                      backgroundColor: Colors.white10,
-                                                  ),
-                                              ),
-                                          );
-                                      },
-                                  ),
-                                  
-                                  const SizedBox(height: 20),
-
-                                  Tooltip( 
-                                      message: loc.nextVideo, 
-                                      child: IconButton(
-                                          icon: const Icon(Icons.keyboard_arrow_down,
-                                              size: 40, color: Colors.white70),
-                                          onPressed: _scrollToNextPage,
-                                          style: IconButton.styleFrom(
-                                              backgroundColor: Colors.white10,
-                                          ),
-                                      ),
-                                  ),
-                            ],
-                        ),
-                      ),
                     ],
                   );
                 }
                 
-                 final screenWidth = constraints.maxWidth;               
-                final calculatedSpace = (screenWidth - totalFixedWidth) / 2;
-                final remainingSpace = calculatedSpace > 0.0 ? calculatedSpace : 0.0;
+                final screenWidth = constraints.maxWidth;               
+                
                 return Stack( 
                   children: [
-                                      
-          if ( constraints.maxWidth > tabletBreakpoint) 
-                    // شريط البحث والـ Chips (الوضع العادي)
+                    // شريط البحث والـ Chips (يبقى في الأعلى)
                     Positioned(
                       top: 0,
                       left: 0,
@@ -602,74 +555,92 @@ void _showArabicDateRangePicker(BuildContext context) async {
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(top: searchBarHeightPadding), 
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(width: remainingSpace), // المسافة اليسرى المتغيرة
-                            
-                            // 🎬 الفيديو
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxWidth: videoWidth,
-                                maxHeight: constraints.maxHeight - searchBarHeightPadding-30, 
-                              ),
-                              child: VideoPlayerScreen(
-                                
-                                key: videoPlayerScreenKey,
-                                onTripChanged: _updateCurrentTripDetails,
-                                onSearchPressed: _handleSearchNavigation, 
-                                onToggleFullscreen: _toggleFullscreen, 
-                                isCurrentlyFullscreen: _isFullscreen,
-                                
+                      padding: EdgeInsets.only(top: searchBarHeightPadding, bottom: searchBarbottomPadding), 
+                      
+                      // 💡 التعديل الرئيسي: استخدام تخطيط مختلف بناءً على حجم الشاشة
+                      child: constraints.maxWidth >= webBreakpoint
+                          ? Padding(
+                            padding: const EdgeInsets.only(left: 400),
+                            child: Center( // التخطيط الكبير (فيديو + أزرار)
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxWidth: videoWidth,
+                                        maxHeight: constraints.maxHeight - searchBarHeightPadding - 30, 
+                                      ),
+                                      child: VideoPlayerScreen(
+                                        key: videoPlayerScreenKey,
+                                        onTripChanged: _updateCurrentTripDetails,
+                                        onSearchPressed: _handleSearchNavigation, 
+                                        onToggleFullscreen: _toggleFullscreen, 
+                                        isCurrentlyFullscreen: _isFullscreen,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20), // المسافة بين الفيديو و RightButtons
+                                    
+                                    // 🎛️ RightButtons (يظهر فقط على الويب)
+                                    Flexible(
+                                      flex: 1, 
+                                      child: ConstrainedBox( 
+                                        constraints: const BoxConstraints(
+                                          minWidth: 350,
+                                          maxWidth: 450,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: RightButtons( 
+                                                tripId: _currentTripId,
+                                                currentTripCategory: _currentTripCategory,
+                                                personCounterKey: _currentPersonCounterKey, 
+                                                selectedTripSummary: _tripSummaryText,
+                                                onHotelSelected: (id, price) { 
+                                                  if (!mounted) return;
+                                                  setState(() { _selectedHotelId = id; _selectedHotelPrice = price; });
+                                                },
+                                                onCarSelected: (id, price) { 
+                                                  if (!mounted) return;
+                                                  setState(() { _selectedCarId = id; _selectedCarPrice = price; });
+                                                },
+                                                onActivitySelected: (id, price) { 
+                                                  if (!mounted) return;
+                                                  setState(() { _selectedActivityId = id; _selectedActivityPrice = price; });
+                                                },
+                                                onFlightSelected: (id, price) {}, 
+                                                onSummaryReady: _updateTripSummary, 
+                                                onDateRangeSelected: onDateRangeSelected,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                             ),
-
-                            const SizedBox(width: spacingBetween), // المسافة بين الفيديو و RightButtons
-
-                            // 🎛️ RightButtons
-                            ConstrainedBox( 
-                              constraints: BoxConstraints(
-                                maxWidth: rightButtonsWidth,
-                                maxHeight: constraints.maxHeight - searchBarHeightPadding, 
-                              ),
-                             child: Column(
-                                children: [
-                                  Expanded(
-                                    child: RightButtons( 
-                                      tripId: _currentTripId,
-                                      currentTripCategory: _currentTripCategory,
-                                      personCounterKey: _currentPersonCounterKey, 
-                                      selectedTripSummary: _tripSummaryText,
-
-                                      onHotelSelected: (id, price) { 
-                                        if (!mounted) return;
-                                        setState(() { _selectedHotelId = id; _selectedHotelPrice = price; });
-                                      },
-                                      onCarSelected: (id, price) { 
-                                        if (!mounted) return;
-                                        setState(() { _selectedCarId = id; _selectedCarPrice = price; });
-                                      },
-                                      onActivitySelected: (id, price) { 
-                                        if (!mounted) return;
-                                        setState(() { _selectedActivityId = id; _selectedActivityPrice = price; });
-                                      },
-                                      onFlightSelected: (id, price) {}, 
-
-                                      onSummaryReady: _updateTripSummary, 
-                                      onDateRangeSelected: onDateRangeSelected,
-                                    ),
-                                  ),
-                                ],
+                          )
+                          : Center( // 💡 التخطيط الأصغر (فيديو متمركز)
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  // حد أقصى للعرض، يمكن أن يكون مثلاً 90% من عرض الشاشة
+                                  maxWidth: constraints.maxWidth * 0.9, 
+                                  maxHeight: constraints.maxHeight - searchBarHeightPadding - 30, 
+                                ),
+                                child: VideoPlayerScreen(
+                                  key: videoPlayerScreenKey,
+                                  onTripChanged: _updateCurrentTripDetails,
+                                  onSearchPressed: _handleSearchNavigation, 
+                                  onToggleFullscreen: _toggleFullscreen, 
+                                  isCurrentlyFullscreen: _isFullscreen,
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                     ),
                     
-        if (constraints.maxWidth > tabletBreakpoint) 
+        // أزرار السكرول في أقصى اليمين (تبقى في الويب فقط)
+        if (constraints.maxWidth >= webBreakpoint) 
                // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
                       right: rightEdgePadding, 
@@ -716,7 +687,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
 
 
                   // 🟢 التعديل 1: يظهر الدرج عندما يكون مفتوحاً (_isDrawerOpen = true)
-                  if (_isDrawerOpen &&  constraints.maxWidth > tabletBreakpoint) 
+                  if (_isDrawerOpen &&  constraints.maxWidth >= webBreakpoint) 
                   Positioned(
                     top: 70,
                     left: isArabic ? null : 20,
@@ -726,7 +697,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                   ),
 
                 // 🟢 التعديل 2: تظهر الأيقونات عندما يكون الدرج مغلقاً (_isDrawerOpen = false)
-        if (constraints.maxWidth > tabletBreakpoint) 
+        if (!_isDrawerOpen && constraints.maxWidth > 1000) 
                   Positioned(
                     left: isArabic ? null : 20,
                     right: isArabic ? 20 : null,
@@ -769,7 +740,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       ],
                     ),
                   ),
-        if (constraints.maxWidth > tabletBreakpoint) 
+        if (constraints.maxWidth > 1000) 
 
                 Positioned(
                   left: isArabic ? null : 20,
@@ -788,6 +759,9 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.12),
                       
+
+                              if (constraints.maxWidth > 1400) 
+
                       Image.asset(
                         'assets/images/TRIPTO.png',
                         height: 58,
@@ -803,7 +777,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
             );
           
         } else {
-          // 📱 للموبايل 
+          // 📱 للموبايل (خارج وضع الويب)
           return const Scaffold(
             backgroundColor: Colors.black,
             body: VideoPlayerScreen(),

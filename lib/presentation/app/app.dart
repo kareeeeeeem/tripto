@@ -47,40 +47,44 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    const double mobileBreakpoint = 600; // نقطة الفصل بين الموبايل والويب/التابلت
-    final screenWidth = MediaQuery.of(context).size.width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const double webBreakpoint = 1200; // شاشات كبيرة (كمبيوتر / لابتوب)
+        const double tabletBreakpoint = 1000; // التابلت أو الآيباد
+        const double mobileBreakpoint = 480; // الموبايل
 
-    final bool isMobileLayout = screenWidth < mobileBreakpoint;
+        final bool isWebLayout = constraints.maxWidth >= webBreakpoint;
+        final bool isTabletLayout =
+            constraints.maxWidth >= tabletBreakpoint && constraints.maxWidth < webBreakpoint;
+        final bool isMobileLayout = constraints.maxWidth < tabletBreakpoint;
 
+        final List<Widget> pages = [
+          const HomePage(), // index 0
+          const Hotelcard(),
+          const ActivityPage(), // index 1
+          hasToken ? const ProfilePage() : const Signuporlogin(), // index 2
+          const SideMenu(),
+        ];
 
-
-    
-    final List<Widget> pages = [
-      const HomePage(), // index 0
-      const Hotelcard(),
-      const ActivityPage(), // index 1
-      hasToken ? const ProfilePage() : const Signuporlogin(), // index 2
-      // const FavoritePage(), // index 3
-      const SideMenu(),
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          pages[_currentIndex],
-          if (isMobileLayout)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: CustomBottomNavBar(
-                currentIndex: _currentIndex,
-                onTap: _changePage,
-              ),
-            ),
-        ],
-      ),
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              pages[_currentIndex],
+              if (isMobileLayout)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: CustomBottomNavBar(
+                    currentIndex: _currentIndex,
+                    onTap: _changePage,
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
