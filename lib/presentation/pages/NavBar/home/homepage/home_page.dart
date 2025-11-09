@@ -562,10 +562,14 @@ void _showArabicDateRangePicker(BuildContext context) async {
                       
 
                       // 💡 التعديل الرئيسي: استخدام تخطيط مختلف بناءً على حجم الشاشة
-child: constraints.maxWidth >= webBreakpoint
-    ? Padding(
-        padding: const EdgeInsets.only(left: 400),
-        child: Center(
+    child: constraints.maxWidth >= webBreakpoint
+      ? Padding(
+        padding:  EdgeInsets.only(
+
+          left: !isArabic ? 400.0 : 0.0,
+          right: isArabic ? 400.0 : 0.0,
+          ),
+         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -666,13 +670,16 @@ child: constraints.maxWidth >= webBreakpoint
               ),
             ),
             Positioned(
-              right: 2,
+              
+              
+             right: isArabic ? null : 2, // في الإنجليزي (LTR) تبقى 2 من اليمين
+             left: isArabic ? 2 : null,  // في العربي (RTL) تصبح 2 من اليسار
               top: 50,
               bottom: 0,
               child: Container(
                 width: 100,
                 decoration: BoxDecoration(
-                color: Colors.transparent, // أو قم بإزالة خاصية color بالكامل                  borderRadius: BorderRadius.circular(16),
+                color: Colors.transparent, 
                 ),
                 padding: const EdgeInsets.all(10),
                 child: RightButtons(
@@ -732,7 +739,8 @@ child: constraints.maxWidth >= webBreakpoint
       if (constraints.maxWidth >= webBreakpoint) 
                // أزرار السكرول في أقصى اليمين (الوضع العادي)
                     Positioned(
-                      right: rightEdgePadding, 
+                      left: isArabic ? rightEdgePadding : null, // في العربي تظهر على اليسار
+                      right: isArabic ? null : rightEdgePadding, // في الإنجليزي تظهر على اليمين
                       top: 0,
                       bottom: 0,
                       child: Column(
