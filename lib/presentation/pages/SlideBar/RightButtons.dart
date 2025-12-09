@@ -680,23 +680,23 @@ class _RightButtonsState extends State<RightButtons> {
     /// Save Button
     /// 
     
-    buttons.add(
-      _ButtonData(
-       iconWidget: Showcase( // ✅ إضافة Showcase هنا
-        key: _saveKey,
-                    description: AppLocalizations.of(context)!.showcaseSaveDescription, 
-                  child: Icon(
-            Icons.bookmark_border,
-            color:
-                selectedIndex == buttons.length
-                    ? selectedIconColor
-                    : defaultIconColor,
-          ),
-        ),
-        label: AppLocalizations.of(context)!.save,
-        onPressed: () => debugPrint('Save pressed'),
-      ),
-    );
+    // buttons.add(
+    //   _ButtonData(
+    //    iconWidget: Showcase( // ✅ إضافة Showcase هنا
+    //     key: _saveKey,
+    //                 description: AppLocalizations.of(context)!.showcaseSaveDescription, 
+    //               child: Icon(
+    //         Icons.bookmark_border,
+    //         color:
+    //             selectedIndex == buttons.length
+    //                 ? selectedIconColor
+    //                 : defaultIconColor,
+    //       ),
+    //     ),
+    //     label: AppLocalizations.of(context)!.save,
+    //     onPressed: () => debugPrint('Save pressed'),
+    //   ),
+    // );
 
 
 

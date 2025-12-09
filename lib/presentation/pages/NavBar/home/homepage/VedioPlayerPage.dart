@@ -1019,6 +1019,10 @@ Positioned(
   ),
 ),
 
+
+
+//
+if (!widget.isCurrentlyFullscreen!)
 Positioned(
   bottom: kIsWeb ? screenHeight * 0.05 : screenHeight * 0.12,
   left: 20,

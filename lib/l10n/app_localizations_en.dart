@@ -30,8 +30,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get joinusviaphonenumber => 'Join us via phone number';
 
   @override
-  String get wewilltextacodetoverfiyyournumber =>
-      'We will text a code to verify your number';
+  String get wewilltextacodetoverfiyyournumber => 'We will text a code to verify your number';
 
   @override
   String get enterthecode => 'Enter the code';
@@ -123,7 +122,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get date => 'Date';
 
   @override
-  String get hotel => 'Hotel';
+  String get hotel => 'Stay';
 
   @override
   String get car => 'Car';
@@ -204,15 +203,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit => 'Edit';
 
   @override
-  String get pleaseselectanactivityfirsttoFinish =>
-      'Please select an activity first to Finish';
+  String get pleaseselectanactivityfirsttoFinish => 'Please select an activity first to Finish';
 
   @override
   String get customtrip => 'Custom Trip';
 
   @override
-  String get customTripMessage =>
-      'Hello, I would like to inquire about a custom trip.';
+  String get customTripMessage => 'Hello, I would like to inquire about a custom trip.';
 
   @override
   String get cannotOpenWhatsapp => 'Cannot open WhatsApp on this device';
@@ -263,8 +260,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get atLeastOneDigit => 'At least one digit';
 
   @override
-  String get passwordNotStrongEnough =>
-      'Password is not strong enough. Please meet all requirements.';
+  String get passwordNotStrongEnough => 'Password is not strong enough. Please meet all requirements.';
 
   @override
   String get registrationSuccess => 'Registration successful!';
@@ -273,8 +269,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationFailed => 'Registration failed. Please try again.';
 
   @override
-  String get unexpectedError =>
-      'An unexpected error occurred. Please try again later.';
+  String get unexpectedError => 'An unexpected error occurred. Please try again later.';
 
   @override
   String get loading => 'Loading...';
@@ -337,8 +332,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get atLeastOneSpecialCharacter => 'At least one special character';
 
   @override
-  String get pleaseEnterPhoneAndPassword =>
-      'Please enter phone number and password';
+  String get pleaseEnterPhoneAndPassword => 'Please enter phone number and password';
 
   @override
   String choose_from_to(Object from, Object to) {
@@ -441,8 +435,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutus => 'About-Us';
 
   @override
-  String get aboutus1 =>
-      'We are a passionate mobile application development agency, specializing in tourism. With';
+  String get aboutus1 => 'We are a passionate mobile application development agency, specializing in tourism. With';
 
   @override
   String get aboutus2 => '20 years of experience ';
@@ -454,16 +447,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutus4 => 'managed from Belgium. ';
 
   @override
-  String get aboutus5 =>
-      'We have designed a unique application to transform the planning and execution of your travels. We work with trusted partners in Egypt and the Gulf countries to guarantee a high-quality service.';
+  String get aboutus5 => 'We have designed a unique application to transform the planning and execution of your travels. We work with trusted partners in Egypt and the Gulf countries to guarantee a high-quality service.';
 
   @override
-  String get abutus6 =>
-      'Our app was created to offer a seamless and memorable travel experience. It provides you with a ';
+  String get abutus6 => 'Our app was created to offer a seamless and memorable travel experience. It provides you with a ';
 
   @override
-  String get aboutus7 =>
-      'carefully selected range of the best hotels, apartments, cars, and airlines.';
+  String get aboutus7 => 'carefully selected range of the best hotels, apartments, cars, and airlines.';
 
   @override
   String get aboutus8 => 'We offer:';
@@ -478,16 +468,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutus11 => '• High-level support, ';
 
   @override
-  String get aboutus12 =>
-      'staff, to ensure a smooth journey at every step of your trip.';
+  String get aboutus12 => 'staff, to ensure a smooth journey at every step of your trip.';
 
   @override
-  String get aboutus13 =>
-      'We are committed to providing you with the best of Egypt. With our expertise and local partners, you are guaranteed an unforgettable adventure, with complete peace of mind.';
+  String get aboutus13 => 'We are committed to providing you with the best of Egypt. With our expertise and local partners, you are guaranteed an unforgettable adventure, with complete peace of mind.';
 
   @override
-  String get aboutus14 =>
-      'TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English';
+  String get aboutus14 => 'TripTo simplifies your travels and guarantees 24/7 assistance in Arabic and English';
 
   @override
   String get favourite => 'Favourite';
@@ -502,19 +489,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancellation2 => '1. Introduction and Scope of Policy';
 
   @override
-  String get cancellation3 =>
-      'Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy \'the Policy\' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities \'the Services\'.';
+  String get cancellation3 => 'Welcome to [TripTo]. We strive to provide a transparent and fair booking experience. This policy \'the Policy\' explains the terms and conditions related to cancellations and refunds for services booked through our application, which include but are not limited to: flight bookings, hotel accommodations, holiday packages, tours, and recreational activities \'the Services\'.';
 
   @override
-  String get cancellation4 =>
-      'Completing a booking through [Tripto] signifies your agreement to this Policy and to the terms and conditions of the end-service provider (e.g., the airline, hotel, or tour operator).';
+  String get cancellation4 => 'Completing a booking through [Tripto] signifies your agreement to this Policy and to the terms and conditions of the end-service provider (e.g., the airline, hotel, or tour operator).';
 
   @override
   String get cancellation5 => '2. Cancellation and Refund Policy';
 
   @override
-  String get cancellation6 =>
-      'The cancellation and refund policy is primarily subject to the terms set by the end-service provider. [TripTo] acts as an intermediary, and we will clearly display the specific cancellation terms for each booking during the reservation process and before you complete the payment.';
+  String get cancellation6 => 'The cancellation and refund policy is primarily subject to the terms set by the end-service provider. [TripTo] acts as an intermediary, and we will clearly display the specific cancellation terms for each booking during the reservation process and before you complete the payment.';
 
   @override
   String get cancellation7 => '2.1. Flight Bookings';
@@ -523,110 +507,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancellation8 => '•  Non-refundable Tickets: ';
 
   @override
-  String get cancellation9 =>
-      'Most airline tickets, especially promotional and economy fares, are non-refundable. If the traveler cancels the booking, no part of the payment may be refunded.';
+  String get cancellation9 => 'Most airline tickets, especially promotional and economy fares, are non-refundable. If the traveler cancels the booking, no part of the payment may be refunded.';
 
   @override
   String get cancellation10 => '•  Refundable Tickets: ';
 
   @override
-  String get cancellation11 =>
-      'Some ticket categories may allow for refunds, but a \'cancellation fee\' set by the airline will often be applied. The refunded amount will be the total amount paid minus this fee.';
+  String get cancellation11 => 'Some ticket categories may allow for refunds, but a \'cancellation fee\' set by the airline will often be applied. The refunded amount will be the total amount paid minus this fee.';
 
   @override
   String get cancellation12 => '•  Cancellation by the Airline: ';
 
   @override
-  String get cancellation13 =>
-      'If a flight is canceled by the airline, the customer is entitled to a full refund or an alternative booking, in accordance with the airline\'s policy and the governing Egyptian law.';
+  String get cancellation13 => 'If a flight is canceled by the airline, the customer is entitled to a full refund or an alternative booking, in accordance with the airline\'s policy and the governing Egyptian law.';
 
   @override
   String get cancellation14 => '•  Modifications: ';
 
   @override
-  String get cancellation15 =>
-      'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
+  String get cancellation15 => 'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
 
   @override
   String get cancellation16 => '2.2. Hotel and Accommodation Bookings';
 
   @override
-  String get cancellation17 =>
-      '•  Each hotel has its own cancellation policy, which will be clearly displayed during the booking process.';
+  String get cancellation17 => '•  Each hotel has its own cancellation policy, which will be clearly displayed during the booking process.';
 
   @override
   String get cancellation18 => '•  Free Cancellation:';
 
   @override
-  String get cancellation19 =>
-      'Many hotels offer a free cancellation period (for example, up to 48 hours before the check-in date). If the cancellation is made within this period, the customer is entitled to a full refund';
+  String get cancellation19 => 'Many hotels offer a free cancellation period (for example, up to 48 hours before the check-in date). If the cancellation is made within this period, the customer is entitled to a full refund';
 
   @override
   String get cancellation20 => '•  Cancellation Fees: ';
 
   @override
-  String get cancellation21 =>
-      'After the free cancellation period expires, the hotel may impose a cancellation fee, which could be equivalent to the cost of the first night or the entire booking value';
+  String get cancellation21 => 'After the free cancellation period expires, the hotel may impose a cancellation fee, which could be equivalent to the cost of the first night or the entire booking value';
 
   @override
   String get cancellation22 => '•  No-Show: ';
 
   @override
-  String get cancellation23 =>
-      'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
+  String get cancellation23 => 'Any changes to a booking (such as date changes) are subject to fees determined by the airline in addition to any price difference.';
 
   @override
   String get cancellation24 => '2.3. Holiday Packages, Tours, and Activities';
 
   @override
-  String get cancellation25 =>
-      '•  Packages and tours are subject to the specific cancellation policy of the tour operator.';
+  String get cancellation25 => '•  Packages and tours are subject to the specific cancellation policy of the tour operator.';
 
   @override
-  String get cancellation26 =>
-      '•  Cancellation fees are often tiered; the closer the cancellation date is to the start date of the trip, the higher the fee. For example:';
+  String get cancellation26 => '•  Cancellation fees are often tiered; the closer the cancellation date is to the start date of the trip, the higher the fee. For example:';
 
   @override
-  String get cancellation27 =>
-      'o  Cancellation more than 30 days prior: 25% deduction from the package price.';
+  String get cancellation27 => 'o  Cancellation more than 30 days prior: 25% deduction from the package price.';
 
   @override
-  String get cancellation28 =>
-      'o  Cancellation between 15 and 29 days prior: 50% deduction from the package price.';
+  String get cancellation28 => 'o  Cancellation between 15 and 29 days prior: 50% deduction from the package price.';
 
   @override
-  String get cancellation29 =>
-      'o  Cancellation less than 15 days prior: 100% deduction from the package price.';
+  String get cancellation29 => 'o  Cancellation less than 15 days prior: 100% deduction from the package price.';
 
   @override
-  String get cancellation30 =>
-      'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.';
+  String get cancellation30 => 'o  The specific cancellation fee schedule for each package will be clarified before the booking is confirmed.';
 
   @override
   String get cancellation31 => '3. Cancellation Request Procedure';
 
   @override
-  String get cancellation32 =>
-      '•  All cancellation requests must be submitted through your personal account in the [Trip To] application.';
+  String get cancellation32 => '•  All cancellation requests must be submitted through your personal account in the [Trip To] application.';
 
   @override
-  String get cancellation33 =>
-      '•  You can find the cancellation option within the booking details under the \'My Bookings\' section.';
+  String get cancellation33 => '•  You can find the cancellation option within the booking details under the \'My Bookings\' section.';
 
   @override
-  String get cancellation34 =>
-      '•  The date and time we receive the cancellation request will be the basis for applying the cancellation terms.';
+  String get cancellation34 => '•  The date and time we receive the cancellation request will be the basis for applying the cancellation terms.';
 
   @override
-  String get cancellation35 =>
-      '•  For assistance, you can contact our customer service team via [Support Email] or [Support Phone Number].';
+  String get cancellation35 => '•  For assistance, you can contact our customer service team via [Support Email] or [Support Phone Number].';
 
   @override
   String get cancellation36 => '4. Refund Processing';
 
   @override
-  String get cancellation37 =>
-      '•  Once the refund request is approved by the service provider, we will process the amount.';
+  String get cancellation37 => '•  Once the refund request is approved by the service provider, we will process the amount.';
 
   @override
   String get cancellation38 => '•  Refunds will be issued to the ';
@@ -644,26 +609,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancellation42 => '7 to 21 business days ';
 
   @override
-  String get cancellation43 =>
-      'to appear in your bank account or on your credit card statement, depending on the policies of the respective bank';
+  String get cancellation43 => 'to appear in your bank account or on your credit card statement, depending on the policies of the respective bank';
 
   @override
-  String get cancellation44 =>
-      '•  The service/booking fees for the [Trip] application (if any) are administrative fees and are non-refundable, except in cases of cancellation by the service provider.';
+  String get cancellation44 => '•  The service/booking fees for the [Trip] application (if any) are administrative fees and are non-refundable, except in cases of cancellation by the service provider.';
 
   @override
   String get cancellation45 => '5. Force Majeure';
 
   @override
-  String get cancellation46 =>
-      'In cases of force majeure events beyond the control of any party (such as natural disasters, pandemics, wars, sudden government decisions) that prevent the service from being rendered, we will adhere to the policies set by the end-service providers and Egyptian law. We will do our utmost to assist our customers in finding the best possible solutions, which may include refunds or vouchers for future use.';
+  String get cancellation46 => 'In cases of force majeure events beyond the control of any party (such as natural disasters, pandemics, wars, sudden government decisions) that prevent the service from being rendered, we will adhere to the policies set by the end-service providers and Egyptian law. We will do our utmost to assist our customers in finding the best possible solutions, which may include refunds or vouchers for future use.';
 
   @override
   String get cancellation47 => '6. Governing Law';
 
   @override
-  String get cancellation48 =>
-      'This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.';
+  String get cancellation48 => 'This Policy shall be governed and construed in accordance with the laws of the Arab Republic of Egypt, particularly the Consumer Protection Law. In the event of any dispute, the competent Egyptian courts shall have exclusive jurisdiction.';
 
   @override
   String get logout => 'Logout';
@@ -696,12 +657,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introduction => '1. Introduction';
 
   @override
-  String get privacypolicy2 =>
-      'At [TripTo], we are committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, share, and safeguard your personal information when you use our application and related services.';
+  String get privacypolicy2 => 'At [TripTo], we are committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, share, and safeguard your personal information when you use our application and related services.';
 
   @override
-  String get privacypolicy3 =>
-      'By accessing or using the TripTo application, you consent to the practices described in this Privacy Policy.';
+  String get privacypolicy3 => 'By accessing or using the TripTo application, you consent to the practices described in this Privacy Policy.';
 
   @override
   String get privacypolicy4 => '2. Information We Collect';
@@ -710,22 +669,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacypolicy5 => 'Information You Provide Directly:';
 
   @override
-  String get privacypolicy6 =>
-      'Payment details (credit/debit cards, e-wallets)';
+  String get privacypolicy6 => 'Payment details (credit/debit cards, e-wallets)';
 
   @override
   String get privacypolicy7 => ' Phone number';
 
   @override
-  String get privacypolicy8 =>
-      ' Passport or ID information when required for travel bookings';
+  String get privacypolicy8 => ' Passport or ID information when required for travel bookings';
 
   @override
   String get privacypolicy9 => ' Information Collected Automatically:';
 
   @override
-  String get privacypolicy10 =>
-      'Device information (model, operating system, unique identifiers) ';
+  String get privacypolicy10 => 'Device information (model, operating system, unique identifiers) ';
 
   @override
   String get privacypolicy11 => 'IP address';
@@ -734,155 +690,127 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacypolicy12 => 'Location data (if permitted by the user)';
 
   @override
-  String get privacypolicy13 =>
-      'Usage data (search history, booking history, interactions within the App)';
+  String get privacypolicy13 => 'Usage data (search history, booking history, interactions within the App)';
 
   @override
   String get privacypolicy14 => '3. How We Use Your Information ';
 
   @override
-  String get privacypolicy15 =>
-      'We use the information we collect for purposes including, but not limited to: ';
+  String get privacypolicy15 => 'We use the information we collect for purposes including, but not limited to: ';
 
   @override
   String get privacypolicy16 => 'Processing bookings and payments. ';
 
   @override
-  String get privacypolicy17 =>
-      'Sending booking confirmations and important notifications.';
+  String get privacypolicy17 => 'Sending booking confirmations and important notifications.';
 
   @override
-  String get privacypolicy18 =>
-      'Providing customer support and technical assistance.';
+  String get privacypolicy18 => 'Providing customer support and technical assistance.';
 
   @override
-  String get privacypolicy19 =>
-      'Improving and personalizing the user experience.';
+  String get privacypolicy19 => 'Improving and personalizing the user experience.';
 
   @override
-  String get privacypolicy20 =>
-      'Sending promotional offers or marketing communications (with your consent). ';
+  String get privacypolicy20 => 'Sending promotional offers or marketing communications (with your consent). ';
 
   @override
-  String get privacypolicy21 =>
-      'Complying with applicable legal and regulatory requirements.';
+  String get privacypolicy21 => 'Complying with applicable legal and regulatory requirements.';
 
   @override
   String get privacypolicy22 => '4. Sharing of Information';
 
   @override
-  String get privacypolicy23 =>
-      'We may share your data in the following circumstances:';
+  String get privacypolicy23 => 'We may share your data in the following circumstances:';
 
   @override
-  String get privacypolicy24 =>
-      'With service providers (e.g., airlines, hotels, tour operators) to complete your booking. ';
+  String get privacypolicy24 => 'With service providers (e.g., airlines, hotels, tour operators) to complete your booking. ';
 
   @override
-  String get privacypolicy25 =>
-      'With payment processors to facilitate secure transactions.';
+  String get privacypolicy25 => 'With payment processors to facilitate secure transactions.';
 
   @override
-  String get privacypolicy26 =>
-      'With legal or regulatory authorities if required by law.';
+  String get privacypolicy26 => 'With legal or regulatory authorities if required by law.';
 
   @override
-  String get privacypolicy27 =>
-      'With business partners in joint marketing campaigns (only with your prior consent).';
+  String get privacypolicy27 => 'With business partners in joint marketing campaigns (only with your prior consent).';
 
   @override
-  String get privacypolicy28 =>
-      'We do not sell or rent your personal information to third parties.';
+  String get privacypolicy28 => 'We do not sell or rent your personal information to third parties.';
 
   @override
   String get privacypolicy29 => '5. Data Security';
 
   @override
-  String get privacypolicy30 =>
-      'We implement industry-standard security measures, including encryption, to protect your data.';
+  String get privacypolicy30 => 'We implement industry-standard security measures, including encryption, to protect your data.';
 
   @override
-  String get privacypolicy31 =>
-      'Access to personal information is restricted to authorized employees only.';
+  String get privacypolicy31 => 'Access to personal information is restricted to authorized employees only.';
 
   @override
-  String get privacypolicy32 =>
-      'However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute protection.';
+  String get privacypolicy32 => 'However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute protection.';
 
   @override
   String get privacypolicy33 => '6. Cookies and Tracking Technologies';
 
   @override
-  String get privacypolicy34 =>
-      'Our application may use cookies or similar technologies to:';
+  String get privacypolicy34 => 'Our application may use cookies or similar technologies to:';
 
   @override
   String get privacypolicy35 => 'Remember user preferences and settings.';
 
   @override
-  String get privacypolicy36 =>
-      'Analyze usage patterns and improve service quality.';
+  String get privacypolicy36 => 'Analyze usage patterns and improve service quality.';
 
   @override
   String get privacypolicy37 => 'Provide relevant offers and promotions.';
 
   @override
-  String get privacypolicy38 =>
-      'You may adjust your device settings to refuse or limit cookies.';
+  String get privacypolicy38 => 'You may adjust your device settings to refuse or limit cookies.';
 
   @override
   String get privacypolicy39 => '7. User Rights';
 
   @override
-  String get privacypolicy40 =>
-      'In line with the Egyptian Consumer Protection Law and applicable regulations, you have the right to:';
+  String get privacypolicy40 => 'In line with the Egyptian Consumer Protection Law and applicable regulations, you have the right to:';
 
   @override
   String get privacypolicy41 => 'Request access to your personal data.';
 
   @override
-  String get privacypolicy42 =>
-      'Request corrections of inaccurate or incomplete data.';
+  String get privacypolicy42 => 'Request corrections of inaccurate or incomplete data.';
 
   @override
-  String get privacypolicy43 =>
-      'Request deletion of your data, except where retention is required by law.';
+  String get privacypolicy43 => 'Request deletion of your data, except where retention is required by law.';
 
   @override
-  String get privacypolicy44 =>
-      'Opt-out of marketing communications at any time.';
+  String get privacypolicy44 => 'Opt-out of marketing communications at any time.';
 
   @override
   String get privacypolicy45 => '8. Data Retention';
 
   @override
-  String get privacypolicy46 =>
-      'We retain your personal information as long as your account is active or as necessary to provide services.';
+  String get privacypolicy46 => 'We retain your personal information as long as your account is active or as necessary to provide services.';
 
   @override
-  String get privacypolicy47 =>
-      'Some data may be retained longer to comply with legal obligations, resolve disputes, or enforce agreements.';
+  String get privacypolicy47 => 'Some data may be retained longer to comply with legal obligations, resolve disputes, or enforce agreements.';
 
   @override
   String get privacypolicy48 => '9. Third-Party Links';
 
   @override
-  String get privacypolicy49 =>
-      'The App may contain links to third-party websites or applications. TripTo is not responsible for the privacy practices or content of those external services.';
+  String get privacypolicy49 => 'The App may contain links to third-party websites or applications. TripTo is not responsible for the privacy practices or content of those external services.';
 
   @override
   String get privacypolicy50 => '10. Changes to this Privacy Policy';
 
   @override
-  String get privacypolicy51 =>
-      'We may update this Privacy Policy periodically. If significant changes are made, we will notify you via email or within the application.';
+  String get privacypolicy51 => 'We may update this Privacy Policy periodically. If significant changes are made, we will notify you via email or within the application.';
 
   @override
   String get privacypolicy52 => '11. Contact Us';
 
   @override
-  String get privacypolicy53 =>
-      'For questions, complaints, or to exercise your rights, please contact us at:';
+  String get privacypolicy53 => 'For questions, complaints, or to exercise your rights, please contact us at:';
 
   @override
   String get privacypolicy54 => 'Email: [Support Email]';
@@ -891,48 +819,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacypolicy55 => ' Phone: [Support Phone Number]';
 
   @override
-  String get termsandcondations => 'Terms and Condations';
+  String get termsandcondations => 'Terms and Conditions';
 
   @override
-  String get termsandcondations1 => 'Terms and Condations';
+  String get termsandcondations1 => 'Terms and Conditions';
 
   @override
-  String get termsandcondations2 =>
-      'Welcome to [TripTo], an application that provides online booking services for flights, hotels, holiday packages, tours, and recreational activities (collectively referred to as the Services). By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions (the Terms). If you do not agree with these Terms, you must discontinue use of the application immediately.';
+  String get termsandcondations2 => 'Welcome to [TripTo], an application that provides online booking services for flights, hotels, holiday packages, tours, and recreational activities (collectively referred to as the Services). By downloading, accessing, or using our application, you agree to be bound by these Terms and Conditions (the Terms). If you do not agree with these Terms, you must discontinue use of the application immediately.';
 
   @override
   String get termsandcondations3 => '2. Definitions';
 
   @override
-  String get termsandcondations4 =>
-      'Application (\'App\'): Refers to the TripTo mobile and web-based application.';
+  String get termsandcondations4 => 'Application (\'App\'): Refers to the TripTo mobile and web-based application.';
 
   @override
-  String get termsandcondations5 =>
-      'User (\'You\', \'Customer\'): Any person using the application to book services.';
+  String get termsandcondations5 => 'User (\'You\', \'Customer\'): Any person using the application to book services.';
 
   @override
-  String get termsandcondations6 =>
-      'Service Providers: Third-party entities such as airlines, hotels, tour operators, and others whose services are offered via the App.';
+  String get termsandcondations6 => 'Service Providers: Third-party entities such as airlines, hotels, tour operators, and others whose services are offered via the App.';
 
   @override
-  String get termsandcondations7 =>
-      'We/Us/Our: TripTo, its owners, employees, and affiliates.';
+  String get termsandcondations7 => 'We/Us/Our: TripTo, its owners, employees, and affiliates.';
 
   @override
   String get termsandcondations8 => '3. Scope of Services';
 
   @override
-  String get termsandcondations9 =>
-      'TripTo acts solely as an intermediary between you and the service providers.';
+  String get termsandcondations9 => 'TripTo acts solely as an intermediary between you and the service providers.';
 
   @override
-  String get termsandcondations10 =>
-      'All bookings are subject to the availability and conditions of the end-service provider.';
+  String get termsandcondations10 => 'All bookings are subject to the availability and conditions of the end-service provider.';
 
   @override
-  String get termsandcondations11 =>
-      'We do not own, operate, or control flights, hotels, or activities.';
+  String get termsandcondations11 => 'We do not own, operate, or control flights, hotels, or activities.';
 
   @override
   String get termsandcondations12 => '4. User Responsibilities';
@@ -941,99 +861,82 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsandcondations13 => 'By using the App, you agree to:';
 
   @override
-  String get termsandcondations14 =>
-      'Provide accurate and complete personal details when making a booking.';
+  String get termsandcondations14 => 'Provide accurate and complete personal details when making a booking.';
 
   @override
-  String get termsandcondations15 =>
-      'Ensure that you meet the requirements (e.g., passport validity, visas, vaccination certificates) for travel.';
+  String get termsandcondations15 => 'Ensure that you meet the requirements (e.g., passport validity, visas, vaccination certificates) for travel.';
 
   @override
-  String get termsandcondations16 =>
-      'Refrain from using the application for fraudulent, speculative, or unlawful purposes.';
+  String get termsandcondations16 => 'Refrain from using the application for fraudulent, speculative, or unlawful purposes.';
 
   @override
   String get termsandcondations17 => '5. Bookings and Payments';
 
   @override
-  String get termsandcondations18 =>
-      'All bookings are considered confirmed once payment is successfully processed.';
+  String get termsandcondations18 => 'All bookings are considered confirmed once payment is successfully processed.';
 
   @override
-  String get termsandcondations19 =>
-      'Prices displayed include applicable taxes, fees, and service charges unless otherwise indicated.';
+  String get termsandcondations19 => 'Prices displayed include applicable taxes, fees, and service charges unless otherwise indicated.';
 
   @override
-  String get termsandcondations20 =>
-      'TripTo reserves the right to modify prices at any time prior to booking confirmation.';
+  String get termsandcondations20 => 'TripTo reserves the right to modify prices at any time prior to booking confirmation.';
 
   @override
   String get termsandcondations21 => '6. Cancellation and Refund Policy';
 
   @override
-  String get termsandcondations22 =>
-      'Cancellations and refunds are subject to our Cancellation and Refund Policy, which forms an integral part of these Terms. By accepting these Terms, you confirm that you have read and agreed to the Cancellation and Refund Policy.';
+  String get termsandcondations22 => 'Cancellations and refunds are subject to our Cancellation and Refund Policy, which forms an integral part of these Terms. By accepting these Terms, you confirm that you have read and agreed to the Cancellation and Refund Policy.';
 
   @override
   String get termsandcondations23 => '7. Modifications and Changes';
 
   @override
-  String get termsandcondations24 =>
-      'Service providers may modify schedules, accommodations, or services due to operational needs.';
+  String get termsandcondations24 => 'Service providers may modify schedules, accommodations, or services due to operational needs.';
 
   @override
-  String get termsandcondations25 =>
-      'TripTo is not liable for such changes but will make reasonable efforts to notify you and assist in finding alternatives.';
+  String get termsandcondations25 => 'TripTo is not liable for such changes but will make reasonable efforts to notify you and assist in finding alternatives.';
 
   @override
   String get termsandcondations26 => '8. Intellectual Property';
 
   @override
-  String get termsandcondations27 =>
-      'All content in the App (designs, logos, texts, graphics, and software) is the property of TripTo and protected by copyright laws.';
+  String get termsandcondations27 => 'All content in the App (designs, logos, texts, graphics, and software) is the property of TripTo and protected by copyright laws.';
 
   @override
-  String get termsandcondations28 =>
-      'You may not copy, reproduce, distribute, or exploit any part of the App without prior written consent.';
+  String get termsandcondations28 => 'You may not copy, reproduce, distribute, or exploit any part of the App without prior written consent.';
 
   @override
   String get termsandcondations29 => '9. Limitation of Liability';
 
   @override
-  String get termsandcondations30 =>
-      'TripTo shall not be held responsible for delays, cancellations, accidents, losses, or damages arising from services provided by third parties.';
+  String get termsandcondations30 => 'TripTo shall not be held responsible for delays, cancellations, accidents, losses, or damages arising from services provided by third parties.';
 
   @override
-  String get termsandcondations31 =>
-      'Our liability, if any, shall not exceed the total amount paid for the booking made through the App.';
+  String get termsandcondations31 => 'Our liability, if any, shall not exceed the total amount paid for the booking made through the App.';
 
   @override
   String get termsandcondations32 => '10. Privacy Policy';
 
   @override
-  String get termsandcondations33 =>
-      'Your use of the App is also governed by our Privacy Policy, which explains how we collect, store, and protect your personal data.';
+  String get termsandcondations33 => 'Your use of the App is also governed by our Privacy Policy, which explains how we collect, store, and protect your personal data.';
 
   @override
   String get termsandcondations34 => '11. Force Majeure';
 
   @override
-  String get termsandcondations35 =>
-      'TripTo shall not be liable for failure to perform any obligation under these Terms due to events beyond our reasonable control, including but not limited to natural disasters, pandemics, government restrictions, strikes, or wars.';
+  String get termsandcondations35 => 'TripTo shall not be liable for failure to perform any obligation under these Terms due to events beyond our reasonable control, including but not limited to natural disasters, pandemics, government restrictions, strikes, or wars.';
 
   @override
   String get termsandcondations36 => '12. Governing Law and Jurisdiction';
 
   @override
-  String get termsandcondations37 =>
-      'These Terms are governed by the laws of the Arab Republic of Egypt. Any disputes shall be subject to the exclusive jurisdiction of the competent Egyptian courts.';
+  String get termsandcondations37 => 'These Terms are governed by the laws of the Arab Republic of Egypt. Any disputes shall be subject to the exclusive jurisdiction of the competent Egyptian courts.';
 
   @override
   String get termsandcondations38 => '13. Contact Information';
 
   @override
-  String get termsandcondations39 =>
-      'For inquiries, complaints, or customer support, you may reach us at:';
+  String get termsandcondations39 => 'For inquiries, complaints, or customer support, you may reach us at:';
 
   @override
   String get termsandcondations40 => 'Email: [Support Email]';
@@ -1078,8 +981,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get issue => 'Description issue';
 
   @override
-  String get noInternetMessage =>
-      'Make sure you are connected to the internet and try again.';
+  String get noInternetMessage => 'Make sure you are connected to the internet and try again.';
 
   @override
   String get tryagain => 'Try again';
@@ -1103,24 +1005,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showcaseDateDescription => 'Choose your trip dates.';
 
   @override
-  String get showcaseHotelDescription =>
-      'Select your hotel from the available list.';
+  String get showcaseHotelDescription => 'Select your hotel from the available list.';
 
   @override
-  String get showcaseCarDescription =>
-      'Choose your car for easy travel during the trip.';
+  String get showcaseCarDescription => 'Choose your car for easy travel during the trip.';
 
   @override
-  String get showcaseActivitiesDescription =>
-      'Browse available activities and plan your adventures.';
+  String get showcaseActivitiesDescription => 'Browse available activities and plan your adventures.';
 
   @override
-  String get showcaseSaveDescription =>
-      'Tap here to save the trip and return to it later.';
+  String get showcaseSaveDescription => 'Tap here to save the trip and return to it later.';
 
   @override
-  String get showcaseInfoDescription =>
-      'To view information about this destination.';
+  String get showcaseInfoDescription => 'To view information about this destination.';
 
   @override
   String get tripNumber => 'Trip No.';
@@ -1177,8 +1074,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get activityPrice => 'Activity Price';
 
   @override
-  String get pleaseLoginFirst =>
-      'Please log in first or create your account if you haven\'t already.';
+  String get pleaseLoginFirst => 'Please log in first or create your account if you haven\'t already.';
 
   @override
   String get pending => 'Pending';
@@ -1196,8 +1092,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripPlace => 'Trip location';
 
   @override
-  String get tripPricePerPerson =>
-      'Price per person in the trip, and you can increase the number of people';
+  String get tripPricePerPerson => 'Price per person in the trip, and you can increase the number of people';
 
   @override
   String get bookTrip => 'Click here to book the trip';
@@ -1235,8 +1130,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videoNotAvailable => 'Video not available';
 
   @override
-  String get tripAvailablePeriods =>
-      'The trip is available during the following periods:';
+  String get tripAvailablePeriods => 'The trip is available during the following periods:';
 
   @override
   String get tripNotAvailable => 'The trip is currently unavailable.';
@@ -1248,8 +1142,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get to => 'to';
 
   @override
-  String get rangeNotContained =>
-      'The booking period must be contained entirely within a single available period.';
+  String get rangeNotContained => 'The booking period must be contained entirely within a single available period.';
 
   @override
   String get pricepernight => 'Price per night';

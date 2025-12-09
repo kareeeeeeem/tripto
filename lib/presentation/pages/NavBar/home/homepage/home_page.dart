@@ -1,5 +1,3 @@
-// 💡 استورد الملف الجديد
-// ignore_for_file: unused_local_variable
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -227,12 +225,10 @@ void _executeDateRangeSearch(DateTime startDate, DateTime endDate) {
     if (result == true) {
       videoState?.disposeAllVideos(); 
       videoState?.fetchAllTrips();    
-      // الاعتماد على onTripChanged من VideoPlayerScreen لتحديث الحالة
     }
     videoState?.playCurrentVideo();
   }
 
-// ⭐️ الدالة الموحدة لفتح ديالوج التاريخ المخصص (منقولة من SearchPage) ⭐️
 void _showArabicDateRangePicker(BuildContext context) async {
   final result = await showDialog(
     context: context,
@@ -408,21 +404,44 @@ void _showArabicDateRangePicker(BuildContext context) async {
           },
         ),
       );
+
+      final logoWidget = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: Image.asset(
+          'assets/images/TRIPTOsmall.png',
+          height: 50, // حجم مناسب لزر
+          width: 50,
+        ),
+      );
+
+      // تحديد ما إذا كان التصميم للموبايل (لعرض اللوجو هنا)
+      final ForLogoT = MediaQuery.of(context).size.width < 1200;
       
       final children = <Widget>[];
+
       if (isArabic) {
-        // RTL: زر التاريخ، أزرار الفئات، شريط البحث
+        // RTL: زر التاريخ، أزرار الفئات، اللوجو (إذا كان موبايل)، شريط البحث
         children.addAll([
           dateSearchButton,
           categoryButtons,
+        ]);
+        if (ForLogoT) { // أضف اللوجو في وضع الموبايل (RTL)
+          children.insert(0, logoWidget); // إضافته قبل أزرار الفئات إذا أردته بعد زر التاريخ
+        }
+        children.addAll([
           const SizedBox(width: 15),
           searchBar,
         ]);
       } else {
-        // LTR: شريط البحث، زر التاريخ، أزرار الفئات
+        // LTR: شريط البحث، اللوجو (إذا كان موبايل)، زر التاريخ، أزرار الفئات
         children.addAll([
           searchBar,
           const SizedBox(width: 15),
+        ]);
+        if (ForLogoT) { // أضف اللوجو في وضع الموبايل (LTR)
+          children.insert(0, logoWidget);
+        }
+        children.addAll([
           dateSearchButton,
           categoryButtons,
         ]);
@@ -450,17 +469,25 @@ void _showArabicDateRangePicker(BuildContext context) async {
             const SizedBox(height: 10),
 
             // شريط الوجهات الفرعية القابل للتمرير
-            if (allSubDestinations != null)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: (allSubDestinations as List).map<Widget>((sub) {
-                    return _buildSubDestinationChip(sub, isArabic);
-                  }).toList(),
+          if (allSubDestinations != null && allSubDestinations!.isNotEmpty)
+              // 💡 1. استخدام Padding لإعطاء مساحة 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                // 💡 2. استخدام ConstrainedBox لضمان عدم تجاوز العرض المحدد لشريط البحث
+                // بما أن شريط البحث مقيد بـ 900، نقوم بالتقييد بنفس العرض.
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800), // يحدد العرض الأقصى لشريط الـ Chips
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: (allSubDestinations as List).map<Widget>((sub) {
+                        return _buildSubDestinationChip(sub, isArabic);
+                      }).toList(),
+                    ),
+                  ),
                 ),
               )
-            else
+            else if (allSubDestinations == null)
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -482,25 +509,15 @@ void _showArabicDateRangePicker(BuildContext context) async {
     return LayoutBuilder(
       builder: (context, constraints) {
         const double webBreakpoint = 1200;   
-        
-        
-          // شاشات كبيرة (كمبيوتر / لابتوب)
         const double tabletBreakpoint = 1000;   // التابلت أو الآيباد
         const double mobileBreakpoint = 480;   // الموبايل
-
-
           final bool isWebLayout = constraints.maxWidth >= webBreakpoint;
           final bool isTabletLayout = constraints.maxWidth >= 1000 && constraints.maxWidth < webBreakpoint;
           final bool isMobileLayout = constraints.maxWidth < 1000;
-
          if (kIsWeb) { 
-  
            const double videoWidth = 450;
-          //const double rightButtonsWidth = 520;
-         // const double spacingBetween = 80;
           const double searchBarHeightPadding = 130.0; 
           const double searchBarbottomPadding = 55.0; 
-
           const double rightEdgePadding = 40.0; 
           const double totalFixedWidth = videoWidth + 20 + 450;
           
@@ -558,170 +575,344 @@ void _showArabicDateRangePicker(BuildContext context) async {
                     ),
  
                     Padding(
-                      padding: EdgeInsets.only(top: searchBarHeightPadding, bottom: searchBarbottomPadding), 
-                      
 
-                      // 💡 التعديل الرئيسي: استخدام تخطيط مختلف بناءً على حجم الشاشة
-    child: constraints.maxWidth >= webBreakpoint
-      ? Padding(
-        padding:  EdgeInsets.only(
+                      padding: EdgeInsets.only(
 
-          left: !isArabic ? 400.0 : 0.0,
-          right: isArabic ? 400.0 : 0.0,
-          ),
-         child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: videoWidth,
-                  maxHeight: constraints.maxHeight - searchBarHeightPadding - 30, 
-                ),
-                child: VideoPlayerScreen(
-                  key: videoPlayerScreenKey,
-                  onTripChanged: _updateCurrentTripDetails,
-                  onSearchPressed: _handleSearchNavigation, 
-                  onToggleFullscreen: _toggleFullscreen, 
-                  isCurrentlyFullscreen: _isFullscreen,
-                ),
-              ),
-              const SizedBox(width: 20),
-              // 🎛️ RightButtons تظهر خارج الفيديو على الويب فقط
-              if (constraints.maxWidth >= webBreakpoint)
-                Positioned(
-                  top: 130,
-                  right: 20,
-                  bottom: 55,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minWidth: 330,
-                        maxWidth: 400,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.45),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(2, 3),
+                          top: searchBarHeightPadding,
+
+                          bottom: searchBarbottomPadding,
+
+                          
+
+                          ),
+
+
+
+                      // التخطيط الرئيسي: فيديو + RightButtons
+
+                      child: constraints.maxWidth >= webBreakpoint
+
+                          ? Padding(
+
+                              padding: EdgeInsets.only(
+
+                                left: !isArabic ? 100.0 : 0.0,
+
+                                right: isArabic ? 100.0 : 0.0,
+
+                              ),
+
+                              child: Center(
+
+                                child: Row(
+
+                                  mainAxisAlignment: MainAxisAlignment.center,
+
+                                  children: [
+
+                                    ConstrainedBox(
+
+                                      constraints: BoxConstraints(
+
+                                        maxWidth: videoWidth,
+
+                                        maxHeight: constraints.maxHeight -
+
+                                            searchBarHeightPadding -
+
+                                            30,
+
+                                      ),
+
+                                      child: VideoPlayerScreen(
+
+                                        key: videoPlayerScreenKey,
+
+                                        onTripChanged: _updateCurrentTripDetails,
+
+                                        onSearchPressed: _handleSearchNavigation,
+
+                                        onToggleFullscreen: _toggleFullscreen,
+
+                                        isCurrentlyFullscreen: _isFullscreen,
+
+                                      ),
+
+                                    ),
+
+                                    const SizedBox(width: 20),
+
+                                  ],
+
+                                ),
+
+                              ),
+
+                            )
+
+                          : Center(
+
+                              // 💡 للشاشات الأصغر (تابلت أو موبايل): RightButtons داخل الفيديو
+
+                              child: Stack(
+
+                                alignment: Alignment.center,
+
+                                children: [
+
+                                  ConstrainedBox(
+
+                                    constraints: BoxConstraints(
+
+                                      maxWidth: constraints.maxWidth * 0.8,
+
+                                      maxHeight: constraints.maxHeight -
+
+                                          searchBarHeightPadding -
+
+                                          30,
+
+                                    ),
+
+                                    child: VideoPlayerScreen(
+
+                                      key: videoPlayerScreenKey,
+
+                                      onTripChanged: _updateCurrentTripDetails,
+
+                                      onSearchPressed: _handleSearchNavigation,
+
+                                      onToggleFullscreen: _toggleFullscreen,
+
+                                      isCurrentlyFullscreen: _isFullscreen,
+
+                                    ),
+
+                                  ),
+
+                                  // 🎛️ RightButtons (الموبايل/التابلت: داخل الفيديو)
+
+                                  Positioned(
+
+                                    right: isArabic ? null : 2,
+
+                                    left: isArabic ? 2 : null,
+
+                                    top: 50,
+
+                                    bottom: 0,
+
+                                    child: Container(
+
+                                      width: 100,
+
+                                      decoration: const BoxDecoration(
+
+                                        color: Colors.transparent,
+
+                                      ),
+
+                                      padding: const EdgeInsets.all(10),
+
+                                      child: RightButtons(
+
+                                        tripId: _currentTripId,
+
+                                        currentTripCategory:
+
+                                            _currentTripCategory,
+
+                                        personCounterKey: _currentPersonCounterKey,
+
+                                        selectedTripSummary: _tripSummaryText,
+
+                                        onHotelSelected: (id, price) {
+
+                                          if (!mounted) return;
+
+                                          setState(() {
+
+                                            _selectedHotelId = id;
+
+                                            _selectedHotelPrice = price;
+
+                                          });
+
+                                        },
+
+                                        onCarSelected: (id, price) {
+
+                                          if (!mounted) return;
+
+                                          setState(() {
+
+                                            _selectedCarId = id;
+
+                                            _selectedCarPrice = price;
+
+                                          });
+
+                                        },
+
+                                        onActivitySelected: (id, price) {
+
+                                          if (!mounted) return;
+
+                                          setState(() {
+
+                                            _selectedActivityId = id;
+
+                                            _selectedActivityPrice = price;
+
+                                          });
+
+                                        },
+
+                                        onFlightSelected: (id, price) {},
+
+                                        onSummaryReady: _updateTripSummary,
+
+                                        onDateRangeSelected: onDateRangeSelected,
+
+                                      ),
+
+                                    ),
+
+                                  ),
+
+                                ],
+
+                              ),
+
                             ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        child: RightButtons(
-                          tripId: _currentTripId,
-                          currentTripCategory: _currentTripCategory,
-                          personCounterKey: _currentPersonCounterKey,
-                          selectedTripSummary: _tripSummaryText,
-                          onHotelSelected: (id, price) {
-                            if (!mounted) return;
-                            setState(() {
-                              _selectedHotelId = id;
-                              _selectedHotelPrice = price;
-                            });
-                          },
-                          onCarSelected: (id, price) {
-                            if (!mounted) return;
-                            setState(() {
-                              _selectedCarId = id;
-                              _selectedCarPrice = price;
-                            });
-                          },
-                          onActivitySelected: (id, price) {
-                            if (!mounted) return;
-                            setState(() {
-                              _selectedActivityId = id;
-                              _selectedActivityPrice = price;
-                            });
-                          },
-                          onFlightSelected: (id, price) {},
-                          onSummaryReady: _updateTripSummary,
-                          onDateRangeSelected: onDateRangeSelected,
-                        ),
-                      ),
+
                     ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      )
-    : Center(
-        // 💡 للشاشات الأصغر (تابلت أو موبايل): RightButtons داخل الفيديو
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: constraints.maxWidth * 0.8,
-                maxHeight: constraints.maxHeight - searchBarHeightPadding - 30,
-              ),
-              child: VideoPlayerScreen(
-                key: videoPlayerScreenKey,
-                onTripChanged: _updateCurrentTripDetails,
-                onSearchPressed: _handleSearchNavigation,
-                onToggleFullscreen: _toggleFullscreen,
-                isCurrentlyFullscreen: _isFullscreen,
-              ),
-            ),
-            Positioned(
-              
-              
-             right: isArabic ? null : 2, // في الإنجليزي (LTR) تبقى 2 من اليمين
-             left: isArabic ? 2 : null,  // في العربي (RTL) تصبح 2 من اليسار
-              top: 50,
-              bottom: 0,
-              child: Container(
-                width: 100,
-                decoration: BoxDecoration(
-                color: Colors.transparent, 
-                ),
-                padding: const EdgeInsets.all(10),
-                child: RightButtons(
-                  tripId: _currentTripId,
-                  currentTripCategory: _currentTripCategory,
-                  personCounterKey: _currentPersonCounterKey,
-                  selectedTripSummary: _tripSummaryText,
-                  onHotelSelected: (id, price) {
-                    if (!mounted) return;
-                    setState(() {
-                      _selectedHotelId = id;
-                      _selectedHotelPrice = price;
-                    });
-                  },
-                  onCarSelected: (id, price) {
-                    if (!mounted) return;
-                    setState(() {
-                      _selectedCarId = id;
-                      _selectedCarPrice = price;
-                    });
-                  },
-                  onActivitySelected: (id, price) {
-                    if (!mounted) return;
-                    setState(() {
-                      _selectedActivityId = id;
-                      _selectedActivityPrice = price;
-                    });
-                  },
-                  onFlightSelected: (id, price) {},
-                  onSummaryReady: _updateTripSummary,
-                  onDateRangeSelected: onDateRangeSelected,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
- ) ,
 
 
 
+                    // 🎛️ RightButtons (الويب: خارج الفيديو على اليمين)
 
+                    if (constraints.maxWidth >= webBreakpoint)
+
+                      Positioned(
+
+                        top: 130,
+
+                        right: isArabic ? null : 180, // اليمين في LTR
+
+                        left: isArabic ? 180 : null, // اليسار في RTL
+
+                        bottom: 55,
+
+                        child: Align(
+
+                          alignment:
+
+                              isArabic ? Alignment.centerLeft : Alignment.centerRight,
+
+                          child: ConstrainedBox(
+
+                            constraints: const BoxConstraints(
+
+                              minWidth: 330,
+
+                              maxWidth: 400,
+
+                            ),
+
+                            child: Container(
+
+                              decoration: BoxDecoration(
+
+                            color: Colors.transparent,
+
+                                borderRadius: BorderRadius.circular(20),
+
+                                boxShadow: [
+
+                                  BoxShadow(
+
+                            color: Colors.transparent,
+
+                                    blurRadius: 8,
+
+                                    offset: const Offset(2, 3),
+
+                                  ),
+
+                                ],
+
+                              ),
+
+                              padding: const EdgeInsets.all(12),
+
+                              child: RightButtons(
+
+                                tripId: _currentTripId,
+
+                                currentTripCategory: _currentTripCategory,
+
+                                personCounterKey: _currentPersonCounterKey,
+
+                                selectedTripSummary: _tripSummaryText,
+
+                                onHotelSelected: (id, price) {
+
+                                  if (!mounted) return;
+
+                                  setState(() {
+
+                                    _selectedHotelId = id;
+
+                                    _selectedHotelPrice = price;
+
+                                  });
+
+                                },
+
+                                onCarSelected: (id, price) {
+
+                                  if (!mounted) return;
+
+                                  setState(() {
+
+                                    _selectedCarId = id;
+
+                                    _selectedCarPrice = price;
+
+                                  });
+
+                                },
+
+                                onActivitySelected: (id, price) {
+
+                                  if (!mounted) return;
+
+                                  setState(() {
+
+                                    _selectedActivityId = id;
+
+                                    _selectedActivityPrice = price;
+
+                                  });
+
+                                },
+
+                                onFlightSelected: (id, price) {},
+
+                                onSummaryReady: _updateTripSummary,
+
+                                onDateRangeSelected: onDateRangeSelected,
+
+                              ),
+
+                            ),
+
+                          ),
+
+                        ),
+
+                      ),
 
 
 
@@ -784,7 +975,8 @@ void _showArabicDateRangePicker(BuildContext context) async {
 
 
                   // 🟢 التعديل 1: يظهر الدرج عندما يكون مفتوحاً (_isDrawerOpen = true)
-                  if (_isDrawerOpen &&  constraints.maxWidth >= webBreakpoint) 
+                  if (_isDrawerOpen &&  constraints.maxWidth >= 1000) 
+                 
                   Positioned(
                     top: 70,
                     left: isArabic ? null : 20,
@@ -794,7 +986,7 @@ void _showArabicDateRangePicker(BuildContext context) async {
                   ),
 
                 // 🟢 التعديل 2: تظهر الأيقونات عندما يكون الدرج مغلقاً (_isDrawerOpen = false)
-        if (!_isDrawerOpen && constraints.maxWidth > 1000) 
+                  if (!_isDrawerOpen && constraints.maxWidth > 1000) 
                   Positioned(
                     left: isArabic ? null : 20,
                     right: isArabic ? 20 : null,
@@ -854,15 +1046,15 @@ void _showArabicDateRangePicker(BuildContext context) async {
                         ),
                         onPressed: toggleDrawer,
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.12),
+                      SizedBox(width:10),
                       
 
                               if (constraints.maxWidth > 1200) 
 
                       Image.asset(
                         'assets/images/TRIPTO.png',
-                        height: 58,
-                        width: 75,
+                        height: 75,
+                        width: 120,
                       ),
                     ],
                   ),

@@ -26,8 +26,8 @@ import 'package:tripto/bloc&repo/GetTrip/GetTrip_event.dart';
 import 'package:tripto/bloc&repo/GetTrip/GetTrip_repository.dart';
 import 'package:tripto/core/theme.dart';
 import 'package:tripto/core/routes/app_routes.dart';
-import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'package:tripto/core/services/wrappers/internet_wrapper.dart';
+import 'package:tripto/presentation/pages/NavBar/home/homepage/VedioPlayerPage.dart';
 import 'l10n/app_localizations.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -120,10 +120,18 @@ class _TripToAppState extends State<TripToApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
-        RepositoryProvider<TripRepository>(create: (_) => TripRepository()),
-        RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
-        RepositoryProvider<CarRepository>(create: (_) => CarRepository()),
+        RepositoryProvider<AuthRepository>(
+          create: (_) => AuthRepository()
+          ),
+        RepositoryProvider<TripRepository>(
+          create: (_) => TripRepository()
+          ),
+        RepositoryProvider<UserRepository>(
+          create: (_) => UserRepository()
+          ),
+        RepositoryProvider<CarRepository>(
+          create: (_) => CarRepository()
+          ),
         RepositoryProvider<ContactusRepository>(
           create: (_) => ContactusRepository(),
         ),
