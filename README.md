@@ -1,23 +1,9 @@
-lib/
-├── data/                        # طبقة البيانات (Data Layer)
-│   ├── models/                  # نماذج البيانات (Data Models)
-│   ├── repositories/            # تنفيذ الـ Repositories
-│   ├── sources/                 # مصادر البيانات (Remote وLocal)
-│   │   ├── remote/              # API أو مصادر خارجية
-│   │   └── local/               # قواعد بيانات محلية
-│   └── services/                # خدمات إضافية (مثل Network أو Storage)
-├── domain/                      # طبقة المنطق الأساسي (Domain Layer)
-│   ├── entities/                # الكيانات (Entities)
-│   ├── repositories/            # واجهات الـ Repositories (Abstract)
-│   └── usecases/                # الـ Use Cases (Business Logic)
-├── presentation/                # طبقة العرض (Presentation Layer)
-│   ├── blocs/                   # الـ BLoC لإدارة الحالة
-│   ├── pages/                   # الشاشات أو الصفحات
-│   ├── widgets/                 # مكونات الـ UI القابلة لإعادة الاستخدام
-│   └── routes/                  # إدارة التنقل بين الشاشات
-├── core/                        # ملفات مشتركة (مثل الثوابت، Errors، Utilities)
-│   ├── constants/               # الثوابت (مثل API URLs)
-│   ├── errors/                  # إدارة الأخطاء
-│   └── utilities/               # أدوات مساعدة (مثل Logger)
-├── injection_container.dart     # إعداد Dependency Injection
-└── main.dart                    # نقطة بداية التطبيق
+TripTo -Powered Travel Video Platform & Booking System
+•explore and engage with short-form videos of real travel experiences, promoting tourism services and trip packages. 
+•Engineered a complete trip customization system allowing users to tailor their journey by selecting trip category (Gold, Business, Platinum), vehicle type, dates, and custom features — seamlessly integrated into the booking workflow.
+• Implemented secure authentication, profile management, and user roles, with smooth onboarding experience and persistent login using token-based authentication.
+•Integrated backend APIs for real-time trip data, dynamic video feeds, and payment workflows, all synchronized with a cloud-hosted PostgreSQL/MongoDB database.
+•Applied robust state management using Bloc, with clean architecture principles to ensure scalability and maintainability.
+•Designed an engaging, responsive UI with animations, transitions, and category-based theming for high user retention.
+•Technologies: Flutter, Dart, RESTful APIs, Firebase Auth / Secure Storage, Bloc, PostgreSQL, Cloud Functions 
+•https://github.com/kareeeeeeem/tripto
