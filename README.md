@@ -6,4 +6,3 @@ TripTo -Powered Travel Video Platform & Booking System
 •Applied robust state management using Bloc, with clean architecture principles to ensure scalability and maintainability.
 •Designed an engaging, responsive UI with animations, transitions, and category-based theming for high user retention.
 •Technologies: Flutter, Dart, RESTful APIs, Firebase Auth / Secure Storage, Bloc, PostgreSQL, Cloud Functions 
-•https://github.com/kareeeeeeem/tripto
