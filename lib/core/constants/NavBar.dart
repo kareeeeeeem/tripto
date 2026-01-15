@@ -13,7 +13,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return token != null && token.isNotEmpty;
   }
 
-   const CustomBottomNavBar({
+  const CustomBottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
@@ -21,9 +21,10 @@ class CustomBottomNavBar extends StatelessWidget {
 
   final List<IconData> _icons = const [
     Icons.home,
+    Icons.hotel,
     Icons.extension,
     Icons.person_2_outlined,
-    Icons.favorite_border,
+    Icons.menu,
   ];
 
   @override

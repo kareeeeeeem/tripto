@@ -26,7 +26,7 @@ class _ExpandedTextState extends State<ExpandedText> {
     String displayText = widget.text;
 
     if (!isExpanded && widget.text.length > 40) {
-      displayText = widget.text.substring(0, 40).trimRight() + '...';
+      displayText = '${widget.text.substring(0, 40).trimRight()}...';
     }
 
     return GestureDetector(
