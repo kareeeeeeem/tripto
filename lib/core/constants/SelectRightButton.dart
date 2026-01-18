@@ -1,5 +1,4 @@
 // lib/core/constants/SelectRightButton.dart
-
 import 'package:flutter/material.dart';
 
 class SelectRightButton extends StatelessWidget {
@@ -18,30 +17,41 @@ class SelectRightButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blueAccent : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.center,
+    // تحديد أبعاد ثابتة للزر
+    const double buttonSize = 60.0;
+    const double iconSize = 30.0;
+    const double fontSize = 12.0;
+
+    return SizedBox(
+      width: buttonSize,
+      height: buttonSize,
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          // تم إزالة margin الذي كان يسبب الفراغات
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.blueAccent : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              iconWidget,
-              // const SizedBox(height: ),
+              SizedBox(
+                width: iconSize,
+                height: iconSize,
+                child: FittedBox(child: iconWidget),
+              ),
+              const SizedBox(height: 4.0),
               Text(
                 label,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontSize: 20, // الحجم اللي إنت عايزه
-                  fontWeight: FontWeight.w700, // الوزن اللي إنت عايزه
-                  color: Colors.white, // اللون اللي انت عايزه
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
             ],

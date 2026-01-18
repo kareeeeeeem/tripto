@@ -16,7 +16,9 @@
   "source_files": "wakelock_plus/Sources/wakelock_plus/**/*.{h,m}",
   "public_header_files": "wakelock_plus/Sources/wakelock_plus/include/**/*.h",
   "dependencies": {
-    "Flutter": []
+    "Flutter": [
+
+    ]
   },
   "platforms": {
     "ios": "12.0"
